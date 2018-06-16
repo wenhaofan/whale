@@ -1,0 +1,16 @@
+.tags_tag {
+	width: 200px !important;
+}
+
+#tags_tags input {
+	background-color: #fafafa;
+	border: 1px solid #eeeeee;
+}
+
+#tags_addTag input {
+	width: 100%;
+}
+
+.swal2-modal .swal2-spacer {
+	height: 0px;
+}

@@ -1,0 +1,67 @@
+#@header()
+<!--首页 -->
+<script type="text/javascript" src="/assets/front/js/article.js"></script>
+<script type="text/javascript">
+function showArticle(id){
+	$.ajax({
+		url:"/article/"+id,
+		dataType:"html",
+		success:function(html){
+			$("main").html(html);
+			renderArticle({
+				callback:function(html){
+					$("main").html(html);
+				}
+			});
+		}
+	})
+}
+</script><link rel="stylesheet" href="/assets/css/article.css" >
+<div class="main-content" style="">
+    <aside class="bg-white">
+        <h3 class="aside-title">标签</h3>
+        <div class="tags" id="tags">
+       		<script type="text/html" id="tpl-tag">
+				<a href="javascript:void(0)" ><span class="tag">{{tag.mname}}(1)</span></a>
+			</script>
+        </div>
+        <h3 class="aside-title">热门文章</h3>
+        <div>
+            <ul class="hot-articles">
+                <li><a href="" >第12篇文章</a><span>(1)</span></li>
+                <li><a href="" >第2篇文章</a><span>(21)</span></li>
+                <li><a href="" >第一12篇文章</a><span>(3)</span></li>
+                <li><a href="" >第12一篇文章</a><span>(12)</span></li>
+            </ul>
+        </div>
+    </aside
+     ><main>
+ 
+      </main>
+</div>
+   <script type="text/html" id="tpl-article">
+ 		<article class="bg-white article-item" >
+       	 <h3><a href="javascript:showArticle({{article.pkId}})">{{article.title}}</a></h3>
+        	<small>2018年05月7日 by 范   阅读 {{article.pv}} 次 <!--, 今日 {{article.todayPv}} 次  --></small>
+        	<div class="content">
+          	  <p click="showArticle({{article.pkId}})">{{article.content}}</p>
+           	 <a href="javascript:showArticle({{article.pkId}})"><strong>阅读全文</strong></a>
+			</div>
+        	<p>
+     	       标签：<small class="article-tags" data-id="{{article.pkId}}" ></small>
+
+           	 <br>
+    	        发布在 <small class="article-categorys" data-id="{{article.pkId}}"></small>
+      	  </p>
+   	 	</article>
+	</script>
+	<style>
+
+	
+
+#@footer()
+<script type="text/javascript" src="/_view/templates/pinghsu/index.js"></script>
+<script color="0,0,0" opacity="0.5" count="100" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.js" type="text/javascript" charset="utf-8"></script>
+
+
+

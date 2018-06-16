@@ -1,0 +1,66 @@
+.categorys-head>h2{
+	font-size:1rem;
+	padding:0.5rem 0.5rem 0.5rem 1rem;
+	background-color:#7b99e4;
+	color:#fff;
+}
+.tags-head>h2{
+	font-size:1rem;
+	padding:0.5rem 0.5rem 0.5rem 1rem;
+	background-color: #ec8f40;
+	color:#fff;
+}
+
+.categorys-body{
+	padding:1rem;
+	background-color: #fff;
+}
+.tags-body{
+	padding:1rem;
+	background-color: #fff;
+}
+.form{
+	margin-top:2rem;
+	padding:1rem 0rem 0rem 0rem;
+	background-color:#fff;
+}
+#reset{
+	display:none;
+}
+#category-list,#tag-list{
+	background-color: #fff;
+}
+.categorys-block .layui-nav-item ,.tags-block .layui-nav-item{
+	margin: 0rem 0.5rem;
+	background-color: #393D49;
+	line-height: 30px;
+}
+
+.list .layui-nav-item a {
+	padding: 0px 20px 0px 5px;
+}
+
+.layui-nva-more {
+	content: '';
+	width: 0;
+	height: 0;
+	border-style: solid dashed dashed;
+	border-color: #fff transparent transparent;
+	overflow: hidden;
+	cursor: pointer;
+	transition: all .2s;
+	-webkit-transition: all .2s;
+	position: absolute;
+	top: 50%;
+	right: 3px;
+	margin-top: -3px;
+	margin-right: 2px;
+	border-width: 6px;
+	border-top-color: rgba(255, 255, 255, .7);
+}
+
+.layui-nva-mored {
+	margin-top: -9px;
+	border-style: dashed dashed solid;
+	border-color: transparent transparent #fff;
+}

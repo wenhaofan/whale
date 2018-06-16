@@ -1,0 +1,144 @@
+body{
+    background-color: #f7f7f7!important;;
+    font-size: 14px;
+}
+a{
+    color: #34538b!important;
+    text-decoration: none;
+    font-size:14px;
+}
+.bg-white {
+    background:rgba(255,255,255,0.8);
+}
+
+header{
+	width:100%;
+	min-width:1360px;
+}
+/**头部样式*/
+header>ul{
+    width: 1360px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+header{
+    background-color:#fff!important;
+    box-shadow: 0 1px 5px rgba(0,0,0,.1);
+}
+.nav-item{
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 60px;
+    font-weight: bold;
+}
+.nav-item a{
+    display: block;
+    padding: 0 20px;
+    color: #fff;
+    color: rgba(255,255,255,.7);
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+.nav-item>a:hover{
+    color: #eb5055 !important;;
+}
+
+
+
+h3 a{
+	font-size:24px;
+	color: #34538b;
+	line-height:46px;
+}
+
+
+.content p{
+    line-height: 1.5;
+    font-size: medium;}
+ .swal2-modal .swal2-spacer {
+ 	display:none!important;
+ }
+.hot-articles a{color:#175199!important;}
+
+aside:first-child{
+    padding-top:20px;
+}
+/**主体样式*/
+.main-content{
+    width: 1360px;
+    max-width: 100%;
+    margin: 0 auto;
+    min-width: 1360px;
+    padding-top:30px;
+}
+
+aside{
+    display: inline-block;
+    width: 300px;
+    vertical-align:middle;
+    margin: 0 auto;
+}
+aside div{
+    margin-bottom: 10px;
+}
+
+.tag{
+    display: inline-block;margin: 0 0.5rem;
+}
+.tags{
+    margin: 0px 20px ;
+    margin-bottom: 10px;
+}
+main{
+    display: inline-block;
+    vertical-align: top;
+    width:1040px;
+    margin: 0 auto;
+    margin-left: 20px;
+}
+
+.article-item>h2{
+    margin:10px 0px 5px;
+}
+.article-item p{
+    margin: 10px 0px;
+}
+.content p{
+    cursor:pointer;
+}
+.article-item{
+    margin: 0 1rem 1rem;
+    padding: 1rem;
+    padding-top:0px;
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,.04);
+}
+
+aside ul{
+    padding: 0px;
+}
+aside ul>li{
+    list-style: none;
+    margin:0 20px;
+    line-height: 30px;
+    border-bottom: 2px solid #f7f7f7;
+   
+}
+aside ul>li>a{
+    padding-left: 12px;
+}
+aside ul>li>span{
+    float: right;
+}
+.article-item:last-child{
+	margin-bottom:30px;
+}
+.aside-title{
+    margin-bottom: 10px;
+    padding: 15px;
+    line-height: 22px;
+    font-weight: bold;
+    border-left: 5px solid #009688;
+    border-radius: 0 2px 2px 0;
+    background-color: #f2f2f2;
+}

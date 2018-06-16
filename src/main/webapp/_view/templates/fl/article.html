@@ -1,0 +1,27 @@
+<!-- 文章详情 -->
+
+
+<script type="text/javascript">
+var  articleId=#(id);
+</script>
+<script type="text/html" id="tpl-info-article">
+<article class="article-info  bg-white">
+    <div class="article-meta">
+        <h2 class="meta-title" itemprop="name headline">
+          	{{article.title}}
+        </h2>
+        <small>
+           	 这篇文章发布于{{article.gmtCreate}}，归类于 java。                        阅读 {{article.pv}}次				
+        </small>
+    </div>
+
+    <div class="article-content">
+		
+    </div>
+
+    <small class="end-info">
+        本文由 <a href="">范文皓</a> 创作，采用 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"
+                                        rel="external nofollow">知识共享署名4.0</a> 国际许可协议进行许可<br>本站文章除注明转载/出处外，均为本站原创或翻译，转载前请务必署名<br>
+    </small>
+</article>
+</script>
