@@ -22,13 +22,16 @@ public class ArticleController extends Controller{
 	private MetaService metaService=MetaService.me;
 	
 	public void index(){
-		Integer articleId=getParaToInt(0);
-		Article article=service.getArticleById(articleId);
+		String identify=getPara(0);
+		Article article=service.getArticle(identify);
+		if(article==null) {
+			renderError(404);
+			return;
+		}
 		List<Meta> categorys=metaService.listByCId(article.getPkId(), "category");
-		
 		setAttr("categorys",categorys);
 		setAttr("article", article);
-		setAttr("id", articleId);
+		setAttr("identify", identify);
 		setAttr("is_post", true);
 		render("post.html");
 	}

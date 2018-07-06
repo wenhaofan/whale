@@ -97,12 +97,12 @@ public abstract class BaseArticle<M extends BaseArticle<M>> extends Model<M> imp
 		return get("gmtModified");
 	}
 
-	public void setUrl(java.lang.String url) {
-		set("url", url);
+	public void setIdentify(java.lang.String identify) {
+		set("identify", identify);
 	}
 	
-	public java.lang.String getUrl() {
-		return getStr("url");
+	public java.lang.String getIdentify() {
+		return getStr("identify");
 	}
 
 }

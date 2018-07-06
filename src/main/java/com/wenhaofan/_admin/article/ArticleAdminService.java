@@ -1,5 +1,6 @@
 package com.wenhaofan._admin.article;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
+import com.wenhaofan.article.ArticleService;
 import com.wenhaofan.common.exception.MsgException;
 import com.wenhaofan.common.kit.ListKit;
 import com.wenhaofan.common.kit.StrKit;
@@ -29,6 +31,9 @@ public class ArticleAdminService {
 	private Article  dao=new Article().dao();
 
 	private MetaService mservice=MetaService.me;
+	
+	private static ArticleService articleService=ArticleService.me;
+	
 	
 	public void saveOrUpdate(Article article,List<Meta> tags,List<Meta> categorys) {
 		if(article.getPkId()==null) {
@@ -55,14 +60,46 @@ public class ArticleAdminService {
 			new MsgException("内容不能为空！");
 		}
 		
+		String identify=article.getIdentify();
+		
+	
+		if(StrKit.notBlank(identify)) {
+			Article tempArticle=articleService.getArticle(identify);
+			if(tempArticle!=null) {
+				new MsgException("路径已存在！");
+			}
+		}else {
+			//默认路径为创建时间
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
+			article.setIdentify(sdf.format(new Date()));
+		}
+		
 		article.setGmtCreate(new Date());
 		article.save();
+		
 		int articleId=article.getPkId();
+		
 		mservice.saveMetas(tags, articleId);
 		mservice.saveMetas(categorys, articleId);
 	}
 
 	public void updateArticle(Article article,List<Meta> tags,List<Meta> categorys) {
+		
+		String identify=article.getIdentify();
+		
+		if(StrKit.notBlank(identify)) {
+			Article tempArticle=articleService.getArticle(identify);
+			if(tempArticle!=null&&tempArticle.getPkId().equals(article.getPkId())) {
+				new MsgException("路径已存在！");
+			}
+		}else {
+			//默认路径为创建时间
+			Article tempArticle=article.findById(article.getPkId());
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
+			sdf.format(tempArticle.getGmtCreate());
+			article.setIdentify(identify);
+		}
+		
 		article.update();
 		
 		int articleId=article.getPkId();
@@ -72,7 +109,6 @@ public class ArticleAdminService {
 		
 		mservice.saveMetas(tags, articleId);
 		mservice.saveMetas(categorys, articleId);
-		
 	}
 
 	

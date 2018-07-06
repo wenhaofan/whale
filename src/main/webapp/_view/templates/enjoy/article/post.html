@@ -75,8 +75,10 @@ function shareQzone(){
 	for(var i in p){
 	s.push(i + '=' + encodeURIComponent(p[i]||''));
 	}
-	window.open("http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?"+s.join('&'));
+	window.open("http://connect.qq.com/widget/shareqq/index.html?"+s.join('&'));
 }
+
+
 /**获取当前页面的url*/
 function getUrl(){
 	return document.location.href.replace("#","");

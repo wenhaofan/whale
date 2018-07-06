@@ -25,8 +25,8 @@ public class ArticleApi extends BaseController{
 	
 	
 	public void index() {
-		Integer articleId=getParaToInt(0);
-		Article article=service.getArticleById(articleId);
+		String identify=getPara(0);
+		Article article=service.getArticle(identify);
 		renderJson(Ret.ok("article", article).toJson());
 	}
 	

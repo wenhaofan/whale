@@ -14,7 +14,6 @@ import com.wenhaofan.common.safe.JsoupFilter;
 public class ArticleService {
 	public static final ArticleService me=new ArticleService();
 	private Article dao=new Article().dao();
-
 	
 	public Page<Article> listArticle(Article article, Integer metaId, int pageNumber, int pageSize) {
 
@@ -28,17 +27,20 @@ public class ArticleService {
 	}
 	
 	public Page<Article> page(Integer pageNumber,Integer pageSize,Integer... metas){
-		
 		List<Integer> temp=Arraykit.remove(metas, 0);
-		
 		SqlPara sqlPara=dao.getSqlPara("article.page", Kv.create().set("metaIds", temp));
 		Page<Article> page= dao.paginate(pageNumber, pageSize,sqlPara);
 		JsoupFilter.filterArticleList(page.getList(), 30, 200);
 		return page;
 	}
 	
-	public Article getArticleById(Integer pkId) {
-		Article article= dao.findById(pkId);
+	/**
+	 * 根据标识去获取
+	 * @param identify
+	 * @return
+	 */
+	public Article getArticle(String  identify) {
+		Article article= dao.findFirst("select * from article where identify =? ",identify);
 		if(article==null) {
 			return article;
 		}

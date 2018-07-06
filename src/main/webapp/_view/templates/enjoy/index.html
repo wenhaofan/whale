@@ -6,8 +6,8 @@
           	#for(article:articlePage.list)
 	          	<div class="post-list-item">
 				    <div class="post-list-item-container">
-				        <div class="item-thumb bg-deepgrey" style="background-image:url(#(article.thumbImg));"></div>
-				        <a href="/article/#(article.pkId)">
+				        <div class="item-thumb bg-deepgrey" ></div>
+				        <a href="/article/#(article.identify)">
 				            <div class="item-desc">
 				                <p>#(article.content)...</p>
 				            </div>
@@ -15,7 +15,7 @@
 				        <div class="item-slant reverse-slant bg-deepgrey"></div>
 				        <div class="item-slant"></div>
 				        <div class="item-label">
-				            <div class="item-title"><a href="/article/#(article.pkId)">#(article.title)</a>
+				            <div class="item-title"><a href="/article/#(article.identify)">#(article.title)</a>
 				            </div>
 				            <div class="item-meta clearfix">
 				                <div class="item-meta-ico "
