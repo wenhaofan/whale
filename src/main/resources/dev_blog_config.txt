@@ -6,7 +6,7 @@ jdbcUrlResource=jdbc:mysql://127.0.0.1:3306/mysql?characterEncoding=utf-8
 
 jdbcUrl=jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=utf-8
 userName=root
-pwd=uAiqwVwjJ8-i
+pwd=root
 
 
 blogCharset=utf-8
@@ -16,4 +16,4 @@ notValid=0
 isValid=1
 
 
-domain=wenhaofan.com
+domain=127.0.0.1

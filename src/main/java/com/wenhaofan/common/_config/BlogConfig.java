@@ -61,7 +61,7 @@ public class BlogConfig extends JFinalConfig {
 	private static Prop loadConfig() {
 		try {
 			// 优先加载生产环境配置文件
-			return PropKit.use("blog_config.txt");
+			return PropKit.use("dev_blog_config.txt");
 		} catch (Exception e) {
 			// 找不到生产环境配置文件，再去找开发环境配置文件
 			return PropKit.use("blog_config.txt");

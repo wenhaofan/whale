@@ -8,7 +8,7 @@
 		pv,
 		thumbImg,
 		state,
-		url,
+		identify,
 		isOriginal
 	from 
 		article 
