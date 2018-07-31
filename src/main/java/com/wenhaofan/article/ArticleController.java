@@ -22,10 +22,10 @@ public class ArticleController extends Controller{
 	private MetaService metaService=MetaService.me;
 	
 	public void index(){
-		String identify=getPara(0);
+		String identify=getPara();
 		Article article=service.getArticle(identify);
 		if(article==null) {
-			renderError(404);
+			redirect("/");
 			return;
 		}
 		List<Meta> categorys=metaService.listByCId(article.getPkId(), "category");
@@ -37,14 +37,7 @@ public class ArticleController extends Controller{
 	}
 	
 
-	/**
-	 * 增加阅读数量,待完成
-	 */
-	public void addReadNum(){
-		service.addReadNum(getParaToInt(0));;
-		Ret json=new Ret().setOk();
-		renderJson(json.toJson());
-	}
+
 	
 	
 }

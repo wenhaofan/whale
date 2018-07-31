@@ -37,15 +37,33 @@ $(function() {
 	})
 	$("body").on("click", ".article-remove", function() {
 		var id = $(this).attr("data-id");
-		$.ajax({
-			url : "/admin/api/article/remove/"+id,
-			success : function(data) {
-				if (fl.isOk(data)) {
-					fl.alertOkAndReload(data.msg)
+		fl.alertConfirm({title:"是否确认删除？",then:function(){
+			$.ajax({
+				url : "/admin/api/article/remove/"+id,
+				success : function(data) {
+					if (fl.isOk(data)) {
+						fl.alertOkAndReload(data.msg)
+					}
 				}
-			}
-		})
+			})
+		}})
 	})
+	
+	$("body").on("click", ".article-recover", function() {
+		var id = $(this).attr("data-id");
+		fl.alertConfirm({title:"是否确认恢复？",then:function(){
+			$.ajax({
+				url : "/admin/api/article/recover/"+id,
+				success : function(data) {
+					if (fl.isOk(data)) {
+						fl.alertOkAndReload(data.msg)
+					}
+				}
+			})
+		}})
+	})
+	
+	
 })
 
 function querylist(data) {

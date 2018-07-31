@@ -16,8 +16,15 @@ public class ExceptionInterceptor implements Interceptor {
 			e.printStackTrace();
 		}catch (Exception e) {
 			e.printStackTrace();
-			inv.getController().renderJson(Ret.fail("msg", "出bug了！"));
+			if(isAjaxRequest(inv)) {
+				inv.getController().renderJson(Ret.fail("msg", "出bug了！"));
+			}
 		}
+	
 	}
 
+	public boolean isAjaxRequest(Invocation inv) {
+	
+		return "XMLHttpRequest".equalsIgnoreCase(inv.getController().getRequest().getHeader("X-Requested-With"));
+	}
 }

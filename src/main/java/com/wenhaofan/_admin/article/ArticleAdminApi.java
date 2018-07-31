@@ -55,15 +55,13 @@ public class ArticleAdminApi extends BaseController {
 	 * 恢复成功
 	 */
 	public void recover() {
-		Integer id = getParaToInt("d");
-		renderJson(articleService.recoverArticle(id).toJson());;
+		Integer id = getParaToInt(0);
+		renderJson(articleService.recoverArticle(id));;
 	}
 
 	/**
 	 * 获取需要更新的文章id并跳转至修改页面
 	 */
-
-	
 	public void update() {
 		renderJson(articleService.getArticleById(getParaToInt(0)));
 	}

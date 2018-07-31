@@ -8,10 +8,12 @@
 	 #if(cid!=null)
 		 and r.cid =#para(cid)
 	 #end
-	 #if(type!=null)
-	 	and m.type= #para(type)
-	 #end
+	where
+		 #if(type!=null)
+	 	 	m.type= #para(type)
+	 	#end
 	 
+	
 		GROUP BY
 		m.id
 	ORDER BY
@@ -27,8 +29,10 @@
 	 #if(cid!=null)
 		 and r.cid =#para(cid)
 	 #end
-	 #if(type!=null)
-	 	and m.type= #para(type)
+	
+	 where
+	  #if(type!=null)
+	 	  m.type= #para(type)
 	 #end
 	 
 		GROUP BY

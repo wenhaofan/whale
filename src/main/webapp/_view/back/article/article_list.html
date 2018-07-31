@@ -38,7 +38,7 @@
 				<th lay-data="{field:'readNum', sort: true}">阅读量</th>
 				<th lay-data="{field:'state',templet:'#state-tpl'}">状态</th>
 				<th lay-data="{field:'isOriginal',templet:'#original-tpl'}">原创</th>
-				<th lay-data="{field:'identity'}">访问路径</th>
+				<th lay-data="{field:'identify'}">访问路径</th>
 				<th lay-data="{field:'pkId',templet:'#operation-tpl'}">操作</th>
 			</tr>
 		</thead>
@@ -75,7 +75,13 @@
 <script type="text/html" id="operation-tpl">
 #[[
 	<button class="layui-btn layui-btn-sm article-update" data-id="{{d.pkId}}">修改</button>
-	<button class="layui-btn layui-btn-sm article-remove" data-id="{{d.pkId}}">删除</button>
+	
+{{# if(d.state == 2){ }}
+	<button class="layui-btn layui-btn-sm article-recover" data-id="{{d.pkId}}">恢复</button> 
+{{# } else if(d.state == 1){ }}
+  <button class="layui-btn layui-btn-sm article-remove" data-id="{{d.pkId}}">删除</button> 
+{{# } }}
+	
 ]]#
 </script>
 <script type="text/javascript" src="/assets/common/meta.js"></script>

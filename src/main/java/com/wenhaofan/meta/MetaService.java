@@ -34,8 +34,7 @@ public class MetaService {
 	 */
 	public List<Meta> listMeta(String type) {
 		if (StrKit.notBlank(type)) {
-			Kv kv=Kv.create().set("type", type);
-			SqlPara sql=mdao.getSqlPara("meta.list",kv);
+			SqlPara sql=mdao.getSqlPara("meta.list",Kv.by("type", type));
 			return mdao.find(sql);
 		}
 		return null;

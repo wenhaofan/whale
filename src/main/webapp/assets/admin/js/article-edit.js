@@ -7,8 +7,6 @@ var attach_url = $('#attach_url').val();
 
 Dropzone.autoDiscover = false;
 $(document).ready(function () {
-	
-	
 	//保存草稿
 	$("#draft").click(function(){
 		var content = $('#fmtType').val() == 'markdown' ? mditor.value : htmlEditor.summernote('code');
@@ -95,6 +93,7 @@ $(document).ready(function () {
 	   $.ajax({
 		   url:"/admin/api/article/add",
 		   data:fdata,
+		   type:"post",
 		   success:function(data){
 			   if(fl.isOk(data)){
 				   fl.alertOk({
@@ -372,8 +371,9 @@ function setArticleForm(data){
 
 function getArticle(callback,articleId){
 	$.ajax({
-		url:"/api/article/"+articleId,
+		url:"/api/article/getById/"+articleId,
 		dataType:"json",
+		type:"post",
 		success:function(data){
 			if(fl.isOk(data)){
 				callback(data.article);

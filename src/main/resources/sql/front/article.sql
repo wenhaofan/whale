@@ -31,17 +31,21 @@
 		* 
 	from 
 		article 
+	 where
 	 
-		#for(metaId:metaIds)
-				#(for.first?' where ':' and ')
-				pkId in(
-			 		select
-						cid 
-					from
-						relevancy
-					where
-						mid=#(metaId)
-					)
-	 	#end
+	 1=1
+	#for(metaId:metaIds)
+			#(for.last?'  ':' and ')
+			pkId in(
+		 		select
+					cid 
+				from
+					relevancy
+				where
+					mid=#(metaId)
+				)
+ 	#end
+	and
+		state=1
 #end
 

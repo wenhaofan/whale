@@ -1,5 +1,3 @@
-
-
 #sql("listArticle")
 	select 
 		pkId,
@@ -25,7 +23,6 @@
 						#end
 					#end)
 		#end
-
 		and state=1
 #end
 

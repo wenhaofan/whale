@@ -14,7 +14,7 @@ public class ArticleAdminRouter extends Controller{
 	 * 跳转进文章编辑页面
 	 */
 	public void edit() {
-		setAttr("pkId", getPara(0));
+		setAttr("pkId",getPara(0));
 		render("article_edit.html");
 	}
 	

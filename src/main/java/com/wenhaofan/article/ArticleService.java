@@ -14,18 +14,14 @@ import com.wenhaofan.common.safe.JsoupFilter;
 public class ArticleService {
 	public static final ArticleService me=new ArticleService();
 	private Article dao=new Article().dao();
-	
-	public Page<Article> listArticle(Article article, Integer metaId, int pageNumber, int pageSize) {
-
-		Kv kv=Kv.by("mid", metaId);
-		
-		SqlPara sql=dao.getSqlPara("adminArticle.listArticle", kv);
-		
-		Page<Article> articlePage = dao.paginate(pageNumber, pageSize,sql);
-		
-		return articlePage;
-	}
-	
+	 
+	/**
+	 * 分页查询文章
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param metas
+	 * @return
+	 */
 	public Page<Article> page(Integer pageNumber,Integer pageSize,Integer... metas){
 		List<Integer> temp=Arraykit.remove(metas, 0);
 		SqlPara sqlPara=dao.getSqlPara("article.page", Kv.create().set("metaIds", temp));
@@ -41,10 +37,16 @@ public class ArticleService {
 	 */
 	public Article getArticle(String  identify) {
 		Article article= dao.findFirst("select * from article where identify =? ",identify);
-		if(article==null) {
-			return article;
-		}
 		return article;
+	}
+	
+	/**
+	 * 根据id获取文章
+	 * @param id
+	 * @return
+	 */
+	public Article getArticle(Integer id) {
+		return dao.findById(id);
 	}
 	
 	/**
