@@ -118,8 +118,19 @@ $(document).ready(function () {
         //上传图片的接口
         callbacks:{
             onImageUpload: function(files) {
+            	
+            	 var uploadUtil=new $.uploadUtil();
+                 uploadUtil.setUploadServerUrl("/admin/api/upload/article");
+                 uploadUtil.uploadFile({
+                	file:files[0],
+                	success:function(data){
+                		alert(data);
+                	}
+                });
+                
                 var data=new FormData();
                 data.append('upfile',files[0]);
+                
                 $.ajax({
                     url: '/admin/api/upload/article',     //上传图片请求的路径
                     method: 'POST',            //方法
@@ -298,6 +309,10 @@ $(document).ready(function () {
 $(function(){
 	window.addEventListener("load",function(){
 		
+		 $("#multiple-sel").select2({
+		        width: '100%'
+		 });
+		 
 		var isUpdate=notNull($("#pkId").val());
 		
 		if(isUpdate){
@@ -305,7 +320,6 @@ $(function(){
 			initUpdate();
 		}else{
 			$(".page-title").text("添加文章");
-			initCategorySelect();
 		    $('#tags').tagsInput({
 		        width: '100%',
 		        height: '35px',
@@ -316,101 +330,23 @@ $(function(){
 })
 
 function initUpdate(){
-	var articleId=$("#pkId").val();
-	//获取文章信息并初始化表单数据
-	getArticle(setArticleForm,articleId);
-	var initTags={
-		callback:function(tags){
-			if(tags==undefined){
-				return;
-			}
-			  // Tags Input
-		    $('#tags').tagsInput({
-		        width: '100%',
-		        height: '35px',
-		        defaultText: '请输入文章标签'
-		    });
-		
-			$.each(tags,function(index,item){
-				$('#tags').addTag(item.mname);
-			})
-		},
-		articleId:articleId,
-		type:"tag"
-	}
-	
-	initCategorySelect();
-	
+	  // Tags Input
+    $('#tags').tagsInput({
+        width: '100%',
+        height: '35px',
+        defaultText: '请输入文章标签'
+    });
+
+    tagInit();
+    
 	metaUtils.listMetaByArticleId(initTags);
 	
-	var initSelectedCategorys={
-		callback:function(categorys){
-			var $option;
-			$.each(categorys,function(index,item){
-				$option=$("option[value='"+item.mname+"']")
-				$option.attr("selected","selected");
-			});
-			
-			 $("#multiple-sel").select2({
-			        width: '100%'
-			 });
-		},
-		type:"category",
-		articleId:articleId
-	}
 	
-	metaUtils.listMetaByArticleId(initSelectedCategorys);
 }
 
 
 
-function setArticleForm(data){
-	formUtil.setFormVal(data);
-     $('#html-container .note-editable').empty().html(data.content);
-}
-
-function getArticle(callback,articleId){
-	$.ajax({
-		url:"/api/article/getById/"+articleId,
-		dataType:"json",
-		type:"post",
-		success:function(data){
-			if(fl.isOk(data)){
-				callback(data.article);
-			}
-		}
-	})
-}
-
-function initCategorySelect(){
-	
-	//初始化分类
-	var initCategorys={
-			type:"category",
-			callback:function(categorys){
-				var $select=$("#multiple-sel");
-				var $option;
-				$.each(categorys,function(index,item){
-					
-					$option=$("<option></option>");
-					$option.val(item.mname);
-					$option.text(item.mname); 
-					$select.append($option);
-					
-				})
-				
-				var articleId=$("#pkId").val();
-				
-				if(isNull(articleId)){
-					 $("#multiple-sel").select2({
-					        width: '100%'
-					 });
-				}
-		}
-	}
-	metaUtils.listMeta(initCategorys);
-}
-
+ 
 
 function allow_comment(obj) {
     var this_ = $(obj);

@@ -14,32 +14,7 @@ public class AdminIndexInterceptor implements Interceptor{
 	
 	@Override
 	public void intercept(Invocation inv) {
-		//String actionKey=inv.getViewPath();
-		
-		
-		//if(actionKey.indexOf("/_view/front/")!=-1) {
-			
-//			Controller c=inv.getController();
-//
-//			List<Article> hotArticles=service.listHotArticle();
-//			
-//			List<Category> categorys=service.listCategory();
-//			
-//			Blogger blogger=service.getBlogger();
-//			
-//			List<Blogroll> blogrolls=service.listBlogroll();
-//			
-//			Basic basic=service.getBasic();
-//			c.setAttr("blogrolls", blogrolls);
-//			c.setAttr("blogger", blogger);
-//			c.setAttr("categorys", categorys);
-//			c.setAttr("hotArticles",hotArticles);
-//			c.setAttr("basic", basic);
-//			inv.invoke();
-//			
-//		}else {
-//			inv.invoke();
-//		}
+ 
 		inv.invoke();
 		
 		Controller c=inv.getController();

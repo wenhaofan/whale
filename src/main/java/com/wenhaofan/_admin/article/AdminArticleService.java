@@ -11,12 +11,14 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan.article.ArticleService;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.exception.MsgException;
 import com.wenhaofan.common.kit.ListKit;
 import com.wenhaofan.common.kit.StrKit;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.meta.MetaService;
+import com.wenhaofan.meta.MetaTyoeEnum;
 
 /**
  * 文章service实现类
@@ -24,22 +26,27 @@ import com.wenhaofan.meta.MetaService;
  * @author fwh
  *
  */
-public class ArticleAdminService {
-	
-	public static final ArticleAdminService me=new ArticleAdminService();
-	
-	private Article  dao=new Article().dao();
-
+public class AdminArticleService {
+	@Inject
+	private Article  dao;
+	@Inject
 	private MetaService mservice=MetaService.me;
+	@Inject
+	private static ArticleService articleService;
 	
-	private static ArticleService articleService=ArticleService.me;
+	public List<Meta> listCategory(Integer id){
+		return mservice.listByCId(id,MetaTyoeEnum.CATEGORY.toString());
+	}
 	
+	public List<Meta> listTag(Integer id){
+		return mservice.listByCId(id,MetaTyoeEnum.TAG.toString());
+	}
 	
 	public void saveOrUpdate(Article article,List<Meta> tags,List<Meta> categorys) {
 		if(article.getPkId()==null) {
-			saveArticle(article, tags, categorys);
+			save(article, tags, categorys);
 		}else {
-			updateArticle(article, tags, categorys);
+			update(article, tags, categorys);
 		}
 	}
 	
@@ -48,7 +55,7 @@ public class ArticleAdminService {
 	 * @param article
 	 * @param categoryIds
 	 */
-	public void saveArticle(Article article,List<Meta> tags,List<Meta> categorys)  {
+	public void save(Article article,List<Meta> tags,List<Meta> categorys)  {
 		
 		if(ListKit.isBlank(categorys)) {
 			new MsgException("分类不能为空！");
@@ -83,7 +90,7 @@ public class ArticleAdminService {
 		mservice.saveMetas(categorys, articleId);
 	}
 
-	public void updateArticle(Article article,List<Meta> tags,List<Meta> categorys) {
+	public void update(Article article,List<Meta> tags,List<Meta> categorys) {
 		
 		String identify=article.getIdentify();
 		
@@ -107,34 +114,44 @@ public class ArticleAdminService {
 		//删除文章的关联
 		mservice.deleteRelevancy(articleId);
 		
+		
 		mservice.saveMetas(tags, articleId);
 		mservice.saveMetas(categorys, articleId);
 	}
 
 	
-	public void removeArticleCategorys(Integer articleId) {
+	public void removeCategorys(Integer articleId) {
 		Db.update("delete from  articleCategory where articleId=?", articleId);
 	}
 	
-	public void removeArticle(Article article) {
+	/**
+	 * 真删除
+	 * @param article
+	 */
+	public void remove(Article article) {
 		article.delete();
 	}
 
 	
-	public Ret deleteArticle(Integer pkId) {
+	public Ret delete(Integer pkId) {
 		Article article=new Article();
 		article.setPkId(pkId);
 		article.setState(Article.STATE_DISCARD);
 		return article.update()?Ret.ok():Ret.fail();
 	}
-	public Ret recoverArticle(Integer pkId) {
+	/**
+	 * 从删除状态修改为发布状态
+	 * @param pkId
+	 * @return
+	 */
+	public Ret recover(Integer pkId) {
 		Article article=new Article();
 		article.setPkId(pkId);
 		article.setState(Article.STATE_PUBLISH);
 		return article.update()?Ret.ok():Ret.fail();
 	}
 		
-	public Article getArticleById(int articleId) {
+	public Article get(int articleId) {
 		Article article= dao.findById(articleId);
 		return article;
 	}
@@ -142,7 +159,7 @@ public class ArticleAdminService {
 	
 
 	
-	public Page<Article> listArticle(Article article, Integer metaId, int pageNumber, int pageSize) {
+	public Page<Article> page(Article article, Integer metaId, int pageNumber, int pageSize) {
 
 		Kv kv=Kv.by("mid", metaId).set("article", article);
 		
@@ -156,7 +173,7 @@ public class ArticleAdminService {
 
 
 	
-	public int countArticle(Article article) {
+	public int count(Article article) {
 		List<Article> articles = article.find("select count(pkId) as count from article where state=?",
 				PropKit.get("is_valid"));
 

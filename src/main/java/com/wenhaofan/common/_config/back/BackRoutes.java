@@ -2,7 +2,7 @@ package com.wenhaofan.common._config.back;
 
 import com.jfinal.config.Routes;
 import com.wenhaofan._admin.article.ArticleAdminApi;
-import com.wenhaofan._admin.article.ArticleAdminRouter;
+import com.wenhaofan._admin.article.ArticleAdminController;
 import com.wenhaofan._admin.basic.BasicAdminApi;
 import com.wenhaofan._admin.basic.BasicRouter;
 import com.wenhaofan._admin.basic.KvController;
@@ -43,7 +43,7 @@ public class BackRoutes extends Routes {
 	   add("/admin/api/article",ArticleAdminApi.class,"/article/");
 	   add("/admin/api/basic",BasicAdminApi.class);
 	   add("/admin/meta", CategoryRouter.class,"/meta/");
-	   add("/admin/article", ArticleAdminRouter.class,"/article/");
+	   add("/admin/article", ArticleAdminController.class,"/article/");
 	   
 	   add("/admin/blogroll", BlogrollController.class,"/blogroll/");
 	

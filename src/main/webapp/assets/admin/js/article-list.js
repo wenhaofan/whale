@@ -35,6 +35,8 @@ $(function() {
 		var id = $(this).attr("data-id");
 		window.location.href = "/admin/article/edit/" + id;
 	})
+	
+	
 	$("body").on("click", ".article-remove", function() {
 		var id = $(this).attr("data-id");
 		fl.alertConfirm({title:"是否确认删除？",then:function(){

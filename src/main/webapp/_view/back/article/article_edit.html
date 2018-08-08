@@ -1,4 +1,3 @@
-
 <link href="/assets/plugins/tagsinput/jquery.tagsinput.css"
 	rel="stylesheet">
 <link href="/assets/plugins/select2/dist/css/select2-bootstrap.css"
@@ -19,6 +18,14 @@
 <link href="/assets/plugins/dropzone/4.3.0/min/dropzone.min.css"
 	rel="stylesheet">
 <link href="/assets/admin/css/artilce-edit.css" rel="stylesheet">
+
+<script type="text/javascript">
+function tagInit(){
+	#for(atag:aTags)
+		$('#tags').tagsinput('add',"#(atag.mname)");
+	#end
+}
+</script>
 </head>
 <body>
 <div class="layui-row ">
@@ -28,34 +35,33 @@
 </div>
 	<div class="row">
 		<div class="col-md-12">
-
-
 			<form id="articleForm">
-				<input type="hidden" name="categoryIds" id="categoryIds" /> <input
-					type="hidden" name="allowComment" value="" id="allowComment" /> <input
-					type="hidden" name="content" id="content-editor" /> <input
-					type="hidden" name="fmtType" id="fmtType" value="" /> <input
-					type="hidden" name="thumbImg" id="thumbImg"> <input
-					type="hidden" name="state" id="state"> <input type="hidden"
-					name="pkId" id="pkId" value="#(pkId)">
+				    <input type="hidden" name="categoryIds" id="categoryIds" /> 
+				    <input type="hidden" name="allowComment" value="" id="allowComment" /> 
+					<input type="hidden" name="content" id="content-editor" /> 
+					<input type="hidden" name="fmtType" id="fmtType" value="" /> 
+					<input type="hidden" name="thumbImg" id="thumbImg" value="#(article.thumbImg)"> 
+					<input type="hidden" name="state" id="state"  value="#(article.state)">
+					<input type="hidden" name="pkId" id="pkId" value="#(pkId)">
 				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
-					<input class="form-control" placeholder="（必须）" name="title"
-						data-rule="required;" value="" />
+					<input class="form-control" placeholder="（必须）" name="title" data-rule="required;" value="#(article.title)" />
 				</div>
 
 				<div class="form-group col-md-6" style="padding: 0 0 0 10px;">
 					<input class="form-control"
 						placeholder="自定义访问路径，如：my-first-article  默认为创建时间" name="identify"
-						value="" />
+						value="#(article.identify)" />
 				</div>
 
 				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
-					<input name="tags" id="tags" type="text" class="form-control"
-						placeholder="请填写文章标签" />
+					<input name="tags" id="tags" type="text" class="form-control" placeholder="请填写文章标签" />
 				</div>
 
 				<div class="form-group col-md-6">
 					<select id="multiple-sel" class="select2 form-control" multiple="multiple" data-placeholder="请选择分类...">
+						#for(category:allCategory)
+							<option #for(aCategory:aCategorys) #if(aCategory.id==category.id) selected  #end  #end  >#(category.mname)</option>
+						#end
 					</select>
 				</div>
 				<div class="clearfix"></div>
@@ -118,18 +124,17 @@
 				</div>
 
 				<div id="dropzone-container" class="form-group col-md-12 ">
-					<div class="dropzone dropzone-previews" id="dropzone">
+					<div class="dropzone dropzone-previews" id="dropzone" #if(article!=null&&article.thumbImg!=null) style="background-image: url("#(article.thumbImg)"); background-size: cover;" #end>
 						<div class="dz-message">
 							<p>可以为你的文章添加一张缩略图 ;)</p>
 						</div>
 					</div>
-
 				</div>
 
 				<div class="clearfix"></div>
 
 				<div class="text-right">
-					<a class="btn btn-default waves-effect waves-light" href="">返回列表</a>
+					<a class="btn btn-default waves-effect waves-light" href="javascript:window.loaction.go(-1)">返回</a>
 					<button type="button"
 						class="btn btn-primary waves-effect waves-light" id="subArticle">
 						保存文章</button>
@@ -140,10 +145,10 @@
 			</form>
 		</div>
 	</div>
-#@bootstrap()
+	#@bootstrap()
+	<script type="text/javascript" src="/assets/common/upload.js"></script>
 	<script src="/assets/plugins/markdown/showdown.js"></script>
 	<script type="text/javascript" src="/assets/util/markdown.js"></script>
-
 	<script src="/assets/plugins/tagsinput/jquery.tagsinput.min.js"></script>
 	<script src="/assets/plugins/jquery-multi-select/jquery.quicksearch.js"></script>
 	<script src="/assets/plugins/mditor/js/mditor.min.js"></script>
@@ -159,3 +164,4 @@
 	<script src="/assets/admin/js/article-edit.js" ></script>
 	<script type="text/javascript" src="/assets/common/meta.js"></script>
 	<script src="/assets/js/strKit.js"></script>
+	

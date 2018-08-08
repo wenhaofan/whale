@@ -22,6 +22,7 @@ import com.jfinal.template.Engine;
 import com.jfinal.template.source.FileSourceFactory;
 import com.wenhaofan.common._config.back.BackRoutes;
 import com.wenhaofan.common._config.front.FrontRoutes;
+import com.wenhaofan.common.aop.AopControllerFactory;
 import com.wenhaofan.common.interceptor.InitInterceptor;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity._MappingKit;
@@ -41,11 +42,8 @@ public class BlogConfig extends JFinalConfig {
 
 	@Override
 	public void configConstant(Constants me) {
-		
-	
-
 		me.setDevMode(true);
-
+		me.setControllerFactory(new AopControllerFactory());
 		me.setError404View("/_view/error/404.html");
 	}
 
@@ -111,17 +109,12 @@ public class BlogConfig extends JFinalConfig {
 	@Override
 	public void configPlugin(Plugins me) {
 		plugins = me;
-		boolean dev=PropKit.getBoolean("devMode");
-		
-		String url=PropKit.get("jdbcUrl");
+	 
 		String userName= PropKit.get("userName");
 		String pwd= PropKit.get("pwd");
-		if(!dev) {
-			createDb(url,userName,pwd,dev);
-		}else {
-			connectDb(userName, pwd);
-		}
-	
+	 
+		connectDb(userName, pwd);
+		 
 	    me.add(new EhCachePlugin());
 	}
 

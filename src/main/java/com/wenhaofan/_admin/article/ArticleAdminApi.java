@@ -3,6 +3,7 @@ package com.wenhaofan._admin.article;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Page;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.Ret;
 import com.wenhaofan.common.model.entity.Article;
@@ -16,14 +17,15 @@ import com.wenhaofan.common.model.entity.Meta;
  */
 public class ArticleAdminApi extends BaseController {
 
-	private ArticleAdminService articleService = ArticleAdminService.me;
+	@Inject
+	private AdminArticleService articleService;
 
 	public void list() {
 		Article article = getModel(Article.class, "", true);
 		Integer metaid = getParaToInt("categoryId");
 		Integer pageNum = getParaToInt("page");
 		Integer limit = getParaToInt("limit");
-		Page<Article> articlePage = articleService.listArticle(article, metaid, pageNum, limit);
+		Page<Article> articlePage = articleService.page(article, metaid, pageNum, limit);
 		Ret ret = Ret.ok().set("code", 0).set("data", articlePage.getList()).set("count", articlePage.getTotalRow());
 		renderJson(ret.toJson());
 	
@@ -48,7 +50,7 @@ public class ArticleAdminApi extends BaseController {
 	 */
 	public void remove() {
 		Integer id =getParaToInt(0);
-		renderJson(articleService.deleteArticle(id).toJson());;
+		renderJson(articleService.delete(id).toJson());;
 	}
 
 	/**
@@ -56,24 +58,24 @@ public class ArticleAdminApi extends BaseController {
 	 */
 	public void recover() {
 		Integer id = getParaToInt(0);
-		renderJson(articleService.recoverArticle(id));;
+		renderJson(articleService.recover(id));;
 	}
 
 	/**
-	 * 获取需要更新的文章id并跳转至修改页面
+	 * 获取文章信息
 	 */
-	public void update() {
-		renderJson(articleService.getArticleById(getParaToInt(0)));
+	public void get() {
+		renderJson(articleService.get(getParaToInt(0)));
 	}
 	/**
 	 * 执行更新操作
 	 */
 
-	public void doUpdate() {
+	public void edit() {
 		Article article = getModel(Article.class, "", true);
 		List<Meta> tags=getModelList(Meta.class, "tag");
 		List<Meta> categorys=getModelList(Meta.class, "category");
-		articleService.updateArticle(article, tags, categorys);
+		articleService.update(article, tags, categorys);
 		renderJson(Ret.ok());
 	}
 
