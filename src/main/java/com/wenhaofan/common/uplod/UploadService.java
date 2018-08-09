@@ -8,6 +8,8 @@ import java.util.Date;
 import com.jfinal.kit.PathKit;
 import com.jfinal.upload.UploadFile;
 import com.wenhaofan.common.kit.DateKit;
+import com.wenhaofan.common.kit.QiniuFileUtils;
+import com.wenhaofan.common.kit.Ret;
 import com.wenhaofan.common.model.dto.FileUploadInfo;
 
 /**
@@ -52,6 +54,9 @@ public class UploadService {
 		info.setAbsolutePath(absolutePath);
 		info.setRelativePath(pathAndFileName[0]);
 		info.setFileName(pathAndFileName[1]);
+		
+		Ret ret=QiniuFileUtils.uploadFile(absolutePath, fileName, fileName);
+		info.setUrl(ret.getStr("url"));
 		return info;
 	}
 	

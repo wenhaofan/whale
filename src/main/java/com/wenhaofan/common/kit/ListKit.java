@@ -11,7 +11,7 @@ public class ListKit {
 	}
 
 	public static boolean notBlank(List<? extends Object> list) {
-		return isBlank(list);
+		return !isBlank(list);
 	}
 
 	/**

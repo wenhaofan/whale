@@ -42,7 +42,7 @@ public class SysConfigurationController extends Controller {
 		int step=1;
 
 		try {
-			isSuccess=BlogConfig.createDb(jdbcUrl, user, passWord,false);
+			//isSuccess=BlogConfig.createDb(jdbcUrl, user, passWord,false);
 			if(isSuccess) {
 				BlogContext.IS_INIT = true;
 				if (service.isExistAdmin()) {

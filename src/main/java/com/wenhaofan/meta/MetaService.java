@@ -111,7 +111,7 @@ public class MetaService {
 			throw new MsgException("数据关联id不能为空!");
 		}
 
-		if (ListKit.notBlank(metas)) {
+		if (ListKit.isBlank(metas)) {
 			throw new MsgException("数据不能为空!");
 		}
 

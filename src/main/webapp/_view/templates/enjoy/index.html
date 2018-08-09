@@ -6,13 +6,13 @@
           	#for(article:articlePage.list)
 	          	<div class="post-list-item">
 				    <div class="post-list-item-container">
-				        <div class="item-thumb bg-deepgrey" ></div>
+				        <div class="item-thumb bg-deepgrey" #if(article.thumbImg!=null) style="background-image:url(#(article.thumbImg));" #end></div>
 				        <a href="/article/#(article.identify)">
 				            <div class="item-desc">
 				                <p>#(article.content)...</p>
 				            </div>
 				        </a>
-				        <div class="item-slant reverse-slant bg-deepgrey"></div>
+				        <div class="item-slant reverse-slant bg-deepgrey"   ></div>
 				        <div class="item-slant"></div>
 				        <div class="item-label">
 				            <div class="item-title"><a href="/article/#(article.identify)">#(article.title)</a>

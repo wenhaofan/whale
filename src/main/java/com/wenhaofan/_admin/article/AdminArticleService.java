@@ -56,24 +56,14 @@ public class AdminArticleService {
 	 * @param categoryIds
 	 */
 	public void save(Article article,List<Meta> tags,List<Meta> categorys)  {
-		
-		if(ListKit.isBlank(categorys)) {
-			new MsgException("分类不能为空！");
-		}
-		if(StrKit.isBlank(article.getTitle())) {
-			new MsgException("标题不能为空！");
-		}
-		if(StrKit.isBlank(article.getContent())) {
-			new MsgException("内容不能为空！");
-		}
-		
+	  
 		String identify=article.getIdentify();
 		
 	
 		if(StrKit.notBlank(identify)) {
 			Article tempArticle=articleService.getArticle(identify);
-			if(tempArticle!=null) {
-				new MsgException("路径已存在！");
+			if(tempArticle!=null&&!identify.equals(tempArticle.getIdentify())) {
+				throw 	new MsgException("路径已存在！");
 			}
 		}else {
 			//默认路径为创建时间
@@ -86,8 +76,14 @@ public class AdminArticleService {
 		
 		int articleId=article.getPkId();
 		
-		mservice.saveMetas(tags, articleId);
-		mservice.saveMetas(categorys, articleId);
+		if(ListKit.notBlank(categorys)) {
+			mservice.saveMetas(categorys, articleId);
+		}
+		if(ListKit.notBlank(tags)) {
+			mservice.saveMetas(tags, articleId);
+		}
+		
+		
 	}
 
 	public void update(Article article,List<Meta> tags,List<Meta> categorys) {
@@ -115,8 +111,13 @@ public class AdminArticleService {
 		mservice.deleteRelevancy(articleId);
 		
 		
-		mservice.saveMetas(tags, articleId);
-		mservice.saveMetas(categorys, articleId);
+		if(ListKit.notBlank(categorys)) {
+			mservice.saveMetas(categorys, articleId);
+		}
+		if(ListKit.notBlank(tags)) {
+			mservice.saveMetas(tags, articleId);
+		}
+		
 	}
 
 	

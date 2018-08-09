@@ -14,3 +14,11 @@
 .swal2-modal .swal2-spacer {
 	height: 0px;
 }
+
+#dropzone{
+	height:500px;
+}
+
+#dropzone-thumbImg{
+	background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;
+}

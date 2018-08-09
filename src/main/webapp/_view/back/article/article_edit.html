@@ -22,12 +22,29 @@
 <script type="text/javascript">
 function tagInit(){
 	#for(atag:aTags)
-		$('#tags').tagsinput('add',"#(atag.mname)");
+		$('#tags').addTag("#(atag.mname)");
 	#end
+	
+	$('#html-container .note-editable').empty().html($("#tpl-content").html());
 }
+
+addEventListener("load",function(){
+	#if(article!=null&&article.thumbImg!=null)
+		var thumbImg="#(article.thumbImg)";
+		$("#dropzone").css({"background-image":"url('"+thumbImg+"')","background-size":"cover"})
+		$('.dz-image').hide();
+ 
+	#end
+})
+
+
+
 </script>
 </head>
 <body>
+<script type="text/html" id="tpl-content">
+	#(article.content ?? '')
+</script>
 <div class="layui-row ">
 	<div class="layui-col-lg12 layui-col-md12">
 		<blockquote class="page-title"></blockquote>
@@ -38,19 +55,19 @@ function tagInit(){
 			<form id="articleForm">
 				    <input type="hidden" name="categoryIds" id="categoryIds" /> 
 				    <input type="hidden" name="allowComment" value="" id="allowComment" /> 
-					<input type="hidden" name="content" id="content-editor" /> 
+					<input type="hidden" name="content" id="content-editor"  /> 
 					<input type="hidden" name="fmtType" id="fmtType" value="" /> 
-					<input type="hidden" name="thumbImg" id="thumbImg" value="#(article.thumbImg)"> 
-					<input type="hidden" name="state" id="state"  value="#(article.state)">
-					<input type="hidden" name="pkId" id="pkId" value="#(pkId)">
+					<input type="hidden" name="thumbImg" id="thumbImg" value="#(article.thumbImg??)"> 
+					<input type="hidden" name="state" id="state"  value="#(article.state??)">
+					<input type="hidden" name="pkId" id="pkId" value="#(article.pkId??)">
 				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
-					<input class="form-control" placeholder="（必须）" name="title" data-rule="required;" value="#(article.title)" />
+					<input class="form-control" placeholder="（必须）" name="title" data-rule="required;" value="#(article.title??)" />
 				</div>
 
 				<div class="form-group col-md-6" style="padding: 0 0 0 10px;">
 					<input class="form-control"
 						placeholder="自定义访问路径，如：my-first-article  默认为创建时间" name="identify"
-						value="#(article.identify)" />
+						value="#(article.identify??)" />
 				</div>
 
 				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
@@ -58,6 +75,7 @@ function tagInit(){
 				</div>
 
 				<div class="form-group col-md-6">
+		 
 					<select id="multiple-sel" class="select2 form-control" multiple="multiple" data-placeholder="请选择分类...">
 						#for(category:allCategory)
 							<option #for(aCategory:aCategorys) #if(aCategory.id==category.id) selected  #end  #end  >#(category.mname)</option>
@@ -75,7 +93,7 @@ function tagInit(){
 				</div>
 
 				<div id="md-container" class="form-group col-md-12">
-					<textarea id="md-editor" class="">#(contents.content ?? '')</textarea>
+					<textarea id="md-editor" class=""></textarea>
 				</div>
 				<div id="html-container" class="form-group col-md-12">
 					<div class="summernote"></div>
@@ -99,6 +117,18 @@ function tagInit(){
 							on="${contents.allowComment ?! true}"></div>
 					</div>
 				</div>
+				<div class="form-group col-md-3 col-sm-4">
+					<div class="text-right">
+					<a class="btn btn-default waves-effect waves-light" href="javascript:window.loaction.go(-1)">返回</a>
+					<button type="button"
+						class="btn btn-primary waves-effect waves-light" id="subArticle">
+						保存文章</button>
+					<button type="button"
+						class="btn btn-warning waves-effect waves-light" id="draft">
+						存为草稿</button>
+				</div>
+			</div>
+				
 				<!--    <div class="form-group col-md-3 col-sm-4">
                 <label class="col-sm-4">允许Ping</label>
                 <div class="col-sm-8">
@@ -113,7 +143,7 @@ function tagInit(){
                     <div class="toggle toggle-success allow-${contents.allowFeed ?! true}"
                          onclick="allow_feed(this);" on="${contents.allowFeed ?! true}"></div>
                 </div>
-            </div>-->
+            </div>
 
 				<div class="form-group col-md-3">
 					<label class="col-sm-5">添加缩略图</label>
@@ -121,28 +151,22 @@ function tagInit(){
 						<div id="thumb-toggle" class="toggle toggle-success" on="false"
 							onclick="add_thumbimg(this);"></div>
 					</div>
-				</div>
+				</div>-->
 
-				<div id="dropzone-container" class="form-group col-md-12 ">
-					<div class="dropzone dropzone-previews" id="dropzone" #if(article!=null&&article.thumbImg!=null) style="background-image: url("#(article.thumbImg)"); background-size: cover;" #end>
-						<div class="dz-message">
-							<p>可以为你的文章添加一张缩略图 ;)</p>
-						</div>
-					</div>
-				</div>
 
-				<div class="clearfix"></div>
 
-				<div class="text-right">
-					<a class="btn btn-default waves-effect waves-light" href="javascript:window.loaction.go(-1)">返回</a>
-					<button type="button"
-						class="btn btn-primary waves-effect waves-light" id="subArticle">
-						保存文章</button>
-					<button type="button"
-						class="btn btn-warning waves-effect waves-light" id="draft">
-						存为草稿</button>
-				</div>
+				<div class="clearfix"></div>	
 			</form>
+			<div class="clearfix"></div>	
+		 	<div class="col-xs-0 col-sm-3 col-md-2"></div>
+	 		<div id="dropzone-container"  class="form-group col-xs-12 col-sm-6 col-md-8 ">
+			<div class="dropzone dropzone-previews" id="dropzone"  >
+				<div class="dz-message">
+					<p>可以为你的文章添加一张缩略图 ;)</p>
+				</div>
+			</div>
+			<img id="dropzone-thumbImg"  class="hide" src="">
+			</div>
 		</div>
 	</div>
 	#@bootstrap()
