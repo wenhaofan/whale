@@ -43,7 +43,9 @@ function saveArticle(paras){
 	   type:"post",
 	   data:paras.fdata,
 	   success:function(data){
-			paras.success(data);
+		   if(fl.isOk(data)){
+			   paras.success(data);
+		   }
 	   }
    })
 }

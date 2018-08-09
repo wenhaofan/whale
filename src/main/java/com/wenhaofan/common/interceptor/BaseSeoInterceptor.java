@@ -3,6 +3,7 @@ package com.wenhaofan.common.interceptor;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
+import com.jfinal.kit.StrKit;
 
 public abstract class BaseSeoInterceptor implements Interceptor{
 	public static final String SEO_TITLE = "seoTitle";
@@ -11,9 +12,16 @@ public abstract class BaseSeoInterceptor implements Interceptor{
 	@Override
 	public void intercept(Invocation inv) {
 		inv.invoke();
+		String controllerKey=inv.getControllerKey();
 		
-		indexSeo(inv);
-		otherSeo(inv);
+		if(StrKit.notBlank(controllerKey)&&controllerKey.equals("/")) {
+			indexSeo(inv);
+		}else {
+			otherSeo(inv);
+		}
+		
+		
+		
 	}
 
 	public void setSeoTitle(Controller c,String seoTitle) {

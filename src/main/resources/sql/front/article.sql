@@ -34,16 +34,17 @@
 	 where
 	 
 	 1=1
+
 	#for(metaId:metaIds)
 			#(for.last?'  ':' and ')
-			pkId in(
+	and		pkId in(
 		 		select
 					cid 
 				from
 					relevancy
 				where
 					mid=#(metaId)
-				)
+			)
  	#end
 	and
 		state=1

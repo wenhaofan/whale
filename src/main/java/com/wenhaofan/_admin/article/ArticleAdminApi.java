@@ -67,16 +67,5 @@ public class ArticleAdminApi extends BaseController {
 	public void get() {
 		renderJson(articleService.get(getParaToInt(0)));
 	}
-	/**
-	 * 执行更新操作
-	 */
-
-	public void edit() {
-		Article article = getModel(Article.class, "", true);
-		List<Meta> tags=getModelList(Meta.class, "tag");
-		List<Meta> categorys=getModelList(Meta.class, "category");
-		articleService.update(article, tags, categorys);
-		renderJson(Ret.ok());
-	}
-
+ 
 }

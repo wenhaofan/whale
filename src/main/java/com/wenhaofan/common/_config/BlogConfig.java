@@ -16,13 +16,12 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.template.Engine;
-import com.jfinal.template.source.ClassPathSourceFactory;
 import com.jfinal.template.source.FileSourceFactory;
 import com.mysql.jdbc.Connection;
 import com.wenhaofan.common._config.back.BackRoutes;
 import com.wenhaofan.common._config.front.FrontRoutes;
 import com.wenhaofan.common.aop.AopControllerFactory;
-import com.wenhaofan.common.interceptor.InitInterceptor;
+
 import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity._MappingKit;
 
@@ -68,7 +67,6 @@ public class BlogConfig extends JFinalConfig {
 	 * 抽取成独立的方法，例于 _Generator 中重用该方法，减少代码冗余
 	 */
 	public static DruidPlugin getDruidPlugin() {
-		System.out.println("PWD:"+p.get("pwd").trim());
 		return new DruidPlugin(p.get("jdbcUrl"), p.get("userName"), p.get("pwd").trim());
 	}
 
@@ -116,10 +114,9 @@ public class BlogConfig extends JFinalConfig {
 	@Override
 	public void configInterceptor(Interceptors me) {
 		// 全局配置拦截器
-		me.add(new InitInterceptor());
+		//me.add(new InitInterceptor());
 		me.add(new LoginInterceptor());
 		me.add(new SessionInViewInterceptor());
-	
 	}
 
 	@Override

@@ -25,11 +25,17 @@ public class IndexController extends Controller {
 	
 	public void index() {
 		Integer[] cids=new Integer[5];
-		for(int i=0,size=5;i<size;i++) {
-			if(getParaToInt(i)!=null) {
-				cids[i]=getParaToInt(i);
+		try {
+			for(int i=0,size=5;i<size;i++) {
+				if(getParaToInt(i)!=null) {
+					cids[i]=getParaToInt(i);
+				}
 			}
+		} catch (Exception e) {
+			
 		}
+		
+		
 		Integer pageNum = getParaToInt("p",1);
 		Integer limit=getParaToInt("limit", 10);
 		Page<Article> articlePage=articleService.page(pageNum, limit, cids);
