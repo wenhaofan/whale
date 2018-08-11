@@ -15,6 +15,17 @@
 <script type="text/javascript" src="/assets/js/from-util.js"></script>
 <script type="text/javascript">
 var fl=new $.fl();
+
+addEventListener("load",function(){
+	
+	
+	$(".menu-tree li").each(function(){
+		if($(this).find("a").attr("href")=="#(requestUrl)"){
+			$(this).addClass("layui-this")
+		}
+	})
+})
+
 </script>
 <style type="text/css">
 body{background:#f5f5f5;font-family:'Noto Sans',sans-serif !important;margin:0;color: #505458;}
@@ -90,7 +101,8 @@ a:hover{
   <div class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
       <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-      <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+      <ul class="layui-nav layui-nav-tree menu-tree"  >
+      	<li class="layui-nav-item"><a href="/admin/statistic" >网&nbsp;&nbsp;站&nbsp;&nbsp;统&nbsp;&nbsp;计</a></li>
         <li class="layui-nav-item"><a href="/admin/article/edit" >发&nbsp;&nbsp;表&nbsp;&nbsp;文&nbsp;&nbsp;章</a></li>
         <li class="layui-nav-item"><a href="/admin/article/list" > 文&nbsp;&nbsp;章&nbsp;&nbsp;列&nbsp;&nbsp;表</a></li>
         <li class="layui-nav-item"><a href="/admin/meta/list" >分&nbsp;&nbsp;类&nbsp;&nbsp;管&nbsp;&nbsp;理</a></li>

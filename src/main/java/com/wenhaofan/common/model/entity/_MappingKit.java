@@ -27,6 +27,7 @@ public class _MappingKit {
 		arp.addMapping("meta", "id",Meta.class);
 		arp.addMapping("relevancy","id",Relevancy.class);
 		arp.addMapping("kv", "id",Kv.class);
+		arp.addMapping("access_log", "id", AccessLog.class);
 	}
 
 	public static void createAll() {

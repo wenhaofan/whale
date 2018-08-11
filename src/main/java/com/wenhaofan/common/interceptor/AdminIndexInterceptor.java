@@ -24,6 +24,9 @@ public class AdminIndexInterceptor implements Interceptor{
 		viewPath+=c.getRender().getView();
 	
 
+		String requestUrl=c.getRequest().getRequestURI();
+		c.setAttr("requestUrl", requestUrl);
+		
 		if(viewPath.endsWith(".html")) {
 			c.setAttr("includeUrl", viewPath);
 			c.render("/_view/back/index.html");

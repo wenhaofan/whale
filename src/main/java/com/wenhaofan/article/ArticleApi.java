@@ -42,8 +42,8 @@ public class ArticleApi extends BaseController{
 	 * 增加阅读数量,待完成
 	 */
 	public void addReadNum(){
-		service.addReadNum(getParaToInt(0));;
-		Ret json=new Ret().setOk();
-		renderJson(json.toJson());
+		service.addReadNum(getParaToInt());;
+		renderJson(Ret.ok());
 	}
+	
 }

@@ -8,6 +8,6 @@ public class IndexAdminController extends BaseController{
 //		if(notLogin()) {
 //			renderError(404);
 //		}
-		redirect("/admin/article/list");
+		redirect("/admin/statistic");
 	}
 }

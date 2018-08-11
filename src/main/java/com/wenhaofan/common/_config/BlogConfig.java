@@ -21,7 +21,7 @@ import com.mysql.jdbc.Connection;
 import com.wenhaofan.common._config.back.BackRoutes;
 import com.wenhaofan.common._config.front.FrontRoutes;
 import com.wenhaofan.common.aop.AopControllerFactory;
-
+import com.wenhaofan.common.interceptor.AccessLogInterceptor;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity._MappingKit;
 
@@ -117,6 +117,7 @@ public class BlogConfig extends JFinalConfig {
 		//me.add(new InitInterceptor());
 		me.add(new LoginInterceptor());
 		me.add(new SessionInViewInterceptor());
+		me.add(new AccessLogInterceptor());
 	}
 
 	@Override

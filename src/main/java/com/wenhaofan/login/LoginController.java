@@ -1,7 +1,6 @@
 package com.wenhaofan.login;
 
 import com.jfinal.aop.Clear;
-import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.common.controller.BaseController;

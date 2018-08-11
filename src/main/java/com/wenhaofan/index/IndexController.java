@@ -2,9 +2,9 @@ package com.wenhaofan.index;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
-import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Page;
 import com.wenhaofan.article.ArticleService;
+import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity.Article;
 
@@ -16,7 +16,7 @@ import com.wenhaofan.common.model.entity.Article;
  */
 @Clear(LoginInterceptor.class)
 @Before(IndexSeoInterceptor.class)
-public class IndexController extends Controller {
+public class IndexController extends BaseController {
 
 	IndexService service = IndexService.me;
 
@@ -34,14 +34,12 @@ public class IndexController extends Controller {
 		} catch (Exception e) {
 			
 		}
-		
-		
 		Integer pageNum = getParaToInt("p",1);
 		Integer limit=getParaToInt("limit", 10);
 		Page<Article> articlePage=articleService.page(pageNum, limit, cids);
 		setAttr("articlePage",articlePage);
 		setAttr("cids", cids);
-		render("index.html");
+		render("/index.html");
 	}
 
 

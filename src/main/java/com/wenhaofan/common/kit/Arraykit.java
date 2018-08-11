@@ -12,7 +12,7 @@ public class Arraykit {
 
 	
 	public static <T>List<T> remove(T[] arr,Object target) {
-		@SuppressWarnings("unchecked")
+ 
 		List<T> list=new ArrayList<T>();
 		
 		list.addAll(Arrays.asList(arr));

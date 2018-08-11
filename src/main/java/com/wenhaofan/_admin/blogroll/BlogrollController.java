@@ -5,6 +5,7 @@ import java.util.List;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.common.annotation.ValidateMethod;
+import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Blogroll;
 /**
  * 友情链接控制器
@@ -12,7 +13,7 @@ import com.wenhaofan.common.model.entity.Blogroll;
  *
  */
 
-public class BlogrollController extends Controller {
+public class BlogrollController extends BaseController {
 
 	private BlogrollService blogrollService=BlogrollService.me;
 	

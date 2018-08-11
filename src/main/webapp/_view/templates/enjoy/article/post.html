@@ -91,5 +91,12 @@ function shareTwitter(){
 function shareWeibo(){
 	window.open("http://service.weibo.com/share/share.php?url="+getUrl()+"&title="+title);
 }
+
+$.ajax({
+	url:"/api/article/addReadNum/#(article.pkId)",
+	success:function(data){
+		console.log(data);
+	}
+})
 </script>
 <script src="http://qzonestyle.gtimg.cn/qzone/app/qzlike/qzopensl.js#jsdate=20111201" charset="utf-8"></script>

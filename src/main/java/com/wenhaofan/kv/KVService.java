@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Db;
-import com.jfinal.plugin.activerecord.SqlPara;import com.sun.corba.se.impl.ior.OldJIDLObjectKeyTemplate;
+import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan.common.exception.MsgException;
 import com.wenhaofan.common.kit.Arraykit;
 import com.wenhaofan.common.kit.StrKit;

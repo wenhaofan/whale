@@ -4,12 +4,13 @@ import java.util.List;
 
 import com.jfinal.core.Controller;
 import com.wenhaofan.common.aop.Inject;
+import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.meta.MetaService;
 import com.wenhaofan.meta.MetaTyoeEnum;
 
-public class ArticleAdminController extends Controller{
+public class ArticleAdminController  extends BaseController{
 	
 	@Inject
 	private AdminArticleService service; 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
-import com.jfinal.core.Controller;
+import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
@@ -16,7 +16,7 @@ import com.wenhaofan.meta.MetaService;
  */
 @Clear(LoginInterceptor.class)
 @Before(ArticleSeo.class)
-public class ArticleController extends Controller{
+public class ArticleController extends BaseController{
 
 	private ArticleService service=ArticleService.me;
 	private MetaService metaService=MetaService.me;

@@ -13,6 +13,8 @@ import com.wenhaofan._admin.diy.html.DiyAdminController;
 import com.wenhaofan._admin.index.IndexAdminController;
 import com.wenhaofan._admin.meta.CategoryRouter;
 import com.wenhaofan._admin.meta.MetaAdminApi;
+import com.wenhaofan._admin.statistic.StatisticApi;
+import com.wenhaofan._admin.statistic.StatisticController;
 import com.wenhaofan._admin.sysConfig.SysConfigurationController;
 import com.wenhaofan._admin.user.AdminUserController;
 import com.wenhaofan.common.interceptor.AdminIndexInterceptor;
@@ -53,6 +55,9 @@ public class BackRoutes extends Routes {
 	   add("/admin/diy/html",DiyAdminController.class,"/diy/");
 	   add("/admin/diy/action", DiyActionAdminController.class,"/diy/");
 	   add("/admin/diy/assets", AssetsAdminController.class,"/diy/");
+	   add("/admin/statistic",StatisticController.class,"/statistic/");
+	   add("/admin/api/statistic", StatisticApi.class,"");
+	   
 	}
 
 }

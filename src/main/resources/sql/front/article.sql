@@ -36,8 +36,8 @@
 	 1=1
 
 	#for(metaId:metaIds)
-			#(for.last?'  ':' and ')
-	and		pkId in(
+		  and  
+			pkId in(
 		 		select
 					cid 
 				from

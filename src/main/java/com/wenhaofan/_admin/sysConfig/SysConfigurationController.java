@@ -6,6 +6,7 @@ import com.jfinal.kit.StrKit;
 import com.wenhaofan._admin.user.AdminUserService;
 import com.wenhaofan.common._config.BlogConfig;
 import com.wenhaofan.common._config.BlogContext;
+import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.User;
 
 /**
@@ -16,7 +17,7 @@ import com.wenhaofan.common.model.entity.User;
  */
 @Clear()
 
-public class SysConfigurationController extends Controller {
+public class SysConfigurationController extends BaseController{
 
 	private AdminUserService service = AdminUserService.me;
 

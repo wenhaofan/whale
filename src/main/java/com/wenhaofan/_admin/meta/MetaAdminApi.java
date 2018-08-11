@@ -2,6 +2,7 @@ package com.wenhaofan._admin.meta;
 
 import com.jfinal.core.Controller;
 import com.jfinal.kit.Ret;
+import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.meta.MetaService;
 
@@ -11,7 +12,7 @@ import com.wenhaofan.meta.MetaService;
  * @author fwh
  *
  */
-public class MetaAdminApi extends Controller {
+public class MetaAdminApi  extends BaseController {
 
 	private MetaService metaService=MetaService.me;
 	/**

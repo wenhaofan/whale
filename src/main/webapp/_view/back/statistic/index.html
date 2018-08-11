@@ -1,0 +1,263 @@
+<script src="/assets/echarts/echarts.js"></script>
+<script src="/assets/kit/DateUtil.js"></script>
+<style>
+.access-statistic-item{
+	margin-left:1rem;
+	width:48%;
+}
+.info-statistic-item{
+	margin-left:1rem;
+}
+.info-block{
+	width:300px;
+	height:130px;
+	border-radius:10px;
+	margin:1rem 1rem;
+	margin-top:0px;
+	color: white;
+}
+
+.divide-line{
+	margin-bottom:1rem;
+}
+
+.info-block-left{
+	display: inline-block;
+	margin-left: 24px;
+    padding-right: 16px;
+}
+
+.info-block-middle p,.info-block-right p{
+ text-align: center;
+}
+.info-block-middle>div,.info-block-right>div{
+ 	position: absolute;
+    top: 50%;
+    left:50%;
+    height: 240px;
+    margin-top: -30px; /* 盒子本身高度的一半 */
+    margin-left:-30px;
+}
+.info-block>div:nth-child(2),.info-block>div:nth-child(3){
+	width:94px;
+	height:130px;
+	display:inline-block;
+	vertical-align: top;
+	position:relative;
+}
+.info-block>div:nth-child(1),.info-block>div:nth-child(2){
+	border-right:1px solid #ececec;
+}
+.info-block-left i{
+	font-size:60px;
+	line-height: 130px;
+}
+.text-right{
+	text-align: right;
+}
+.text-big{
+	font-size: 1.5rem;
+}
+</style>
+
+<script type="text/javascript">
+$(function(){
+	//获取本月发表文章的数量
+	$.ajax({
+		url:"/admin/api/statistic/articleNum/",
+		type:"post",
+		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(new Date())},
+		success:function(data){
+			if(fl.isOk(data)){
+				$(".article-month-num").text(data.articleNum);
+			}
+		}
+	})
+	
+	$.ajax({
+		url:"/admin/api/statistic/articleNum/",
+		success:function(data){
+			if(fl.isOk(data)){
+				$(".article-total-num").text(data.articleNum);
+			}
+		}
+	})
+})
+</script>
+<div class="layui-bg-green divide-line" style="width:100%;text-align:center;line-height: 30px;border-radius: 5px;">
+	仪表盘
+</div>
+
+<div class="layui-inline info-statistic-item">
+	<div class="info-block" style="background-color: #1E9FFF;">
+		<div class="info-block-left">
+			<i class="layui-icon layui-icon-edit"></i>
+		</div>
+		<div class="info-block-middle">
+			<div>
+				<p>共发表了</p>
+				<p class="text-right text-big article-total-num"></p>
+				<p>篇文章</p>
+			</div>
+		</div>
+		<div class="info-block-right">
+			<div>
+				<p>本月发表</p>
+				<p class="text-right text-big article-month-num"></p>
+				<p>篇文章</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!--  
+<div class="layui-inline info-statistic-item">
+	<div class="info-block" style="background-color: #5FB878;">
+		<div class="info-block-left">
+			<i class="layui-icon layui-icon-chat"></i>
+		</div>
+		<div class="info-block-middle">
+			<div>
+				<p>共收到了</p>
+				<p class="text-right text-big">20</p>
+				<p>条留言</p>
+			</div>
+		</div>
+		<div class="info-block-right ">
+			<div>
+				<p>本月收到</p>
+				<p class="text-right text-big">10</p>
+				<p>条留言</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="layui-inline info-statistic-item">
+	<div class="info-block" style="background-color: #7d7c7c;">
+		<div class="info-block-left">
+			<i class="layui-icon layui-icon-upload-drag"></i>
+		</div>
+		<div class="info-block-middle">
+			<div>
+				<p>共上传了</p>
+				<p class="text-right text-big">20</p>
+				<p>个附件</p>
+			</div>
+		</div>
+		<div class="info-block-right ">
+			<div>
+				<p>本月上传</p>
+				<p class="text-right text-big">10</p>
+				<p>个附件</p>
+			</div>
+		</div>
+	</div>
+</div>
+-->
+<div class="layui-bg-green divide-line" style="width:100%;text-align:center;line-height: 30px;border-radius: 5px;">
+	浏览统计
+</div>
+
+<div class="layui-inline access-statistic-item">
+	 <div id="line" style="width:100%;height:400px;"></div>
+</div>
+
+<div class="layui-inline access-statistic-item">
+	 <div id="bar" style="width: 100%;height:400px;"></div>
+</div>
+ 
+
+<script>
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('bar'));
+
+$.ajax({
+	url:"/admin/api/statistic/hotArticle/10",
+	success:function(data){
+		// 指定图表的配置项和数据
+		var option = {
+		    title: {
+		        text: '热门文章'
+		    },
+		    tooltip: {},   toolbox: {
+		        feature: {
+		            dataView: {},
+		            saveAsImage: {
+		                pixelRatio: 2
+		            },
+		            restore: {}
+		        }
+		    },
+		    legend: {
+		        data:['阅读量']
+		    },
+		    grid:{
+		    	bottom:"30%"
+		    },
+		    xAxis: {
+		        data: data.titleList,
+		        axisLabel:{
+                    interval:0,
+                    rotate:45,
+                    margin:2,
+                    textStyle:{
+                             color:"#222"
+                    },formatter:function(value)
+                    {
+                    	if(value.length>7){
+                    		return value.substring(0,7)+"...";
+                    	}
+                        return value;
+                    }}
+		    },
+		    yAxis: {},
+		    series: [{
+		        type: 'bar',
+		        data:data.pvList,
+		        barMaxWidth:40
+		    }]
+		};
+		
+		// 使用刚指定的配置项和数据显示图表。
+		myChart.setOption(option);
+
+	}
+})
+
+ 
+
+$.ajax({
+	url:"/admin/api/statistic/statisticsAccessNumDays/7",
+	success:function(data){
+		echarts.init(document.getElementById('line')).setOption({
+		    title: {text: '7天访问量'},
+		    tooltip: {},
+		    toolbox: {
+		        feature: {
+		            dataView: {},
+		            saveAsImage: {
+		                pixelRatio: 2
+		            },
+		            restore: {}
+		        }
+		    },
+		    xAxis: { 
+		    	type: 'category',
+		        data: data.dayList
+		    }, grid:{
+		    	bottom:"30%"
+		    },
+		    yAxis: {
+		    	type:'value'
+		    },
+		    series: [{
+		        type: 'line',
+		        smooth: true,
+		        data: data.numList
+		    }]
+		});
+	}
+})
+
+
+
+</script>

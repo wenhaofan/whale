@@ -1,7 +1,7 @@
 package com.wenhaofan.profiles;
 
 import com.jfinal.aop.Clear;
-import com.jfinal.core.Controller;
+import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
 /**
  * 个人信息首页
@@ -9,7 +9,7 @@ import com.wenhaofan.common.interceptor.LoginInterceptor;
  *
  */
 @Clear(LoginInterceptor.class)
-public class ProfilesController extends Controller {
+public class ProfilesController extends BaseController{
 
 	public void index(){
 		render("/WEB-INF/front/profiles/profiles.html");

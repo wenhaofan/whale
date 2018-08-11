@@ -70,7 +70,7 @@ public class ArticleService {
 	
 	
 	public void addReadNum(Integer pkId){
-		Db.update("update article set readNum=readNum+1 where pkId="+pkId);
+		Db.update("update article set pv=pv+1 where pkId="+pkId);
 	}
 
 }

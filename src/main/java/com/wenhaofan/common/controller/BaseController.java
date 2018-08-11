@@ -16,6 +16,11 @@ public class BaseController extends Controller{
 	
 	private User loginUser=null;
 	
+	public boolean isAjax() {
+		String requestType = getRequest().getHeader("X-Requested-With");
+		return "XMLHttpRequest".equals(requestType);
+	}
+	
 	public User getLogUser() {
 		if(loginUser==null) {
 			loginUser=getAttr(LoginService.loginUserKey);

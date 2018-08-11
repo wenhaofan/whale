@@ -28,6 +28,8 @@
 #namespace("adminKv")
 #include("/back/kv.sql")
 #end
-
+#namespace("statistic")
+#include("/back/statistic.sql")
+#end
 加载通用sql组件
 #include("common.sql");
