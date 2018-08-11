@@ -2,7 +2,6 @@ package com.wenhaofan._admin.blogroll;
 
 import java.util.List;
 
-import com.jfinal.core.Controller;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.common.annotation.ValidateMethod;
 import com.wenhaofan.common.controller.BaseController;

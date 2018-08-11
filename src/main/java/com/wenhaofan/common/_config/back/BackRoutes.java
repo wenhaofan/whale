@@ -7,6 +7,8 @@ import com.wenhaofan._admin.basic.BasicAdminApi;
 import com.wenhaofan._admin.basic.BasicRouter;
 import com.wenhaofan._admin.basic.KvController;
 import com.wenhaofan._admin.blogroll.BlogrollController;
+import com.wenhaofan._admin.disk.DiskApi;
+import com.wenhaofan._admin.disk.DiskController;
 import com.wenhaofan._admin.diy.action.DiyActionAdminController;
 import com.wenhaofan._admin.diy.assets.AssetsAdminController;
 import com.wenhaofan._admin.diy.html.DiyAdminController;
@@ -57,7 +59,8 @@ public class BackRoutes extends Routes {
 	   add("/admin/diy/assets", AssetsAdminController.class,"/diy/");
 	   add("/admin/statistic",StatisticController.class,"/statistic/");
 	   add("/admin/api/statistic", StatisticApi.class,"");
-	   
+	   add("/admin/disk", DiskController.class, "/disk/");
+	   add("/admin/api/disk",DiskApi.class);
 	}
 
 }

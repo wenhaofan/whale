@@ -33,6 +33,14 @@ public abstract class BaseAccessLog<M extends BaseAccessLog<M>> extends Model<M>
 		return getStr("referer");
 	}
 
+	public void setUserAgent(java.lang.String userAgent) {
+		set("userAgent", userAgent);
+	}
+	
+	public java.lang.String getUserAgent() {
+		return getStr("userAgent");
+	}
+	
 	public void setTarget(java.lang.String target) {
 		set("target", target);
 	}

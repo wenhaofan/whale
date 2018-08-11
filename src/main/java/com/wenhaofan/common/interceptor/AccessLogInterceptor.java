@@ -34,7 +34,7 @@ public class AccessLogInterceptor implements Interceptor {
 		String ip=IpKit.getRealIp(c.getRequest());
 		String target = c.getRequest().getRequestURI();
 		String info=getLog(c,target,inv.getActionKey());
-		
+		String userAgent=c.getRequest().getHeader("User-Agent");
 		
 		//获取标识
 		User user=c.getLogUser();
@@ -54,6 +54,7 @@ public class AccessLogInterceptor implements Interceptor {
 		}
 
 		AccessLog log = new AccessLog();
+		log.setUserAgent(userAgent);
 		log.setGmtCreate(new Date());
 		log.setInfo(info);
 		log.setIp(ip);

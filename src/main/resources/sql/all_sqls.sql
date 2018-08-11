@@ -31,5 +31,10 @@
 #namespace("statistic")
 #include("/back/statistic.sql")
 #end
+#namespace("disk")
+#include("/back/disk.sql")
+#end
+
+
 加载通用sql组件
 #include("common.sql");

@@ -39,7 +39,7 @@ public class IndexController extends BaseController {
 		Page<Article> articlePage=articleService.page(pageNum, limit, cids);
 		setAttr("articlePage",articlePage);
 		setAttr("cids", cids);
-		render("/index.html");
+		render("index.html");
 	}
 
 

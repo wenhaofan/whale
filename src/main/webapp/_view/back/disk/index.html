@@ -1,0 +1,185 @@
+<div class="disk-main">
+	<div class="disk-header clear">
+		<div class="header-left float-left">
+			<button type="button" class="disk-btn inline-block">上传文件</button>
+			<button type="button" class="disk-btn inline-block">新建文件夹</button>
+		</div>
+	</div>
+	<div class="divide-line">
+		<span class="float-left">
+			全部文件
+		</span>
+		<span class="float-right">
+			10个文件夹,20个文件
+		</span>
+	</div>
+	<div class="disk-select-line">
+	 	<div class="select-all">
+	 		<span>全选</span>
+	 	</div>
+	 	<div class="select-size">
+	 		<span>大小</span>
+	 	</div>
+	 	<div class="select-gmtcreate">
+	 		<span>创建时间</span>
+	 	</div>
+	</div>
+	<div class="disk-content clear">
+		<div class="file-item">
+			<div class="file-thumb">
+			</div>
+			<div class="file-name">
+				<h3 class="overflow-omit">测试文件夹测试文件夹测试文件夹测试文件夹测试文件夹</h3>
+			</div>
+		</div>
+		<div class="file-item">
+			<div class="file-thumb">
+			</div>
+			<div class="file-name">
+				<h3>测试文件夹</h3>
+			</div>
+		</div>
+		<div class="file-item">
+			<div class="file-thumb">
+			</div>
+			<div class="file-name">
+				<h3>测试文件夹</h3>
+			</div>
+		</div>
+		<div class="file-item">
+			<div class="file-thumb">
+			</div>
+			<div class="file-name">
+				<h3>测试文件夹</h3>
+			</div>
+		</div>
+		<div class="file-item">
+			<div class="file-thumb">
+			</div>
+			<div class="file-name">
+				<h3>测试文件夹</h3>
+			</div>
+		</div>
+	</div>
+</div>
+<style>
+boyd,html{
+	background-color: white;
+}
+.file-item{
+	width:100px;
+	height:100px;
+	margin:0 10px;
+	float:left;
+	border: 1px solid white;
+}
+.file-item:hover{
+    border: 1px solid #f1f5fa;
+    border-radius: 5px;
+    background: #f1f5fa;
+}
+.file-thumb{
+	width:80px;
+	height:55px;
+	padding:10px;
+	padding-bottom:0px;
+    background: url(/assets/disk/thumb/folder_thumb.png) center no-repeat;
+}
+.file-name h3{
+	font-size:12px;
+	margin: 0px;
+}
+.file-name{
+	width:100%;
+	height:30px;
+	text-align: center;
+}
+.divide-line{
+	height:30px;
+	line-height: 30px;
+	font-size: 12px;
+}
+.disk-select-line{
+	height:30px;
+	line-height: 30px;
+	font-size: 12px;	
+	    color: #888;
+	border-bottom: 1px solid white;
+}
+.disk-select-line div{
+	display: inline-block;
+}
+.disk-select-line>div>span{
+	display: inline-block;
+	padding-left: 6px;
+}
+
+.select-all{
+	width: 60%;
+}
+.select-size{
+	width: 16%;
+}
+.select-gmtcreate{
+	width: 23%;
+}
+ 
+.disk-select-line div:hover{
+    background: #f6faff;  
+}
+</style>
+<style>
+ .overflow-omit{
+	 overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}
+ .clear:after{/*清除浮动*/
+     content: '';
+     display:block;
+     clear: both;
+ }
+.disk-main{
+	height:100%;
+	width: 100%;
+}
+.disk-header{
+	width:100%;
+	height:40px;
+}
+.float-left{
+	float:left;
+}
+.float-right{
+	float:right;
+}
+.header-left{
+	width:70%;
+}
+.header-right{
+	width:20%;
+}
+
+</style>
+
+
+<style>
+.inline-block{
+	display: inline-block;
+}
+.disk-btn{
+  display: inline-block;
+  height: 34px;
+  line-height: 34px;
+  padding: 0 16px;
+  white-space: nowrap;
+  text-align: center;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid  #c0d9fe;
+  background-color: #fff;
+  color: #3b8cff;
+}
+</style>
