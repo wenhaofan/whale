@@ -1,8 +1,148 @@
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script type="text/javascript" src="/assets/common/upload.js"></script>
+
+<script type="text/javascript">
+
+var uploadUtil=new $.uploadUtil();
+
+uploadUtil.setUploadServerUrl("/admin/api/disk/upload");
+
+
+
+</script>
+<script type="text/html" id="tpl-file-edit-item">
+	<div class="disk-item disk-edit">
+		<div class="file-thumb">
+		</div>
+		<div class="file-name">
+			<input class="disk-edit-input" type="text">
+			<span class="confirm-create-folder"><i class="fa fa-check"></i></span>
+			<span><i class="fa fa-close"></i></span>
+		</div>
+	</div>
+</script>
+<script type="text/html" id="tpl-disk-item">
+	<div class="disk-item {{type=="folder"?" disk-folder":""}} " data-id="{{id}}">
+		<div class="file-thumb">
+		</div>
+		<div class="file-name">
+			<h3 class="overflow-omit">{{name}}</h3>
+		</div>
+	</div>
+</script>
+<script type="text/javascript">
+var currentFolderId="#(folderId)";
+
+function listDiskItem(query){
+	if(!query){
+		query={};
+	}
+	query.parentId=currentFolderId;
+	$.ajax({
+		url:"/admin/api/disk/list/",
+		data:query,
+		dataType:"json",
+		success:function(data){
+			if(data.state=="ok"){
+				$.each(data.list,function(){
+					addFileItem(this);
+				})
+			}else{
+				console.log("erro----加载失败");
+			}
+		}
+	})
+}
+
+function addFileItem(paras){
+	var $diskItem=$(template("tpl-disk-item",paras));
+	if(paras.sort!=null&&paras.sort=="first"){
+		var $temp=$(".disk-content .disk-item:first-child");
+		if($temp.length==0){
+			$(".disk-content").append($diskItem);
+		}else{
+			$temp.before($diskItem);
+		}
+		
+	}else{
+		var $temp=$(".disk-content .disk-item:last-child").after();
+		if($temp.length==0){
+			$(".disk-content").append($diskItem);
+		}else{
+			$temp.after($diskItem);
+		}
+	}
+}
+
+function createFolderItem(){
+	var $folder= $(template("tpl-file-edit-item",{}));
+	var $firstDiskItem=$(".disk-content .disk-item:first-child");
+	if($firstDiskItem.length==0){
+		$(".disk-content").append($folder);
+	}else{
+		$firstDiskItem.before($folder);
+	}
+}
+function editFolder(target){
+	
+}
+
+function createFolder(paras){
+	paras.parentId=currentFolderId;
+	$.ajax({
+		url:"/admin/api/disk/createFolder",
+		data:paras,
+		dataType:"json",
+		success:function(data){
+			if(data.state=="ok"){
+				paras.sort="first";
+				addFileItem(paras);
+			}else{
+				console.log("erro----文件创建失败！");
+			}
+		}
+	})
+}
+$(function(){
+	$(".disk-create-folder").click(function(){
+		createFolderItem();
+	})
+	
+	$(".disk-content").on("click",".confirm-create-folder",function(){
+		var folderName=$(this).prev().val();
+		createFolder({name:folderName});
+		$(this).parent().parent().remove();
+	})
+	$(".disk-content").on("click",".disk-folder",function(){
+		currentFolderId=$(this).data("id");
+		$(".disk-content").empty();
+		listDiskItem();
+	})
+	
+	$("body").on("change",".disk-upload-file",function(){
+		var that=this;
+		uploadUtil.uploadFile({data:{"parentId":currentFolderId},file:$(this),success:function(data){
+			alert("上传成功！")
+			
+			addFileItem(data.disk);
+			
+			$(that).replaceWith('<input type="file" class=" disk-upload-file " style="display:none;">');
+		}})
+	})
+	
+	$(".disk-upload-button").click(function(){
+		$(".disk-upload-file").trigger("click");
+	})
+	
+	listDiskItem();
+})
+</script>
 <div class="disk-main">
 	<div class="disk-header clear">
 		<div class="header-left float-left">
-			<button type="button" class="disk-btn inline-block">上传文件</button>
-			<button type="button" class="disk-btn inline-block">新建文件夹</button>
+			<input type="file" class=" disk-upload-file " style="display:none;">
+			<button type="button" class="disk-btn inline-block disk-upload-button"><i class="fa fa-cloud-upload"></i><span>上传文件</span></button> 
+			<button type="button" class="disk-btn inline-block disk-create-folder">新建文件夹</button>
 		</div>
 	</div>
 	<div class="divide-line">
@@ -14,66 +154,66 @@
 		</span>
 	</div>
 	<div class="disk-select-line">
-	 	<div class="select-all">
+	 	<div class="select-all">	
+	 		<i class="fa fa-check-square"></i>
+	 		<i class="fa fa-square-o"></i>
 	 		<span>全选</span>
 	 	</div>
 	 	<div class="select-size">
-	 		<span>大小</span>
+	 		<i class="fa fa-arrow-down"></i><i class="fa fa-arrow-up"></i><span>大小</span>
 	 	</div>
 	 	<div class="select-gmtcreate">
-	 		<span>创建时间</span>
+	 		<i class="fa fa-arrow-down"></i><i class="fa fa-arrow-up"></i><span>创建时间</span>
 	 	</div>
 	</div>
 	<div class="disk-content clear">
-		<div class="file-item">
-			<div class="file-thumb">
-			</div>
-			<div class="file-name">
-				<h3 class="overflow-omit">测试文件夹测试文件夹测试文件夹测试文件夹测试文件夹</h3>
-			</div>
-		</div>
-		<div class="file-item">
-			<div class="file-thumb">
-			</div>
-			<div class="file-name">
-				<h3>测试文件夹</h3>
-			</div>
-		</div>
-		<div class="file-item">
-			<div class="file-thumb">
-			</div>
-			<div class="file-name">
-				<h3>测试文件夹</h3>
-			</div>
-		</div>
-		<div class="file-item">
-			<div class="file-thumb">
-			</div>
-			<div class="file-name">
-				<h3>测试文件夹</h3>
-			</div>
-		</div>
-		<div class="file-item">
-			<div class="file-thumb">
-			</div>
-			<div class="file-name">
-				<h3>测试文件夹</h3>
-			</div>
-		</div>
+	 
 	</div>
 </div>
 <style>
 boyd,html{
 	background-color: white;
 }
-.file-item{
+.disk-item{
 	width:100px;
 	height:100px;
 	margin:0 10px;
 	float:left;
 	border: 1px solid white;
+	cursor: pointer;
 }
-.file-item:hover{
+.disk-edit{
+	width:140px;
+    background: white!important;
+    border: 0px!important;
+}
+.disk-edit input {
+	width: 80px;
+	height: 24px;
+    vertical-align: middle;
+    border: 1px solid #3b8cff;
+    border: 1px solid rgba(58,140,255,.3);
+    background: #fff;
+    border-radius: 2px;
+}
+
+.disk-edit input:focus {
+    outline: 0;
+    -webkit-box-shadow: 0 0 5px 0 #3b8cff;
+    -moz-box-shadow: 0 0 5px 0 #3b8cff;
+    box-shadow: 0 0 5px 0 #3b8cff;
+}
+
+.disk-edit .file-name span {
+	 border: 1px solid rgba(58,140,255,.3);
+	 display: inline-block;
+	 padding:2px;
+	 width: 18px;
+     vertical-align: middle;
+     cursor: pointer;
+}
+
+.disk-item:hover{
     border: 1px solid #f1f5fa;
     border-radius: 5px;
     background: #f1f5fa;
@@ -81,8 +221,8 @@ boyd,html{
 .file-thumb{
 	width:80px;
 	height:55px;
-	padding:10px;
-	padding-bottom:0px;
+	padding-top: 10px;
+    margin: 0 auto;
     background: url(/assets/disk/thumb/folder_thumb.png) center no-repeat;
 }
 .file-name h3{
@@ -117,6 +257,15 @@ boyd,html{
 .select-all{
 	width: 60%;
 }
+.select-all i{
+	font-size:1.1rem;
+	line-height:32px;
+	vertical-align:bottom;
+}
+.select-all>.fa-square-o{
+	font-size:1.2rem;
+	line-height:30px;
+}
 .select-size{
 	width: 16%;
 }
@@ -126,6 +275,17 @@ boyd,html{
  
 .disk-select-line div:hover{
     background: #f6faff;  
+}
+ 
+.disk-upload-file span{
+	display:inline-block;
+	margin-left:5px;
+	
+}.disk-upload-file i{
+	font-size:1.2rem;
+    line-height: 34px;
+	vertical-align:bottom;
+	
 }
 </style>
 <style>

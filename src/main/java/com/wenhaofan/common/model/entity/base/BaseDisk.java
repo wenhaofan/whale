@@ -58,14 +58,6 @@ public abstract class BaseDisk<M extends BaseDisk<M>> extends Model<M> implement
 		return getStr("type");
 	}
 
-	public void setIsFolder(java.lang.Boolean isFolder) {
-		set("isFolder", isFolder);
-	}
-	
-	public java.lang.Boolean getIsFolder() {
-		return get("isFolder");
-	}
-
 	public void setParentId(java.lang.Integer parentId) {
 		set("parentId", parentId);
 	}

@@ -1,9 +1,9 @@
 package com.wenhaofan.common.uplod;
 
 
-import com.jfinal.core.Controller;
 import com.jfinal.kit.Ret;
 import com.jfinal.upload.UploadFile;
+import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.dto.FileUploadInfo;
 
 
@@ -13,7 +13,7 @@ import com.wenhaofan.common.model.dto.FileUploadInfo;
  *
  *
  */
-public class FileUploadApi extends Controller {
+public class FileUploadApi extends BaseController {
 
 	private UploadService service=UploadService.me;
 
