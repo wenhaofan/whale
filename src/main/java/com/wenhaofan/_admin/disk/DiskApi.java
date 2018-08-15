@@ -18,9 +18,7 @@ public class DiskApi extends BaseController{
 	
 	public void list() {
 		QueryDisk query=getBean(QueryDisk.class,"",true);
-		
 		List<Disk> diskList=service.list(query);
-		
 		renderJson(Ret.ok("list", diskList));
 	}
 	
@@ -34,8 +32,7 @@ public class DiskApi extends BaseController{
 	public void createFolder() {
 		Disk disk=getModel(Disk.class,"",true);
 		disk.setType(DiskType.FOLDER.toString());
-		service.save(disk);
-		
+		service.createFolder(disk);
 		renderJson(Ret.ok("disk",disk));
 	}
 	
@@ -44,6 +41,4 @@ public class DiskApi extends BaseController{
 		renderJson(Ret.ok());
 	}
 
-	
-	
 }

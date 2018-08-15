@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.PathKit;
+import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.SqlPara;
 import com.jfinal.upload.UploadFile;
 import com.wenhaofan.common.aop.Inject;
@@ -19,11 +20,21 @@ public class DiskService {
 	@Inject
 	private Disk dao;
 	
-	public void save(Disk disk) {
-		if(disk.getParentId()==null) disk.setParentId(0);
+	public void createFolder(Disk disk) {
+		if(disk.getParentId()==null) {
+			disk.setParentId(0);
+		}
+		SqlPara sql=Db.getSqlPara("disk.listCheckFolder",
+				Kv.by("name", disk.getName()).set("parentId", disk.getParentId()));
+		
+		List<Disk> diskList=dao.find(sql);
+		
+		if(!diskList.isEmpty()) {
+			disk.setName(disk.getName()+"("+diskList.size()+")");
+		}
+		
 		disk.save();
 	}
-	
 	public List<Disk> list(QueryDisk query){
 		SqlPara sql=dao.getSqlPara("disk.list", Kv.by("query",query));
 		return dao.find(sql);
@@ -48,7 +59,7 @@ public class DiskService {
 		String temp=arr.length>=2?arr[0]:fileName;
 		
 		
-		SqlPara sql=dao.getSqlPara("disk.check", Kv.by("fileName", temp).set("parentId", parentId));
+		SqlPara sql=dao.getSqlPara("disk.listCheckFile", Kv.by("fileName", temp).set("parentId", parentId));
 		List<Disk> list=dao.find(sql);
 		
 		if(list.isEmpty()) {
@@ -93,6 +104,10 @@ public class DiskService {
 		disk.setUrl(url);
 		disk.setParentId(parentId);
 		disk.setSize(uf.getFile().length());
+		
+		String type=getFileType(disk.getName());
+		disk.setType(type);
+		
 		disk.save();
 		return disk;
 	}
@@ -113,6 +128,16 @@ public class DiskService {
 	 */
 	private void saveOriginalFileToTargetFile(File originalFile, String targetFile) {
 		originalFile.renameTo(new File(targetFile));
+	}
+	
+	
+	public String getFileType(String fileName) {
+		String[] strArr=fileName.split("\\.");
+		if(strArr.length==0) {
+			return null;
+		}
+		
+		return strArr[strArr.length-1].toLowerCase();
 	}
 
 }

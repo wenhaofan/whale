@@ -1,18 +1,14 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="/_view/back/disk/contextMenu.css" rel="stylesheet">
 <script type="text/javascript" src="/assets/common/upload.js"></script>
 
 <script type="text/javascript">
-
 var uploadUtil=new $.uploadUtil();
-
 uploadUtil.setUploadServerUrl("/admin/api/disk/upload");
-
-
-
 </script>
 <script type="text/html" id="tpl-file-edit-item">
 	<div class="disk-item disk-edit">
-		<div class="file-thumb">
+		<div class="file-thumb" style="background:  url( /assets/disk/diskThumb/folder.png) center no-repeat;     background-size: 100% 100%;">
 		</div>
 		<div class="file-name">
 			<input class="disk-edit-input" type="text">
@@ -22,121 +18,120 @@ uploadUtil.setUploadServerUrl("/admin/api/disk/upload");
 	</div>
 </script>
 <script type="text/html" id="tpl-disk-item">
-	<div class="disk-item {{type=="folder"?" disk-folder":""}} " data-id="{{id}}">
-		<div class="file-thumb">
+	<div class="disk-item {{type=="folder"?" disk-folder":""}} "   data-id="{{id}}">
+		<div class="file-thumb" style="background:  url( {{ if(type=="img")}}{{url}}{{else}}/assets/disk/diskThumb/{{type}}.png{{/if}}) center no-repeat;     background-size: 100% 100%;">
 		</div>
 		<div class="file-name">
-			<h3 class="overflow-omit">{{name}}</h3>
+			<h3 class="overflow-omit" title="{{name}}">{{name}}</h3>
 		</div>
 	</div>
+</script>
+<script type="text/html" id="tpl-folder-nav-item">
+	<a href="javascript:void(0)" data-id="{{id}}">{{name}}</a>
+	<span style="color: #c5d8f3;padding: 0 5px;line-height: 16px;">&gt;</span>
 </script>
 <script type="text/javascript">
 var currentFolderId="#(folderId)";
 
-function listDiskItem(query){
-	if(!query){
-		query={};
-	}
-	query.parentId=currentFolderId;
-	$.ajax({
-		url:"/admin/api/disk/list/",
-		data:query,
-		dataType:"json",
-		success:function(data){
-			if(data.state=="ok"){
-				$.each(data.list,function(){
-					addFileItem(this);
-				})
-			}else{
-				console.log("erro----加载失败");
-			}
-		}
-	})
-}
-
-function addFileItem(paras){
-	var $diskItem=$(template("tpl-disk-item",paras));
-	if(paras.sort!=null&&paras.sort=="first"){
-		var $temp=$(".disk-content .disk-item:first-child");
-		if($temp.length==0){
-			$(".disk-content").append($diskItem);
-		}else{
-			$temp.before($diskItem);
-		}
-		
-	}else{
-		var $temp=$(".disk-content .disk-item:last-child").after();
-		if($temp.length==0){
-			$(".disk-content").append($diskItem);
-		}else{
-			$temp.after($diskItem);
-		}
-	}
-}
-
-function createFolderItem(){
-	var $folder= $(template("tpl-file-edit-item",{}));
-	var $firstDiskItem=$(".disk-content .disk-item:first-child");
-	if($firstDiskItem.length==0){
-		$(".disk-content").append($folder);
-	}else{
-		$firstDiskItem.before($folder);
-	}
-}
-function editFolder(target){
-	
-}
-
-function createFolder(paras){
-	paras.parentId=currentFolderId;
-	$.ajax({
-		url:"/admin/api/disk/createFolder",
-		data:paras,
-		dataType:"json",
-		success:function(data){
-			if(data.state=="ok"){
-				paras.sort="first";
-				addFileItem(paras);
-			}else{
-				console.log("erro----文件创建失败！");
-			}
-		}
-	})
-}
-$(function(){
-	$(".disk-create-folder").click(function(){
-		createFolderItem();
-	})
-	
-	$(".disk-content").on("click",".confirm-create-folder",function(){
-		var folderName=$(this).prev().val();
-		createFolder({name:folderName});
-		$(this).parent().parent().remove();
-	})
-	$(".disk-content").on("click",".disk-folder",function(){
-		currentFolderId=$(this).data("id");
-		$(".disk-content").empty();
-		listDiskItem();
-	})
-	
-	$("body").on("change",".disk-upload-file",function(){
-		var that=this;
-		uploadUtil.uploadFile({data:{"parentId":currentFolderId},file:$(this),success:function(data){
-			alert("上传成功！")
-			
-			addFileItem(data.disk);
-			
-			$(that).replaceWith('<input type="file" class=" disk-upload-file " style="display:none;">');
-		}})
-	})
-	
-	$(".disk-upload-button").click(function(){
-		$(".disk-upload-file").trigger("click");
-	})
-	
-	listDiskItem();
+window.addEventListener("load",function(){
+	listDiskItem({parentId:currentFolderId});
 })
 </script>
+<script type="text/javascript" src="/_view/back/disk/disk.js"></script>
+<script type="text/javascript">
+function clickFolder(folderId,folderName){
+	
+	if($(".folder-goback").hasClass("hide")){
+		$(".folder-goback").removeClass("hide")
+		$(".folder-goback").data("id",folderId);
+		$(".folder-nva").removeClass("hide");
+		$(".folder-nva").append("<span style='color: #c5d8f3;padding: 0 5px;line-height: 16px;'>&gt;</span>");
+		$(".folder-all-info").addClass("hide");
+	}else{
+		//获取最后一个节点的名字和文件夹id
+		var $lastA=$(".folder-nva span:last");
+		if($lastA.length>0){
+			var preId=$lastA.data("id");
+			var preName=$lastA.text();
+			var menuItem=template("tpl-folder-nav-item",{name:preName,id:preId});
+			var $menuItem=$(menuItem);
+			$lastA.replaceWith($menuItem);
+		}
+	
+	}
+	
+	$(".folder-nva").append("<span data-id='"+folderId+"'>"+folderName+"</span>");
+
+	listDiskItem({parentId:folderId});
+}
+
+
+function goBackFolder(){
+	var $lastA=$(".folder-nva a:last");
+	$lastA.trigger("click");
+}
+
+function deleteNext(folderId){
+	var $obj=$(".folder-nva a[data-id='"+folderId+"']");
+	if($obj.length==0){
+		return;
+	}
+	
+	var $nextObj=$obj.next();
+	
+	while($nextObj.length>0){
+		$nextObj.remove();
+		$nextObj=$obj.next();
+	}
+}
+
+function convertToSpan(obj){
+	var folderId=$(obj).data("id");
+	var folderName=$(obj).text();
+	var $span=$("<span data-id='"+folderId+"'>"+folderName+"</span>");
+	$(obj).replaceWith($span);
+}
+
+$(function(){
+	$(".folder-nva").on("click","a",function(){
+		var id=$(this).data("id");
+		
+		deleteNext(id);
+		if(id==0){
+			$(".folder-nva").addClass("hide");
+			$(".folder-goback").addClass("hide");
+			$(".folder-all-info").removeClass("hide");
+		}else{
+			convertToSpan(this);
+		}
+		
+		listDiskItem({parentId:id});
+	})
+	
+	$(".folder-goback a").click(function(){
+		goBackFolder();
+	})
+})
+</script>
+<style>
+.folder-click-nav ul li{
+	display: inline-block;
+	font-size: 12px;
+	line-height: 16px;	
+}
+.folder-click-nav a{
+	color: #4287ed;
+}
+.folder-click-nav{
+	height: 24px;
+	margin-bottom: 6px;
+	border-bottom: 1px solid #f2f5fa;
+}
+
+body,html{
+    color: rgb(102, 102, 102);
+}
+</style>
 <div class="disk-main">
 	<div class="disk-header clear">
 		<div class="header-left float-left">
@@ -145,15 +140,32 @@ $(function(){
 			<button type="button" class="disk-btn inline-block disk-create-folder">新建文件夹</button>
 		</div>
 	</div>
-	<div class="divide-line">
-		<span class="float-left">
-			全部文件
-		</span>
-		<span class="float-right">
-			10个文件夹,20个文件
-		</span>
+	<div class="folder-click-nav">
+		<ul>
+			<li class="folder-all-info">
+				<span>全部文件</span>
+			</li>
+			
+			<li class="folder-goback hide" data-id="">
+				<a href="javascript:void(0)">返回上一级</a>
+				<span style="color: #c5d8f3;padding: 0 3px;">|</span>
+			</li>
+			
+			<li class="folder-nva hide">
+				<a href="javascript:void(0)" data-id="0">全部文件</a>
+				 
+				<!-- 
+				<a href="javascript:void(0)">测试</a>
+				<span style="color: #c5d8f3;padding: 0 5px;line-height: 16px;">&gt;</span>
+				<span>二级目录</span> -->
+			</li>
+			
+			<li class="float-right">
+				<span>10个文件夹,20个文件</span>
+			</li>
+		</ul>
 	</div>
-	<div class="disk-select-line">
+	<div class="disk-select-line hide">
 	 	<div class="select-all">	
 	 		<i class="fa fa-check-square"></i>
 	 		<i class="fa fa-square-o"></i>
@@ -173,6 +185,9 @@ $(function(){
 <style>
 boyd,html{
 	background-color: white;
+}
+.hide{
+	display: none!important;
 }
 .disk-item{
 	width:100px;
@@ -219,12 +234,12 @@ boyd,html{
     background: #f1f5fa;
 }
 .file-thumb{
-	width:80px;
+	width:70px;
 	height:55px;
 	padding-top: 10px;
     margin: 0 auto;
-    background: url(/assets/disk/thumb/folder_thumb.png) center no-repeat;
 }
+
 .file-name h3{
 	font-size:12px;
 	margin: 0px;
@@ -234,11 +249,7 @@ boyd,html{
 	height:30px;
 	text-align: center;
 }
-.divide-line{
-	height:30px;
-	line-height: 30px;
-	font-size: 12px;
-}
+ 
 .disk-select-line{
 	height:30px;
 	line-height: 30px;
@@ -343,3 +354,5 @@ boyd,html{
   color: #3b8cff;
 }
 </style>
+
+<script type="text/javascript" src="/_view/back/disk/contextMenu.js"></script>

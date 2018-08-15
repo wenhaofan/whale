@@ -22,7 +22,7 @@ public class QiniuFileUtils {
 	public static String  ak="-J6wMUs4suf31Rr3mOpI9gSALJT8S3d4Y8q6YlPs";
 	public static String  sk="x2A_diIcaZ-Uiv4E66w5eO-_F8CUc2QQUOMuBXHc";
 	public static String  bucket="blog";
-	public static String  qiniuUrl="pd6htjig8.bkt.clouddn.com";
+	public static String  qiniuUrl="http://pd6htjig8.bkt.clouddn.com";
 	/**
 	 * 上传文件工具类 
 	 * @param filePath 上传的文件的路径

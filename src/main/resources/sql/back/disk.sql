@@ -27,7 +27,7 @@
 		#end
 #end
 
-#sql("check")
+#sql("listCheckFile")
 	select 
 		* 
 	from
@@ -36,4 +36,15 @@
 		left(disk.name, #(fileName.length()))=#para(fileName)
 	and
 		parentId=#para(parentId==null?0:parentId)
+#end
+
+#sql("listCheckFolder")
+	select 
+		* 
+	from
+		disk 
+	where 
+		left(disk.name, #(name.length()))=#para(name)
+	and
+		parentId=#para(parentId)
 #end
