@@ -17,7 +17,6 @@ import com.wenhaofan._admin.meta.CategoryRouter;
 import com.wenhaofan._admin.meta.MetaAdminApi;
 import com.wenhaofan._admin.statistic.StatisticApi;
 import com.wenhaofan._admin.statistic.StatisticController;
-import com.wenhaofan._admin.sysConfig.SysConfigurationController;
 import com.wenhaofan._admin.user.AdminUserController;
 import com.wenhaofan.common.interceptor.AdminIndexInterceptor;
 import com.wenhaofan.common.interceptor.ExceptionInterceptor;
@@ -52,7 +51,6 @@ public class BackRoutes extends Routes {
 	   add("/admin/blogroll", BlogrollController.class,"/blogroll/");
 	
 	   add("/admin/basic",BasicRouter.class,"/basic/");
-	   add("/admin/fisrt/init",SysConfigurationController.class,"/");
 	   add("/admin/bloger",KvController.class,"/basic/");
 	   add("/admin/diy/html",DiyAdminController.class,"/diy/");
 	   add("/admin/diy/action", DiyActionAdminController.class,"/diy/");
