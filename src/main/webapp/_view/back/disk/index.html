@@ -1,25 +1,36 @@
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="/_view/back/disk/contextMenu.css" rel="stylesheet">
 <script type="text/javascript" src="/assets/common/upload.js"></script>
-
+<script type="text/javascript" src="/_view/back/disk/disk.js"></script>
 <script type="text/javascript">
 var uploadUtil=new $.uploadUtil();
 uploadUtil.setUploadServerUrl("/admin/api/disk/upload");
 </script>
-<script type="text/html" id="tpl-file-edit-item">
+<script type="text/html" id="tpl-folder-add-item">
 	<div class="disk-item disk-edit">
-		<div class="file-thumb" style="background:  url( /assets/disk/diskThumb/folder.png) center no-repeat;     background-size: 100% 100%;">
+		<div class="file-thumb" style="background:  url( /assets/disk/diskThumb/folder.png) center no-repeat; ">
 		</div>
 		<div class="file-name">
 			<input class="disk-edit-input" type="text">
 			<span class="confirm-create-folder"><i class="fa fa-check"></i></span>
-			<span><i class="fa fa-close"></i></span>
+			<span class="cancel-create-folder"><i class="fa fa-close"></i></span>
+		</div>
+	</div>
+</script>
+<script type="text/html" id="tpl-disk-item-rename">
+	<div class="disk-item disk-edit {{type=="folder"?" disk-folder":"disk-file"}} "   data-id="{{id}}">
+		<div class="file-thumb" style="{{style}}" >
+		</div>
+		<div class="file-name"  data-id="{{id}}">
+			<input class="disk-edit-input" type="text" value="{{name}}" >
+			<span class="confirm-rename"><i class="fa fa-check"></i></span>
+			<span class="cancel-rename"><i class="fa fa-close"></i></span>
 		</div>
 	</div>
 </script>
 <script type="text/html" id="tpl-disk-item">
-	<div class="disk-item {{type=="folder"?" disk-folder":""}} "   data-id="{{id}}">
-		<div class="file-thumb" style="background:  url( {{ if(type=="img")}}{{url}}{{else}}/assets/disk/diskThumb/{{type}}.png{{/if}}) center no-repeat;     background-size: 100% 100%;">
+	<div class="disk-item {{type=="folder"?" disk-folder":"disk-file"}} "   data-id="{{id}}">
+		<div class="file-thumb" style="background:  url( {{ if(type=="img")}}{{url}}{{else}}/assets/disk/diskThumb/{{type}}.png{{/if}}) center no-repeat;   " >
 		</div>
 		<div class="file-name">
 			<h3 class="overflow-omit" title="{{name}}">{{name}}</h3>
@@ -35,61 +46,57 @@ var currentFolderId="#(folderId)";
 
 window.addEventListener("load",function(){
 	listDiskItem({parentId:currentFolderId});
+	
+	if(currentFolderId!=0){
+		queryFolderNav(currentFolderId);
+	}
 })
 </script>
-<script type="text/javascript" src="/_view/back/disk/disk.js"></script>
+
 <script type="text/javascript">
-function clickFolder(folderId,folderName){
-	
-	if($(".folder-goback").hasClass("hide")){
-		$(".folder-goback").removeClass("hide")
-		$(".folder-goback").data("id",folderId);
-		$(".folder-nva").removeClass("hide");
-		$(".folder-nva").append("<span style='color: #c5d8f3;padding: 0 5px;line-height: 16px;'>&gt;</span>");
-		$(".folder-all-info").addClass("hide");
-	}else{
-		//获取最后一个节点的名字和文件夹id
-		var $lastA=$(".folder-nva span:last");
-		if($lastA.length>0){
-			var preId=$lastA.data("id");
-			var preName=$lastA.text();
-			var menuItem=template("tpl-folder-nav-item",{name:preName,id:preId});
-			var $menuItem=$(menuItem);
-			$lastA.replaceWith($menuItem);
+
+function removeFile(id){
+	$.ajax({
+		url:"/admin/api/disk/remove/"+id,
+		dataType:"json",
+		success:function(data){
+			if(fl.isOk(data)){
+				$("[data-id='"+id+"']").remove();
+			}
 		}
-	
-	}
-	
-	$(".folder-nva").append("<span data-id='"+folderId+"'>"+folderName+"</span>");
-
-	listDiskItem({parentId:folderId});
+	})
 }
 
-
-function goBackFolder(){
-	var $lastA=$(".folder-nva a:last");
-	$lastA.trigger("click");
+function rename(element){
+	var $element=$(element);
+	var $fileNameElement=$element.find(".file-name");
+	
+	var id=$element.data("id");
+	var style=$element.find(".file-thumb").attr("style");
+	var name=$fileNameElement.find("h3").text();
+	
+	var $newElement=$(template("tpl-disk-item-rename",{name:name,id:id,style:style}));
+	$fileNameElement.parent().hide();
+	$fileNameElement.parent().after($newElement);
 }
 
-function deleteNext(folderId){
-	var $obj=$(".folder-nva a[data-id='"+folderId+"']");
-	if($obj.length==0){
-		return;
-	}
+function confirmRename(element){
+	var name=$(element).prev().val();
+	var id=$(element).parent().data("id");
 	
-	var $nextObj=$obj.next();
-	
-	while($nextObj.length>0){
-		$nextObj.remove();
-		$nextObj=$obj.next();
-	}
-}
-
-function convertToSpan(obj){
-	var folderId=$(obj).data("id");
-	var folderName=$(obj).text();
-	var $span=$("<span data-id='"+folderId+"'>"+folderName+"</span>");
-	$(obj).replaceWith($span);
+	$.ajax({
+		url:"/admin/api/disk/update",
+		data:{id:id,name:name},
+		dataType:"json",
+		success:function(data){
+			if(fl.isOk(data)){
+				var type=getType(data.disk.type);
+				data.disk.type=type;
+				var $afterElement=$(template("tpl-disk-item",data.disk));
+				$(element).parent().parent().replaceWith($afterElement);
+			}
+		}
+	})
 }
 
 $(function(){
@@ -110,6 +117,19 @@ $(function(){
 	
 	$(".folder-goback a").click(function(){
 		goBackFolder();
+	})
+	
+	$("body").on("click",".confirm-rename",function(){
+		confirmRename(this);
+	})
+	
+	$("body").on("click",".cancel-create-folder",function(){
+		$(this).parent().parent().remove();
+	})
+	
+	$("body").on("click",".cancel-rename",function(){
+		$(this).parent().parent().prev().show();
+		$(this).parent().parent().remove();
 	})
 })
 </script>
@@ -161,7 +181,7 @@ body,html{
 			</li>
 			
 			<li class="float-right">
-				<span>10个文件夹,20个文件</span>
+				<span><span class="disk-folder-num">10</span>个文件夹,<span class="disk-file-num">20</span>个文件</span>
 			</li>
 		</ul>
 	</div>
@@ -190,26 +210,31 @@ boyd,html{
 	display: none!important;
 }
 .disk-item{
-	width:100px;
-	height:100px;
+	width:120px;
+	height:120px;
 	margin:0 10px;
 	float:left;
 	border: 1px solid white;
 	cursor: pointer;
 }
 .disk-edit{
-	width:140px;
+	width: 180px;;
     background: white!important;
     border: 0px!important;
 }
-.disk-edit input {
-	width: 80px;
-	height: 24px;
+.disk-edit .file-name{
+	z-index:99;
+	width: 180px;;
+}
+.disk-edit-input {
+	width: 120px;
+	height: 20px;
     vertical-align: middle;
     border: 1px solid #3b8cff;
     border: 1px solid rgba(58,140,255,.3);
     background: #fff;
     border-radius: 2px;
+    font-size:10px;
 }
 
 .disk-edit input:focus {
@@ -222,7 +247,7 @@ boyd,html{
 .disk-edit .file-name span {
 	 border: 1px solid rgba(58,140,255,.3);
 	 display: inline-block;
-	 padding:2px;
+	 
 	 width: 18px;
      vertical-align: middle;
      cursor: pointer;
@@ -234,9 +259,9 @@ boyd,html{
     background: #f1f5fa;
 }
 .file-thumb{
-	width:70px;
-	height:55px;
-	padding-top: 10px;
+	width:84px;
+	height:84px;
+	 
     margin: 0 auto;
 }
 
@@ -313,6 +338,7 @@ boyd,html{
 .disk-main{
 	height:100%;
 	width: 100%;
+	min-height:500px;
 }
 .disk-header{
 	width:100%;
@@ -354,5 +380,114 @@ boyd,html{
   color: #3b8cff;
 }
 </style>
-
+<link href="/_view/back/disk/contextMenu.css" rel="stylesheet">
 <script type="text/javascript" src="/_view/back/disk/contextMenu.js"></script>
+<script type="text/javascript">
+$contextMenu.on(".disk-file",[
+	{
+		events:{
+			"click":function(element){
+				var id=$(element).data("id");
+				download(id);
+			}
+		},text:"下载"
+	},{
+		events:{
+			"click":function(element){
+				rename(element);
+			}
+		},text:"重命名"
+	},{
+		events:{
+			"click":function(element){
+				removeFile($(element).data("id"));
+			}
+		},text:"删除"
+	},{
+		events:{
+			"click":function(element){
+				
+			}
+		},text:"分享"
+	}
+]);
+
+$(function(){
+	$contextMenu.on(".disk-file",[
+		{
+			events:{
+				"click":function(element,element2){
+				
+				},"mouseover":function(){
+					
+				}
+			},text:"下载",
+			className:"menuGoBack",
+			condition:function(){
+				return currentFolderId!=0;
+			}
+		},{
+			events:{
+				"click":function(element){
+					rename(element);
+				}
+			},text:"重命名"
+		}
+	]);
+})
+
+$contextMenu.on(".disk-main",[
+	{
+		events:{
+			"click":function(element){
+				goBackFolder();
+			}
+		},text:"返回"
+		,className:"menuGoBack",
+		condition:function(){
+			return currentFolderId!=0;
+		}
+	},
+	{	
+		events:{
+			"click":function(element){
+				createFolderItem();
+			}
+		},text:"新建文件夹"
+	},{
+		events:{
+			"click":function(element){
+				window.location.reload();
+			}
+		},text:"刷新"
+	}
+]);
+
+$contextMenu.on(".disk-folder",[
+	{
+		events:{
+			"click":function(element){
+				$(element).trigger("click");
+			}
+		},text:"打开"
+	},{
+		events:{
+			"click":function(element){
+				rename(element);
+			}
+		},text:"重命名"
+	},{
+		events:{
+			"click":function(element){
+				removeFile($(element).data("id"));
+			}
+		},text:"删除"
+	},{
+		events:{
+			"click":function(element){
+				
+			}
+		},text:"分享"
+	}
+]);
+</script>
