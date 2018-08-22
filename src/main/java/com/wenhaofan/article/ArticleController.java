@@ -15,7 +15,6 @@ import com.wenhaofan.meta.MetaService;
  * @author fwh
  *
  */
-@Clear(LoginInterceptor.class)
 @Before(ArticleSeo.class)
 public class ArticleController extends BaseController{
 

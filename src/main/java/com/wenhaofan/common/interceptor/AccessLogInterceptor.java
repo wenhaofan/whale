@@ -8,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
-import com.jfinal.kit.StrKit;
-import com.wenhaofan.common._config.BlogContext;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.IpKit;
 import com.wenhaofan.common.log.access.AccessLogService;
 import com.wenhaofan.common.model.entity.AccessLog;
-import com.wenhaofan.common.model.entity.User;
+import com.wenhaofan.common.model.entity.AgentUser;
 
 public class AccessLogInterceptor implements Interceptor {
 
 	private static int maxOutputLengthOfParaValue = 512;
 	
 	private static AccessLogService service=AccessLogService.me;
+	
 	
 	@Override
 	public void intercept(Invocation inv) {
@@ -30,29 +29,15 @@ public class AccessLogInterceptor implements Interceptor {
 			return;
 		}
 		
-		String referer=c.getResponse().getHeader("Referer");
+		String referer=c.getRequest().getHeader("Referer");
 		String ip=IpKit.getRealIp(c.getRequest());
 		String target = c.getRequest().getRequestURI();
 		String info=getLog(c,target,inv.getActionKey());
 		String userAgent=c.getRequest().getHeader("User-Agent");
 		
 		//获取标识
-		User user=c.getLogUser();
+		AgentUser agentUser=c.getAgentUser();
 		
-		String cookie=null;
-		
-		if(user!=null) {
-			cookie=user.getPkId().toString();
-		}else {
-			cookie=c.getCookie(BlogContext.IDENTIFY_COOKIE);
-		}
-		
-		//如果未登录 且没有标识cookie 则新建
-		if(StrKit.isBlank(cookie)) {
-			cookie=StrKit.getRandomUUID();
-			c.setCookie(BlogContext.IDENTIFY_COOKIE, cookie, BlogContext.IDENTIFY_MAX_AGE, true);
-		}
-
 		AccessLog log = new AccessLog();
 		log.setUserAgent(userAgent);
 		log.setGmtCreate(new Date());
@@ -60,7 +45,8 @@ public class AccessLogInterceptor implements Interceptor {
 		log.setIp(ip);
 		log.setReferer(referer);
 		log.setTarget(target);
-		log.setCookie(cookie);
+		log.setCookie(agentUser.getCookie());
+		log.setAgentUserId(agentUser.getId());
 		service.add(log);
 		
 		inv.invoke();

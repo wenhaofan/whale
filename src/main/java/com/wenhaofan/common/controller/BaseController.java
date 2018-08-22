@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.jfinal.core.Controller;
+import com.jfinal.kit.StrKit;
+import com.wenhaofan.agentUser.AgentUserService;
+import com.wenhaofan.common.model.entity.AgentUser;
 import com.wenhaofan.common.model.entity.User;
 import com.wenhaofan.login.LoginService;
 
@@ -16,20 +19,72 @@ public class BaseController extends Controller{
 	
 	private User loginUser=null;
 	
+	private  static AgentUserService agentUserService=new AgentUserService();
+	
+	public AgentUser getAgentUser() {
+		AgentUser agentUser=null;
+		
+		String cookie=getCookie(AgentUserService.AGENT_USER_COOKIE_KEY);
+		
+		if(StrKit.notBlank(cookie)) {
+			agentUser=agentUserService.get(cookie);
+			if(agentUser!=null) {
+				return agentUser;
+			}
+		}
+		cookie=StrKit.getRandomUUID();
+		if(getLoginUser()!=null) {
+			agentUser=new AgentUser();
+			agentUser.setId(0);
+			agentUser.setName("admin");
+		}else {
+			agentUser=new AgentUser();
+			agentUser.setCookie(cookie);
+		}
+		agentUserService.save(agentUser);
+		//设置cookie
+		setCookie(AgentUserService.AGENT_USER_COOKIE_KEY,cookie,AgentUserService.AGENT_USER_COOKIE_AGE);
+		return agentUser;
+		 
+	}
+	
 	public boolean isAjax() {
 		String requestType = getRequest().getHeader("X-Requested-With");
 		return "XMLHttpRequest".equals(requestType);
 	}
 	
-	public User getLogUser() {
-		if(loginUser==null) {
-			loginUser=getAttr(LoginService.loginUserKey);
+	public User getLoginUser() {
+		
+		if(loginUser!=null) {
+			return loginUser;
 		}
-		return loginUser;
+		
+		String sessionId=getCookie(LoginService.sessionIdName);
+		
+		if(sessionId!=null) {
+			//通过sessionId从缓存中获取登录用户
+			User loginUser=LoginService.me.getUserWithSessionId(sessionId);
+			//如果依然为空则从数据库中寻找有效的登录用户
+			if(loginUser==null) {
+				loginUser=LoginService.me.loginWithSessionId(sessionId);
+			}
+			
+			if(loginUser!=null) {
+				setAttr(LoginService.loginUserKey, loginUser);
+		
+			}else {
+				//为空则表示cookie无用，删之
+				removeCookie(LoginService.sessionIdName);
+				renderError(404);
+			}
+		}
+		
+		
+		return getAttr(LoginService.loginUserKey);
 	}
 	
 	public boolean isLogin() {
-		return getLogUser()!=null;
+		return getLoginUser()!=null;
 	}
 	
 	public boolean notLogin() {

@@ -9,7 +9,9 @@
 #namespace("index")
 #include("/front/index.sql")
 #end
-
+#namespace("agentUser")
+#include("/front/agentUser.sql")
+#end
 登录sql
 #namespace("login")
 #include("/front/login.sql");

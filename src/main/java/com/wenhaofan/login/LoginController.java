@@ -3,6 +3,7 @@ package com.wenhaofan.login;
 import com.jfinal.aop.Clear;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.Ret;
+import com.wenhaofan.agentUser.AgentUserService;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.kit.IpKit;
@@ -36,6 +37,8 @@ public class LoginController extends BaseController{
 			int maxAge=ret.getInt("cookieMaxAge");
 			setAttr(LoginService.loginUserKey,ret.get(LoginService.loginUserKey));
 			setCookie(LoginService.sessionIdName,sessionId, maxAge,"/",PropKit.get("domain"),true);
+			
+			removeCookie(AgentUserService.AGENT_USER_COOKIE_KEY);
 			redirect("/admin");
 			return;
 		}

@@ -20,7 +20,6 @@ import com.wenhaofan.meta.MetaTypeEnum;
  * @author fwh
  *
  */
-@Clear(LoginInterceptor.class)
 @Before(IndexSeoInterceptor.class)
 public class IndexController extends BaseController {
 

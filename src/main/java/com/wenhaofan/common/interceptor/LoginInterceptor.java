@@ -2,9 +2,8 @@ package com.wenhaofan.common.interceptor;
 
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
-import com.jfinal.core.Controller;
+import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.User;
-import com.wenhaofan.login.LoginService;
 
 public class LoginInterceptor implements Interceptor{
 
@@ -13,36 +12,23 @@ public class LoginInterceptor implements Interceptor{
 	 */
 	public void intercept(Invocation inv) {
 		
-		Controller c=inv.getController();
+		BaseController c=(BaseController)inv.getController();
+	
+	    User user=c.getLoginUser();
 		
-		String actionKey=inv.getActionKey();
-		if(!actionKey.startsWith("/admin")) {
+		if(user!=null) {
 			inv.invoke();
-			return;
-		}
-		String sessionId=c.getCookie(LoginService.sessionIdName);
-		
-		if(sessionId!=null) {
-			//通过sessionId从缓存中获取登录用户
-			User loginUser=LoginService.me.getUserWithSessionId(sessionId);
-			//如果依然为空则从数据库中寻找有效的登录用户
-			if(loginUser==null) {
-				loginUser=LoginService.me.loginWithSessionId(sessionId);
-			}
-			
-			if(loginUser!=null) {
-				c.setAttr(LoginService.loginUserKey, loginUser);
-				inv.invoke();
-			}else {
-				//为空则表示cookie无用，删之
-				c.removeCookie(LoginService.sessionIdName);
-				c.renderError(404);
-			}
 		}else {
+			String actionKey=inv.getActionKey();
+			//只有登陆了才能访问后台
+			if(!actionKey.startsWith("/admin")) {
+				inv.invoke();
+				return;
+			}
 			c.renderError(404);
 		}
 		
-		inv.invoke();
+		
 	}
 
 	
