@@ -1,6 +1,6 @@
 package com.wenhaofan.meta;
 
-public enum MetaTyoeEnum {
+public enum MetaTypeEnum {
 	
 	CATEGORY,
 	TAG;

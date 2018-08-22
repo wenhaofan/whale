@@ -6,6 +6,7 @@ import com.jfinal.kit.Kv;
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.SqlPara;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.exception.MsgException;
 import com.wenhaofan.common.kit.ListKit;
 import com.wenhaofan.common.model.entity.Meta;
@@ -13,9 +14,11 @@ import com.wenhaofan.common.model.entity.Relevancy;
 
 public class MetaService {
 
-	private static Meta mdao = new Meta();
-	private static Relevancy rdao = new Relevancy();
-	public static MetaService me = new MetaService();
+	@Inject
+	private static Meta mdao;
+	@Inject
+	private static Relevancy rdao;
+
 
 	public List<Meta> listByCId(Integer id, String type) {
 		if (id == null) {

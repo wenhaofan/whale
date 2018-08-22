@@ -1,10 +1,12 @@
 package com.wenhaofan.meta;
 
 import com.jfinal.kit.Ret;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 
 public class MetaApi extends BaseController{
-	private static MetaService mservice=MetaService.me;
+	@Inject
+	private static MetaService mservice;
 	
 	public void list() {
 		String type=getPara(0);

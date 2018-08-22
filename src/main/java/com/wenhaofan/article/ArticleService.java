@@ -6,15 +6,22 @@ import com.jfinal.kit.Kv;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.kit.Arraykit;
 import com.wenhaofan.common.model.entity.Article;
+import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.common.safe.JsoupFilter;
+import com.wenhaofan.meta.MetaService;
+import com.wenhaofan.meta.MetaTypeEnum;
 
 
 public class ArticleService {
-	public static final ArticleService me=new ArticleService();
-	private Article dao=new Article().dao();
+ 
+	@Inject
+	private Article dao;
 	 
+	@Inject
+	private MetaService metaService;
 	/**
 	 * 分页查询文章
 	 * @param pageNumber
@@ -22,11 +29,17 @@ public class ArticleService {
 	 * @param metas
 	 * @return
 	 */
-	public Page<Article> page(Integer pageNumber,Integer pageSize,Integer... metas){
-		List<Integer> temp=Arraykit.remove(metas, 0);
+	public Page<Article> page(Integer pageNumber,Integer pageSize,Integer... metaIds){
+		List<Integer> temp=Arraykit.remove(metaIds, 0);
 		SqlPara sqlPara=dao.getSqlPara("article.page", Kv.create().set("metaIds", temp));
 		Page<Article> page= dao.paginate(pageNumber, pageSize,sqlPara);
 		JsoupFilter.filterArticleList(page.getList(), 30, 200);
+		
+		for(Article article:page.getList()) {
+			List<Meta> metas=metaService.listByCId(article.getPkId(), MetaTypeEnum.CATEGORY.toString());
+			article.setMetas(metas);
+		}
+
 		return page;
 	}
 	

@@ -8,7 +8,7 @@ import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.meta.MetaService;
-import com.wenhaofan.meta.MetaTyoeEnum;
+import com.wenhaofan.meta.MetaTypeEnum;
 
 public class ArticleAdminController  extends BaseController{
 	
@@ -31,7 +31,7 @@ public class ArticleAdminController  extends BaseController{
 	public void edit() {
 		Integer id=getParaToInt();
 		//所有的分类
-		setAttr("allCategory", mService.listMeta(MetaTyoeEnum.CATEGORY.toString()));
+		setAttr("allCategory", mService.listMeta(MetaTypeEnum.CATEGORY.toString()));
 		if(id==null) {
 			render("article_edit.html");
 			return;

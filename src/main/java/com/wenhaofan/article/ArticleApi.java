@@ -1,12 +1,14 @@
 package com.wenhaofan.article;
 
 import com.jfinal.kit.Ret;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Article;
 
 public class ArticleApi extends BaseController{
 
-	private ArticleService service=ArticleService.me;
+	@Inject
+	private ArticleService service;
 	
 	//通过标识获取文章信息
 	public void index() {
@@ -19,16 +21,10 @@ public class ArticleApi extends BaseController{
 	 * 根据多个分类 标签id进行查询
 	 */
 	public void list() {
-		Integer[] cids=new Integer[5];
-		for(int i=0,size=5;i<size;i++) {
-			if(getParaToInt(i)!=null) {
-				cids[i]=getParaToInt(i);
-			}
-			
-		}
+		Integer cid=getParaToInt();
 		Integer pageNum = getParaToInt("p");
 		Integer limit=getParaToInt("limit", 10);
-		renderJson(Ret.ok("articlePage", service.page(pageNum, limit, cids)));
+		renderJson(Ret.ok("articlePage", service.page(pageNum, limit, cid)));
 	}
 	
 	/**

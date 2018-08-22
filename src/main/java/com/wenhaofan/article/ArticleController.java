@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity.Article;
@@ -18,8 +19,10 @@ import com.wenhaofan.meta.MetaService;
 @Before(ArticleSeo.class)
 public class ArticleController extends BaseController{
 
-	private ArticleService service=ArticleService.me;
-	private MetaService metaService=MetaService.me;
+	@Inject
+	private ArticleService service;
+	@Inject
+	private MetaService metaService;
 	
 	public void index(){
 		String identify=getPara();

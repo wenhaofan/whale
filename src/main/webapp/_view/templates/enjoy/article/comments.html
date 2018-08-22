@@ -1,0 +1,70 @@
+
+<div id="" class="comment-container">
+    <div id="comments" class="clearfix">
+        #if(true)
+         <span class="response">#if(null!=login_user) Hi，<a href="${login_user.home_url}" data-no-instant>${login_user.username}</a>
+            如果你想 <a href="/logout" title="注销" data-no-instant>注销</a> ? #end</span> 
+
+        <form method="post" id="comment-form" class="comment-form" onsubmit="return TaleComment.subComment();">
+            <input type="hidden" name="coid" id="coid"/>
+            <input type="hidden" name="cid" id="cid" value="${article.cid}"/>
+            <input type="hidden" name="csrf_token" value="${csrf_token}"/>
+            <input name="author" maxlength="12" id="author" class="form-control input-control clearfix"
+                   placeholder="姓名 (*)" value="${login_user.username ?! ''}" required/>
+            <input type="email" name="mail" id="mail" class="form-control input-control clearfix" placeholder="邮箱 (*)"
+                   value="${login_user.email ?! ''}" required/>
+            <input type="url" name="url" id="url" class="form-control input-control clearfix" placeholder="网址 (http://)"
+                   value="${login_user.home_url ?! ''}"/>
+            <textarea name="content" id="textarea" class="form-control" placeholder="基佬，留下你的评论." required minlength="5" maxlength="2000"></textarea>
+            <button class="submit" id="misubmit">提交</button>
+        </form>
+
+        #else
+        <span class="response">评论已关闭.</span>
+        #end
+       
+        <ol class="comment-list">
+            <li id="li-comment-1" class="comment-body comment-parent comment-odd">
+                <div id="comment-1">
+                    <div class="comment-view" onclick="">
+                        <div class="comment-header">
+                            <img class="avatar" src="https://secure.gravatar.com/avatar/c790c723a73d44732aa61461c27f3d4c?s=80&r=G&d=mm" title="范文皓"
+                                 width="80" height="80">
+                            <span class="comment-author">
+                                <a href="/" target="_blank" rel="external nofollow">范文皓</a>
+                            </span>
+                        </div>
+                        <div class="comment-content">
+                            <span class="comment-author-at"></span>
+                            <p>写的不错啊</p>
+                        </div>
+                        <div class="comment-meta">
+                            <time class="comment-time">Jul 27, 2018</time>
+                            <span class="comment-reply">
+                                <a rel="nofollow" onclick="TaleComment.reply('1');">回复</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+        </ol>
+        <div class="lists-navigator clearfix">
+            <ol class="page-navigator">
+                #if(comments.isFirstPage)
+                <li class="prev"><a href="?cp=#(currentIndex-1)#comments">←</a></li>
+                #end
+                #for(navIndex : comments.pageNumber)
+                <li #if(currentIndex== navIndex) class="current" #end><a href="?cp=#(navIndex)#comments">#(navIndex)</a></li>
+                #end
+                #if(comments.isFirstPage)
+                <li class="next"><a href="?cp=#(currentIndex+1)#comments">→</a></li>
+                #end
+            </ol>
+
+        </div>
+         
+    </div>
+</div>
+
+#include('tale_comment.html')

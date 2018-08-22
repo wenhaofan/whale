@@ -17,7 +17,7 @@ public class FrontRoutes extends Routes{
 	@Override
 	public void config() {
 		addInterceptor(new ExceptionInterceptor());
-		String pinghsuFront="/_view/templates/enjoy/";
+		String pinghsuFront="/_view/templates/default/";
 		setBaseViewPath(pinghsuFront);
 		add("/article",ArticleController.class);
 		add("/api/meta", MetaApi.class,"/");

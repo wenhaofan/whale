@@ -1,5 +1,7 @@
 package com.wenhaofan.common.model.entity;
 
+import java.util.List;
+
 import com.wenhaofan.common.model.entity.base.BaseArticle;
 
 /**
@@ -11,5 +13,16 @@ public class Article extends BaseArticle<Article> {
 	public static Integer STATE_DRAFT=0;
 	public static Integer STATE_PUBLISH=1;
 	public static Integer STATE_DISCARD=2;
+
+	private List<Meta> metas;
+
+	public List<Meta> getMetas() {
+		return metas;
+	}
+
+	public void setMetas(List<Meta> metas) {
+		this.metas = metas;
+	}
+	
 	
 }

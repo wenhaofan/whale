@@ -18,7 +18,7 @@ import com.wenhaofan.common.kit.StrKit;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.meta.MetaService;
-import com.wenhaofan.meta.MetaTyoeEnum;
+import com.wenhaofan.meta.MetaTypeEnum;
 
 /**
  * 文章service实现类
@@ -30,16 +30,16 @@ public class AdminArticleService {
 	@Inject
 	private Article  dao;
 	@Inject
-	private MetaService mservice=MetaService.me;
+	private MetaService mservice;
 	@Inject
 	private static ArticleService articleService;
 	
 	public List<Meta> listCategory(Integer id){
-		return mservice.listByCId(id,MetaTyoeEnum.CATEGORY.toString());
+		return mservice.listByCId(id,MetaTypeEnum.CATEGORY.toString());
 	}
 	
 	public List<Meta> listTag(Integer id){
-		return mservice.listByCId(id,MetaTyoeEnum.TAG.toString());
+		return mservice.listByCId(id,MetaTypeEnum.TAG.toString());
 	}
 	
 	public void saveOrUpdate(Article article,List<Meta> tags,List<Meta> categorys) {

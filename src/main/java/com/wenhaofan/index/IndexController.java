@@ -1,12 +1,18 @@
 package com.wenhaofan.index;
 
+import java.util.List;
+
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.plugin.activerecord.Page;
 import com.wenhaofan.article.ArticleService;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity.Article;
+import com.wenhaofan.common.model.entity.Meta;
+import com.wenhaofan.meta.MetaService;
+import com.wenhaofan.meta.MetaTypeEnum;
 
 /**
  * 网站首页控制器
@@ -18,27 +24,26 @@ import com.wenhaofan.common.model.entity.Article;
 @Before(IndexSeoInterceptor.class)
 public class IndexController extends BaseController {
 
-	IndexService service = IndexService.me;
-
+	@Inject
+	private IndexService service;
 	
-	ArticleService articleService=ArticleService.me;
+	@Inject
+	private ArticleService articleService;
+	
+	@Inject
+	private MetaService metaService;
 	
 	public void index() {
-		Integer[] cids=new Integer[5];
-		try {
-			for(int i=0,size=5;i<size;i++) {
-				if(getParaToInt(i)!=null) {
-					cids[i]=getParaToInt(i);
-				}
-			}
-		} catch (Exception e) {
-			
-		}
+		Integer cid=getParaToInt();
 		Integer pageNum = getParaToInt("p",1);
 		Integer limit=getParaToInt("limit", 10);
-		Page<Article> articlePage=articleService.page(pageNum, limit, cids);
+		Page<Article> articlePage=articleService.page(pageNum, limit,cid);
+	
+		List<Meta> metaList=metaService.listMeta(MetaTypeEnum.CATEGORY.toString());
+		
+		setAttr("categorys", metaList);
 		setAttr("articlePage",articlePage);
-		setAttr("cids", cids);
+		setAttr("cid", cid);
 		render("index.html");
 	}
 

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="">
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    <link rel="dns-prefetch" href="" />
+    <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <link rel="dns-prefetch" href="//secure.gravatar.com" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-transform"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/favicon.ico">
+    <meta name="keywords" content="#(seoKeywords)"/>
+    <meta name="description" content="#(seoDescr)"/>
+    <title>#(seoTitle)</title>
+    <link href="//cdn.bootcss.com/highlight.js/9.10.0/styles/xcode.min.css" rel="stylesheet">
+    <link href="/_view/templates/enjoy/static/css/style.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+.this{
+color:#eb5054;
+}
+</style>
+</head>
+<!-- <?php if (array_key_exists('archive',unserialize($this->___fields()))): ?>bg-grey<?php elseif($this->is('archive')&&($this->options->colorBgPosts == 'defaultColor')): ?>bg-grey<?php elseif($this->is('archive')&&($this->options->colorBgPosts == 'customColor')): ?>bg-white<?php elseif(!$this->is('single')): ?>bg-grey<?php endif; ?> -->
+<body class="" gtools_scp_screen_capture_injected="true">
+<!--[if lt IE 8]>
+<div class="browsehappy" role="dialog">
+    当前网页 <strong>不支持</strong> 你正在使用的浏览器. 为了正常的访问, 请 <a href="http://browsehappy.com/" target="_blank">升级你的浏览器</a>。
+</div>
+<![endif]-->
+
+<header id="header" class="header bg-white">
+    <div class="navbar-container">
+        <a href="/" class="navbar-logo">
+             
+            <img src="/_view/templates/enjoy/static/img/logo.png" alt="" />
+             
+        </a>
+        <div class="navbar-menu">
+         	#for(category:categorys)
+         		
+         		<a href="/#(category.id)" class="header-categry #if(category.id==cid)this#end" data-id="#(category.id)">#(category.mname)</a>
+         	#end
+        </div>
+        
+         <a href="" class="navbar-search">
+            <span class="icon-search"></span>
+        </a>
+         <!--
+        <div class="navbar-search" onclick="">
+            <span class="icon-search"></span>
+            <form id="search" method="post" action="<?php $this->options->siteUrl(); ?>" role="search">
+                <span class="search-box">
+                    <input type="text" id="input" class="input" name="s" required="true" placeholder="Search..." maxlength="30" autocomplete="off">
+                </span>
+            </form>
+        </div>-->
+        
+        <div class="navbar-mobile-menu" onclick="">
+            <span class="icon-menu cross"><span class="middle"></span></span>
+            <ul  class="categorys">
+                #for(category:categorys)
+                	<li><a href="/#(category.id)"  class="header-categry" data-id="#(category.id)">#(category.mname)</a></li>
+         		#end
+            </ul>
+        </div>
+    </div>
+</header>
