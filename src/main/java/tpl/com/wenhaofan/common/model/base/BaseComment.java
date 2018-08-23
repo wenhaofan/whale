@@ -1,4 +1,4 @@
-package com.wenhaofan.common.model.entity.base;
+package tpl.com.wenhaofan.common.model.base;
 
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.IBean;

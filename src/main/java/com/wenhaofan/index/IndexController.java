@@ -3,12 +3,10 @@ package com.wenhaofan.index;
 import java.util.List;
 
 import com.jfinal.aop.Before;
-import com.jfinal.aop.Clear;
 import com.jfinal.plugin.activerecord.Page;
 import com.wenhaofan.article.ArticleService;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
-import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.meta.MetaService;

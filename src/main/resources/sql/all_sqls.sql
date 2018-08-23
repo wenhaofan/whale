@@ -23,6 +23,9 @@
 #namespace("article")
 #include("/front/article.sql");
 #end
+#namespace("comment")
+#include("/front/comment.sql");
+#end
 后台sql
 #namespace("adminArticle")
 #include("/back/article.sql")

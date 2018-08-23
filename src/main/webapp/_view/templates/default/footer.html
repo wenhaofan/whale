@@ -1,8 +1,8 @@
-<footer id="footer" class="footer <?php if (array_key_exists('archive',unserialize($this->___fields()))): ?>bg-white<?php elseif($this->is('archive')&&($this->options->colorBgPosts == 'defaultColor')): ?>bg-white<?php elseif($this->is('archive')&&($this->options->colorBgPosts == 'customColor')): ?>bg-grey<?php elseif($this->is('single')): ?>bg-white<?php endif; ?>">
+<footer id="footer" class="footer">
 	<div class="footer-social">
 		<div class="footer-container clearfix">
 			<div class="social-list">
-			 
+			 <!-- 
 				<a class="social weibo" target="blank" href="<?php $this->options->socialweibo(); ?>">WEIBO</a>
 			 
                 <a class="social zhihu" target="blank" href="<?php $this->options->socialzhihu(); ?>">ZHIHU</a>
@@ -13,39 +13,53 @@
 			 
 		 
 				<a class="social twitter" target="blank" href="<?php $this->options->socialtwitter(); ?>">TWITTER</a>
-			 
+			  -->
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<div class="footer-meta">
 		<div class="footer-container">
 			<div class="meta-item meta-copyright">
 				<div class="meta-copyright-info">
                     <a href="/" class="info-logo">
                          
-                        <img src="http://127.0.0.1/_view/templates/enjoy/static/img/logo.png" alt="<?php $this->options->title() ?>" />
+                        <img src="http://127.0.0.1/_view/templates/enjoy/static/img/logo.png" alt="范文皓的个人博客" />
                          
                     </a>
 					<div class="info-text">
-                    	<p>Theme is <a href="https://github.com/chakhsu/pinghsu" target="_blank">Pinghsu</a> by <a href="https://www.linpx.com/" target="_blank">Chakhsu</a></p>
-						<p>Powered by <a href="http://www.typecho.org" target="_blank" rel="nofollow">Typecho</a></p>
-						<p>&copy; <?php echo date('Y'); ?> <a href="<?php $this->options->siteUrl(); ?>"><?php $this->options->title(); ?></a></p>
+                    	<p>Theme is Powered by <a href="https://www.linpx.com/" target="_blank">Pinghsu</a></p>
+						<p>Powered by <a href="/" target="_blank" rel="nofollow">范文皓</a></p>
+						<p>&copy; 2018 <a href="/">Whale</a></p>
 					</div>
 				</div>
 			</div>
 			<div class="meta-item meta-posts">
 				<h3 class="meta-title">RECENT POSTS</h3>
                	热门文章
+               	<ul>
+               		#for(article:recentArticles)
+               			<li>
+               				<a href="/article/#(article.identify)">#(article.title)</a>
+               			</li>
+               		#end
+               	</ul>
 			</div>
             <div class="meta-item meta-comments">
                 <h3 class="meta-title">RECENT COMMENTS</h3>
-               最新评论
+              		 最新评论
+              	<ul style="padding-left:0px;">
+               		#for(comment:recentComments)
+               			<li>
+               				<a href="/article/#(comment.identify)?p=#(comment.pageNum)#li-comment-#(comment.id)">#(comment.content)</a>
+               			</li>
+               		#end
+               	</ul>
             </div>
 		</div>
 	</div>
 </footer>
 
-#if(false)
+#if(isPost)
 <div id="directory-content" class="directory-content">
     <div id="directory"></div>
 </div>
@@ -141,7 +155,7 @@ postDirectoryBuild();
 </script>
 #end
 
-#if(false)
+#if(isPost)
 <script>
 (function () {
     window.TypechoComment = {
@@ -201,21 +215,7 @@ postDirectoryBuild();
         }
     };
 })();
-#if(false)
-function getCommentCookie(name){
-    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
-    if(arr=document.cookie.match(reg))
-        return unescape(decodeURI(arr[2]));
-    else
-        return null;
-}
-function addCommentInputValue(){
-    document.getElementById('author').value = getCommentCookie('<?php echo md5($this->request->getUrlPrefix()); ?>__typecho_remember_author');
-    document.getElementById('mail').value = getCommentCookie('<?php echo md5($this->request->getUrlPrefix()); ?>__typecho_remember_mail');
-    document.getElementById('url').value = getCommentCookie('<?php echo md5($this->request->getUrlPrefix()); ?>__typecho_remember_url');
-}
-addCommentInputValue();
-#end
+ 
 </script>
 #end
 
@@ -239,13 +239,13 @@ var postDirectory = new Headroom(document.getElementById("directory-content"), {
         unpinned: "unpinned"
     }
 });
-#if(false)
+#if(isPost)
 	postDirectory.init();
 #end
 
  
 //当时详情页时才加载
-#if(false)
+#if(isPost)
 var postSharer = new Headroom(document.getElementById("post-bottom-bar"), {
     tolerance: 0,
     offset : 70,

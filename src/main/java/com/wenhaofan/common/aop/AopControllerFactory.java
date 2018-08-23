@@ -1,7 +1,9 @@
 package com.wenhaofan.common.aop;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.jfinal.aop.Enhancer;
 import com.jfinal.core.Controller;
@@ -116,12 +118,24 @@ public class AopControllerFactory extends ControllerFactory {
 		}
 		
 		targetClass = getUsefulClass(targetClass);
-		Field[] fields = targetClass.getDeclaredFields();
-		if (fields.length == 0) {
+		
+		List<Field> filedList=new ArrayList<>();
+
+		Field[] fields = targetClass.getFields();
+		
+		for(Field field:fields) {
+			filedList.add(field);
+		}
+		fields=targetClass.getDeclaredFields();
+		
+		for(Field field:fields) {
+			filedList.add(field);
+		}
+		if (filedList.isEmpty()) {
 			return ;
 		}
 		
-		for (Field field : fields) {
+		for (Field field : filedList) {
 			Inject inject = field.getAnnotation(Inject.class);
 			if (inject == null) {
 				continue ;

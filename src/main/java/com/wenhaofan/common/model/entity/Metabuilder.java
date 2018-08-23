@@ -11,7 +11,7 @@ public class Metabuilder extends MetaBuilder {
 
 	@SuppressWarnings({ "unchecked", "rawtypes", "serial" })
 	private List<String> tables=new ArrayList(){{
-		add("access_log");
+		add("comment");
 	}};
 	
 	public Metabuilder(DataSource dataSource) {

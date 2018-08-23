@@ -1,6 +1,7 @@
 package com.wenhaofan._admin.disk;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,30 @@ public class DiskService {
 	@Inject
 	private Disk dao;
 	
+	public List<Disk> listFolderChain(Integer folderId){
+		if(folderId==null||folderId==0) {
+			return null;
+		}
+		List<Disk> result=new ArrayList<>();
+		Disk disk=dao.findById(folderId);
+		result.add(disk);
+		while(disk!=null&&disk.getParentId()!=0) {
+			result.add(disk);
+			disk=dao.findById(disk.getParentId());
+		}
+		
+		return result;
+	}
+	
+	public Disk update(Disk disk) {
+		disk.setGmtModify(new Date()).update();
+		return dao.findById(disk.getId());
+	}
+	
+	public Disk get(Integer id) {
+		return dao.findById(id);
+	}
+	
 	public void createFolder(Disk disk) {
 		if(disk.getParentId()==null) {
 			disk.setParentId(0);
@@ -32,7 +57,7 @@ public class DiskService {
 		if(!diskList.isEmpty()) {
 			disk.setName(disk.getName()+"("+diskList.size()+")");
 		}
-		
+		disk.setGmtModify(new Date());
 		disk.save();
 	}
 	public List<Disk> list(QueryDisk query){
@@ -44,7 +69,7 @@ public class DiskService {
 	 * @param pkId
 	 */
 	public void remove(Integer pkId) {
-		dao.findById(pkId).setState(0);
+		dao.findById(pkId).setState(1).setGmtModify(new Date()).update();	
 	}
 	
 	/**

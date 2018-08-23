@@ -3,11 +3,12 @@ package com.wenhaofan.article;
 import java.util.List;
 
 import com.jfinal.aop.Before;
-import com.jfinal.aop.Clear;
+import com.jfinal.plugin.activerecord.Page;
+import com.wenhaofan.comment.CommentService;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
-import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity.Article;
+import com.wenhaofan.common.model.entity.Comment;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.meta.MetaService;
 /**
@@ -23,6 +24,9 @@ public class ArticleController extends BaseController{
 	@Inject
 	private MetaService metaService;
 	
+	@Inject
+	private CommentService commentService;
+	
 	public void index(){
 		String identify=getPara();
 		Article article=service.getArticle(identify);
@@ -30,13 +34,18 @@ public class ArticleController extends BaseController{
 			redirect("/");
 			return;
 		}
+		
 		List<Meta> categorys=metaService.listByCId(article.getPkId(), "category");
 		List<Meta> tags=metaService.listByCId(article.getPkId(), "tag");
+		Page<Comment> comments=commentService.page(getParaToInt("p",1), 6, article.getIdentify());
+		 
+		setAttr("agentUser", getAgentUser());
+		setAttr("comments", comments);
 		setAttr("categorys",categorys);
 		setAttr("tags",tags);
 		setAttr("article", article);
 		setAttr("identify", identify);
-		setAttr("is_post", true);
+		setAttr("isPost", true);
 		render("post.html");
 	}
 }

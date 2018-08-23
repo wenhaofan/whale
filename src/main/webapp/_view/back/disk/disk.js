@@ -12,7 +12,7 @@ function queryFolderNav (folderId){
 		success:function(data){
 			if(fl.isOk(data)){
 				var diskList=data.diskList;
-				for(var i = diskList.length; i>0; i--){
+				for(var i = diskList.length-1; i>=0; i--){
 					changeMenuNav(diskList[i].id, diskList[i].name);
 				}
 			}
@@ -89,18 +89,14 @@ function listDiskItem(query){
 		data:query,
 		dataType:"json",
 		success:function(data){
-			
 		    var stateObject = {};
-		   // var title = history.state.title;
-		    var newUrl = '';
+ 
 		    var currentUrl=window.location.href;
 		    var strArr=currentUrl.split("?");
 		    if(strArr.length!=0){
 		    	currentUrl=strArr[0];
 		    }
-		    
-		    currentUrl+="?p="+currentFolderId;
-		    
+		    currentUrl+="?p="+currentFolderId; 
 		    history.pushState(stateObject, document.title, currentUrl);
 			if(data.state=="ok"){
 				var folderNum=0;

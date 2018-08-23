@@ -15,6 +15,9 @@ public class DiskApi extends BaseController{
 	@Inject
 	private DiskService service;
 	
+	public void get() {
+		renderJson(Ret.ok("disk", service.get(getParaToInt())));
+	}
 	
 	public void list() {
 		QueryDisk query=getBean(QueryDisk.class,"",true);
@@ -41,4 +44,13 @@ public class DiskApi extends BaseController{
 		renderJson(Ret.ok());
 	}
 
+	public void update() {
+		Disk disk=getModel(Disk.class,"",true);
+		renderJson(Ret.ok("disk", service.update(disk)	));
+ 	}
+	
+	public void listFolderChain() {
+		Integer folderId=getParaToInt();
+		renderJson(Ret.ok("diskList", service.listFolderChain(folderId)));
+	}
 }

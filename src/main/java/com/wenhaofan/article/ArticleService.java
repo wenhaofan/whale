@@ -86,4 +86,7 @@ public class ArticleService {
 		Db.update("update article set pv=pv+1 where pkId="+pkId);
 	}
 
+	public List<Article> listRecent(){
+		return dao.find("select title,identify from article where state=1 order by gmtCreate desc limit 6");
+	}
 }
