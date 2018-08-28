@@ -47,8 +47,8 @@ public class BaseController extends Controller{
 			agentUser.setName("admin");
 		}else {
 			agentUser=new AgentUser();
-			agentUser.setCookie(cookie);
 		}
+		agentUser.setCookie(cookie);
 		agentUserService.save(agentUser);
 		//设置cookie
 		setCookie(AgentUserService.AGENT_USER_COOKIE_KEY,cookie,AgentUserService.AGENT_USER_COOKIE_AGE);

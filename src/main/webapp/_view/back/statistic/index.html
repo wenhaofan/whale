@@ -1,93 +1,71 @@
 <script src="/assets/echarts/echarts.js"></script>
 <script src="/assets/kit/DateUtil.js"></script>
-<style>
-.access-statistic-item{
-	margin-left:1rem;
-	width:48%;
-}
-.info-statistic-item{
-	margin-left:1rem;
-}
-.info-block{
-	width:300px;
-	height:130px;
-	border-radius:10px;
-	margin:1rem 1rem;
-	margin-top:0px;
-	color: white;
-}
-
-.divide-line{
-	margin-bottom:1rem;
-}
-
-.info-block-left{
-	display: inline-block;
-	margin-left: 24px;
-    padding-right: 16px;
-}
-
-.info-block-middle p,.info-block-right p{
- text-align: center;
-}
-.info-block-middle>div,.info-block-right>div{
- 	position: absolute;
-    top: 50%;
-    left:50%;
-    height: 240px;
-    margin-top: -30px; /* 盒子本身高度的一半 */
-    margin-left:-30px;
-}
-.info-block>div:nth-child(2),.info-block>div:nth-child(3){
-	width:94px;
-	height:130px;
-	display:inline-block;
-	vertical-align: top;
-	position:relative;
-}
-.info-block>div:nth-child(1),.info-block>div:nth-child(2){
-	border-right:1px solid #ececec;
-}
-.info-block-left i{
-	font-size:60px;
-	line-height: 130px;
-}
-.text-right{
-	text-align: right;
-}
-.text-big{
-	font-size: 1.5rem;
-}
-</style>
-
+<link rel="stylesheet" href="/assets/admin/css/statistic.css">
 <script type="text/javascript">
-$(function(){
-	//获取本月发表文章的数量
-	$.ajax({
-		url:"/admin/api/statistic/articleNum/",
-		type:"post",
-		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(new Date())},
+(function(){
+	
+	window.statistic={
+		countArticle:function(paras){
+			$.ajax({
+				url:"/admin/api/statistic/articleNum/",
+				type:"post",
+				data:paras.data,
+				success:function(data){
+					if(fl.isOk(data)){
+						paras.success(data);
+					}
+				}
+			})
+		},
+		countComment:function(paras){
+			$.ajax({
+				url:"/admin/api/statistic/commentNum/",
+				type:"post",
+				data:paras.data,
+				success:function(data){
+					if(fl.isOk(data)){
+						paras.success(data);
+					}
+				}
+			})
+		}
+	}
+	//初始化文章统计
+	statistic.countArticle({
+		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(dateUtil.getTodayEnd())},
 		success:function(data){
-			if(fl.isOk(data)){
-				$(".article-month-num").text(data.articleNum);
-			}
+			$(".article-month-num").text(data.articleNum);
+		}
+	})
+	statistic.countArticle({
+		data:{},
+		success:function(data){
+			$(".article-total-num").text(data.articleNum);
 		}
 	})
 	
-	$.ajax({
-		url:"/admin/api/statistic/articleNum/",
+	statistic.countComment({
+		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(dateUtil.getTodayEnd())},
 		success:function(data){
-			if(fl.isOk(data)){
-				$(".article-total-num").text(data.articleNum);
-			}
+			$(".comment-month-num").text(data.count);
 		}
 	})
+	
+	statistic.countComment({
+		data:{},
+		success:function(data){
+			$(".comment-total-num").text(data.count);
+		}
+	})
+})();
+$(function(){
+	//获取本月发表文章的数量
+
 })
 </script>
 <div class="layui-bg-green divide-line" style="width:100%;text-align:center;line-height: 30px;border-radius: 5px;">
 	仪表盘
 </div>
-
 <div class="layui-inline info-statistic-item">
 	<div class="info-block" style="background-color: #1E9FFF;">
 		<div class="info-block-left">
@@ -109,7 +87,6 @@ $(function(){
 		</div>
 	</div>
 </div>
-<!--  
 <div class="layui-inline info-statistic-item">
 	<div class="info-block" style="background-color: #5FB878;">
 		<div class="info-block-left">
@@ -118,19 +95,20 @@ $(function(){
 		<div class="info-block-middle">
 			<div>
 				<p>共收到了</p>
-				<p class="text-right text-big">20</p>
-				<p>条留言</p>
+				<p class="text-right text-big comment-total-num"></p>
+				<p>条评论</p>
 			</div>
 		</div>
 		<div class="info-block-right ">
 			<div>
 				<p>本月收到</p>
-				<p class="text-right text-big">10</p>
-				<p>条留言</p>
+				<p class="text-right text-big comment-month-num"></p>
+				<p>条评论</p>
 			</div>
 		</div>
 	</div>
 </div>
+<!--  
 <div class="layui-inline info-statistic-item">
 	<div class="info-block" style="background-color: #7d7c7c;">
 		<div class="info-block-left">

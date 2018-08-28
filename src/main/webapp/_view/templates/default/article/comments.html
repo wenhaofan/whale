@@ -2,7 +2,7 @@
     <div id="comments" class="clearfix">
         <span class="response">Responses  / </span>
 
-        <form method="post"  id="comment-form" class="comment-form" onsubmit="return false;">
+        <form method="post"  id="comment-form" class="comment-form" onsubmit="return fl.subComment();">
             <input type="hidden" name="identify" id="identify" value="#(article.identify)"/>
             <input type="hidden" name="parentId" id="parentId" value=""/>
             <input type="hidden" name="toUserId" id="toUserId" value=""/>
@@ -153,9 +153,7 @@ $(function(){
 		 fl.cancelReply($(this));
 	})
 	
-	$("#comment-submit").click(function(){
-		fl.subComment();
-	})
+ 
 })
 </script>
  

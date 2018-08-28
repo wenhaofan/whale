@@ -39,3 +39,31 @@
 		gmtCreate <= #para(gmtEnd)
 	#end
 #end
+
+
+#sql("commentNum")
+	select
+		count(id)
+	from
+		comment
+	#if(gmtEnd!=null)
+		where
+			gmtCreate >= '#(gmtStart)'
+		and
+			gmtCreate <= '#(gmtEnd)'
+	#end
+#end
+
+
+#sql("diskNum")
+	select
+		count(id)
+	from
+		disk
+	#if(gmtEnd!=null)
+		where
+			gmtCreate >= #para(gmtStart)
+		and
+			gmtCreate <= #para(gmtEnd)
+	#end
+#end

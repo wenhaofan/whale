@@ -1,0 +1,57 @@
+.access-statistic-item{
+	margin-left:1rem;
+	width:48%;
+}
+.info-statistic-item{
+	margin-left:1rem;
+}
+.info-block{
+	width:300px;
+	height:130px;
+	border-radius:10px;
+	margin:1rem 1rem;
+	margin-top:0px;
+	color: white;
+}
+
+.divide-line{
+	margin-bottom:1rem;
+}
+
+.info-block-left{
+	display: inline-block;
+	margin-left: 24px;
+    padding-right: 16px;
+}
+
+.info-block-middle p,.info-block-right p{
+ text-align: center;
+}
+.info-block-middle>div,.info-block-right>div{
+ 	position: absolute;
+    top: 50%;
+    left:50%;
+    height: 240px;
+    margin-top: -30px; /* 盒子本身高度的一半 */
+    margin-left:-30px;
+}
+.info-block>div:nth-child(2),.info-block>div:nth-child(3){
+	width:94px;
+	height:130px;
+	display:inline-block;
+	vertical-align: top;
+	position:relative;
+}
+.info-block>div:nth-child(1),.info-block>div:nth-child(2){
+	border-right:1px solid #ececec;
+}
+.info-block-left i{
+	font-size:60px;
+	line-height: 130px;
+}
+.text-right{
+	text-align: right;
+}
+.text-big{
+	font-size: 1.5rem;
+}
