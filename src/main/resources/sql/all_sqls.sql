@@ -33,8 +33,8 @@
 #namespace("adminKv")
 #include("/back/kv.sql")
 #end
-#namespace("statistic")
-#include("/back/statistic.sql")
+#namespace("statistics")
+#include("/back/statistics.sql")
 #end
 #namespace("disk")
 #include("/back/disk.sql")

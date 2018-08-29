@@ -6,7 +6,7 @@
 	where
 		1=1
 		#@valid("")
-		and pkId in (
+		and id in (
 			select 
 				articleId
 			from
@@ -37,7 +37,7 @@
 
 	#for(metaId:metaIds)
 		  and  
-			pkId in(
+			id in(
 		 		select
 					cid 
 				from

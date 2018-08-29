@@ -64,13 +64,13 @@
 				
 					#for(item:htmlActions)
 						<tr>
-							<td>#(item.pkId)</td>
+							<td>#(item.id)</td>
 							<td>#(item.path)</td>
 							<td>#(item.action)</td>
 							<td>#date(item.gmtCreate,"yyyy-MM-dd HH:mm:ss")</td>
 							<td>				
-								<button type="button" class="btn btn-default btn-sm viewDelete" actionId="#(item.pkId)">删除</button>		
-								<button type="button" id="" class="btn btn-default btn-sm update"  data-toggle="modal" data-target="#myModal" actionId="#(item.pkId)" onclick="update()">修改</button>		
+								<button type="button" class="btn btn-default btn-sm viewDelete" actionId="#(item.id)">删除</button>		
+								<button type="button" id="" class="btn btn-default btn-sm update"  data-toggle="modal" data-target="#myModal" actionId="#(item.id)" onclick="update()">修改</button>		
 								<!--  -->
 							</td>
 						</tr>
@@ -113,7 +113,7 @@
       <div class="modal-body">
        	<form action="" id="form" enctype="multipart/form-data" method="post">
        				<input type="hidden" name="type">
-       				<input type="hidden" name="pkId">
+       				<input type="hidden" name="id">
 					<input type="file" name="upfile">
        		访问路径:<input type="text" name="action">
        		
@@ -155,10 +155,10 @@
 	function submitForm(){
 		var url=$("#form").attr("action");
 		var formData = new FormData();
-		var pkId=$("input[name='pkId']").val();
+		var id=$("input[name='id']").val();
 		
 		var file=$("#form").find("input[type='file']")[0].files[0];
-		formData.append("ha.pkId",pkId);
+		formData.append("ha.id",id);
    		formData.append("upfile",file);
    		formData.append("ha.action",$("input[name='action']").val());
 			
@@ -228,7 +228,7 @@
 			$.ajax({
 				url:"/admin/diy/action/update/"+id,
 				success:function(data){
-					$("input[name='pkId']").val(data.pkId);
+					$("input[name='id']").val(data.id);
 					$("input[name='action']").val(data.action);
 					$("input[name='upfile']").hide();
 					viewUpdate();

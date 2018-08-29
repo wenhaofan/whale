@@ -9,13 +9,13 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings({"serial", "unchecked"})
 public abstract class BaseHtmlAction<M extends BaseHtmlAction<M>> extends Model<M> implements IBean {
 
-	public M setPkId(java.lang.Long pkId) {
-		set("pkId", pkId);
+	public M setId(java.lang.Long id) {
+		set("id", id);
 		return (M)this;
 	}
 	
-	public java.lang.Long getPkId() {
-		return getLong("pkId");
+	public java.lang.Long getId() {
+		return getLong("id");
 	}
 
 	public M setPath(java.lang.String path) {

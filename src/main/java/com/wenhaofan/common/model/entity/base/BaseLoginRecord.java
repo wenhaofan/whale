@@ -9,13 +9,13 @@ import com.jfinal.plugin.activerecord.IBean;
 @SuppressWarnings({"serial", "unchecked"})
 public abstract class BaseLoginRecord<M extends BaseLoginRecord<M>> extends Model<M> implements IBean {
 
-	public M setPkId(java.lang.Integer pkId) {
-		set("pkId", pkId);
+	public M setId(java.lang.Integer id) {
+		set("id", id);
 		return (M)this;
 	}
 	
-	public java.lang.Integer getPkId() {
-		return getInt("pkId");
+	public java.lang.Integer getId() {
+		return getInt("id");
 	}
 
 	public M setTime(java.util.Date time) {

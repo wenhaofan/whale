@@ -3,7 +3,7 @@
 #end
 
 #sql("listHotArticle")
-	select pkId,title,gmtCreate,readNum,content from article order by readNum desc limit 0,5
+	select id,title,gmtCreate,readNum,content from article order by readNum desc limit 0,5
 #end
 
 #sql("getBlogger")
@@ -23,5 +23,5 @@
 	WHERE
 		articleCategory.articleId =#para(0)
 		AND 
-		category.pkId = articleCategory.categoryId
+		category.id articleCategory.categoryId
 #end

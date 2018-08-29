@@ -1,6 +1,6 @@
 #sql("listArticle")
 	select 
-		pkId,
+		id,
 		title,
 		content,
 		gmtModified,
@@ -14,9 +14,9 @@
 		1=1
 
 		#if(articles!=null&&!articles.isEmpty())
-			and pkId not in (
+			and id not in (
 						#for(article:articles)
-							#(article.pkId) 
+							#(article.id) 
 							#if(for.last!=true)
 							,
 							#end

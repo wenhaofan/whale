@@ -43,7 +43,7 @@ public class AdminArticleService {
 	}
 	
 	public void saveOrUpdate(Article article,List<Meta> tags,List<Meta> categorys) {
-		if(article.getPkId()==null) {
+		if(article.getId()==null) {
 			save(article, tags, categorys);
 		}else {
 			update(article, tags, categorys);
@@ -74,7 +74,7 @@ public class AdminArticleService {
 		article.setGmtCreate(new Date());
 		article.save();
 		
-		int articleId=article.getPkId();
+		int articleId=article.getId();
 		
 		if(ListKit.notBlank(categorys)) {
 			mservice.saveMetas(categorys, articleId);
@@ -92,12 +92,12 @@ public class AdminArticleService {
 		
 		if(StrKit.notBlank(identify)) {
 			Article tempArticle=articleService.getArticle(identify);
-			if(tempArticle!=null&&tempArticle.getPkId().equals(article.getPkId())) {
+			if(tempArticle!=null&&tempArticle.getId().equals(article.getId())) {
 				new MsgException("路径已存在！");
 			}
 		}else {
 			//默认路径为创建时间
-			Article tempArticle=article.findById(article.getPkId());
+			Article tempArticle=article.findById(article.getId());
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
 			sdf.format(tempArticle.getGmtCreate());
 			article.setIdentify(identify);
@@ -105,7 +105,7 @@ public class AdminArticleService {
 		
 		article.update();
 		
-		int articleId=article.getPkId();
+		int articleId=article.getId();
 		
 		//删除文章的关联
 		mservice.deleteRelevancy(articleId);
@@ -134,20 +134,20 @@ public class AdminArticleService {
 	}
 
 	
-	public Ret delete(Integer pkId) {
+	public Ret delete(Integer id) {
 		Article article=new Article();
-		article.setPkId(pkId);
+		article.setId(id);
 		article.setState(Article.STATE_DISCARD);
 		return article.update()?Ret.ok():Ret.fail();
 	}
 	/**
 	 * 从删除状态修改为发布状态
-	 * @param pkId
+	 * @param id
 	 * @return
 	 */
-	public Ret recover(Integer pkId) {
+	public Ret recover(Integer id) {
 		Article article=new Article();
-		article.setPkId(pkId);
+		article.setId(id);
 		article.setState(Article.STATE_PUBLISH);
 		return article.update()?Ret.ok():Ret.fail();
 	}
@@ -175,7 +175,7 @@ public class AdminArticleService {
 
 	
 	public int count(Article article) {
-		List<Article> articles = article.find("select count(pkId) as count from article where state=?",
+		List<Article> articles = article.find("select count(id) as count from article where state=?",
 				PropKit.get("is_valid"));
 
 		if (articles != null && articles.size() > 0) {

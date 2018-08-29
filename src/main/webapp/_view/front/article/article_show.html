@@ -41,7 +41,7 @@
 			<p class="article-info">
 				分类:
 					#for(category:article.categorys)
-						<a href="/index?c=#(category.pkId)" title="查看#(category.ukName)开发中的文章">#(category.ukName)</a>
+						<a href="/index?c=#(category.id)" title="查看#(category.ukName)开发中的文章">#(category.ukName)</a>
 						#if(for.last!=true)
 									 、 
 								#end 
@@ -58,17 +58,17 @@
 	
 				#set(lastArticle=lastNextArticle.get(0))
 				<p class="last">
-					上一篇：<a href="/article/#(lastArticle.pkId)">#(lastArticle.title)</a>
+					上一篇：<a href="/article/#(lastArticle.id)">#(lastArticle.title)</a>
 				</p>
 				#set(nextArticle=lastNextArticle[1])
 				<p class="next">
-					上一篇：<a href="/article/#(nextArticle.pkId)">#(nextArticle.title)</a>
+					上一篇：<a href="/article/#(nextArticle.id)">#(nextArticle.title)</a>
 				</p>
 			</nav>
 		</article>
 		<div class="" style="margin: 2rem 0;">
 			<!--PC和WAP自适应版-->
-			<div id="SOHUCS" sid="#(article.pkId)"></div>
+			<div id="SOHUCS" sid="#(article.id)"></div>
 			<script type="text/javascript">
 				(function() {
 					var appid = 'cytcLUopr';

@@ -24,8 +24,8 @@ public class ArticleSeo extends BaseSeoInterceptor {
 		List<Meta> categorys=c.getAttr("categorys");
 		
 		setSeoTitle(c, article.getTitle());
-		setSeoKeyWords(c, keywords(tags,categorys,article.getTitle()));
-		setSeoDescr(c, article.getTitle());
+		setSeoKeyWords(c,keywords(tags,categorys,article.getTitle())+",范文皓,范文皓的个人博客");
+		setSeoDescr(c, article.getTitle()+",范文皓,范文皓的个人博客");
 	}
 
 	public String keywords(List<Meta> tags,List<Meta> categorys,String title) {

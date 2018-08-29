@@ -36,11 +36,11 @@ public class LoginService {
 		LoginRecord log=new LoginRecord();
 		log.setIp(ip);
 		log.setTime(new Date());
-		log.setUserId(loginUser.getPkId());
+		log.setUserId(loginUser.getId());
 		log.save();
 		Session session=new Session();
 		session.setId(StrKit.getRandomUUID());
-		session.setUserId(loginUser.getPkId());
+		session.setUserId(loginUser.getId());
 		
 		long liveSecond=isKeep?365*24*60*60:60*60;
 		

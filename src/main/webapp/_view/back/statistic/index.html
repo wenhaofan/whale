@@ -5,21 +5,9 @@
 (function(){
 	
 	window.statistic={
-		countArticle:function(paras){
+		countByDate:function(paras){
 			$.ajax({
-				url:"/admin/api/statistic/articleNum/",
-				type:"post",
-				data:paras.data,
-				success:function(data){
-					if(fl.isOk(data)){
-						paras.success(data);
-					}
-				}
-			})
-		},
-		countComment:function(paras){
-			$.ajax({
-				url:"/admin/api/statistic/commentNum/",
+				url:"/admin/api/statistic/"+paras.methodName+"Num/",
 				type:"post",
 				data:paras.data,
 				success:function(data){
@@ -30,33 +18,53 @@
 			})
 		}
 	}
-	//初始化文章统计
-	statistic.countArticle({
-		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(dateUtil.getTodayEnd())},
-		success:function(data){
-			$(".article-month-num").text(data.articleNum);
-		}
-	})
-	statistic.countArticle({
+
+	statistic.countByDate({
+		methodName:"article",
 		data:{},
 		success:function(data){
-			$(".article-total-num").text(data.articleNum);
+			$(".article-total-num").text(data.count);
 		}
 	})
-	
-	statistic.countComment({
-		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(dateUtil.getTodayEnd())},
-		success:function(data){
-			$(".comment-month-num").text(data.count);
-		}
-	})
-	
-	statistic.countComment({
+	statistic.countByDate({
+		methodName:"comment",
 		data:{},
 		success:function(data){
 			$(".comment-total-num").text(data.count);
 		}
 	})
+	
+	statistic.countByDate({
+		methodName:"disk",
+		data:{},
+		success:function(data){
+			$(".disk-total-num").text(data.count);
+		}
+	})
+	
+	statistic.countByDate({
+		methodName:"comment",
+		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(dateUtil.getTodayEnd())},
+		success:function(data){
+			$(".comment-month-num").text(data.count);
+		}
+	})
+	statistic.countByDate({
+		methodName:"article",
+		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(dateUtil.getTodayEnd())},
+		success:function(data){
+			$(".article-month-num").text(data.count);
+		}
+	})
+
+	statistic.countByDate({
+		methodName:"disk",
+		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(dateUtil.getTodayEnd())},
+		success:function(data){
+			$(".disk-month-num").text(data.count);
+		}
+	})
+
 })();
 $(function(){
 	//获取本月发表文章的数量
@@ -85,6 +93,7 @@ $(function(){
 				<p>篇文章</p>
 			</div>
 		</div>
+		
 	</div>
 </div>
 <div class="layui-inline info-statistic-item">
@@ -104,6 +113,27 @@ $(function(){
 				<p>本月收到</p>
 				<p class="text-right text-big comment-month-num"></p>
 				<p>条评论</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="layui-inline info-statistic-item">
+	<div class="info-block" style="background-color: #e8b30c;">
+		<div class="info-block-left">
+			<i class="layui-icon layui-icon-chat"></i>
+		</div>
+		<div class="info-block-middle">
+			<div>
+				<p>共上传了</p>
+				<p class="text-right text-big disk-total-num"></p>
+				<p>个附件</p>
+			</div>
+		</div>
+		<div class="info-block-right ">
+			<div>
+				<p>本月上传</p>
+				<p class="text-right text-big disk-month-num"></p>
+				<p>个附件</p>
 			</div>
 		</div>
 	</div>

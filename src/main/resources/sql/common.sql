@@ -5,7 +5,7 @@
 文章分类通用组件
 #define queryMeta()
 	#if(mid!=null)
-		and pkId in
+		and id in
 					(
 						select 
 							cid 

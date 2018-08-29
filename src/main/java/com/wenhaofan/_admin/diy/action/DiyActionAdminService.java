@@ -53,7 +53,7 @@ public class DiyActionAdminService {
 	
 	public Ret remove(Integer actionId) {
 		HtmlAction action=new HtmlAction();
-		action.setPkId(actionId.longValue());
+		action.setId(actionId.longValue());
 		reload();
 		return action.delete()?Ret.ok():Ret.fail();
 	}
@@ -94,7 +94,7 @@ public class DiyActionAdminService {
 		return false;
 	}
 	
-	public HtmlAction getHtmlAction(Integer pkId) {
-		return dao.findById(pkId);
+	public HtmlAction getHtmlAction(Integer id) {
+		return dao.findById(id);
 	}
 }

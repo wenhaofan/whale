@@ -12,8 +12,10 @@ public class StatisticApi extends BaseController{
 	
 	@Inject
 	private StatisticArticleService statisticArticleService;
+
 	@Inject
-	private StatisticCommentService statisticCommentService;
+	private StatisticsService statisticsService;
+	
 	public void statisticsAccessNumDays() {
 		renderJson(statisticAccessLogService.accessNum(getParaToInt()));
 	}
@@ -29,17 +31,23 @@ public class StatisticApi extends BaseController{
 	public void articleNum() {
 		Date gmtStart=getParaToDate("gmtStart");
 		Date gmtEnd=getParaToDate("gmtEnd");
-		
-		renderJson(statisticArticleService.articleNum(gmtStart, gmtEnd));
+		renderJson(statisticsService.countByDate("article", gmtStart, gmtEnd));
 	}
 	/**
-	 * 根据时间获取评论数
+	 * 根据时间区间获取评论数
 	 */
 	public void commentNum() {
 		Date gmtStart=getParaToDate("gmtStart");
 		Date gmtEnd=getParaToDate("gmtEnd");
-		renderJson(statisticCommentService.commentNum(gmtStart, gmtEnd));
+		renderJson(statisticsService.countByDate("comment", gmtStart, gmtEnd));
 	}
-	
+	/**
+	 * 根据时间区间获取附件数
+	 */
+	public void diskNum() {
+		Date gmtStart=getParaToDate("gmtStart");
+		Date gmtEnd=getParaToDate("gmtEnd");
+		renderJson(statisticsService.countByDate("disk", gmtStart, gmtEnd));
+	}
 	
 }

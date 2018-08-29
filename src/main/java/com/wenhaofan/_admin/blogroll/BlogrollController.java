@@ -30,7 +30,7 @@ public class BlogrollController extends BaseController {
 	public void remove(){
 		Integer id=getParaToInt(0);
 		Blogroll blogroll=new Blogroll();
-		blogroll.setPkId(id);
+		blogroll.setId(id);
 	
 		blogrollService.remove(blogroll);
 		setAttr("blogrollMes","删除成功!");

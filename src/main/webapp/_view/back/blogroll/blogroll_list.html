@@ -5,13 +5,13 @@ layui.use('form',function(){
 })
 </script>
 <script type="text/javascript">
-	function blogrollUpdate(pkId){
+	function blogrollUpdate(id){
 		
 		$("#updateAndAdd").attr("action","/admin/blogroll/doUpdate");
 		$("#myModalLabel").html("修改友链");
 		$("#formSubmit").val("确认修改");
 		$.ajax({
-				url:"/admin/blogroll/update/"+pkId,
+				url:"/admin/blogroll/update/"+id,
 				type:"get",
 				success:function(result){
 					if(result.state=='fail'){

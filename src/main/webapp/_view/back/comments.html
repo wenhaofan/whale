@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="/assets/admin/css/article-list.css">
 <div class="layui-row ">
 	<div class="layui-col-lg12 layui-col-md12">
-		<blockquote class="page-title">评论管理</blockquote>
+		<blockquote class="page-title">文章列表</blockquote>
 	</div>
 </div>
 <div class="site-block">
 	<form class="layui-form" method="post">
 		<div class="layui-form-item">
-			<label class="layui-form-label">文章:</label>
+			<label class="layui-form-label">分类:</label>
 			<div class="layui-input-block category-select">
 				<select name="categoryId" id="category-select"
 					lay-filter="category-select">
@@ -18,9 +18,9 @@
 			<label class="layui-form-label">状态:</label>
 			<div class="layui-input-block state-select">
 				<select name="state" id="state-select" lay-filter="state-select">
-					<option value="1">未回复</option>
-					<option value="0">已删除</option>
-					<option value="2">已回复</option>
+					<option value="1">发布</option>
+					<option value="0">草稿</option>
+					<option value="2">废弃</option>
 					<option value="-1">不限</option>
 				</select>
 			</div>

@@ -21,7 +21,7 @@ public class LoginInterceptor implements Interceptor{
 		}else {
 			String actionKey=inv.getActionKey();
 			//只有登陆了才能访问后台
-			if(!actionKey.startsWith("/admin")) {
+			if(!actionKey.contains("/admin")) {
 				inv.invoke();
 				return;
 			}

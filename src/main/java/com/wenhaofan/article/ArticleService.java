@@ -36,7 +36,7 @@ public class ArticleService {
 		JsoupFilter.filterArticleList(page.getList(), 30, 200);
 		
 		for(Article article:page.getList()) {
-			List<Meta> metas=metaService.listByCId(article.getPkId(), MetaTypeEnum.CATEGORY.toString());
+			List<Meta> metas=metaService.listByCId(article.getId(), MetaTypeEnum.CATEGORY.toString());
 			article.setMetas(metas);
 		}
 
@@ -68,7 +68,7 @@ public class ArticleService {
 	 * @return
 	 */
 	public List<Article> lastNextArticle(Article article){
-		SqlPara sql=dao.getSqlPara("article.lastNextArticle", article.getPkId());
+		SqlPara sql=dao.getSqlPara("article.lastNextArticle", article.getId());
 		List<Article> articles= dao.find(sql);
 		
 		if(articles==null||articles.isEmpty()) {
@@ -82,8 +82,8 @@ public class ArticleService {
 	}
 	
 	
-	public void addReadNum(Integer pkId){
-		Db.update("update article set pv=pv+1 where pkId="+pkId);
+	public void addReadNum(Integer id){
+		Db.update("update article set pv=pv+1 where id="+id);
 	}
 
 	public List<Article> listRecent(){

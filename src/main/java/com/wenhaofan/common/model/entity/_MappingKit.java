@@ -17,12 +17,12 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 public class _MappingKit {
 
 	public static void mapping(ActiveRecordPlugin arp) {
-		arp.addMapping("article", "pkId", Article.class);
-		arp.addMapping("blogroll", "pkId", Blogroll.class);
-		arp.addMapping("login_record", "pkId", LoginRecord.class);
-		arp.addMapping("user", "pkId", User.class);
+		arp.addMapping("article", "id", Article.class);
+		arp.addMapping("blogroll", "id", Blogroll.class);
+		arp.addMapping("login_record", "id", LoginRecord.class);
+		arp.addMapping("user", "id", User.class);
 		arp.addMapping("session", "id", Session.class);	
-		arp.addMapping("html_action","pkId", HtmlAction.class);
+		arp.addMapping("html_action","id", HtmlAction.class);
 		arp.addMapping("meta", "id",Meta.class);
 		arp.addMapping("relevancy","id",Relevancy.class);
 		arp.addMapping("kv", "id",Kv.class);

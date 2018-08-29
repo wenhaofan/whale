@@ -18,7 +18,7 @@ public class StatisticAccessLogService {
 	
 	public Ret accessNum(Integer days){
 		
-		SqlPara sql=Db.getSqlPara("statistic.statisticsNum", Kv.by("days", days));
+		SqlPara sql=Db.getSqlPara("statistics.beforeNum", Kv.by("days", days));
 		
 		List<Record> list= Db.find(sql);
 		

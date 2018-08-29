@@ -33,9 +33,9 @@ public class BlogrollService{
 	}
 
 	
-	public Blogroll getBlogrollById(Integer pkId) {
+	public Blogroll getBlogrollById(Integer id) {
 		// TODO Auto-generated method stub
-		return dao.findById(pkId);
+		return dao.findById(id);
 	}
 
 	

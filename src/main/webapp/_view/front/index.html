@@ -68,7 +68,7 @@
 			<div class="xs-top top-article-blok col-xs-12 col-md-6" style="">
 				<article class="" >
 					<h3 class="top-article-title">
-						<a href="/article/#(article.pkId)" title="查看#(article.title)全文">#(article.title)</a>
+						<a href="/article/#(article.id)" title="查看#(article.title)全文">#(article.title)</a>
 					</h3>
 					<p class="top-article-info">
 						<span class="glyphicon glyphicon-arrow-right"></span> 
@@ -84,7 +84,7 @@
 					#(article.readNum)
 					</p>
 					<div class="top-article-content"   name="content_a">
-						<a href="/article/#(article.pkId)"  title="查看#(article.ukName)" >
+						<a href="/article/#(article.id)"  title="查看#(article.ukName)" >
 							#(article.content) </a>
 						
 					</div>
@@ -119,7 +119,7 @@
 				</div>
 				<!--最新文章显示部分-->
 				<div class="new-article-block col-xs-12 col-sm-11 col-md-11">
-					<a href="/article/#(article.pkId)"
+					<a href="/article/#(article.id)"
 						class="new-article-content-img hidden-xs">
 						#if(article.thumbImg!=null)
 							<img src="#(article.thumbImg)" width="135px;" height="115px;" />
@@ -128,7 +128,7 @@
 					<div class="new-article-content-block" >
 						<article style="height:107px;overflow: hidden; text-overflow: ellipsis;">
 							<h3 class="new-article-title">
-								<a href="/article/#(article.pkId)"
+								<a href="/article/#(article.id)"
 									title="查看#(article.title)全文">#(article.title)</a>
 							</h3>
 	
@@ -144,7 +144,7 @@
 									#(article.readNum)
 							</p>
 							<div class="new-article-content">
-									<a href="/article/#(article.pkId)" title="查看#(article.title)全文" class="newArticle">
+									<a href="/article/#(article.id)" title="查看#(article.title)全文" class="newArticle">
 									#(article.content) </a>
 							</div>
 						</article>

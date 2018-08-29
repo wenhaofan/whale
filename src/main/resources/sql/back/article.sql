@@ -1,6 +1,6 @@
 #sql("listArticle")
 	select
-		pkId,
+		id,
 		title,
 		content,
 		gmtCreate,

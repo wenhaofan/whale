@@ -19,7 +19,7 @@ public class LoginController extends BaseController{
 
 	public void index(){
 		if(isLogin()) {
-			render("/admin");
+			render("/admin/");
 			return;
 		}
 		

@@ -1,4 +1,4 @@
-#sql("statisticsNum")
+#sql("beforeNum")
 	select 
 		DATE_FORMAT(a.gmtcreate,'%m-%d') as gmtcreate,ifnull(b.count,0) as count
 	from (
@@ -20,50 +20,22 @@
 	select
 		title,
 		pv,
-		pkId
+		id
 	from
 		article
 		order by pv desc limit 0,#(size)
 #end
 
-#sql("articleNum")
-	select
-		count(pkId)
-	from
-		article
-	#if(gmtEnd!=null)
-
-	where
-		gmtCreate >= #para(gmtStart)
-	and
-		gmtCreate <= #para(gmtEnd)
-	#end
-#end
-
-
-#sql("commentNum")
+#sql("countByDate")
 	select
 		count(id)
 	from
-		comment
+		#(tableName)
+		
 	#if(gmtEnd!=null)
 		where
-			gmtCreate >= '#(gmtStart)'
+			gmtCreate >= '#date(gmtStart,"yyyy-MM-dd HH:mm:ss")'
 		and
-			gmtCreate <= '#(gmtEnd)'
-	#end
-#end
-
-
-#sql("diskNum")
-	select
-		count(id)
-	from
-		disk
-	#if(gmtEnd!=null)
-		where
-			gmtCreate >= #para(gmtStart)
-		and
-			gmtCreate <= #para(gmtEnd)
+			gmtCreate <= '#date(gmtEnd,"yyyy-MM-dd HH:mm:ss")'
 	#end
 #end

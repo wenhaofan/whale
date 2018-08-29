@@ -66,10 +66,10 @@ public class DiskService {
 	}
 	/**
 	 * 假删除
-	 * @param pkId
+	 * @param id
 	 */
-	public void remove(Integer pkId) {
-		dao.findById(pkId).setState(1).setGmtModify(new Date()).update();	
+	public void remove(Integer id) {
+		dao.findById(id).setState(1).setGmtModify(new Date()).update();	
 	}
 	
 	/**
