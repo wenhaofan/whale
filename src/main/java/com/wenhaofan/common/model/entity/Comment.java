@@ -14,17 +14,17 @@ public class Comment extends BaseComment<Comment> {
 	
 	private AgentUser user;
 	
-	private Integer pageNum;
-	
+ 
 	public Integer getPageNum() {
-		return pageNum;
+		return getInt("pageNum");
 	}
 
 	public void setPageNum(Integer pageNum) {
 		if(pageNum==0) {
 			pageNum=1;
 		}
-		this.pageNum = pageNum;
+ 
+		this.put("pageNum", pageNum);
 	}
 
 	public List<Comment> getChilds() {

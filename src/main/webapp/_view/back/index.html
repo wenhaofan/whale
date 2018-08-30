@@ -17,8 +17,6 @@
 var fl=new $.fl();
 
 addEventListener("load",function(){
-	
-	
 	$(".menu-tree li").each(function(){
 		if($(this).find("a").attr("href")=="#(requestUrl)"){
 			$(this).addClass("layui-this")
@@ -58,8 +56,11 @@ a:hover{
 .right-nva{
 	margin-bottom: 24px;
 }
+.swal2-container{
+	z-index:19891015!important;
+}
 .swal2-modal .swal2-spacer {
-
+	
  	background-color:rgb(255,255,255);
  }
  .layui-body{overflow-y: scroll;}

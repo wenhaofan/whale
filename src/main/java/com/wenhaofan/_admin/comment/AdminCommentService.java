@@ -2,6 +2,7 @@ package com.wenhaofan._admin.comment;
 
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
+import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan.common.aop.Inject;
@@ -16,7 +17,13 @@ public class AdminCommentService extends BaseController {
 	
 	public Page<Comment> page(Integer pageNumber,Integer pageSize,Boolean isAduit) {	
 		SqlPara sqlPara=dao.getSqlPara("adminComment.page", Kv.by("isAduit", isAduit));
-		return dao.paginate(pageNumber, pageSize, sqlPara);
+		Page<Comment> page= dao.paginate(pageNumber, pageSize, sqlPara);
+		
+		 for(Comment c:page.getList()) {
+			 Integer beforeRow=Db.queryInt("select count(id) from comment where identify= ? and gmtCreate > ?",c.getIdentify(),c.getGmtCreate());
+			 c.setPageNum(beforeRow/6);
+		 }
+		 return page;
 	}
 	
 	public Ret reply(Integer toId,String content,AgentUser user) {
@@ -28,7 +35,7 @@ public class AdminCommentService extends BaseController {
 		comment.setEmail(user.getEmail());
 		comment.setIdentify(toComment.getIdentify());
 		comment.setName(user.getName());
-		comment.setId(user.getId());
+		comment.setUserId(user.getId());
 		comment.setWebsite(user.getWebsite());
 		comment.setParentId(toId);
 		comment.setToUserId(toComment.getUserId());

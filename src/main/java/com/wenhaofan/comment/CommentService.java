@@ -91,7 +91,6 @@ public class CommentService {
 		 List<Comment> comments=dao.find("select * from comment order by gmtCreate desc limit 6");
 		 for(Comment c:comments) {
 			 Integer beforeRow=Db.queryInt("select count(id) from comment where identify= ? and gmtCreate > ?",c.getIdentify(),c.getGmtCreate());
-		 
 			 c.setPageNum(beforeRow/6);
 		 }
 		 return comments;

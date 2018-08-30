@@ -9,6 +9,7 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.ext.interceptor.SessionInViewInterceptor;
+import com.jfinal.json.MixedJsonFactory;
 import com.jfinal.kit.PathKit;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
@@ -42,6 +43,7 @@ public class BlogConfig extends JFinalConfig {
 	public void configConstant(Constants me) {
 		me.setDevMode(true);
 		me.setControllerFactory(new AopControllerFactory());
+		me.setJsonFactory(new MixedJsonFactory());
 		me.setError404View("/_view/templates/default/404.html");
 	}
 

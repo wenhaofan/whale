@@ -36,8 +36,8 @@
 		<updatePolicy>daily</updatePolicy> </snapshots> </repository> </repositories -->
 
 	<dependencies>
-	 <!--
-			此处的 scope 值为 compile 仅为支持 IDEA 下启动项目
+	
+		 <!--	此处的 scope 值为 compile 仅为支持 IDEA 下启动项目
 			打 war 包时需要改成 provided，以免将一些无用的 jar 打进去
 		 <scope>compile</scope> -->
 		 <dependency>
@@ -107,13 +107,7 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.json/json -->
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20160810</version>
-		</dependency>
-
+	
 
 		<dependency>
 			<groupId>com.qiniu</groupId>
@@ -126,12 +120,7 @@
 			<version>3.3.1</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.6.2</version>
-			<scope>compile</scope>
-		</dependency>
+	
 		<dependency>
 			<groupId>com.qiniu</groupId>
 			<artifactId>happy-dns-java</artifactId>
@@ -139,13 +128,12 @@
 			<scope>compile</scope>
 		</dependency>
 
-
-		<dependency>
-			<!-- jsoup HTML parser library @ https://jsoup.org/ -->
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.10.3</version>
+<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>fastjson</artifactId>
+		    <version>1.2.47</version>
 		</dependency>
+		
 
 		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 		<dependency>
