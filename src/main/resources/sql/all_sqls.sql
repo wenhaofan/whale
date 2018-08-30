@@ -39,7 +39,9 @@
 #namespace("disk")
 #include("/back/disk.sql")
 #end
-
+#namespace("adminComment")
+#include("/back/comment.sql")
+#end
 
 加载通用sql组件
 #include("common.sql");

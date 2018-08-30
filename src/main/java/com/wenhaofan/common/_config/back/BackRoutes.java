@@ -7,6 +7,8 @@ import com.wenhaofan._admin.basic.BasicAdminApi;
 import com.wenhaofan._admin.basic.BasicRouter;
 import com.wenhaofan._admin.basic.KvController;
 import com.wenhaofan._admin.blogroll.BlogrollController;
+import com.wenhaofan._admin.comment.AdminCommentApi;
+import com.wenhaofan._admin.comment.AdminCommentController;
 import com.wenhaofan._admin.disk.DiskApi;
 import com.wenhaofan._admin.disk.DiskController;
 import com.wenhaofan._admin.diy.action.DiyActionAdminController;
@@ -21,7 +23,6 @@ import com.wenhaofan._admin.user.AdminUserController;
 import com.wenhaofan.common.interceptor.AdminIndexInterceptor;
 import com.wenhaofan.common.interceptor.ExceptionInterceptor;
 import com.wenhaofan.common.uplod.FileUploadApi;
-import com.wenhaofan.login.LoginController;
 
 /**
  * 后端路由配置
@@ -36,7 +37,7 @@ public class BackRoutes extends Routes {
 	   addInterceptor(new ExceptionInterceptor());
 	   setBaseViewPath("/_view/back");
 	   add("/admin",IndexAdminController.class,"/");
-	   add("/login",LoginController.class,"/");
+	   
 	   add("/admin/user",AdminUserController.class,"/");
 	   
 	   add("/admin/api/upload",FileUploadApi.class,"/");
@@ -45,20 +46,21 @@ public class BackRoutes extends Routes {
 	   add("/admin/api/blogger", KvController.class,"/");
 	   add("/admin/api/article",ArticleAdminApi.class,"/article/");
 	   add("/admin/api/basic",BasicAdminApi.class);
+	   add("/admin/api/statistic", StatisticApi.class,"");
+	   add("/admin/api/disk",DiskApi.class);
+	   add("/admin/api/comment",AdminCommentApi.class);
+	   
 	   add("/admin/meta", CategoryRouter.class,"/meta/");
 	   add("/admin/article", ArticleAdminController.class,"/article/");
-	   
 	   add("/admin/blogroll", BlogrollController.class,"/blogroll/");
-	
 	   add("/admin/basic",BasicRouter.class,"/basic/");
 	   add("/admin/bloger",KvController.class,"/basic/");
 	   add("/admin/diy/html",DiyAdminController.class,"/diy/");
 	   add("/admin/diy/action", DiyActionAdminController.class,"/diy/");
 	   add("/admin/diy/assets", AssetsAdminController.class,"/diy/");
 	   add("/admin/statistic",StatisticController.class,"/statistic/");
-	   add("/admin/api/statistic", StatisticApi.class,"");
 	   add("/admin/disk", DiskController.class, "/disk/");
-	   add("/admin/api/disk",DiskApi.class);
+	   add("/admin/comment", AdminCommentController.class, "/");
 	}
 
 }

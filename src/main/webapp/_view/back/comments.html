@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="/assets/admin/css/article-list.css">
 <div class="layui-row ">
 	<div class="layui-col-lg12 layui-col-md12">
-		<blockquote class="page-title">文章列表</blockquote>
+		<blockquote class="page-title">评论列表</blockquote>
 	</div>
 </div>
 <div class="site-block">
 	<form class="layui-form" method="post">
 		<div class="layui-form-item">
-			<label class="layui-form-label">分类:</label>
+			<label class="layui-form-label">文章:</label>
 			<div class="layui-input-block category-select">
 				<select name="categoryId" id="category-select"
 					lay-filter="category-select">
@@ -18,9 +18,8 @@
 			<label class="layui-form-label">状态:</label>
 			<div class="layui-input-block state-select">
 				<select name="state" id="state-select" lay-filter="state-select">
-					<option value="1">发布</option>
-					<option value="0">草稿</option>
-					<option value="2">废弃</option>
+					<option value="0">未审核</option>
+					<option value="1">已审核</option>
 					<option value="-1">不限</option>
 				</select>
 			</div>
@@ -29,30 +28,29 @@
 </div>
 <div>
 	<table class="layui-table" id="articles"
-		lay-data="{ id: 'articles',url:'/admin/api/article/list', page:{count:80,limit:10}}"
+		lay-data="{ id: 'articles',url:'/admin/api/comment/page', page:{count:80,limit:10}}"
 		lay-filter="test">
 		<thead>
 			<tr>
 				<th lay-data="{field:'id', sort: true}">ID</th>
-				<th lay-data="{field:'title'}">标题</th>
-				<th lay-data="{field:'readNum', sort: true}">阅读量</th>
-				<th lay-data="{field:'state',templet:'#state-tpl'}">状态</th>
-				<th lay-data="{field:'isOriginal',templet:'#original-tpl'}">原创</th>
-				<th lay-data="{field:'identify'}">访问路径</th>
-				<th lay-data="{field:'id',templet:'#operation-tpl'}">操作</th>
+				<th lay-data="{field:'name'}">姓名</th>
+				<th lay-data="{field:'email'}">邮箱</th>
+				<th lay-data="{field:'content'}">内容</th>
+				<th lay-data="{templet:'#aduit-tpl'}">状态</th>
+				<th lay-data="{templet:'#operation-tpl'}">操作</th>
 			</tr>
 		</thead>
 	</table>
 </div>
 
 
-<script type="text/html" id="state-tpl">
-  #[[ {{#  if(d.state ==0){ }}
-   	{{ "草稿" }}
-  {{#  } else if(d.state==1) { }}
-   	{{ "发布" }}
+<script type="text/html" id="aduit-tpl">
+  #[[ {{#  if(d.aduit){ }}
+   	{{ "审核通过" }}
+  {{#  } else if(d.aduit==null) { }}
+   	{{ "未审核" }}
   {{# }else{ }}
-	{{ "废弃" }}
+	{{ "审核未通过"}}
   {{# }}}
 	]]#
 </script>
@@ -74,12 +72,13 @@
 </script>
 <script type="text/html" id="operation-tpl">
 #[[
-	<button class="layui-btn layui-btn-sm article-update" data-id="{{d.id}}">修改</button>
+	<button class="layui-btn layui-btn-sm article-update" data-id="{{d.id}}">查看所有回复</button>
+	<button class="layui-btn layui-btn-sm article-update" data-id="{{d.id}}">回复</button>
 	
-{{# if(d.state == 2){ }}
-	<button class="layui-btn layui-btn-sm article-recover" data-id="{{d.id}}">恢复</button> 
-{{# } else if(d.state == 1){ }}
-  <button class="layui-btn layui-btn-sm article-remove" data-id="{{d.id}}">删除</button> 
+{{# if(d.aduit == null){ }}
+	<button class="layui-btn layui-btn-sm article-recover" data-id="{{d.id}}">通过</button> 
+{{# } else if(d.aduit == 0){ }}
+  <button class="layui-btn layui-btn-sm article-remove" data-id="{{d.id}}">不通过</button> 
 {{# } }}
 	
 ]]#

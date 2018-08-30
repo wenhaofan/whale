@@ -42,7 +42,7 @@ public class BlogConfig extends JFinalConfig {
 	public void configConstant(Constants me) {
 		me.setDevMode(true);
 		me.setControllerFactory(new AopControllerFactory());
-		me.setError404View("/_view/error/404.html");
+		me.setError404View("/_view/templates/default/404.html");
 	}
 
 

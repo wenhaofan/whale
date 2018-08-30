@@ -18,6 +18,8 @@ public class ExceptionInterceptor implements Interceptor {
 			e.printStackTrace();
 			if(isAjaxRequest(inv)) {
 				inv.getController().renderJson(Ret.fail("msg", "出bug了！"));
+			}else {
+				inv.getController().renderError(404);
 			}
 		}
 	
