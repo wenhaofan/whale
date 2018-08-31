@@ -47,7 +47,7 @@ color:#eb5054;
         <div class="navbar-menu">
          	#for(category:categorys)
          		
-         		<a href="/#(category.id)" class="header-categry #if(category.id==cid)this#end" data-id="#(category.id)">#(category.mname)</a>
+         		<a href="?c=#(category.id)" class="header-categry #if(category.id==cid)this#end" data-id="#(category.id)">#(category.mname)</a>
          	#end
         </div>
         
@@ -68,7 +68,7 @@ color:#eb5054;
             <span class="icon-menu cross"><span class="middle"></span></span>
             <ul  class="categorys">
                 #for(category:categorys)
-                	<li><a href="/#(category.id)"  class="header-categry" data-id="#(category.id)">#(category.mname)</a></li>
+                	<li><a href="?c=#(category.id)"  class="header-categry" data-id="#(category.id)">#(category.mname)</a></li>
          		#end
             </ul>
         </div>

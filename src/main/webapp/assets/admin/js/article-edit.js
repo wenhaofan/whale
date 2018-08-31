@@ -74,7 +74,7 @@ $(document).ready(function () {
 	    
 	    saveArticle({fdata:fdata,success:function(data){
 	    	  fl.alertOk({});
-			  $("#pkId").val(data.article.pkId);
+			  $("#id").val(data.article.id);
 	    }});
 	});
 	
@@ -275,7 +275,7 @@ $(function(){
 
 	    tagInit();
 		 
-		var isUpdate=notNull($("#pkId").val());
+		var isUpdate=notNull($("#id").val());
 		
 		if(isUpdate){
 			$(".page-title").text("修改文章");

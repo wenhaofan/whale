@@ -31,7 +31,7 @@ public class IndexController extends BaseController {
 	private MetaService metaService;
 	
 	public void index() {
-		Integer cid=getParaToInt();
+		Integer cid=getParaToInt("c",null);
 		Integer pageNum = getParaToInt("p",1);
 		Integer limit=getParaToInt("limit", 10);
 		Page<Article> articlePage=articleService.page(pageNum, limit,cid);
@@ -44,23 +44,7 @@ public class IndexController extends BaseController {
 		render("index.html");
 	}
 
-
-	public void page() {
-		Integer[] cids=new Integer[5];
-		for(int i=0,size=5;i<size;i++) {
-			if(getParaToInt(i)!=null) {
-				cids[i]=getParaToInt(i);
-			}
-		}
-		Integer pageNum = getParaToInt("p",1);
-		Integer limit=getParaToInt("limit", 16);
-		Page<Article> articlePage=articleService.page(pageNum, limit, cids);
-		
-		setAttr("articlePage",articlePage);
-		setAttr("cids", cids);
-		render("index.html");
-	}
-	
+ 
 	public void profiles() {
 		render("profiles/profiles.html");
 	}
