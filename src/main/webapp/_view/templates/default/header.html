@@ -63,10 +63,10 @@ color:#eb5054;
         
         <div class="navbar-mobile-menu" onclick="">
             <span class="icon-menu cross"><span class="middle"></span></span>
-            <ul  class="categorys">
-                #for(category:categorys)
-                	<li><a href="?c=#(category.id)"  class="header-categry" data-id="#(category.id)">#(category.mname)</a></li>
-         		#end
+            <ul>
+	              #for(nav:navs)
+	         		<a href="#(nav.url)" class="header-categry ">#(nav.title)</a>
+	         	#end
             </ul>
         </div>
     </div>
