@@ -63,9 +63,9 @@ color:#eb5054;
         
         <div class="navbar-mobile-menu" onclick="">
             <span class="icon-menu cross"><span class="middle"></span></span>
-            <ul>
-	              #for(nav:navs)
-	         		<a href="#(nav.url)" class="header-categry ">#(nav.title)</a>
+            <ul  class="categorys">
+               #for(nav:navs)
+	         		<li><a href="#(nav.url)" class="header-categry ">#(nav.title)</a></li>
 	         	#end
             </ul>
         </div>

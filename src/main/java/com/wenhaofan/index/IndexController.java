@@ -29,7 +29,7 @@ public class IndexController extends BaseController {
 	public void index() {
 		Integer cid=getParaToInt("c",null);
 		Integer pageNum = getParaToInt("p",1);
-		Integer limit=getParaToInt("limit", 2);
+		Integer limit=getParaToInt("limit", 12);
 		Page<Article> articlePage=articleService.page(pageNum, limit,cid);
  
 		setAttr("articlePage",articlePage);
