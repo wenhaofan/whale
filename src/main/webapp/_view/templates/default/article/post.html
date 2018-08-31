@@ -6,12 +6,12 @@
 			#(article.title)
 		</h1>
 		<div class="post-data">
-			<time datetime="2018-04-01T23:34:00+08:00" itemprop="datePublished">Published on Apr 1, 2018</time> in   with 20 <a href="#comments">comments </a>
+			<time datetime="2018-04-01T23:34:00+08:00" itemprop="datePublished">Published on Apr 1, 2018</time> in   with #(commentNum) <a href="#comments">comments </a>
 		</div>
 	</div>
 	<div id="post-content" class="post-content" itemprop="articleBody">
         <p class="post-tags">
-        	#for(category:categorys)
+        	#for(category:acategorys)
         		<a href="/#(category.id)" >#(category.mname)</a>
         	#end
         </p>
@@ -26,10 +26,9 @@
 	<div class="bottom-bar-inner">
 		<div class="bottom-bar-items social-share left">
 			<span class="bottom-bar-item">Share : </span>
-			<span class="bottom-bar-item bottom-bar-facebook"><a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode($this->permalink()); ?>" target="_blank" title="<?php $this->title() ?>" rel="nofollow">facebook</a></span>
-			<span class="bottom-bar-item bottom-bar-twitter"><a href="https://twitter.com/intent/tweet?url=<?php echo urlencode($this->permalink()); ?>&text=<?php echo urlencode($this->title()); ?>" target="_blank" title="<?php $this->title() ?>" rel="nofollow">Twitter</a></span>
-			<span class="bottom-bar-item bottom-bar-weibo"><a href="http://service.weibo.com/share/share.php?url=<?php echo urlencode($this->permalink()); ?>&amp;title=<?php echo urlencode($this->title()); ?>" target="_blank" title="<?php $this->title() ?>" rel="nofollow">Weibo</a></span>
-			<span class="bottom-bar-item bottom-bar-qrcode"><a href="//pan.baidu.com/share/qrcode?w=300&amp;h=300&amp;url=<?php echo urlencode($this->permalink()); ?>" target="_blank" rel="nofollow">QRcode</a></span>
+			<span class="bottom-bar-item bottom-bar-facebook"><a href="javascript:shareQzone()" rel="nofollow">Qzone</a></span>
+			<span class="bottom-bar-item bottom-bar-twitter"><a href="javascript:shareTwitter()" target="_blank" title="<?php $this->title() ?>" rel="nofollow">Twitter</a></span>
+			<span class="bottom-bar-item bottom-bar-weibo"><a href="javascript:shareWeibo()" target="_blank" title="分享至微博" rel="nofollow">Weibo</a></span>
 		</div>
 		<div class="bottom-bar-items right">
 			<span class="bottom-bar-item"><?php theNext($this); ?></span>
@@ -39,7 +38,39 @@
 		</div>
 	</div>
 </div>
-
+<script type="text/javascript">
+/**分享至qq空间*/
+function shareQzone(){
+	var p = {
+			url:location.href,
+			showcount:'1',/*是否显示分享总数,显示：'1'，不显示：'0' */
+			desc:'赞！',/*默认分享理由(可选)*/
+			title:document.title,/*分享标题(可选)*/
+			site:'范文皓的个人博客',/*分享来源 如：腾讯网(可选)*/
+			pics:'', /*分享图片的路径(可选)*/
+			style:'203',
+			width:98,
+			height:22
+		};
+	var s = [];
+	for(var i in p){
+	s.push(i + '=' + encodeURIComponent(p[i]||''));
+	}
+	window.open("http://connect.qq.com/widget/shareqq/index.html?"+s.join('&'));
+}
+/**获取当前页面的url*/
+function getUrl(){
+	return document.location.href.replace("#","");
+}
+/**分享至推特*/
+function shareTwitter(){
+	window.open("https://twitter.com/intent/tweet?url="+getUrl()+"&text="+document.title);
+}
+/**分享至微博*/
+function shareWeibo(){
+	window.open("http://service.weibo.com/share/share.php?url="+getUrl()+"&title="+document.title);
+}
+</script>
 
 #include('comments.html')
 

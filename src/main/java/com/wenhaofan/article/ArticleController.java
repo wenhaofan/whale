@@ -37,12 +37,12 @@ public class ArticleController extends BaseController{
 		
 		List<Meta> categorys=metaService.listByCId(article.getId(), "category");
 		List<Meta> tags=metaService.listByCId(article.getId(), "tag");
-		Page<Comment> comments=commentService.page(getParaToInt("p",1), 6, article.getIdentify());
+		Page<Comment> comments=commentService.page(getParaToInt("p",1),2, article.getIdentify());
 		 
 		setAttr("agentUser", getAgentUser());
 		setAttr("comments", comments);
-		setAttr("categorys",categorys);
-		setAttr("tags",tags);
+		setAttr("acategorys",categorys);
+		setAttr("atags",tags);
 		setAttr("article", article);
 		setAttr("identify", identify);
 		setAttr("isPost", true);

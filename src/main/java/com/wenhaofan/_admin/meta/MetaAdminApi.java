@@ -1,6 +1,5 @@
 package com.wenhaofan._admin.meta;
 
-import com.jfinal.core.Controller;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;

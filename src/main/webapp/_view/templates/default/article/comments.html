@@ -79,7 +79,7 @@
                 #if(!comments.isFirstPage())
                 <li class="prev"><a href="/article/#(article.identify)?p=#(comments.pageNumber-1)#comments">←</a></li>
                 #end
-                #for(navIndex : comments.totalPage)
+                #for(navIndex =1;navIndex<=comments.totalPage;navIndex++)
                 <li #if(comments.pageNumber == navIndex) class="current" #end><a href="/article/#(article.identify)?p=#(navIndex)#comments">#(navIndex)</a></li>
                 #end
                 #if(!comments.isLastPage())

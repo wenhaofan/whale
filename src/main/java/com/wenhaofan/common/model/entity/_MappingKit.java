@@ -30,6 +30,7 @@ public class _MappingKit {
 		arp.addMapping("disk", "id", Disk.class);
 		arp.addMapping("agent_user", "id", AgentUser.class);
 		arp.addMapping("comment", "id", Comment.class);
+		arp.addMapping("nav", "id", Nav.class);
 	}
 
 	 

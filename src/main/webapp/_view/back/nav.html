@@ -1,0 +1,178 @@
+ 
+<div class="layui-row ">
+	<div class="layui-col-lg12 layui-col-md12">
+		<blockquote class="page-title">评论列表</blockquote>
+	</div>
+</div>
+<div class="site-block">
+	<form class="layui-form" method="post">
+	   	<button class="layui-btn layui-btn-sm add" type="button">添加</button>
+	</form>
+</div>
+<div>
+	<table class="layui-hide" id="comments"></table>
+</div>
+
+
+<script type="text/javascript">
+
+layui.use(['form','layer','form','table'], function(){
+	
+	 form = layui.form;
+	 layer = layui.layer;
+	 table = layui.table;
+	 
+	 //监听提交
+	  form.on('submit(add)', function(data){
+		   add(data.field);
+	  	 return false;
+	  });
+	  form.on('submit(update)', function(data){
+		   update(data.field);
+	  	 return false;
+	  });
+	 table.render({
+		elem: '#comments'
+	    ,url:'/admin/api/nav/list'
+	    ,cellMinWidth: 80 
+	    ,cols: [[
+	    	{field:'id', sort: true,width:60,title:"id"}
+	      ,{field:'title',title:"标题",width:130} 
+	      ,{field:'url',title:"URL"}
+	      ,{field:'sort',title:"排序"}
+	      ,{templet:'#operation-tpl',title:"操作"}
+	    ]]
+	  });
+});
+
+
+var replyData;
+var layerIndex;
+ 
+$(function(){
+	$("body").on("click",".add",function(){
+	  	var editHtml=template("tpl-edit",{method:"add"});
+
+	  	layerIndex=layer.open({
+	  		title:"新增导航",
+	  		area: ['420px', '300px'],
+		  	  type: 1, 
+		  	  content: editHtml, //这里content是一个普通的String
+		  	  success:function(){
+		  		  form.render();
+		  	  }
+	  	});
+	})
+	
+	$("body").on("click",".update",function(){
+		var id=$(this).data("id");
+		var sort=$(this).parent().parent().prev().text();
+		var url=$(this).parent().parent().prev().prev().text();
+		var title=$(this).parent().parent().prev().prev().prev().text();
+		
+	  	var editHtml=template("tpl-edit",{method:"update",sort:sort,url:url,title:title,id:id});
+	  	layerIndex=layer.open({
+	  		title:"修改导航",
+	  		area: ['420px', '300px'],
+		  	  type: 1, 
+		  	  content: editHtml, //这里content是一个普通的String
+		  	  success:function(){
+		  		  form.render();
+		  	  }
+	  	});
+	})
+ 
+ 
+	var deleteId;
+	$("body").on("click",".delete",function(){
+		deleteId=$(this).data("id");
+		fl.alertConfirm({title:"确认删除！",then:function(){
+			$.ajax({
+				url:"/admin/api/nav/delete",
+				data:{toId:deleteId},
+				success:function(data){
+					if(fl.isOk(data)){
+						fl.alertOkAndReload();	
+					}
+				}
+			})
+		}})
+	})
+	$("body").on("click",".update",function(){
+		
+	})
+})
+
+function add(data){
+	$.ajax({
+		url:"/admin/api/nav/add",
+		type:"post",
+		data:data,
+		success:function(data){
+			if(fl.isOk(data)){
+				fl.alertOkAndReload("添加成功！");
+			}
+		}
+	})
+
+}
+function update(data){
+	$.ajax({
+		url:"/admin/api/nav/update",
+		type:"post",
+		data:data,
+		success:function(data){
+			if(fl.isOk(data)){
+				fl.alertOkAndReload("修改成功！");
+			}
+		}
+	})
+
+}
+</script>
+ 
+
+<script type="text/html" id="tpl-edit">
+<div style="width:350px;padding:10px;margin:0 auto;padding-left:0px;">
+	<form class="layui-form" onsubmit="return add();">
+		<input type="hidden" name="id" value="{{id}}">
+		<div class="layui-form-item">
+   		 <label class="layui-form-label">标题</label>
+    		<div class="layui-input-block">
+      			<input type="text" name="title" required  lay-verify="required" value="{{title}}" placeholder="请输入标题" autocomplete="off" class="layui-input">
+    	 	</div>
+ 		 </div>
+	  	<div class="layui-form-item">
+    		<label class="layui-form-label">访问路径</label>
+    		<div class="layui-input-block">
+      			<input type="text" name="url" required  lay-verify="required"  value="{{url}}" placeholder="请输入访问路径" autocomplete="off" class="layui-input">
+    		</div>
+  		</div>
+		<div class="layui-form-item">
+    		<label class="layui-form-label">排序(值越大越靠前)</label>
+    		<div class="layui-input-block">
+      			<input type="number" name="sort" required  lay-verify="required"  value="{{sort}}"  placeholder="请输入排序值 " autocomplete="off"   class="layui-input">
+    		</div>
+  		</div>
+		 <div class="layui-form-item">
+		    <div class="layui-input-block">
+		    <button class="layui-btn" type="submit" lay-submit lay-filter="{{method}}">立即提交</button>
+		 </div>
+	  </div>
+	</form>
+</div>
+</script>
+<script type="text/htmp" id="option-tpl">
+	<option value="" selected>----<option>
+	{{ each categorys }}
+		<option value='{{ $value.id}}'>{{  $value.mname }}({{  $value.count }})<option>
+	{{ /each }}
+</script>
+<script type="text/html" id="operation-tpl">
+#[[ 
+ 
+	<button class="layui-btn layui-btn-sm update" data-id="{{d.id}}">修改</button>
+	<button class="layui-btn layui-btn-sm delete" data-id="{{d.id}}">删除</button> 
+]]#
+</script>
+ 

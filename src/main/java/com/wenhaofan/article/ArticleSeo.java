@@ -20,8 +20,8 @@ public class ArticleSeo extends BaseSeoInterceptor {
 		Controller c=inv.getController();
 		Article article = c.getAttr("article");
 
-		List<Meta> tags=c.getAttr("tags");
-		List<Meta> categorys=c.getAttr("categorys");
+		List<Meta> tags=c.getAttr("atags");
+		List<Meta> categorys=c.getAttr("acategorys");
 		
 		setSeoTitle(c, article.getTitle());
 		setSeoKeyWords(c,keywords(tags,categorys,article.getTitle())+",范文皓,范文皓的个人博客");

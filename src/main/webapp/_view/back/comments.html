@@ -54,9 +54,9 @@ layui.use(['form','layer','form','table'], function(){
 	  });
 
   //监听提交
-  form.on('submit(replyDemo)', function(data){
-	  submitReply(data.field);
-  	return false;
+  form.on('submit(reply)', function(data){
+	   submitReply(data.field);
+  	 return false;
   });
 });
 
@@ -175,7 +175,7 @@ $(function(){
 	  	</div>
 		  <div class="layui-form-item">
 		    <div class="layui-input-block">
-		    <button class="layui-btn" lay-submit lay-filter="replyDemo">立即提交</button>
+		    <button class="layui-btn" lay-submit lay-filter="reply">立即提交</button>
 		 </div>
 	  </div>
 </form>

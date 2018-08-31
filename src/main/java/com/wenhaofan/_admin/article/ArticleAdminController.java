@@ -2,7 +2,6 @@ package com.wenhaofan._admin.article;
 
 import java.util.List;
 
-import com.jfinal.core.Controller;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Article;
