@@ -243,9 +243,8 @@ $(document).ready(function () {
         dictInvalidInputType:'不支持您上传的类型',
         init: function() {
             this.on('success', function (files, result) {
-
                 if(fl.isOk(result)){
-                    var url ="http://"+result.info.url;
+                    var url =result.info.url;
                     thumbdropzone.css('background-image', 'url('+ url +')');
                     thumbdropzone.css('background-size', 'cover');
                     $('.dz-image').hide();

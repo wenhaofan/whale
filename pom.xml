@@ -36,7 +36,11 @@
 		<updatePolicy>daily</updatePolicy> </snapshots> </repository> </repositories -->
 
 	<dependencies>
-	
+	<dependency>
+    <groupId>org.apache.xmlrpc</groupId>
+    <artifactId>xmlrpc-client</artifactId>
+    <version>3.1.3</version>
+</dependency>
 		 <!--	此处的 scope 值为 compile 仅为支持 IDEA 下启动项目
 			打 war 包时需要改成 provided，以免将一些无用的 jar 打进去
 		 <scope>compile</scope> -->
@@ -128,7 +132,7 @@
 			<scope>compile</scope>
 		</dependency>
 
-<dependency>
+		<dependency>
 		    <groupId>com.alibaba</groupId>
 		    <artifactId>fastjson</artifactId>
 		    <version>1.2.47</version>

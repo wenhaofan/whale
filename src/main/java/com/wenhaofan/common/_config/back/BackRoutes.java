@@ -19,6 +19,8 @@ import com.wenhaofan._admin.meta.CategoryRouter;
 import com.wenhaofan._admin.meta.MetaAdminApi;
 import com.wenhaofan._admin.nav.NavApi;
 import com.wenhaofan._admin.nav.NavController;
+import com.wenhaofan._admin.seo.AdminSeoApi;
+import com.wenhaofan._admin.seo.AdminSeoController;
 import com.wenhaofan._admin.statistic.StatisticApi;
 import com.wenhaofan._admin.statistic.StatisticController;
 import com.wenhaofan._admin.user.AdminUserController;
@@ -51,7 +53,9 @@ public class BackRoutes extends Routes {
 	   add("/admin/api/statistic", StatisticApi.class,"");
 	   add("/admin/api/disk",DiskApi.class);
 	   add("/admin/api/comment",AdminCommentApi.class);
+	   add("/admin/api/seo",AdminSeoApi.class);
 	   
+	   add("/admin/seo", AdminSeoController.class,"/");
 	   add("/admin/meta", CategoryRouter.class,"/meta/");
 	   add("/admin/article", ArticleAdminController.class,"/article/");
 	   add("/admin/blogroll", BlogrollController.class,"/blogroll/");

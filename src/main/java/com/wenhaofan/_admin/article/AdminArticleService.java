@@ -99,7 +99,7 @@ public class AdminArticleService {
 			//默认路径为创建时间
 			Article tempArticle=article.findById(article.getId());
 			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
-			sdf.format(tempArticle.getGmtCreate());
+			identify=sdf.format(tempArticle.getGmtCreate());
 			article.setIdentify(identify);
 		}
 		

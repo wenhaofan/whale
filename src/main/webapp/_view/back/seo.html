@@ -1,0 +1,86 @@
+<style>
+ 
+.table-block{
+	width:700px;
+	margin: 0 auto;
+}
+</style> 
+<div class="layui-row ">
+	<div class="layui-col-lg12 layui-col-md12">
+		<blockquote class="layui-elem-quote my-quote ">SEO配置</blockquote>
+	</div>
+</div>
+
+<div class="layui-row">
+	<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+		<div class="table-block">
+			<blockquote class="layui-elem-quote my-quote ">metaweblog配置</blockquote>
+			<table id="metaweblog" lay-filter="metaweblogseo"></table>
+		</div>
+	</div>
+	<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+		<div class="table-block">
+			<blockquote class="layui-elem-quote my-quote ">百度推送配置</blockquote>
+			<table id="baiduseo" lay-filter="baiduseo"></table>
+		</div>
+	</div>
+</div>
+
+<script>
+layui.use(['form','table','laytpl'],function(){
+	form=layui.form;
+	table=layui.table;
+	
+	form.render();
+	
+	table.render({
+		elem: '#metaweblog'
+	   ,url:'/admin/api/seo/mList'
+	   ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+	   ,cols: [[
+	   	{field:'id', sort: true,width:60,title:"id"}
+	     ,{field:'website',title:"网站",width:100}
+	     ,{field:'url',title:"接口路径"}
+	     ,{field:'userName',title:"登录名",width:100}
+	     ,{templet:'#tpl-mprivacy',title:"密码",width:150}
+	     ,{templet:'#tpl-moperation',title:"操作",width:100}
+	   ]]
+	 });
+	
+	table.render({
+		  elem: '#baiduseo'
+		   ,url:'/admin/api/seo/bList'
+		   ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+		   ,cols: [[
+		   	 {field:'id', sort: true,width:60,title:"id"}
+		     ,{field:'site',title:"网站" }
+		     ,{templet:'#tpl-bprivacy',title:"token",width:200}
+		     ,{templet:'#tpl-boperation',title:"操作",width:100}
+		   ]]
+		 });
+}) 
+</script>
+<script type="text/html" id="tpl-mprivacy">
+	#[[<span class="privacy" data-content="{{d.password}}">*********</span>]]#
+</script>
+<script type="text/html" id="tpl-bprivacy">
+	#[[<span class="privacy" data-content="{{d.token}}">****************</span>]]#
+</script>
+<script type="text/html" id="tpl-moperation">
+	#[[<button class="layui-btn layui-btn-sm mupdate" data-id="{{d.id}}">修改</button> ]]#
+</script>
+<script type="text/html" id="tpl-boperation">
+	#[[<button class="layui-btn layui-btn-sm bupdate" data-id="{{d.id}}" >修改</button> ]]#
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$("body").on("click",".privacy",function(){
+		var content=$(this).data("content");
+		var text=$(this).text();
+		
+		$(this).text(content);
+		$(this).data("content",text);
+	})
+})
+</script>

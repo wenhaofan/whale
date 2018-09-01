@@ -72,6 +72,7 @@ public class _Generator {
 		Generator gen = new Generator(dataSource, baseModelPackageName, baseModelOutputDir, modelPackageName, modelOutputDir);
 		// 设置数据库方言
 		gen.setDialect(new MysqlDialect());
+		gen.setGenerateChainSetter(true);
 		// 添加不需要生成的表名
 		for (String table : excludedTable) {
 			gen.addExcludedTable(table);
