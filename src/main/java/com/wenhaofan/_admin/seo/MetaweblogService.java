@@ -14,6 +14,7 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.common.aop.Inject;
+import com.wenhaofan.common.model.entity.BaiduSeoConfig;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.common.model.entity.MetaweblogConfig;
 
@@ -22,20 +23,27 @@ public class MetaweblogService {
 	@Inject
 	private MetaweblogConfig dao;
 	
-	public Ret add(MetaweblogConfig config) {
-		config.save();
-		return Ret.ok();
+	public MetaweblogConfig get(Integer id) {
+		return dao.findById(id);
 	}
+	
+	
+	public Ret updateOrAdd(MetaweblogConfig config) {
+		if(config.getId()!=null) {
+			config.update();
+		}else {
+			config.save();
+		}
+		
+		return Ret.ok();
+	} 
 	
 	public Ret delete(Integer toId) {
 		dao.deleteById(toId);
 		return Ret.ok();
 	}
 	
-	public Ret update(MetaweblogConfig config) {
-		config.update();
-		return Ret.ok();
-	}
+ 
 	
 	public List<MetaweblogConfig> list(){
 		return dao.find("select * from metaweblog_config");

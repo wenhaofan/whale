@@ -1,8 +1,13 @@
 <style>
  
 .table-block{
-	width:700px;
+	width:90%;
 	margin: 0 auto;
+}
+.add-form{
+	width:400px;
+	margin: 0 auto;
+	margin-left:15px;
 }
 </style> 
 <div class="layui-row ">
@@ -15,18 +20,131 @@
 	<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
 		<div class="table-block">
 			<blockquote class="layui-elem-quote my-quote ">metaweblog配置</blockquote>
+			<div class="site-block">
+			 	<button class="layui-btn layui-btn-sm madd" >新增</button>
+			</div>
 			<table id="metaweblog" lay-filter="metaweblogseo"></table>
 		</div>
 	</div>
 	<div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
 		<div class="table-block">
 			<blockquote class="layui-elem-quote my-quote ">百度推送配置</blockquote>
+			<div class="site-block">
+			 	<button class="layui-btn layui-btn-sm badd" >新增</button>
+			</div>
 			<table id="baiduseo" lay-filter="baiduseo"></table>
 		</div>
 	</div>
 </div>
-
+<script type="text/html" id="tpl-medit">
+<div style="width:500px;padding:10px;">
+	<form class="layui-form add-form" onsubmit="return false;">
+		    <input type="hidden" name="id" value="{{id}}" >
+  		  	<div class="layui-form-item layui-form-text">
+	   	 	<label class="layui-form-label">网站名</label>
+	    	<div class="layui-input-block">
+				
+	     		<input type="text" name="website" required  lay-verify="required" value="{{website}}" placeholder="请输入网站名" autocomplete="off" class="layui-input">
+	    	</div>
+	  	</div>
+	  	<div class="layui-form-item layui-form-text">
+	   	 	<label class="layui-form-label">接口路径</label>
+	    	<div class="layui-input-block">
+	     		 <input type="text" name="url" required  lay-verify="required" value="{{url}}" placeholder="请输入接口路径" autocomplete="off" class="layui-input">
+	    	</div>
+	  	</div>
+	  	<div class="layui-form-item layui-form-text">
+	   	 	<label class="layui-form-label">账号</label>
+	    	<div class="layui-input-block">
+	     		 <input type="text" name="userName" required  lay-verify="required " value="{{userName}}"  placeholder="请输入账号" autocomplete="off" class="layui-input">
+	    	</div>
+	  	</div>
+	  	
+	  	<div class="layui-form-item layui-form-text">
+	   	 	<label class="layui-form-label">密码</label>
+	    	<div class="layui-input-block">
+	     		 <input type="text" name="password" required  lay-verify="required" value="{{password}}"  placeholder="请输入密码" autocomplete="off" class="layui-input">
+	    	</div>
+	  	</div>
+		  <div class="layui-form-item">
+		    <div class="layui-input-block">
+		    <button class="layui-btn" lay-submit lay-filter="editMconfig">立即提交</button>
+		 </div>
+	  </div>
+</form>
+</div>
+</script>
+<script type="text/html" id="tpl-bedit">
+<div style="width:500px;padding:10px; add-form">
+	<form class="layui-form  add-form" onsubmit="return false;">
+		<input type="hidden" name="id" value="{{id}}" >
+  		  	<div class="layui-form-item layui-form-text">
+	   	 	<label class="layui-form-label">网站</label>
+	    	<div class="layui-input-block">
+	     		<input type="text" name="site" required  lay-verify="required" value="{{site}}" placeholder="请输入网站名" autocomplete="off" class="layui-input">
+	    	</div>
+	  	</div>
+	  	<div class="layui-form-item layui-form-text">
+	   	 	<label class="layui-form-label">Token</label>
+	    	<div class="layui-input-block">
+	     		 <input type="text" name="token" required  lay-verify="required" value="{{token}}" placeholder="请输入token" autocomplete="off" class="layui-input">
+	    	</div>
+	  	</div>
+	  	 
+		  <div class="layui-form-item">
+		    <div class="layui-input-block">
+		    <button class="layui-btn" lay-submit lay-filter="editBconfig"  >立即提交</button>
+		 </div>
+	  </div>
+</form>
+</div>
+</script>
 <script>
+
+function renderMEdit(data){
+	var content=template("tpl-medit",data);
+  	layerIndex=layer.open({
+  		title:"新增",
+  		area: ['520px', '350px'],
+	  	  type: 1, 
+	  	  content: content //这里content是一个普通的String
+  	});
+}
+function renderBEdit(data){
+	var content=template("tpl-bedit",data);
+  	layerIndex=layer.open({
+  		title:"新增",
+  		area: ['520px', '230px'],
+	  	  type: 1, 
+	  	  content: content //这里content是一个普通的String
+  	});
+}
+
+function medit(data){
+	$.ajax({
+		url:"/admin/api/seo/mconfigEdit",
+		data:data,
+		type:"post",
+		success:function(data){
+			if(fl.isOk(data)){
+				fl.alertOkAndReload();
+			}
+		}
+	})
+}
+function bedit(data){
+	$.ajax({
+		url:"/admin/api/seo/bconfigEdit",
+		data:data,
+		type:"post",
+		success:function(data){
+			if(fl.isOk(data)){
+				fl.alertOkAndReload();
+			}
+		}
+	})
+}
+
 layui.use(['form','table','laytpl'],function(){
 	form=layui.form;
 	table=layui.table;
@@ -41,9 +159,9 @@ layui.use(['form','table','laytpl'],function(){
 	   	{field:'id', sort: true,width:60,title:"id"}
 	     ,{field:'website',title:"网站",width:100}
 	     ,{field:'url',title:"接口路径"}
-	     ,{field:'userName',title:"登录名",width:100}
+	     ,{field:'userName',title:"账号",width:100}
 	     ,{templet:'#tpl-mprivacy',title:"密码",width:150}
-	     ,{templet:'#tpl-moperation',title:"操作",width:100}
+	     ,{templet:'#tpl-moperation',title:"操作",width:150}
 	   ]]
 	 });
 	
@@ -55,9 +173,16 @@ layui.use(['form','table','laytpl'],function(){
 		   	 {field:'id', sort: true,width:60,title:"id"}
 		     ,{field:'site',title:"网站" }
 		     ,{templet:'#tpl-bprivacy',title:"token",width:200}
-		     ,{templet:'#tpl-boperation',title:"操作",width:100}
-		   ]]
-		 });
+		     ,{templet:'#tpl-boperation',title:"操作",width:150}
+		]]
+	});
+	
+	form.on("submit(editMconfig)",function(data){
+		medit(data.field);
+	})
+	form.on("submit(editBconfig)",function(data){
+		bedit(data.field);
+	})
 }) 
 </script>
 <script type="text/html" id="tpl-mprivacy">
@@ -67,10 +192,16 @@ layui.use(['form','table','laytpl'],function(){
 	#[[<span class="privacy" data-content="{{d.token}}">****************</span>]]#
 </script>
 <script type="text/html" id="tpl-moperation">
-	#[[<button class="layui-btn layui-btn-sm mupdate" data-id="{{d.id}}">修改</button> ]]#
+	#[[
+		<button class="layui-btn layui-btn-sm mupdate" data-id="{{d.id}}">修改</button> 
+		<button class="layui-btn layui-btn-sm mdelete" data-id="{{d.id}}">删除</button>
+	]]#
 </script>
 <script type="text/html" id="tpl-boperation">
-	#[[<button class="layui-btn layui-btn-sm bupdate" data-id="{{d.id}}" >修改</button> ]]#
+	#[[
+		<button class="layui-btn layui-btn-sm bupdate" data-id="{{d.id}}" >修改</button> 
+		<button class="layui-btn layui-btn-sm bdelete" data-id="{{d.id}}" >删除</button> 
+	]]#
 </script>
 
 <script type="text/javascript">
@@ -81,6 +212,68 @@ $(function(){
 		
 		$(this).text(content);
 		$(this).data("content",text);
+	})
+	$("body").on("click",".mupdate",function(){
+		$.ajax({
+			url:"/admin/api/seo/mget/"+$(this).data("id"),
+			dataType:'json',
+			success:function(data){
+				if(fl.isOk(data)){
+					renderMEdit(data.config);
+				}
+			}
+		})
+ 
+	})
+	$("body").on("click",".bupdate",function(){
+		$.ajax({
+			url:"/admin/api/seo/bget/"+$(this).data("id"),
+			dataType:'json',
+			success:function(data){
+				if(fl.isOk(data)){
+					renderBEdit(data.config);
+				}
+			}
+		}) 
+	})
+	
+	$("body").on("click",".madd",function(){
+		renderMEdit({});
+	})
+	$("body").on("click",".badd",function(){
+		renderBEdit({});
+	})
+	
+	var deleteMid;
+	
+	$("body").on("click",".mdelete",function(){
+		deleteMid=$(this).data("id");
+		fl.alertConfirm({title:"是否确认删除？",then:function(){
+			$.ajax({
+				url:"/admin/api/seo/mconfigDelete/"+deleteMid,
+				success:function(data){
+					if(fl.isOk(data)){
+						fl.alertOkAndReload();
+					}
+				}
+			})
+		}})
+		
+	})
+	var deleteBid;
+	$("body").on("click",".bdelete",function(){
+		deleteBid=$(this).data("id");
+		fl.alertConfirm({title:"是否确认删除？",then:function(){
+			$.ajax({
+				url:"/admin/api/seo/bconfigDelete/"+deleteBid,
+				success:function(data){
+					if(fl.isOk(data)){
+						fl.alertOkAndReload();
+					}
+				}
+			})
+  
+		}});
 	})
 })
 </script>

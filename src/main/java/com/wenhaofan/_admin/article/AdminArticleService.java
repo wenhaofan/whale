@@ -10,6 +10,8 @@ import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
+import com.wenhaofan._admin.seo.BaiduSeoService;
+import com.wenhaofan._admin.seo.MetaweblogService;
 import com.wenhaofan.article.ArticleService;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.exception.MsgException;
@@ -32,7 +34,11 @@ public class AdminArticleService {
 	@Inject
 	private MetaService mservice;
 	@Inject
-	private static ArticleService articleService;
+	private  ArticleService articleService;
+	@Inject
+	private BaiduSeoService baiduSeoService;
+	@Inject
+	private MetaweblogService metaweblogService;
 	
 	public List<Meta> listCategory(Integer id){
 		return mservice.listByCId(id,MetaTypeEnum.CATEGORY.toString());
@@ -48,7 +54,17 @@ public class AdminArticleService {
 		}else {
 			update(article, tags, categorys);
 		}
+		
+		String projectPath=PropKit.get("projectPath");
+		
+		new Thread(()-> {
+			//向百度推送该文章
+			baiduSeoService.pushLink(projectPath+"article/"+article.getIdentify());
+			
+		}).start();;
+
 	}
+	
 	
 	/**
 	 * 添加一篇文章
@@ -83,7 +99,10 @@ public class AdminArticleService {
 			mservice.saveMetas(tags, articleId);
 		}
 		
-		
+		new Thread(()-> {
+			//向其他论坛推送
+			System.err.println(metaweblogService.pushNewPostMetaweblog(article.getTitle(), article.getContent(), tags));
+		}).start();
 	}
 
 	public void update(Article article,List<Meta> tags,List<Meta> categorys) {

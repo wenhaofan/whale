@@ -13,6 +13,10 @@ public class BaiduSeoService {
 	@Inject
 	private BaiduSeoConfig dao;
 	
+	public BaiduSeoConfig get(Integer id) {
+		return dao.findById(id);
+	}
+	
 	public List<BaiduSeoConfig> list(){
 		return dao.find("select * from baidu_seo_config");
 	}
@@ -23,10 +27,11 @@ public class BaiduSeoService {
 	
 	@SuppressWarnings("unchecked")
 	public void pushLink(String link,String site,String token) {
-		String url="http://data.zz.baidu.com/urls?site=wenhaofan.com&token=kZ4mRWVQGEsoJvbz";
+		String url="http://data.zz.baidu.com/urls?site="+site+"&token="+token;
 		Kv headers=Kv.by("User-Agent", "curl/7.12.1 ").set("Host", "data.zz.baidu.com").set("Content-Type", "text/plain").set("Content-Length", "83");
-		HttpKit.post(url, "http://wenhaofan.com/article/20180618180327\nhttp://wenhaofan.com/article/fast-reboot-tomcat",headers);
+		String result=HttpKit.post(url,link,headers);
 		//待加日志
+		System.out.println(result);
 	}
 	
 	public void pushLink(List<BaiduSeoConfig> configs,String link) {
@@ -39,18 +44,21 @@ public class BaiduSeoService {
 		}); 
 	}
 	
-	public Ret add(BaiduSeoConfig config) {
-		config.save();
-		return Ret.ok();
-	}
+ 
 	
 	public Ret delete(Integer toId) {
 		dao.deleteById(toId);
 		return Ret.ok();
 	}
 	
-	public Ret update(BaiduSeoConfig config) {
-		config.update();
+	 
+	public Ret updateOrAdd(BaiduSeoConfig config) {
+		if(config.getId()!=null) {
+			config.update();
+		}else {
+			config.save();
+		}
+		
 		return Ret.ok();
 	}
 }
