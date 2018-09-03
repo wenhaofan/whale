@@ -14,14 +14,17 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.common.aop.Inject;
-import com.wenhaofan.common.model.entity.BaiduSeoConfig;
+import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.common.model.entity.MetaweblogConfig;
+import com.wenhaofan.common.model.entity.MetaweblogRelevance;
 
 public class MetaweblogService {
 
 	@Inject
 	private MetaweblogConfig dao;
+	@Inject
+	private MetaweblogRelevanceService relevanceService;
 	
 	public MetaweblogConfig get(Integer id) {
 		return dao.findById(id);
@@ -49,7 +52,7 @@ public class MetaweblogService {
 		return dao.find("select * from metaweblog_config");
 	}
 	
-	public Ret pushNewPostMetaweblog(String title,String content,List<Meta> tags) {
+	public Ret pushNewPostMetaweblog(Article article,List<Meta> tags) {
 		List<MetaweblogConfig> configs= list();
 		Ret result=null;
  
@@ -59,20 +62,21 @@ public class MetaweblogService {
 		Kv successKv=Kv.create();
 		Kv failKv=Kv.create();
 		for(MetaweblogConfig config:configs) {
-			result=pushNewPost(config.getUrl(),config.getUserName(),config.getPassword(),title,content,tags);
+			result=pushNewPost(config,article,tags);
+			String type=result.getStr("type");
 			if(result.isOk()) {
 				successCount++;
-				successKv.set(config.getWebsite(), config);
+				successKv.set(config.getWebsite(), config).set("type", type);
 			}else {
 				failCount++;
-				failKv.set(config.getWebsite(), config);
+				failKv.set(config.getWebsite(), config).set("type", type);
 			}
 		}
 		
 		return Ret.ok("success",successKv).set("fail", failKv);
 	}
 	
-	public Ret pushNewPost(String url,String account,String password,String title,String content,List<Meta> tags) {
+	public Ret pushNewPost(MetaweblogConfig config,Article article,List<Meta> tags) {
 		StringBuilder sb=new StringBuilder();
 		 
 		tags.forEach(new Consumer<Meta>() {
@@ -82,12 +86,25 @@ public class MetaweblogService {
 		    }
 		});
 		
-		return pushNewPost(url,account,password,title,content,sb.toString());
+		return pushPost(config,article,sb.toString());
 	}
-	public Ret pushNewPost(String url,String account,String password,String title,String content,String keywords) {
+	
+	public Ret pushPost(MetaweblogConfig mconfig,Article article,String keywords) {
+		MetaweblogRelevance  metaweblogRelevance =relevanceService.get(article.getId(),mconfig.getId());
+		
+		if(metaweblogRelevance!=null) {
+			return editPost(mconfig, article, keywords,metaweblogRelevance);
+		}else {
+			return pushNewPost(mconfig, article, keywords);
+		}
+		
+	}
+	
+	public Ret pushNewPost(MetaweblogConfig mconfig,Article article,String keywords) {
+ 
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		try {
-			config.setServerURL(new URL(url));
+			config.setServerURL(new URL(mconfig.getUrl()));
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,22 +113,53 @@ public class MetaweblogService {
 		client.setConfig(config);
  
 		Map<String, String> m = new HashMap<String, String>();
-		m.put("title", title);
+		m.put("title", article.getTitle());
 		m.put("mt_keywords", keywords);
-		m.put("description", content);
+		m.put("description", article.getContent());
 		 
-		Object[] params = new Object[]{"default", account,password, m, true};
+		Object[] params = new Object[]{"default", mconfig.getUserName(),mconfig.getPassword(), m, true};
 		 
- 
+	
 		try {
-			 client.execute("metaWeblog.newPost", params);
+			String postId= client.execute("metaWeblog.newPost", params).toString();
+			relevanceService.add(postId, mconfig.getId(), article.getId());
 		} catch (XmlRpcException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return Ret.fail();
 		}
 		
-		return Ret.ok();
+		return Ret.ok("type","newPost");
+	}
+	
+	public Ret editPost(MetaweblogConfig mconfig,Article article,String keywords,MetaweblogRelevance  metaweblogRelevance) {
+		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+		try {
+			config.setServerURL(new URL(mconfig.getUrl()));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		XmlRpcClient client = new XmlRpcClient();
+		client.setConfig(config);
+ 
+		Map<String, String> m = new HashMap<String, String>();
+		m.put("title", article.getTitle());
+		m.put("mt_keywords", keywords);
+		m.put("description", article.getContent());
+		 
+		Object[] params = new Object[]{metaweblogRelevance.getPostId(), mconfig.getUserName(),mconfig.getPassword(), m, true};
+		 
+		try {
+			String postId= client.execute("metaWeblog.editPost", params).toString();
+			System.out.println(postId);
+		} catch (XmlRpcException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Ret.fail();
+		}
+		
+		return Ret.ok("type","editPost");
 	}
 	
 }

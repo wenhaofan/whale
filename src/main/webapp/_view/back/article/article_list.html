@@ -74,6 +74,9 @@
 </script>
 <script type="text/html" id="operation-tpl">
 #[[
+	
+	<button class="layui-btn layui-btn-sm article-async" data-id="{{d.id}}">同步发布</button>
+
 	<button class="layui-btn layui-btn-sm article-update" data-id="{{d.id}}">修改</button>
 	
 {{# if(d.state == 2){ }}
@@ -83,6 +86,20 @@
 {{# } }}
 	
 ]]#
+</script>
+<script type="text/javascript">
+$(function(){
+	$("body").on("click",".article-async",function(){
+		$.ajax({
+			url:"/admin/api/article/asyncMetaWeblog/"+$(this).data("id"),
+			success:function(data){
+				if(fl.isOk(data)){
+					fl.alertOk({});
+				}
+			}
+		})
+	})
+})
 </script>
 <script type="text/javascript" src="/assets/common/meta.js"></script>
 <script src="/assets/admin/js/article-list.js"></script>

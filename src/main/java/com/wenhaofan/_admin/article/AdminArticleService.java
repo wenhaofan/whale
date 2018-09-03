@@ -40,6 +40,21 @@ public class AdminArticleService {
 	@Inject
 	private MetaweblogService metaweblogService;
 	
+	/**
+	 * 将指定文章推送至其他网站
+	 * @param id
+	 * @return
+	 */
+	public Ret asyncMetaWeblog(Integer id) {
+		List<Meta> tags=listTag(id);
+		Article article=dao.findById(id);
+		new Thread(()-> {
+			//向其他论坛推送
+			System.err.println(metaweblogService.pushNewPostMetaweblog(article, tags));
+		}).start();
+		return Ret.ok();
+	}
+	
 	public List<Meta> listCategory(Integer id){
 		return mservice.listByCId(id,MetaTypeEnum.CATEGORY.toString());
 	}
@@ -98,11 +113,7 @@ public class AdminArticleService {
 		if(ListKit.notBlank(tags)) {
 			mservice.saveMetas(tags, articleId);
 		}
-		
-		new Thread(()-> {
-			//向其他论坛推送
-			System.err.println(metaweblogService.pushNewPostMetaweblog(article.getTitle(), article.getContent(), tags));
-		}).start();
+
 	}
 
 	public void update(Article article,List<Meta> tags,List<Meta> categorys) {

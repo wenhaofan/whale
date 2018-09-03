@@ -25,6 +25,7 @@
 }
 
 .info-block-middle p,.info-block-right p{
+cursor:pointer;
  text-align: center;
 }
 .info-block-middle>div,.info-block-right>div{

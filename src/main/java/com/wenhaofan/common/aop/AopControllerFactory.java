@@ -70,9 +70,9 @@ public class AopControllerFactory extends ControllerFactory {
 	// 单例缓存
 	protected HashMap<Class<?>, Object> singletonCache = new HashMap<Class<?>, Object>();
 	
-	private YesOrNo enhance = YesOrNo.YES;			// 默认增强
+	private YesOrNo enhance = YesOrNo.NO;			// 默认增强
 	private YesOrNo singleton = YesOrNo.YES;			// 默认单例
-	private int injectDepth = 3;						// 默认注入深度
+	private int injectDepth = 5;						// 默认注入深度
 	
 	/**
 	 * 设置被注入的对象是否被增强，可使用 @Inject(enhance = YesOrNo.NO) 覆盖此默认值

@@ -20,6 +20,7 @@ public class ArticleAdminApi extends BaseController {
 	@Inject
 	private AdminArticleService articleService;
 
+	
 	public void list() {
 		Article article = getModel(Article.class, "", true);
 		Integer metaid = getParaToInt("categoryId");
@@ -31,6 +32,11 @@ public class ArticleAdminApi extends BaseController {
 	
 	}
 
+	public void asyncMetaWeblog() {
+		Integer id=getParaToInt();
+		renderJson(articleService.asyncMetaWeblog(id));
+	}
+	
 	/**
 	 * 执行文章添加
 	 * 
