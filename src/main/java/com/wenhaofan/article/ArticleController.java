@@ -31,7 +31,7 @@ public class ArticleController extends BaseController{
 		String identify=getPara();
 		Article article=service.getArticle(identify);
 		if(article==null) {
-			redirect("/");
+			renderError(404);
 			return;
 		}
 		

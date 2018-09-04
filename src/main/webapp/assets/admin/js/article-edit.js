@@ -133,7 +133,7 @@ $(document).ready(function () {
                 	file:files[0],
                 	success:function(data){
             		   if(fl.isOk(data)){
-                      	 var url ="http://"+data.info.url;
+                      	 var url =data.info.url;
                           console.log('url =>' + url);
                           htmlEditor.summernote('insertImage', url);
                       } else {

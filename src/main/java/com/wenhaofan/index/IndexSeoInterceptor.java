@@ -3,15 +3,18 @@ package com.wenhaofan.index;
 import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
 import com.wenhaofan.common.interceptor.BaseSeoInterceptor;
+import com.wenhaofan.common.model.entity.BasicConfig;
 
 public class IndexSeoInterceptor extends BaseSeoInterceptor {
 
 	@Override
 	public void indexSeo(Invocation inv) {
 		Controller c=inv.getController();
-		setSeoKeyWords(c,"范文皓的个人博客,范文皓,博客,个人博客,JAVA博客");
-		setSeoTitle(c,"范文皓的个人博客");
-		setSeoDescr(c, "范文皓创建的个人博客,基于jfinal框架开发的开源博客");
+		BasicConfig config=c.getAttr("basicConfig");
+		setSeoKeyWords(c,config.getKeywords());
+		setSeoTitle(c,config.getTitle());
+		setSeoDescr(c, config.getDescription());
+		
 	}
 
 	@Override

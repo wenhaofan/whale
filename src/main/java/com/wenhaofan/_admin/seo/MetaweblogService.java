@@ -115,7 +115,7 @@ public class MetaweblogService {
 		Map<String, String> m = new HashMap<String, String>();
 		m.put("title", article.getTitle());
 		m.put("mt_keywords", keywords);
-		m.put("description", article.getContent());
+		m.put("description", signContent(article.getContent(),article.getUrl()));
 		 
 		Object[] params = new Object[]{"default", mconfig.getUserName(),mconfig.getPassword(), m, true};
 		 
@@ -146,7 +146,7 @@ public class MetaweblogService {
 		Map<String, String> m = new HashMap<String, String>();
 		m.put("title", article.getTitle());
 		m.put("mt_keywords", keywords);
-		m.put("description", article.getContent());
+		m.put("description", signContent(article.getContent(),article.getUrl()));
 		 
 		Object[] params = new Object[]{metaweblogRelevance.getPostId(), mconfig.getUserName(),mconfig.getPassword(), m, true};
 		 
@@ -160,6 +160,10 @@ public class MetaweblogService {
 		}
 		
 		return Ret.ok("type","editPost");
+	}
+	
+	public String signContent(String content,String link){
+		return content+"<br><a href='"+link+"'>原文地址:"+link+"</a>";
 	}
 	
 }

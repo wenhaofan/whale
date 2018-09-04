@@ -6,3 +6,4 @@ jdbcUrl=jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=utf-8
 userName=root
 blogCharset=utf-8
 domain=wenhaofan.com
+projectPath=http://www.wenhaofan.com;

@@ -1,4 +1,4 @@
-package com.wenhaofan.common.log.access;
+package com.wenhaofan.common.log;
 
 import com.wenhaofan.common.model.entity.AccessLog;
 

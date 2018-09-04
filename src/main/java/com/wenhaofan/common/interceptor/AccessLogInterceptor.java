@@ -10,7 +10,7 @@ import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.IpKit;
-import com.wenhaofan.common.log.access.AccessLogService;
+import com.wenhaofan.common.log.AccessLogService;
 import com.wenhaofan.common.model.entity.AccessLog;
 import com.wenhaofan.common.model.entity.AgentUser;
 

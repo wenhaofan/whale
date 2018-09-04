@@ -13,6 +13,7 @@ public class FrontInterceptor implements Interceptor{
 			inv.invoke();
 			return ;
 		}
+		c.setAttr("basicConfig", c.basicConfigService.get());
 		c.setAttr("navs", c.navService.list());
 		c.setAttr("recentArticles", c.articleService.listRecent());
 		c.setAttr("recentComments", c.commentService.listRecent());

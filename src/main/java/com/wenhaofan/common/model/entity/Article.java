@@ -2,6 +2,7 @@ package com.wenhaofan.common.model.entity;
 
 import java.util.List;
 
+import com.jfinal.kit.PropKit;
 import com.wenhaofan.common.model.entity.base.BaseArticle;
 
 /**
@@ -24,5 +25,9 @@ public class Article extends BaseArticle<Article> {
 		this.metas = metas;
 	}
 	
+	public String getUrl() {
+		String projectPath=PropKit.get("projectPath");
+		return projectPath+"article/"+getIdentify();
+	}
 	
 }

@@ -3,7 +3,6 @@ package com.wenhaofan._admin.blogroll;
 import java.util.List;
 
 import com.jfinal.kit.Ret;
-import com.wenhaofan.common.annotation.ValidateMethod;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Blogroll;
 /**
@@ -47,7 +46,7 @@ public class BlogrollController extends BaseController {
 		renderJson(result.toJson());
 	}
 	
-	@ValidateMethod(name="doUpdate")
+ 
 	public void doUpdate() {
 		Blogroll blogroll=getModel(Blogroll.class,"",true);
 		blogrollService.update(blogroll);

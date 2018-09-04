@@ -39,7 +39,7 @@ public class AdminArticleService {
 	private BaiduSeoService baiduSeoService;
 	@Inject
 	private MetaweblogService metaweblogService;
-	
+
 	/**
 	 * 将指定文章推送至其他网站
 	 * @param id
@@ -70,11 +70,10 @@ public class AdminArticleService {
 			update(article, tags, categorys);
 		}
 		
-		String projectPath=PropKit.get("projectPath");
-		
+ 
 		new Thread(()-> {
 			//向百度推送该文章
-			baiduSeoService.pushLink(projectPath+"article/"+article.getIdentify());
+			baiduSeoService.pushLink(article.getUrl());
 			
 		}).start();;
 
