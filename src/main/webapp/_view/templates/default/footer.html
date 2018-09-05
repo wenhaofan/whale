@@ -36,7 +36,7 @@
 			<div class="meta-item meta-posts">
 				<h3 class="meta-title">RECENT POSTS</h3>
                	热门文章
-               	<ul>
+               	<ul style="margin-top: 0px;padding-left: 0px">
                		#for(article:recentArticles)
                			<li>
                				<a href="/article/#(article.identify)">#(article.title)</a>
@@ -47,7 +47,7 @@
             <div class="meta-item meta-comments">
                 <h3 class="meta-title">RECENT COMMENTS</h3>
               		 最新评论
-              	<ul style="padding-left:0px;">
+              	<ul style="padding-left:0px;margin-top: 0px;">
                		#for(comment:recentComments)
                			<li>
                				<a href="/article/#(comment.identify)?p=#(comment.pageNum)#li-comment-#(comment.id)">#(comment.content)</a>

@@ -9,6 +9,7 @@ public class BasicConfigService {
 	private BasicConfig dao;
 	
 	public BasicConfig get() {
-		return dao.findFirst("select * from basic_config order by gmtCreate desc limit 1");
+		BasicConfig config= dao.findFirst("select * from basic_config order by gmtCreate desc limit 1");
+		return config==null?new BasicConfig():config;
 	}
 }

@@ -6,7 +6,7 @@
 			#(article.title)
 		</h1>
 		<div class="post-data">
-			<time datetime="2018-04-01T23:34:00+08:00" itemprop="datePublished">Published on Apr 1, 2018</time> in   with #(commentNum) <a href="#comments">comments </a>
+			<time datetime="#(article.gmtCreate)" itemprop="datePublished">Published on #(article.gmtCreate)</time> in   with #(comments.totalRow) <a href="#comments">comments </a>
 		</div>
 	</div>
 	<div id="post-content" class="post-content" itemprop="articleBody">
@@ -17,7 +17,7 @@
         </p>
 		#(article.content)
 		<p class="post-info">
-			本文由 <a href="<?php $this->author->permalink(); ?>">范文皓</a> 创作，采用 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="external nofollow">知识共享署名4.0</a> 国际许可协议进行许可<br>本站文章除注明转载/出处外，均为本站原创或翻译，转载前请务必署名<br>最后编辑时间为: 最后编辑时间为: Apr 2, 2018 at 03:22 am 
+			本文由 <a href="#(basePath)">#(basicConfig.author)</a> 创作，采用 <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="external nofollow">知识共享署名4.0</a> 国际许可协议进行许可<br>本站文章除注明转载/出处外，均为本站原创或翻译，转载前请务必署名<br>最后编辑时间为: 最后编辑时间为: #(article.gmtModified)
 		</p>
 	</div>
 </article>
@@ -26,8 +26,8 @@
 	<div class="bottom-bar-inner">
 		<div class="bottom-bar-items social-share left">
 			<span class="bottom-bar-item">Share : </span>
-			<span class="bottom-bar-item bottom-bar-facebook"><a href="javascript:shareQzone()" rel="nofollow">Qzone</a></span>
-			<span class="bottom-bar-item bottom-bar-twitter"><a href="javascript:shareTwitter()" target="_blank" title="<?php $this->title() ?>" rel="nofollow">Twitter</a></span>
+			<span class="bottom-bar-item bottom-bar-facebook"><a href="javascript:shareQzone()" title="分享至QQ空间"  rel="nofollow">Qzone</a></span>
+			<span class="bottom-bar-item bottom-bar-twitter"><a href="javascript:shareTwitter()" target="_blank" title="分享至Twitter" rel="nofollow">Twitter</a></span>
 			<span class="bottom-bar-item bottom-bar-weibo"><a href="javascript:shareWeibo()" target="_blank" title="分享至微博" rel="nofollow">Weibo</a></span>
 		</div>
 		<div class="bottom-bar-items right">
