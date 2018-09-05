@@ -1,6 +1,6 @@
 .access-statistic-item{
 	margin-left:1rem;
-	width:48%;
+	width:100%;position: relative;
 }
 .info-statistic-item{
 	margin-left:1rem;

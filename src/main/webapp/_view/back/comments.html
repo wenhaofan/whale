@@ -4,9 +4,9 @@
 		<blockquote class="page-title">评论列表</blockquote>
 	</div>
 </div>
-<div class="site-block">
+<!--<div class="site-block">
 	<form class="layui-form" method="post">
-	<!--  	<div class="layui-form-item">
+	  	<div class="layui-form-item">
 			<label class="layui-form-label">文章:</label>
 			<div class="layui-input-block category-select">
 				<select name="categoryId" id="category-select"
@@ -23,11 +23,11 @@
 					<option value="-1">不限</option>
 				</select>
 			</div>
-		</div>-->
+		</div>
 	</form>
-</div>
-<div>
-	<table class="layui-hide" id="comments"></table>
+</div>-->
+<div style="width:100%;overflow:auto;">
+	<table class="layui-hide"   width="auto" style="white-space:nowrap"   id="comments"></table>
 </div>
 
 
@@ -49,7 +49,7 @@ layui.use(['form','layer','table'], function(){
 	      ,{field:'website',title:"网址"}
 	      ,{field:'content',title:"评论内容"}
 	      ,{templet:'#aduit-tpl',width:100,title:"状态"}
-	      ,{templet:'#operation-tpl',title:"操作"}
+	      ,{templet:'#operation-tpl',title:"操作",width:190}
 	    ]]
 	  });
 

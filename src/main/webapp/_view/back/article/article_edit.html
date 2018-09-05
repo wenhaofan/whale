@@ -40,6 +40,18 @@ addEventListener("load",function(){
 
 
 </script>
+<style>
+
+@media screen and (max-width: 768px) {
+ .mditor .head{
+	height:76px;
+}
+#md-container .body{
+	margin-top:38px;
+}
+}
+
+</style>
 </head>
 <body>
 <script type="text/html" id="tpl-content">
@@ -64,7 +76,7 @@ addEventListener("load",function(){
 					<input class="form-control" placeholder="（必须）" name="title" data-rule="required;" value="#(article.title??)" />
 				</div>
 
-				<div class="form-group col-md-6" style="padding: 0 0 0 10px;">
+				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
 					<input class="form-control"
 						placeholder="自定义访问路径，如：my-first-article  默认为创建时间" name="identify"
 						value="#(article.identify??)" />
@@ -74,7 +86,7 @@ addEventListener("load",function(){
 					<input name="tags" id="tags" type="text" class="form-control" placeholder="请填写文章标签" />
 				</div>
 
-				<div class="form-group col-md-6">
+				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
 		 
 					<select id="multiple-sel" class="select2 form-control" multiple="multiple" data-placeholder="请选择分类...">
 						#for(category:allCategory)
@@ -82,16 +94,17 @@ addEventListener("load",function(){
 						#end
 					</select>
 				</div>
-				<div class="clearfix"></div>
-
-				<div class="form-group col-xs-12">
+					<div class="form-group col-xs-12">
 					<div class="pull-right">
 						<a id="switch-btn" href="javascript:void(0)"
 							class="btn btn-purple btn-sm waves-effect waves-light switch-editor">
 							切换为富文本编辑器 </a>
 					</div>
 				</div>
+				
+				<div class="clearfix"></div>
 
+			
 				<div id="md-container" class="form-group col-md-12">
 					<textarea id="md-editor" class=""></textarea>
 				</div>
@@ -99,7 +112,7 @@ addEventListener("load",function(){
 					<div class="summernote"></div>
 				</div>
 
-				<div class="form-group col-md-3 col-sm-4">
+				<!-- <div class="form-group col-md-3 col-sm-4">
 					<label class="col-sm-4">开启评论</label>
 					<div class="col-sm-8">
 						<div
@@ -116,7 +129,7 @@ addEventListener("load",function(){
 							onclick="allow_comment(this);"
 							on="${contents.allowComment ?! true}"></div>
 					</div>
-				</div>
+				</div> -->
 				<div class="form-group col-md-3 col-sm-4">
 					<div class="text-right">
 					<a class="btn btn-default waves-effect waves-light" href="javascript:window.loaction.go(-1)">返回</a>

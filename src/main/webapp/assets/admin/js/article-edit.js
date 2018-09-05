@@ -158,25 +158,28 @@ $(document).ready(function () {
         });  
     });  
     
-    var fmtType = $('#fmtType').val();
-    // 富文本编辑器
-    if (fmtType != 'markdown') {
-        var this_ = $('#switch-btn');
-        mditor.value = '';
-        $('#md-container').hide();
-        $('#html-container').show();
-        this_.text('切换为Markdown编辑器');
-        this_.attr('type', 'texteditor');
-    } else {
-        var this_ = $('#switch-btn');
-        $('#html-container').hide();
-        $('#md-container').show();
-        $('#fmtType').val('markdown');
-        this_.attr('type', 'markdown');
-        this_.text('切换为富文本编辑器');
-        htmlEditor.summernote("code", "");
-    }
-
+ 
+	 
+  
+	 var fmtType = $('#fmtType').val();
+	    // 富文本编辑器
+	    if (fmtType != 'markdown') {
+	        var this_ = $('#switch-btn');
+	        mditor.value = '';
+	        $('#md-container').hide();
+	        $('#html-container').show();
+	        this_.text('切换为Markdown编辑器');
+	        this_.attr('type', 'texteditor');
+	        $("#md-container > div > div.head > ul > i.item.fa.fa-columns.active.control").trigger("click");
+	    } else {
+	        var this_ = $('#switch-btn');
+	        $('#html-container').hide();
+	        $('#md-container').show();
+	        $('#fmtType').val('markdown');
+	        this_.attr('type', 'markdown');
+	        this_.text('切换为富文本编辑器');
+	        htmlEditor.summernote("code", "");
+	    }
     /*
      * 切换编辑器
      * */
@@ -206,6 +209,8 @@ $(document).ready(function () {
             $('#fmtType').val('markdown');
             this_.text('切换为富文本编辑器');
             htmlEditor.summernote("code", "");
+            
+        
         }
     });
   
@@ -262,10 +267,13 @@ $(document).ready(function () {
 
 $(function(){
 	window.addEventListener("load",function(){
-		
+		  if($(window).width()<=768){
+		    	$(".fa-columns").trigger("click");
+		    	isHideShowHtml=true;
+		    }
 		 $("#multiple-sel").select2({
 		        width: '100%'
-		 });	  // Tags Input
+		 });	 
 	    $('#tags').tagsInput({
 	        width: '100%',
 	        height: '35px',

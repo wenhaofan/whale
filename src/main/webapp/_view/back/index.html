@@ -23,11 +23,52 @@ addEventListener("load",function(){
 		}
 	})
 })
+$(function(){
+	$(".layui-toggle-menu").click(function(){
+		if($(this).find("i").hasClass("layui-icon-spread-left")){
+			$(this).find("i").removeClass("layui-icon-spread-left");
+			$(this).find("i").addClass("layui-icon-shrink-right");
+			$(".layui-side").show();
+			$(".layui-body").css("left","200px");
+		}else{
+			$(this).find("i").addClass("layui-icon-spread-left");
+			$(this).find("i").removeClass("layui-icon-shrink-right");
+			$(".layui-side").hide();
+			$(".layui-body").css("left","0");
+		}
+	})
+	
+	$(window).resize(function(){
+		if($(window).width()<=768){
+			$(".layui-toggle-menu i").addClass("layui-icon-spread-left");
+			$(".layui-toggle-menu i").removeClass("layui-icon-spread-right");
+			$(".layui-side").hide();
+			$(".layui-body").css("left",0);
+		}
+	})
 
+})
+
+
+addEventListener("load",function(){
+	if($(window).width()<=768){
+		$(".layui-toggle-menu i").addClass("layui-icon-spread-left");
+		$(".layui-side").hide();
+		$(".layui-body").css("left",0);
+	}else{
+		$(".layui-toggle-menu i").addClass("layui-icon-shrink-right");
+		$(".layui-side").show();
+	}
+})
 </script>
 <style type="text/css">
+.layui-layout-admin .layui-logo{
+	left:50px;
+	width:150px;
+	    text-align: left
+}
 body{background:#f5f5f5;font-family:'Noto Sans',sans-serif !important;margin:0;color: #505458;}
-html{overflow-x:hidden;position:relative;min-height:100%;background:#f5f5f5}
+html{ min-height:100%;background:#f5f5f5}
 /**为了隐藏在使用bootstrap的模态框和layui的冲突导致的遮罩*/
 .modal-backdrop{
 	position:static !important;
@@ -64,38 +105,68 @@ a:hover{
  	background-color:rgb(255,255,255);
  }
  .layui-body{overflow-y: scroll;}
+ 
+ 
+ 
+.layui-toggle-menu{
+    display: block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    color: #fff;
+    cursor: pointer;
+  
+ }
+ .layui-toggle-menu i,.layui-logo{
+ font-size: 20px;
+ }  
+ .layui-header{
+ 	height:50px;
+ 	
+ }
+ .layui-nav .layui-layout-right{
+	 height:50px;
+ }
+.layui-layout-admin .layui-logo{
+ line-height: 50px;
+ }
+ .layui-nav .layui-nav-item{
+ line-height: 50px;
+ }
+ .layui-layout-admin .layui-side,.layui-layout-admin .layui-body  {
+   top: 50px;
+ 
+}
+.layui-layout-admin .layui-body{
+bottom: 0px;
+}
+.layui-bg-black{
+	display: none;
+}
 </style>
 </head>
-<body class="layui-layout-body">
+<body class=" ">
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
-    <div class="layui-logo">博客后台管理</div>
-    <!-- 头部区域（可配合layui已有的水平导航） 
-    <ul class="layui-nav layui-layout-left">
-      <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
-      <li class="layui-nav-item"><a href="">用户</a></li>
-      <li class="layui-nav-item">
-        <a href="javascript:;">其它系统</a>
-        <dl class="layui-nav-child">
-          <dd><a href="">邮件管理</a></dd>
-          <dd><a href="">消息管理</a></dd>
-          <dd><a href="">授权管理</a></dd>
-        </dl>
-      </li>
-    </ul>-->
+  	<div class="layui-toggle-menu">
+  		<i class="layui-icon"></i>
+  	</div>
+    <div class="layui-logo">博客管理</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+ 
     <ul class="layui-nav layui-layout-right">
-    <!--  <li class="layui-nav-item">
+      <li class="layui-nav-item">
         <a href="javascript:;">
-          <img src="" class="layui-nav-img">
-          贤心
+          
+         	欢迎你,系统管理员
         </a>
         <dl class="layui-nav-child">
-          <dd><a href="">基本资料</a></dd>
-          <dd><a href="">安全设置</a></dd>
+      
+           <dd><a href="/">退出</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="">退了</a></li>  -->
+ 
     </ul>
   </div>
   
@@ -123,11 +194,7 @@ a:hover{
     	</main>	
     </div>
   </div>
-  
-  <div class="layui-footer">
-    <!-- 底部固定区域 -->
-    © layui.com - 底部固定区域
-  </div>
+ 
 </div>
 
 <script>
