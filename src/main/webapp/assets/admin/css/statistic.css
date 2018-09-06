@@ -2,16 +2,22 @@
 	margin-left:1rem;
 	width:100%;position: relative;
 }
+.info-statistic-block{
+	text-align: center;
+}
 .info-statistic-item{
-	margin-left:1rem;
+	width: 85%;
+    margin: 0 auto;
+    min-width: 300px
 }
 .info-block{
 	width:300px;
 	height:130px;
 	border-radius:10px;
-	margin:1rem 1rem;
+	margin:1rem 0px 1rem 0px;
 	margin-top:0px;
 	color: white;
+
 }
 
 .divide-line{
@@ -20,7 +26,7 @@
 
 .info-block-left{
 	display: inline-block;
-	margin-left: 24px;
+ 
     padding-right: 16px;
 }
 

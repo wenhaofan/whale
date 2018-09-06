@@ -1,6 +1,6 @@
 <script src="/assets/echarts/echarts.js"></script>
 <script src="/assets/kit/DateUtil.js"></script>
-<link rel="stylesheet" href="/assets/admin/css/statistic.css">
+<link rel="stylesheet" href="/assets/admin/css/statistic.css?v=12">
 <script type="text/javascript">
 (function(){
 	
@@ -74,70 +74,81 @@ $(function(){
 <div class="layui-bg-green divide-line" style="width:100%;text-align:center;line-height: 30px;border-radius: 5px;">
 	仪表盘
 </div>
-<div class="layui-inline info-statistic-item">
-	<div class="info-block" style="background-color: #1E9FFF;">
-		<div class="info-block-left">
-			<i class="layui-icon layui-icon-edit"></i>
-		</div>
-		<div class="info-block-middle">
-			<div>
-				<p>共发表了</p>
-				<p class="text-right text-big article-total-num" onclick='window.location.href="/admin/article/list"'></p>
-				<p>篇文章</p>
-			</div>
-		</div>
-		<div class="info-block-right">
-			<div>
-				<p>本月发表</p>
-				<p class="text-right text-big article-month-num"  onclick='window.location.href="/admin/article/list"'></p>
-				<p>篇文章</p>
-			</div>
-		</div>
-		
-	</div>
-</div>
-<div class="layui-inline info-statistic-item">
-	<div class="info-block" style="background-color: #5FB878;">
-		<div class="info-block-left">
-			<i class="layui-icon layui-icon-chat"></i>
-		</div>
-		<div class="info-block-middle">
-			<div>
-				<p>共收到了</p>
-				<p class="text-right text-big comment-total-num"  onclick='window.location.href="/admin/comment"'></p>
-				<p>条评论</p>
-			</div>
-		</div>
-		<div class="info-block-right ">
-			<div>
-				<p>本月收到</p>
-				<p class="text-right text-big comment-month-num"  onclick='window.location.href="/admin/comment"'></p>
-				<p>条评论</p>
+<div class="layui-row">
+	<div class="layui-col-xs12 layui-col-sm6 layui-col-md4 info-statistic-block">
+		<div class="layui-inline info-statistic-item">
+			<div class="info-block" style="background-color: #1E9FFF;">
+				<div class="info-block-left">
+					<i class="layui-icon layui-icon-edit"></i>
+				</div>
+				<div class="info-block-middle">
+					<div>
+						<p>共发表了</p>
+						<p class="text-right text-big article-total-num" onclick='window.location.href="/admin/article/list"'></p>
+						<p>篇文章</p>
+					</div>
+				</div>
+				<div class="info-block-right">
+					<div>
+						<p>本月发表</p>
+						<p class="text-right text-big article-month-num"  onclick='window.location.href="/admin/article/list"'></p>
+						<p>篇文章</p>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 	</div>
-</div>
-<div class="layui-inline info-statistic-item">
-	<div class="info-block" style="background-color: #e8b30c;">
-		<div class="info-block-left">
-			<i class="layui-icon layui-icon-chat"></i>
-		</div>
-		<div class="info-block-middle">
-			<div>
-				<p>共上传了</p>
-				<p class="text-right text-big disk-total-num" onclick='window.location.href="/admin/disk"'></p>
-				<p>个附件</p>
+	<div class="layui-col-xs12 layui-col-sm6 layui-col-md4 info-statistic-block">
+		<div class="layui-inline info-statistic-item">
+			<div class="info-block" style="background-color: #5FB878;">
+				<div class="info-block-left">
+					<i class="layui-icon layui-icon-chat"></i>
+				</div>
+				<div class="info-block-middle">
+					<div>
+						<p>共收到了</p>
+						<p class="text-right text-big comment-total-num"  onclick='window.location.href="/admin/comment"'></p>
+						<p>条评论</p>
+					</div>
+				</div>
+				<div class="info-block-right ">
+					<div>
+						<p>本月收到</p>
+						<p class="text-right text-big comment-month-num"  onclick='window.location.href="/admin/comment"'></p>
+						<p>条评论</p>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="info-block-right ">
-			<div>
-				<p>本月上传</p>
-				<p class="text-right text-big disk-month-num"  onclick='window.location.href="/admin/disk"'></p>
-				<p>个附件</p>
+	</div>
+	<div class="layui-col-xs12 layui-col-sm6 layui-col-md4 info-statistic-block">
+		<div class="layui-inline info-statistic-item">
+			<div class="info-block" style="background-color: #e8b30c;">
+				<div class="info-block-left">
+					<i class="layui-icon layui-icon-chat"></i>
+				</div>
+				<div class="info-block-middle">
+					<div>
+						<p>共上传了</p>
+						<p class="text-right text-big disk-total-num" onclick='window.location.href="/admin/disk"'></p>
+						<p>个附件</p>
+					</div>
+				</div>
+				<div class="info-block-right ">
+					<div>
+						<p>本月上传</p>
+						<p class="text-right text-big disk-month-num"  onclick='window.location.href="/admin/disk"'></p>
+						<p>个附件</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+
+
 <!--  
 <div class="layui-inline info-statistic-item">
 	<div class="info-block" style="background-color: #7d7c7c;">

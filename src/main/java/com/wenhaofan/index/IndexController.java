@@ -42,5 +42,6 @@ public class IndexController extends BaseController {
 	public void profiles() {
 		render("profiles/profiles.html");
 	}
+ 
 
 }

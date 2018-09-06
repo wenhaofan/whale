@@ -1,25 +1,24 @@
 package com.wenhaofan._admin.user;
 
-import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.kit.Ret;
+import com.wenhaofan.common.aop.Inject;
+import com.wenhaofan.common.kit.StrKit;
 import com.wenhaofan.common.model.entity.User;
 
 public class AdminUserService {
 
-	public static final AdminUserService me= new AdminUserService();
-	//private final User dao=new User().dao();
+	@Inject
+	private User dao;
 	
-
-	public void update(User user) {
+	public Ret editPassword(User user,String oladpassword,String newPassword) {
+		user=dao.findById(user.getId());
+		if(!StrKit.equals(oladpassword, user.getPwd())) {
+			return Ret.fail("msg", "原密码错误！");
+		}
+		user.setPwd(newPassword);
 		user.update();
+		return Ret.ok("msg", "密码修改成功！");
 	}
 	
-	
-	public Boolean isExistAdmin() {
-		Integer count= Db.queryInt("select count(*) from user where level=1");
-		return count!=null&&count>0;
-	}
-	
-	public void saveUser(User user) {
-		user.save();
-	}
+ 
 }

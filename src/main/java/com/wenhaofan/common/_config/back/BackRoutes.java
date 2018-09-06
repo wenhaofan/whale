@@ -24,7 +24,7 @@ import com.wenhaofan._admin.seo.AdminSeoController;
 import com.wenhaofan._admin.seo.BasicConfigApi;
 import com.wenhaofan._admin.statistic.StatisticApi;
 import com.wenhaofan._admin.statistic.StatisticController;
-import com.wenhaofan._admin.user.AdminUserController;
+import com.wenhaofan._admin.user.AdminUserApi;
 import com.wenhaofan.common.interceptor.AdminIndexInterceptor;
 import com.wenhaofan.common.interceptor.ExceptionInterceptor;
 import com.wenhaofan.common.uplod.FileUploadApi;
@@ -43,7 +43,8 @@ public class BackRoutes extends Routes {
 	   setBaseViewPath("/_view/back");
 	   add("/admin",IndexAdminController.class,"/");
 	   
-	   add("/admin/user",AdminUserController.class,"/");
+	   add("/admin/api/user", AdminUserApi.class);
+	   add("/admin/user",AdminUserApi.class,"/");
 	   add("/admin/api/nav", NavApi.class, "/");
 	   add("/admin/api/upload",FileUploadApi.class,"/");
 	   add("/admin/api/kv", KvController.class,"/");

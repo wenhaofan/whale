@@ -104,10 +104,7 @@ a:hover{
 	
  	background-color:rgb(255,255,255);
  }
- .layui-body{overflow-y: scroll;}
- 
- 
- 
+
 .layui-toggle-menu{
     display: block;
     width: 50px;
@@ -144,6 +141,9 @@ bottom: 0px;
 .layui-bg-black{
 	display: none;
 }
+.update-pwd-from .layui-input-block{
+	margin-left:45px;
+}
 </style>
 </head>
 <body class=" ">
@@ -162,8 +162,9 @@ bottom: 0px;
          	欢迎你,系统管理员
         </a>
         <dl class="layui-nav-child">
-      
-           <dd><a href="/">退出</a></dd>
+      		
+      	   <dd id="updatePwd"><a href="javascript:void(0)">修改密码</a></dd>
+           <dd><a href="/login/logout">退出</a></dd>
         </dl>
       </li>
  
@@ -196,12 +197,78 @@ bottom: 0px;
   </div>
  
 </div>
-
+<script type="text/html" id="tpl-update-pwd">
+<div style="width:290px;padding:10px;">
+	<form class="layui-form update-pwd-from" onsubmit="return false;">
+		 <div class="layui-form-item layui-form-text">
+	   	 	<div class="layui-input-block">
+      			<input type="text" name="oldPwd" required  lay-verify="required" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+    		</div>
+	  	</div>
+	  	 <div class="layui-form-item layui-form-text">
+	   	 	<div class="layui-input-block">
+      			<input type="text" name="newPwd" required  lay-verify="required" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+    		</div>
+	  	</div>
+		  <div class="">
+		     <div style="    text-align: center;">
+		    	<button class="layui-btn" lay-submit lay-filter="updatePwd">立即提交</button>
+			 </div>
+	  	</div>
+</form>
+</div>
+</script>
+<script type="text/javascript">
+var updatePwdIndex;
+layui.use(['form','layer'],function(){
+	form=layui.form;
+	layer=layui.layer;
+	
+	  //监听提交
+	  form.on('submit(updatePwd)', function(data){
+		 
+		   $.ajax({
+			   url:"/admin/api/user/editPwd",
+			   data:data.field,
+			   type:"post",
+			   success:function(data){
+				   if(fl.isOk(data)){
+					   fl.alertOk({title:"密码修改成功！"});
+					   layer.close(updatePwdIndex);
+				   }
+			   }
+		   })
+	  	 return false;
+	  });
+})
+function updatePwd(){
+	updatePwdIndex=layer.open({
+  		title:"修改密码",
+  		area: ['340px', '215px'],
+	  	type: 1, 
+	  	content: $("#tpl-update-pwd").html(),
+	  	success:function(){
+	  		form.render();
+	  	}
+  	});
+}</script>
 <script>
 
 layui.use('element', function(){
   var element = layui.element;
+  
+  
 });
+
+$(function(){
+	$("#updatePwd").click(function(){
+		updatePwd();
+	});
+	
+	$(".layui-layout-right").click(function(){
+		$(this).trigger("mouseover");
+	})
+})
 </script>
 
 

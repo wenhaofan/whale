@@ -42,7 +42,7 @@ public class LoginService {
 		session.setId(StrKit.getRandomUUID());
 		session.setUserId(loginUser.getId());
 		
-		long liveSecond=isKeep?365*24*60*60:60*60;
+		long liveSecond=isKeep?365*24*60*60:24*60*60;
 		
 		session.setExpireAt(System.currentTimeMillis()+liveSecond*1000);
 		

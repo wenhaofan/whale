@@ -1,4 +1,4 @@
-.layui-form-item{
+.article-query-form .layui-form-item{
 	margin-bottom:0px;
 }
 .category-select{
@@ -7,7 +7,7 @@
 .state-select{
 	width:100px;
 }
-.layui-form-item{
+.article-query-form .layui-form-item{
 	display:inline-block;
 }
 .article-query-form .layui-form-label{
