@@ -21,4 +21,14 @@ public class AdminUserService {
 	}
 	
  
+	public Ret update(User user) {
+		System.out.println(user);
+		user.setId(getAdminUser().getId());
+		user.update();
+		return Ret.ok();
+	}
+	public User getAdminUser() {
+		return dao.findFirst("select * from user");
+	}
+	
 }

@@ -25,7 +25,9 @@ import com.wenhaofan.common.aop.AopControllerFactory;
 import com.wenhaofan.common.handle.BasePathHandler;
 import com.wenhaofan.common.interceptor.AccessLogInterceptor;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
+import com.wenhaofan.common.model.entity.BasicConfig;
 import com.wenhaofan.common.model.entity._MappingKit;
+import com.wenhaofan.config.BasicConfigService;
 
 /**
  * 博客的配置文件
@@ -126,6 +128,20 @@ public class BlogConfig extends JFinalConfig {
 	@Override
 	public void configHandler(Handlers me) {
 		me.add(new BasePathHandler("basePath"));
+	}
+
+
+	@Override
+	public void afterJFinalStart() {
+		// TODO Auto-generated method stub
+		super.afterJFinalStart();
+		
+		
+		 
+		BasicConfigService configService=AopControllerFactory.getInject(BasicConfigService.class);
+		 
+		BasicConfig  config=configService.get();
+		BlogContext.reset(config);
 	}
 	
  

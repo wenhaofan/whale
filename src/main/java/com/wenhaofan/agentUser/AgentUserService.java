@@ -22,5 +22,9 @@ public class AgentUserService {
 		return dao.findFirst(dao.getSqlPara("agentUser.findByCookie", cookie));
 	}
 	
+	public void update(AgentUser agentUser) {
+		dao.deleteById(agentUser.getId());
+		agentUser.save();
+	}
 	
 }

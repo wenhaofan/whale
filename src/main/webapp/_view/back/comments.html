@@ -33,9 +33,10 @@
 
 <script type="text/javascript">
 
-layui.use(['layer','table'], function(){
+layui.use(['layer','table','form'], function(){
 	 layer = layui.layer;
 	 table = layui.table;
+	 form  = layui.form;
 	 table.render({
 		 page:{count:80,limit:10}
 	    ,elem: '#comments'
@@ -169,7 +170,7 @@ $(function(){
 	  	<div class="layui-form-item layui-form-text">
 	   	 <label class="layui-form-label">回答内容</label>
 	    	<div class="layui-input-block">
-	     	 <textarea  maxlength="300" minlength="5" rows="5" cols="40" name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
+	     	 <textarea  maxlength="300" rows="5" cols="40" name="content" placeholder="请输入内容" class="layui-textarea"></textarea>
 	    	</div>
 	  	</div>
 		  <div class="layui-form-item">

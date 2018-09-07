@@ -1,12 +1,43 @@
 package com.wenhaofan.common._config;
 
-public abstract class BlogContext {
+import com.jfinal.kit.PropKit;
+import com.wenhaofan.common.model.entity.BasicConfig;
 
-	public static boolean IS_INIT=true;
+public class BlogContext {
 	
-	//标识未登录用户
-	public static final String IDENTIFY_COOKIE="IDENTIFY_COOKIE";
-	public static final Integer IDENTIFY_MAX_AGE=30*24*60*60;
-
+	public static  EmailConfig emailConfig;
+	public static BasicConfig basicConfig;
+	
+	public static String getProjectPath(){
+		return PropKit.get("projectPath");
+	}
+	
+	public static void reset(BasicConfig config) {
+		emailConfig=new BlogContext().new EmailConfig(config);
+		basicConfig=config;
+	}
+	
+	public class EmailConfig{
+		BasicConfig config;
+		
+		public EmailConfig(BasicConfig config) {
+			this.config=config;
+		}
+		
+		public String getEmailServer() {
+			return config.getEmailServer();
+		}
+		public String getEmailPassword() {
+			return config.getEmailPassword();
+		}
+		
+		 
+		
+		public String getFromEmail() {
+			return config.getFromEmail();
+		}
+	}
+	
+	 
 	
 }

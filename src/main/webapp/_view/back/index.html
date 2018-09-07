@@ -98,7 +98,7 @@ a:hover{
 	margin-bottom: 24px;
 }
 .swal2-container{
-	z-index:19891015!important;
+	z-index:19991015!important;
 }
 .swal2-modal .swal2-spacer {
 	
@@ -141,7 +141,7 @@ bottom: 0px;
 .layui-bg-black{
 	display: none;
 }
-.update-pwd-from .layui-input-block{
+.update-pwd-from  .layui-input-block,.update-info-from .layui-input-block{
 	margin-left:45px;
 }
 </style>
@@ -159,10 +159,10 @@ bottom: 0px;
       <li class="layui-nav-item">
         <a href="javascript:;">
           
-         	欢迎你,系统管理员
+         	欢迎你,#(adminUser.name)
         </a>
         <dl class="layui-nav-child">
-      		
+           <dd id="updateInfo"><a href="javascript:void(0)">修改个人信息</a></dd>
       	   <dd id="updatePwd"><a href="javascript:void(0)">修改密码</a></dd>
            <dd><a href="/login/logout">退出</a></dd>
         </dl>
@@ -182,7 +182,7 @@ bottom: 0px;
       	<li class="layui-nav-item"><a href="/admin/disk">文&nbsp;&nbsp;件&nbsp;&nbsp;管&nbsp;&nbsp;理</a></li>
      	<li class="layui-nav-item"><a href="/admin/comment">评&nbsp;&nbsp;论&nbsp;&nbsp;管&nbsp;&nbsp;理</a></li>
       	<li class="layui-nav-item"><a href="/admin/nav">导&nbsp;&nbsp;航&nbsp;&nbsp;管&nbsp;&nbsp;理</a></li>
-      	<li class="layui-nav-item"><a href="/admin/seo">SEO</a></li>
+      	<li class="layui-nav-item"><a href="/admin/config">网&nbsp;&nbsp;站&nbsp;&nbsp;配&nbsp;&nbsp;置</a></li>
       </ul>
     </div>
   </div>
@@ -218,6 +218,27 @@ bottom: 0px;
 </form>
 </div>
 </script>
+<script type="text/html" id="tpl-update-info">
+<div style="width:290px;padding:10px;">
+	<form class="layui-form update-info-from" onsubmit="return false;">
+		 <div class="layui-form-item layui-form-text">
+	   	 	<div class="layui-input-block">
+      			<input type="text" name="name" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" value="#(adminUser.name)" class="layui-input">
+    		</div>
+	  	</div>
+	  	 <div class="layui-form-item layui-form-text">
+	   	 	<div class="layui-input-block">
+      			<input type="text" name="email" required  lay-verify="required" placeholder="请输入邮箱" autocomplete="off" value="#(adminUser.email)" class="layui-input">
+    		</div>
+	  	</div>
+		  <div class="">
+		     <div style="text-align: center;">
+		    	<button class="layui-btn" lay-submit lay-filter="updateInfo">立即提交</button>
+			 </div>
+	  	</div>
+</form>
+</div>
+</script>
 <script type="text/javascript">
 var updatePwdIndex;
 layui.use(['form','layer'],function(){
@@ -240,6 +261,23 @@ layui.use(['form','layer'],function(){
 		   })
 	  	 return false;
 	  });
+	  
+	  //监听提交
+	  form.on('submit(updateInfo)', function(data){
+		 
+		   $.ajax({
+			   url:"/admin/api/user/editInfo",
+			   data:data.field,
+			   type:"post",
+			   success:function(data){
+				   if(fl.isOk(data)){
+					   fl.alertOk({title:"修改成功！"});
+					   layer.close(updatePwdIndex);
+				   }
+			   }
+		   })
+	  	 return false;
+	  });
 })
 function updatePwd(){
 	updatePwdIndex=layer.open({
@@ -251,7 +289,19 @@ function updatePwd(){
 	  		form.render();
 	  	}
   	});
-}</script>
+}
+function updateInfo(){
+	updatePwdIndex=layer.open({
+  		title:"修改个人信息",
+  		area: ['340px', '215px'],
+	  	type: 1, 
+	  	content: $("#tpl-update-info").html(),
+	  	success:function(){
+	  		form.render();
+	  	}
+  	});
+}
+</script>
 <script>
 
 layui.use('element', function(){
@@ -264,7 +314,9 @@ $(function(){
 	$("#updatePwd").click(function(){
 		updatePwd();
 	});
-	
+	$("#updateInfo").click(function(){
+		updateInfo();
+	});
 	$(".layui-layout-right").click(function(){
 		$(this).trigger("mouseover");
 	})

@@ -39,22 +39,33 @@ public class BaseController extends Controller{
 		
 		String cookie=getCookie(AgentUserService.AGENT_USER_COOKIE_KEY);
 		
-		if(StrKit.notBlank(cookie)) {
+		if(StrKit.notBlank(cookie)&&getLoginUser()==null) {
 			agentUser=agentUserService.get(cookie);
 			if(agentUser!=null) {
 				return agentUser;
 			}
 		}
+		
 		cookie=StrKit.getRandomUUID();
 		if(getLoginUser()!=null) {
-			agentUser=new AgentUser();
-			agentUser.setId(0);
-			agentUser.setName("admin");
+			agentUser=agentUserService.get(-1);
+			if(agentUser==null) agentUser=new AgentUser();
+			String userName=getLoginUser().getName();
+			agentUser.setId(-1);
+			agentUser.setName(StrKit.isBlank(userName)?"系统管理员":userName);
+			agentUser.setEmail(getLoginUser().getEmail());
 		}else {
 			agentUser=new AgentUser();
 		}
 		agentUser.setCookie(cookie);
-		agentUserService.save(agentUser);
+		
+		if(agentUser.getId()!=null) {
+			agentUserService.update(agentUser);
+		}else {
+			agentUserService.save(agentUser);
+		}
+		
+		
 		//设置cookie
 		setCookie(AgentUserService.AGENT_USER_COOKIE_KEY,cookie,AgentUserService.AGENT_USER_COOKIE_AGE);
 		return agentUser;

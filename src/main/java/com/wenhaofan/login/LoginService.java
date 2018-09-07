@@ -23,7 +23,7 @@ public class LoginService {
 	public Ret  login(String ukAccount,String pwd,boolean isKeep,String ip) {
 
 		
-		Kv vals=Kv.by("ukAccount",ukAccount)
+		Kv vals=Kv.by("account",ukAccount)
 				.set("pwd",pwd);
 		SqlPara sql=dao.getSqlPara("login.login",vals);
 		

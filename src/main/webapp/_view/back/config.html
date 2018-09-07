@@ -1,10 +1,22 @@
 <style>
 
-@media screen and (min-width: 1200px){
+@media screen and (max-width: 1200px){
 	.table-block{
 		width:90%;
 		margin: 0 auto;
 	}
+}
+
+@media screen and (max-width: 768px){
+	.layui-form-label{
+		width: 50px!important;
+	    padding-left:  0px!important;
+	}
+	.layui-input-block{
+	 margin-left: 70px;
+	     max-width: 230px;
+	}
+	   
 }
 .add-form{
 	width:400px;
@@ -21,7 +33,7 @@
 </style> 
 <div class="layui-row ">
 	<div class="layui-col-lg12 layui-col-md12">
-		<blockquote class="layui-elem-quote my-quote ">SEO配置</blockquote>
+		<blockquote class="layui-elem-quote my-quote ">高级配置</blockquote>
 	</div>
 </div>
 
@@ -49,12 +61,12 @@
 <div class="layui-row" >
 	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
 		<div class="basic-config">
-			<blockquote class="layui-elem-quote my-quote quote-level2">网站基础信息配置</blockquote>
-			<form class="layui-form" action="" id="basicConfig" onsubmit="return false">
+			<blockquote class="layui-elem-quote my-quote quote-level2">基础配置</blockquote>
+			<form class="layui-form basicConfig" action=""   onsubmit="return false">
 			  <div class="layui-form-item">
 			    <label class="layui-form-label">标题</label>
 			    <div class="layui-input-block">
-			    <input type="hidden" name="id">
+			      <input type="hidden" name="id">
 			      <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
 			    </div>
 			  </div>
@@ -84,7 +96,41 @@
 			</form>
 		</div>
 	</div>
+	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
+		<div class="basic-config">
+			<blockquote class="layui-elem-quote my-quote quote-level2">邮箱配置</blockquote>
+			<form class="layui-form basicConfig" action="" onsubmit="return false">
+			
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">发件邮箱</label>
+			    <div class="layui-input-block">
+			      <input type="text" name=fromEmail required  lay-verify="required" placeholder="请输入发件邮箱" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">邮件密码</label>
+			    <div class="layui-input-block">
+			      <input type="text" name="emailPassword" required  lay-verify="required" placeholder="请输入邮件密码" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">邮件服务器</label>
+			    <div class="layui-input-block">
+			      <input type="hidden" name="id">
+			      <input type="text" name="emailServer" required  lay-verify="required" placeholder="请输入邮件服务器地址" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			 
+			  <div class="layui-form-item">
+			    <div class="layui-input-block">
+			      <button  class="layui-btn" lay-submit lay-filter="basicConfig">立即提交</button>
+			    </div>
+			  </div>
+			</form>
+		</div>
+	</div>
 </div>
+ 
 <script type="text/html" id="tpl-medit">
 <div style="width:500px;padding:10px;">
 	<form class="layui-form add-form" onsubmit="return false;">
@@ -158,7 +204,8 @@ function setBasicForm(){
 		dataType:"json",
 		success:function(data){
 			if(fl.isOk(data)){
-				formUtil.setFormVal(data.config,$("#basicConfig"));
+				formUtil.setFormVal(data.config,$(".basicConfig"));
+				formUtil.setFormVal(data.config,$(".basicConfig"));
 			}
 		}
 	})
@@ -196,7 +243,7 @@ function renderBEdit(data){
 
 function medit(data){
 	$.ajax({
-		url:"/admin/api/seo/mconfigEdit",
+		url:"/admin/api/config/mconfigEdit",
 		data:data,
 		type:"post",
 		success:function(data){
@@ -208,7 +255,7 @@ function medit(data){
 }
 function bedit(data){
 	$.ajax({
-		url:"/admin/api/seo/bconfigEdit",
+		url:"/admin/api/config/bconfigEdit",
 		data:data,
 		type:"post",
 		success:function(data){
@@ -227,7 +274,7 @@ layui.use(['form','table','laytpl'],function(){
 	
 	table.render({
 		elem: '#metaweblog'
-	   ,url:'/admin/api/seo/mList'
+	   ,url:'/admin/api/config/mList'
 	   ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
 	   ,cols: [[
 	   	{field:'id', sort: true,width:60,title:"id"}
@@ -241,7 +288,7 @@ layui.use(['form','table','laytpl'],function(){
 	
 	table.render({
 		  elem: '#baiduseo'
-		   ,url:'/admin/api/seo/bList'
+		   ,url:'/admin/api/config/bList'
 		   ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
 		   ,cols: [[
 		   	 {field:'id', sort: true,width:60,title:"id"}
@@ -293,7 +340,7 @@ $(function(){
 	})
 	$("body").on("click",".mupdate",function(){
 		$.ajax({
-			url:"/admin/api/seo/mget/"+$(this).data("id"),
+			url:"/admin/api/config/mget/"+$(this).data("id"),
 			dataType:'json',
 			success:function(data){
 				if(fl.isOk(data)){
@@ -305,7 +352,7 @@ $(function(){
 	})
 	$("body").on("click",".bupdate",function(){
 		$.ajax({
-			url:"/admin/api/seo/bget/"+$(this).data("id"),
+			url:"/admin/api/config/bget/"+$(this).data("id"),
 			dataType:'json',
 			success:function(data){
 				if(fl.isOk(data)){
@@ -328,7 +375,7 @@ $(function(){
 		deleteMid=$(this).data("id");
 		fl.alertConfirm({title:"是否确认删除？",then:function(){
 			$.ajax({
-				url:"/admin/api/seo/mconfigDelete/"+deleteMid,
+				url:"/admin/api/config/mconfigDelete/"+deleteMid,
 				success:function(data){
 					if(fl.isOk(data)){
 						fl.alertOkAndReload();
@@ -343,7 +390,7 @@ $(function(){
 		deleteBid=$(this).data("id");
 		fl.alertConfirm({title:"是否确认删除？",then:function(){
 			$.ajax({
-				url:"/admin/api/seo/bconfigDelete/"+deleteBid,
+				url:"/admin/api/config/bconfigDelete/"+deleteBid,
 				success:function(data){
 					if(fl.isOk(data)){
 						fl.alertOkAndReload();

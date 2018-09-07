@@ -4,7 +4,7 @@
 	from
 		user
 	where
-		ukAccount=#para(ukAccount)
+		account=#para(account)
 	and
 		pwd=#para(pwd)
 		

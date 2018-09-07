@@ -63,4 +63,60 @@ public abstract class BaseBasicConfig<M extends BaseBasicConfig<M>> extends Mode
 		return getStr("title");
 	}
 
+	public M setGmtCreate(java.util.Date gmtCreate) {
+		set("gmtCreate", gmtCreate);
+		return (M)this;
+	}
+	
+	public java.util.Date getGmtCreate() {
+		return get("gmtCreate");
+	}
+
+	public M setIconUrl(java.lang.String iconUrl) {
+		set("iconUrl", iconUrl);
+		return (M)this;
+	}
+	
+	public java.lang.String getIconUrl() {
+		return getStr("iconUrl");
+	}
+
+	public M setLogoUrl(java.lang.String logoUrl) {
+		set("logoUrl", logoUrl);
+		return (M)this;
+	}
+	
+	public java.lang.String getLogoUrl() {
+		return getStr("logoUrl");
+	}
+
+	public M setEmailServer(java.lang.String emailServer) {
+		set("emailServer", emailServer);
+		return (M)this;
+	}
+	
+	public java.lang.String getEmailServer() {
+		return getStr("emailServer");
+	}
+
+	public M setFromEmail(java.lang.String fromEmail) {
+		set("fromEmail", fromEmail);
+		return (M)this;
+	}
+	
+	public java.lang.String getFromEmail() {
+		return getStr("fromEmail");
+	}
+
+ 
+
+	public M setEmailPassword(java.lang.String emailPassword) {
+		set("emailPassword", emailPassword);
+		return (M)this;
+	}
+	
+	public java.lang.String getEmailPassword() {
+		return getStr("emailPassword");
+	}
+
 }

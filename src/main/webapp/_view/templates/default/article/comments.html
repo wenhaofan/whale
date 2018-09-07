@@ -11,7 +11,7 @@
             <input type="email" name="email" id="email" class="form-control input-control clearfix" placeholder="邮箱 (*)"
                    value="#(agentUser.email??)" required/>
             <input type="url" name="website" id="website" class="form-control input-control clearfix" placeholder="网址 (http://)"  value="#(agentUser.website??)"/>
-            <textarea name="content" id="textarea" class="form-control" placeholder="留下你的评论." required minlength="5" maxlength="2000"></textarea>
+            <textarea name="content" id="textarea" class="form-control" placeholder="留下你的评论." required minlength="2" maxlength="2000"></textarea>
             <button class="submit" id="comment-submit">提交</button>
         </form>
  		#if(comments!=null)

@@ -11,7 +11,7 @@ public class Metabuilder extends MetaBuilder {
 
 	@SuppressWarnings({ "unchecked", "rawtypes", "serial" })
 	private List<String> tables=new ArrayList(){{
-		add("metaweblog_relevance");
+		add("user");
 	}};
 	
 	public Metabuilder(DataSource dataSource) {

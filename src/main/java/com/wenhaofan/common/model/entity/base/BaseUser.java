@@ -54,22 +54,22 @@ public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implement
 		return get("sex");
 	}
 
-	public M setUkPhone(java.lang.String ukPhone) {
-		set("ukPhone", ukPhone);
+	public M setPhone(java.lang.String phone) {
+		set("phone", phone);
 		return (M)this;
 	}
 	
-	public java.lang.String getUkPhone() {
-		return getStr("ukPhone");
+	public java.lang.String getPhone() {
+		return getStr("phone");
 	}
 
-	public M setUkEmail(java.lang.String ukEmail) {
-		set("ukEmail", ukEmail);
+	public M setEmail(java.lang.String email) {
+		set("email", email);
 		return (M)this;
 	}
 	
-	public java.lang.String getUkEmail() {
-		return getStr("ukEmail");
+	public java.lang.String getEmail() {
+		return getStr("email");
 	}
 
 	public M setLevel(java.lang.Integer level) {
@@ -81,22 +81,13 @@ public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implement
 		return getInt("level");
 	}
 
-	public M setIsValid(java.lang.Integer isValid) {
-		set("isValid", isValid);
+	public M setAccount(java.lang.String account) {
+		set("account", account);
 		return (M)this;
 	}
 	
-	public java.lang.Integer getIsValid() {
-		return getInt("isValid");
-	}
-
-	public M setUkAccount(java.lang.String ukAccount) {
-		set("ukAccount", ukAccount);
-		return (M)this;
-	}
-	
-	public java.lang.String getUkAccount() {
-		return getStr("ukAccount");
+	public java.lang.String getAccount() {
+		return getStr("account");
 	}
 
 	public M setRegisterTime(java.util.Date registerTime) {

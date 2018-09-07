@@ -72,7 +72,38 @@ public class AopControllerFactory extends ControllerFactory {
 	
 	private YesOrNo enhance = YesOrNo.NO;			// 默认增强
 	private YesOrNo singleton = YesOrNo.YES;			// 默认单例
-	private int injectDepth = 5;						// 默认注入深度
+	private static int injectDepth = 5;						// 默认注入深度
+	
+	private static AopControllerFactory me;
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T getInject(Class<? extends Object> target){
+		Object obj=null;
+		try {
+			obj = target.newInstance();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(me==null) {
+			me=new 	AopControllerFactory();
+		}
+		
+		try {
+			me.inject(injectDepth, target, obj);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return (T) obj;
+	}
 	
 	/**
 	 * 设置被注入的对象是否被增强，可使用 @Inject(enhance = YesOrNo.NO) 覆盖此默认值
@@ -112,7 +143,7 @@ public class AopControllerFactory extends ControllerFactory {
 		return c;
 	}
 	
-	protected void inject(int injectDepth, Class<?> targetClass, Object targetObject) throws IllegalAccessException, InstantiationException {
+	public void inject(int injectDepth, Class<?> targetClass, Object targetObject) throws IllegalAccessException, InstantiationException {
 		if ((injectDepth--) <= 0) {
 			return ;
 		}

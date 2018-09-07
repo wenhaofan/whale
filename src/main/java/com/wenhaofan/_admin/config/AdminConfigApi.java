@@ -1,4 +1,4 @@
-package com.wenhaofan._admin.seo;
+package com.wenhaofan._admin.config;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.BaiduSeoConfig;
 import com.wenhaofan.common.model.entity.MetaweblogConfig;
 
-public class AdminSeoApi extends BaseController {
+public class AdminConfigApi extends BaseController {
 	@Inject
 	private BaiduSeoService baiduSeoService;
 	@Inject

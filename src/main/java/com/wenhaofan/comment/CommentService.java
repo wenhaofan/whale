@@ -6,11 +6,17 @@ import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
+import com.wenhaofan._admin.user.AdminUserService;
 import com.wenhaofan.agentUser.AgentUserService;
+import com.wenhaofan.article.ArticleService;
+import com.wenhaofan.common._config.BlogContext;
+import com.wenhaofan.common.aop.AopControllerFactory;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.exception.MsgException;
+import com.wenhaofan.common.kit.EmailKit;
 import com.wenhaofan.common.model.entity.AgentUser;
 import com.wenhaofan.common.model.entity.Comment;
+import com.wenhaofan.common.model.entity.User;
 
 public class CommentService {
 
@@ -18,7 +24,8 @@ public class CommentService {
 	private static  Comment dao;
 	@Inject
 	private static AgentUserService agentUserService;
-	
+	@Inject
+	private ArticleService articleService;
 	public void save(Comment comment,String cookie) {
 		if(cookie==null) {
 			throw new MsgException("什么鬼！");
@@ -42,6 +49,12 @@ public class CommentService {
 		
 		if(comment.getParentId()==null) {
 			comment.setParentId(0);
+		}else if(comment.getParentId()!=0){
+			//设置回复的消息所属的父级楼层
+			Comment parentComment=get(comment.getParentId());
+			if(parentComment.getParentId()!=0) {
+				comment.setParentId(parentComment.getParentId());
+			}
 		}
 		
 		AgentUser agentUser=agentUserService.get(cookie);
@@ -55,28 +68,42 @@ public class CommentService {
 		agentUser.update();
 		
 		comment.setUserId(agentUser.getId());
-		//向被回复人发送通知邮件
-		sendReplyEmail(comment);
+		//如果为后台用户则直接设置为已审核
+		if(comment.getUserId()==-1) {
+			comment.setIsAduit(true);
+		}
 		
-		
-		
+		new Thread(()->{
+			//发送通知邮件
+			sendHintAdminEmail(comment);
+		}).start();;
 		comment.save();
 	}
 
 
-	private void sendReplyEmail(Comment comment) {
-		if(comment.getParentId()!=null) {
-			Comment replyComment=this.get(comment.getParentId());
-			if(replyComment!=null) {
-				Integer userId=replyComment.getUserId();
-				AgentUser replayAgentUser=agentUserService.get(userId);
-				if(replayAgentUser!=null) {
-					//发送通知邮件
-				}
-			}
+	private void sendHintAdminEmail(Comment comment) {
+		
+		//如果等于该值 则表示为管理员则发送回复邮件
+		if(comment.getUserId()==-1) {
+			sendReplyEmail(comment);
+			return;
 		}
+		//否则通知管理员
+		AdminUserService adminUserService=AopControllerFactory.getInject(AdminUserService.class);
+		User adminUser=adminUserService.getAdminUser();
+		if(adminUser==null) {
+			return;
+		}
+		
+		AgentUser user=agentUserService.get(comment.getUserId());
+		String title=articleService.getArticle(comment.getIdentify()).getTitle();
+		EmailKit.sendEmail(adminUser.getEmail(), "你收到了一条评论 by "+BlogContext.basicConfig.getTitle(),getHintEmailContent(user.getName(),title));
 	}
 	
+	public String getHintEmailContent(String userName,String title) {
+		String serverUrl=BlogContext.getProjectPath();
+		return userName+"评论了《"+title+"》,<a href='"+serverUrl+"/admin'>点此前往后台查看</a>";
+	}
 	
 	public Page<Comment> page(Integer pageNum,Integer pageSize,String identify){
 		SqlPara sql=dao.getSqlPara("comment.page", identify);
@@ -90,9 +117,35 @@ public class CommentService {
 	public List<Comment> listRecent(){
 		 List<Comment> comments=dao.find("select * from comment where isAduit=1 order by gmtCreate desc limit 6");
 		 for(Comment c:comments) {
-			 Integer beforeRow=Db.queryInt("select count(id) from comment where identify= ? and gmtCreate > ?",c.getIdentify(),c.getGmtCreate());
-			 c.setPageNum(beforeRow/6);
+			 setInPageNum(c);
 		 }
 		 return comments;
+	}
+	
+	public void setInPageNum(Comment c) {
+		 Integer beforeRow=Db.queryInt("select count(id) from comment where identify= ? and gmtCreate > ?",c.getIdentify(),c.getGmtCreate());
+		 c.setPageNum(beforeRow/6);
+	}
+	
+	public void sendReplyEmail(Comment comment) {
+		
+		if(comment.getParentId()==null)return ;
+ 
+		//获取被回复人信息
+		AgentUser replayAgentUser=agentUserService.get(comment.getToUserId());
+		
+		//获取当前用户名称
+		String userName=agentUserService.get(comment.getUserId()).getName();
+		
+		if(replayAgentUser!=null) {
+			EmailKit.sendEmail(replayAgentUser.getEmail(),userName+ "回复了你的评论  by "+BlogContext.basicConfig.getTitle(),getHintEmail(userName,comment));
+		}	 
+	}
+	
+	public String getHintEmail(String name,Comment comment) {
+		setInPageNum(comment);
+		String serverUrl=BlogContext.getProjectPath();
+		String url=serverUrl+"article/"+comment.getIdentify()+"?p="+comment.getPageNum()+"#li-comment-"+comment.getId();
+		return name+"回复了你的评论,<a href='"+url+"'>点此查看</a>";
 	}
 }

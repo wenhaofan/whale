@@ -5,6 +5,8 @@ import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
+import com.wenhaofan._admin.user.AdminUserService;
+import com.wenhaofan.comment.CommentService;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.AgentUser;
@@ -15,6 +17,9 @@ public class AdminCommentService extends BaseController {
 	@Inject
 	private Comment dao;
 	
+	@Inject
+	private CommentService frontCommentService;
+ 
 	public Page<Comment> page(Integer pageNumber,Integer pageSize,Boolean isAduit) {	
 		SqlPara sqlPara=dao.getSqlPara("adminComment.page", Kv.by("isAduit", isAduit));
 		Page<Comment> page= dao.paginate(pageNumber, pageSize, sqlPara);
@@ -39,13 +44,19 @@ public class AdminCommentService extends BaseController {
 		comment.setWebsite(user.getWebsite());
 		comment.setParentId(toId);
 		comment.setToUserId(toComment.getUserId());
-		
+		comment.setIsAduit(true);
 		comment.save();
-		
-		//发送被回复邮件
-		
+	
+		new Thread(()-> {
+			frontCommentService.sendReplyEmail(comment);
+		}).start();
+		//向被回复人发送通知邮件
+
 		return Ret.ok();
 	}
+	
+	
+	
 	
 	public Ret delete(Integer id) {
 		dao.findById(id).delete();
@@ -53,8 +64,25 @@ public class AdminCommentService extends BaseController {
 	}
 	
 	public Ret aduit(Integer id,boolean aduit) {
-		dao.findById(id).setIsAduit(aduit).update();
+		Comment comment=dao.findById(id);
+		comment.setIsAduit(aduit).update();
+		
+		if(comment.getParentId()==null) {
+			return Ret.ok();
+		}
+
+		new Thread(()-> {
+			frontCommentService.sendReplyEmail(comment);
+		}).start();
+		
 		return Ret.ok();
 	}
 	
+	public void setInPageNum(Comment c) {
+		 Integer beforeRow=Db.queryInt("select count(id) from comment where identify= ? and gmtCreate > ?",c.getIdentify(),c.getGmtCreate());
+		 c.setPageNum(beforeRow/6);
+	}
+	public Comment get(Integer id) {
+		return dao.findById(id);
+	}
 }

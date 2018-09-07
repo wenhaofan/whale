@@ -1,6 +1,7 @@
-package com.wenhaofan._admin.seo;
+package com.wenhaofan._admin.config;
 
 import com.jfinal.kit.Ret;
+import com.wenhaofan.common._config.BlogContext;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.BasicConfig;
 
@@ -19,6 +20,9 @@ public class BasicConfigService {
 		}else {
 			config.save();
 		}
+		
+		BlogContext.reset(config);
+		
 		return Ret.ok();
 	}
 }

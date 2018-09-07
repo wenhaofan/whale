@@ -1,4 +1,4 @@
-package com.wenhaofan._admin.seo;
+package com.wenhaofan._admin.config;
 
 import java.net.MalformedURLException;
 import java.net.URL;
