@@ -5,7 +5,7 @@ import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.BasicConfig;
 
-public class BasicConfigApi  extends BaseController {
+public class AdminBasicConfigApi  extends BaseController {
 
 	@Inject
 	private BasicConfigService service;

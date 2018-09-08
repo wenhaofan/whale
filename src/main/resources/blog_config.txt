@@ -1,9 +1,8 @@
 #数据库信息
 dbDriver=com.mysql.jdbc.Driver
-jdbcUrlResource=jdbc:mysql://127.0.0.1:3306/mysql?characterEncoding=utf-8
-pwd=uAiqwVwjJ8-i
-jdbcUrl=jdbc:mysql://127.0.0.1:3306/blog?characterEncoding=utf-8
+pwd=521479
+jdbcUrl=jdbc:mysql://127.0.0.1:3306/qiuqiublog?characterEncoding=utf-8
 userName=root
 blogCharset=utf-8
-domain=wenhaofan.com
-projectPath=http://www.wenhaofan.com;
+domain=liyanqiu.live
+projectPath=http://www.liyanqiu.live;

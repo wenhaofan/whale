@@ -182,7 +182,8 @@ bottom: 0px;
       	<li class="layui-nav-item"><a href="/admin/disk">文&nbsp;&nbsp;件&nbsp;&nbsp;管&nbsp;&nbsp;理</a></li>
      	<li class="layui-nav-item"><a href="/admin/comment">评&nbsp;&nbsp;论&nbsp;&nbsp;管&nbsp;&nbsp;理</a></li>
       	<li class="layui-nav-item"><a href="/admin/nav">导&nbsp;&nbsp;航&nbsp;&nbsp;管&nbsp;&nbsp;理</a></li>
-      	<li class="layui-nav-item"><a href="/admin/config">网&nbsp;&nbsp;站&nbsp;&nbsp;配&nbsp;&nbsp;置</a></li>
+      	<li class="layui-nav-item"><a href="/admin/basicConfig">网&nbsp;&nbsp;站&nbsp;&nbsp;配&nbsp;&nbsp;置</a></li>
+      	<li class="layui-nav-item"><a href="/admin/advancedConfig">高&nbsp;&nbsp;级&nbsp;&nbsp;配&nbsp;&nbsp;置</a></li>
       </ul>
     </div>
   </div>
@@ -221,6 +222,11 @@ bottom: 0px;
 <script type="text/html" id="tpl-update-info">
 <div style="width:290px;padding:10px;">
 	<form class="layui-form update-info-from" onsubmit="return false;">
+		<div class="layui-form-item layui-form-text">
+	   	 	<div class="layui-input-block">
+      			<input type="text" name="account" required  lay-verify="required" placeholder="请输入登陆账号" autocomplete="off" value="#(adminUser.account)" class="layui-input">
+    		</div>
+	  	</div>
 		 <div class="layui-form-item layui-form-text">
 	   	 	<div class="layui-input-block">
       			<input type="text" name="name" required  lay-verify="required" placeholder="请输入姓名" autocomplete="off" value="#(adminUser.name)" class="layui-input">
@@ -293,7 +299,7 @@ function updatePwd(){
 function updateInfo(){
 	updatePwdIndex=layer.open({
   		title:"修改个人信息",
-  		area: ['340px', '215px'],
+  		area: ['340px', '265px'],
 	  	type: 1, 
 	  	content: $("#tpl-update-info").html(),
 	  	success:function(){

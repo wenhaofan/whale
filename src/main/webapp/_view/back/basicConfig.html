@@ -1,0 +1,158 @@
+<style>
+
+@media screen and (max-width: 1200px){
+	.table-block{
+		width:90%;
+		margin: 0 auto;
+	}
+}
+
+@media screen and (max-width: 768px){
+	.layui-form-label{
+		width: 50px!important;
+	    padding-left:  0px!important;
+	}
+	.layui-input-block{
+	 margin-left: 70px;
+	     max-width: 230px;
+	}
+	   
+}
+.add-form{
+	width:400px;
+	margin: 0 auto;
+	margin-left:15px;
+}
+.basic-config{
+    width: 500px;
+
+    margin: 1rem 0 0 0rem;}
+.quote-level2{
+	margin-left:25px;
+}
+</style> 
+ <div class="layui-row ">
+	<div class="layui-col-lg12 layui-col-md12">
+		<blockquote class="layui-elem-quote my-quote ">基础配置</blockquote>
+	</div>
+</div>
+<div class="layui-row" >
+	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
+		<div class="basic-config">
+			<blockquote class="layui-elem-quote my-quote quote-level2">网站信息配置</blockquote>
+			<form class="layui-form basicConfig" action=""   onsubmit="return false">
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">标题</label>
+			    <div class="layui-input-block">
+			      <input type="hidden" name="id">
+			      <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">介绍</label>
+			    <div class="layui-input-block">
+			      <input type="text" name="description" required  lay-verify="required" placeholder="请输入介绍" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">关键字</label>
+			    <div class="layui-input-block">
+			      <input type="text" name="keywords" required  lay-verify="required" placeholder="请输入关键字" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">author</label>
+			    <div class="layui-input-block">
+			      <input type="text" name="author" required  lay-verify="required" placeholder="请输入作者" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <div class="layui-input-block">
+			      <button  class="layui-btn" lay-submit lay-filter="basicConfig">立即提交</button>
+			    </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
+		<div class="basic-config">
+			<blockquote class="layui-elem-quote my-quote quote-level2">邮箱配置</blockquote>
+			<form class="layui-form basicConfig" action="" onsubmit="return false">
+			
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">发件邮箱</label>
+			    <div class="layui-input-block">
+			      <input type="text" name=fromEmail required  lay-verify="required" placeholder="请输入发件邮箱" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">邮件密码</label>
+			    <div class="layui-input-block">
+			      <input type="text" name="emailPassword" required  lay-verify="required" placeholder="请输入邮件密码" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">邮件服务器</label>
+			    <div class="layui-input-block">
+			      <input type="hidden" name="id">
+			      <input type="text" name="emailServer" required  lay-verify="required" placeholder="请输入邮件服务器地址" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			 
+			  <div class="layui-form-item">
+			    <div class="layui-input-block">
+			      <button  class="layui-btn" lay-submit lay-filter="basicConfig">立即提交</button>
+			    </div>
+			  </div>
+			</form>
+		</div>
+	</div>
+</div>
+ 
+ 
+<script>
+addEventListener("load",function(){
+	setBasicForm();
+})
+function setBasicForm(){
+	$.ajax({
+		url:"/admin/api/basicConfig",
+		dataType:"json",
+		success:function(data){
+			if(fl.isOk(data)){
+				formUtil.setFormVal(data.config,$(".basicConfig"));
+				formUtil.setFormVal(data.config,$(".basicConfig"));
+			}
+		}
+	})
+}
+function editBasicConfig(data){
+	$.ajax({
+		url:"/admin/api/basicConfig/edit",
+		data:data,
+		type:"post",
+		success:function(data){
+			if(fl.isOk(data)){
+				fl.alertOk({title:"修改成功！"});
+			}
+		}
+	})
+}
+ 
+ 
+layui.use(['form', 'laytpl'],function(){
+	form=layui.form;
+	 
+	
+	form.render();
+ 
+ 
+	
+	form.on("submit(basicConfig)",function(data){
+		editBasicConfig(data.field);
+	})
+}) 
+</script>
+ 
+<script type="text/javascript" src="/assets/js/from-util.js"></script>
+ 

@@ -58,75 +58,23 @@
 		</div>
 	</div>
 </div>
-<div class="layui-row" >
-	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
-		<div class="basic-config">
-			<blockquote class="layui-elem-quote my-quote quote-level2">基础配置</blockquote>
-			<form class="layui-form basicConfig" action=""   onsubmit="return false">
-			  <div class="layui-form-item">
-			    <label class="layui-form-label">标题</label>
-			    <div class="layui-input-block">
-			      <input type="hidden" name="id">
-			      <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
-			    </div>
+<div class="layui-row">
+	<div class="layui-col-xs12  layui-col-md12 layui-col-lg6">
+		<blockquote class="layui-elem-quote my-quote quote-level2">百度推送工具</blockquote>
+		<div>
+			<form class="layui-form add-form" onsubmit="return false;">
+			 	  <div class="layui-form-item layui-form-text">
+				    <label class="layui-form-label">链接</label>
+				    <div class="layui-input-block">
+				      <textarea name="links" placeholder="请输入需要推送的链接(多个以\n分割)" class="layui-textarea"></textarea>
+				    </div>
+				  </div>
+				 <div class="layui-form-item">
+				    <div class="layui-input-block">
+				    <button class="layui-btn" lay-submit lay-filter="pushLinks">立即提交</button>
+				 </div>
 			  </div>
-			  <div class="layui-form-item">
-			    <label class="layui-form-label">介绍</label>
-			    <div class="layui-input-block">
-			      <input type="text" name="description" required  lay-verify="required" placeholder="请输入介绍" autocomplete="off" class="layui-input">
-			    </div>
-			  </div>
-			  <div class="layui-form-item">
-			    <label class="layui-form-label">关键字</label>
-			    <div class="layui-input-block">
-			      <input type="text" name="keywords" required  lay-verify="required" placeholder="请输入关键字" autocomplete="off" class="layui-input">
-			    </div>
-			  </div>
-			  <div class="layui-form-item">
-			    <label class="layui-form-label">author</label>
-			    <div class="layui-input-block">
-			      <input type="text" name="author" required  lay-verify="required" placeholder="请输入作者" autocomplete="off" class="layui-input">
-			    </div>
-			  </div>
-			  <div class="layui-form-item">
-			    <div class="layui-input-block">
-			      <button  class="layui-btn" lay-submit lay-filter="basicConfig">立即提交</button>
-			    </div>
-			  </div>
-			</form>
-		</div>
-	</div>
-	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
-		<div class="basic-config">
-			<blockquote class="layui-elem-quote my-quote quote-level2">邮箱配置</blockquote>
-			<form class="layui-form basicConfig" action="" onsubmit="return false">
-			
-			  <div class="layui-form-item">
-			    <label class="layui-form-label">发件邮箱</label>
-			    <div class="layui-input-block">
-			      <input type="text" name=fromEmail required  lay-verify="required" placeholder="请输入发件邮箱" autocomplete="off" class="layui-input">
-			    </div>
-			  </div>
-			  <div class="layui-form-item">
-			    <label class="layui-form-label">邮件密码</label>
-			    <div class="layui-input-block">
-			      <input type="text" name="emailPassword" required  lay-verify="required" placeholder="请输入邮件密码" autocomplete="off" class="layui-input">
-			    </div>
-			  </div>
-			  <div class="layui-form-item">
-			    <label class="layui-form-label">邮件服务器</label>
-			    <div class="layui-input-block">
-			      <input type="hidden" name="id">
-			      <input type="text" name="emailServer" required  lay-verify="required" placeholder="请输入邮件服务器地址" autocomplete="off" class="layui-input">
-			    </div>
-			  </div>
-			 
-			  <div class="layui-form-item">
-			    <div class="layui-input-block">
-			      <button  class="layui-btn" lay-submit lay-filter="basicConfig">立即提交</button>
-			    </div>
-			  </div>
-			</form>
+		</form>
 		</div>
 	</div>
 </div>
@@ -198,30 +146,8 @@
 addEventListener("load",function(){
 	setBasicForm();
 })
-function setBasicForm(){
-	$.ajax({
-		url:"/admin/api/basicConfig",
-		dataType:"json",
-		success:function(data){
-			if(fl.isOk(data)){
-				formUtil.setFormVal(data.config,$(".basicConfig"));
-				formUtil.setFormVal(data.config,$(".basicConfig"));
-			}
-		}
-	})
-}
-function editBasicConfig(data){
-	$.ajax({
-		url:"/admin/api/basicConfig/edit",
-		data:data,
-		type:"post",
-		success:function(data){
-			if(fl.isOk(data)){
-				fl.alertOk({title:"修改成功！"});
-			}
-		}
-	})
-}
+ 
+ 
 function renderMEdit(data){
 	var content=template("tpl-medit",data);
   	layerIndex=layer.open({
@@ -243,7 +169,7 @@ function renderBEdit(data){
 
 function medit(data){
 	$.ajax({
-		url:"/admin/api/config/mconfigEdit",
+		url:"/admin/api/metaConfig/mconfigEdit",
 		data:data,
 		type:"post",
 		success:function(data){
@@ -255,7 +181,7 @@ function medit(data){
 }
 function bedit(data){
 	$.ajax({
-		url:"/admin/api/config/bconfigEdit",
+		url:"/admin/api/baiduConfig/bconfigEdit",
 		data:data,
 		type:"post",
 		success:function(data){
@@ -274,7 +200,7 @@ layui.use(['form','table','laytpl'],function(){
 	
 	table.render({
 		elem: '#metaweblog'
-	   ,url:'/admin/api/config/mList'
+	   ,url:'/admin/api/metaConfig/mList'
 	   ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
 	   ,cols: [[
 	   	{field:'id', sort: true,width:60,title:"id"}
@@ -288,7 +214,7 @@ layui.use(['form','table','laytpl'],function(){
 	
 	table.render({
 		  elem: '#baiduseo'
-		   ,url:'/admin/api/config/bList'
+		   ,url:'/admin/api/baiduConfig/bList'
 		   ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
 		   ,cols: [[
 		   	 {field:'id', sort: true,width:60,title:"id"}
@@ -305,10 +231,25 @@ layui.use(['form','table','laytpl'],function(){
 		bedit(data.field);
 	})
 	
-	form.on("submit(basicConfig)",function(data){
-		editBasicConfig(data.field);
+	form.on("submit(pushLinks)",function(data){
+		pushLinks(data.field);
 	})
+ 
+ 
 }) 
+
+function pushLinks(data){
+	$.ajax({
+		data:data,
+		url:"/admin/api/baiduConfig/pushBaiduLinks",
+		type:"post",
+		success:function(data){
+			if(fl.isOk(data)){
+				fl.alertOk({title:"提交成功！"});
+			}
+		}
+	})
+}
 </script>
 <script type="text/html" id="tpl-mprivacy">
 	#[[<span class="privacy" data-content="{{d.password}}">*********</span>]]#
@@ -340,7 +281,7 @@ $(function(){
 	})
 	$("body").on("click",".mupdate",function(){
 		$.ajax({
-			url:"/admin/api/config/mget/"+$(this).data("id"),
+			url:"/admin/api/metaConfig/mget/"+$(this).data("id"),
 			dataType:'json',
 			success:function(data){
 				if(fl.isOk(data)){
@@ -352,7 +293,7 @@ $(function(){
 	})
 	$("body").on("click",".bupdate",function(){
 		$.ajax({
-			url:"/admin/api/config/bget/"+$(this).data("id"),
+			url:"/admin/api/baiduConfig/bget/"+$(this).data("id"),
 			dataType:'json',
 			success:function(data){
 				if(fl.isOk(data)){
@@ -375,7 +316,7 @@ $(function(){
 		deleteMid=$(this).data("id");
 		fl.alertConfirm({title:"是否确认删除？",then:function(){
 			$.ajax({
-				url:"/admin/api/config/mconfigDelete/"+deleteMid,
+				url:"/admin/api/metaConfig/mconfigDelete/"+deleteMid,
 				success:function(data){
 					if(fl.isOk(data)){
 						fl.alertOkAndReload();
@@ -390,7 +331,7 @@ $(function(){
 		deleteBid=$(this).data("id");
 		fl.alertConfirm({title:"是否确认删除？",then:function(){
 			$.ajax({
-				url:"/admin/api/config/bconfigDelete/"+deleteBid,
+				url:"/admin/api/baiduConfig/bconfigDelete/"+deleteBid,
 				success:function(data){
 					if(fl.isOk(data)){
 						fl.alertOkAndReload();
