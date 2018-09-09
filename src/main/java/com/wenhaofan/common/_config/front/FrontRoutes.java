@@ -7,9 +7,9 @@ import com.wenhaofan.comment.CommentApi;
 import com.wenhaofan.common.interceptor.ExceptionInterceptor;
 import com.wenhaofan.common.interceptor.FrontInterceptor;
 import com.wenhaofan.index.IndexController;
-import com.wenhaofan.login.LoginApi;
-import com.wenhaofan.login.LoginController;
 import com.wenhaofan.meta.MetaApi;
+import com.wenhaofan.user.LoginApi;
+import com.wenhaofan.user.LoginController;
 
 /**
  * 前端路由配置
@@ -22,15 +22,15 @@ public class FrontRoutes extends Routes{
 	public void config() {
 		addInterceptor(new ExceptionInterceptor());
 		addInterceptor(new FrontInterceptor());
-		String pinghsuFront="/_view/templates/default/";
+		String pinghsuFront="/_view/templates/morning/";
 		setBaseViewPath(pinghsuFront);
 		add("/api/login", LoginApi.class,"/");
 		add("/login",LoginController.class,"/");
-		add("/article",ArticleController.class);
+		add("/article",ArticleController.class,"/");
 		add("/api/meta", MetaApi.class,"/");
 		add("/api/article",ArticleApi.class,"/");
 		add("/comment", CommentApi.class);
-		add("/",IndexController.class);
+		add("/",IndexController.class,"/");
 	}
 
 }

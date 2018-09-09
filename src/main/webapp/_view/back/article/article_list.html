@@ -25,6 +25,10 @@
 				</select>
 			</div>
 		</div>
+		<div class="layui-form-item">
+		    <div class="layui-input-block">
+		    <button type="button" class="layui-btn" onclick="window.location.href='/admin/article/edit'"  >新增</button>
+		 </div>
 	</form>
 </div>
 <div style="width:100%;overflow:auto;">
@@ -34,7 +38,7 @@
 			<tr>
 				<th lay-data="{field:'id', sort: true}">ID</th>
 				<th lay-data="{field:'title',minWidth:150}">标题</th>
-				<th lay-data="{field:'readNum', sort: true}">阅读量</th>
+				<th lay-data="{field:'pv', sort: true}">阅读量</th>
 				<th lay-data="{field:'state',templet:'#state-tpl'}">状态</th>
 				<th lay-data="{field:'isOriginal',templet:'#original-tpl'}">原创</th>
 				<th lay-data="{field:'identify'}">访问路径</th>

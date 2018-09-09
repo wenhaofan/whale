@@ -54,15 +54,6 @@ public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implement
 		return get("sex");
 	}
 
-	public M setPhone(java.lang.String phone) {
-		set("phone", phone);
-		return (M)this;
-	}
-	
-	public java.lang.String getPhone() {
-		return getStr("phone");
-	}
-
 	public M setEmail(java.lang.String email) {
 		set("email", email);
 		return (M)this;
@@ -90,13 +81,58 @@ public abstract class BaseUser<M extends BaseUser<M>> extends Model<M> implement
 		return getStr("account");
 	}
 
-	public M setRegisterTime(java.util.Date registerTime) {
-		set("registerTime", registerTime);
+	public M setGmtCreate(java.util.Date gmtCreate) {
+		set("gmtCreate", gmtCreate);
 		return (M)this;
 	}
 	
-	public java.util.Date getRegisterTime() {
-		return get("registerTime");
+	public java.util.Date getGmtCreate() {
+		return get("gmtCreate");
+	}
+
+	public M setQq(java.lang.String qq) {
+		set("qq", qq);
+		return (M)this;
+	}
+	
+	public java.lang.String getQq() {
+		return getStr("qq");
+	}
+
+	public M setDescription(java.lang.String description) {
+		set("description", description);
+		return (M)this;
+	}
+	
+	public java.lang.String getDescription() {
+		return getStr("description");
+	}
+
+	public M setAbposition(java.lang.String abposition) {
+		set("abposition", abposition);
+		return (M)this;
+	}
+	
+	public java.lang.String getAbposition() {
+		return getStr("abposition");
+	}
+
+	public M setHeadImg(java.lang.String headImg) {
+		set("headImg", headImg);
+		return (M)this;
+	}
+	
+	public java.lang.String getHeadImg() {
+		return getStr("headImg");
+	}
+
+	public M setAddress(java.lang.String address) {
+		set("address", address);
+		return (M)this;
+	}
+	
+	public java.lang.String getAddress() {
+		return getStr("address");
 	}
 
 }

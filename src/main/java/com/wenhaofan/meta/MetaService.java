@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.StrKit;
+import com.jfinal.plugin.activerecord.DaoContainerFactory;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan.common.aop.Inject;
@@ -235,4 +236,7 @@ public class MetaService {
 		Db.update("delete from relevancy where cid= ?  ", cid);
 	}
 
+	public Meta get(Integer id) {
+		return mdao.findById(id);
+	}
 }

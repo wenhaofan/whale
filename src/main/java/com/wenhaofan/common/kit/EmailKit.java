@@ -26,9 +26,7 @@ import com.wenhaofan.common._config.BlogContext;
 public class EmailKit {
 	
 	private static final Log log = Log.getLog(EmailKit.class);
-	
  
-	
 	public static String sendEmail(String emailServer, String fromEmail, String password, String toEmail, String title, String content) {
 		
 		// 获取系统属性
@@ -78,10 +76,12 @@ public class EmailKit {
 		} catch (AddressException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e.getMessage(), e);
 			return "fail";
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e.getMessage(), e);
 			return "fail";
 		}
 		

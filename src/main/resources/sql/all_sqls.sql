@@ -4,11 +4,7 @@
 #namespace("share")
 #include("share.sql")
 #end
-
-前台sql
-#namespace("index")
-#include("/front/index.sql")
-#end
+ 
 #namespace("agentUser")
 #include("/front/agentUser.sql")
 #end

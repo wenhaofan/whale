@@ -5,7 +5,8 @@
 		article
 	where
 		1=1
-		#@valid("")
+	and 
+		state=1
 		and id in (
 			select 
 				articleId
@@ -31,11 +32,10 @@
 		* 
 	from 
 		article 
-	 where
+	where
 	 
-	 1=1
-
-	#for(metaId:metaIds)
+	1=1
+	#if(metaId!=null)
 		  and  
 			id in(
 		 		select
@@ -48,6 +48,20 @@
  	#end
 	and
 		state=1
+	#if(isTop!=null)
+	and
+		isTop=#para(isTop)
+	#end
 	order by gmtCreate desc
 #end
 
+#sql("listTop")
+	select
+		*
+	from
+		article
+	where
+	 	state=1
+	and
+		isTop=1
+#end

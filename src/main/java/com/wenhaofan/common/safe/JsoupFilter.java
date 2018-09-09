@@ -21,7 +21,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.safety.Whitelist;
 
+import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Model;
+import com.wenhaofan.common.model.entity.Article;
 
 /**
  * 使用 Jsoup 对 html 进行过滤
@@ -77,24 +79,36 @@ public class JsoupFilter {
 
 
 	/**
-	 * 对要显示在列表中的 article list 进行过滤，将其中的 title content 转成纯文本
+	 * 对要显示在列表中的 article list 进行过滤,如果intro为空则取conten纯文本值为intro值
 	 */
-	public static void filterArticleList(List<? extends Model> modelList, int titleLen, int contentLen) {
-		for (Model m : modelList) {
-			String title = getText(m.getStr("title"));
-			if (title.length() > titleLen) {
-				title = title.substring(0, titleLen - 1);
+	public static void filterArticleList(List<Article> modelList, int contentLen) {
+		for (Article m : modelList) {
+			
+			if (StrKit.notBlank(m.getIntro())) {
+				continue;
 			}
-
-			String content = getText(m.getStr("content")).replaceAll("&nbsp;", " ");
-			if (content.length() > contentLen) {
-				content = content.substring(0, contentLen - 1);
+			
+			String intro = getText(m.getStr("content")).replaceAll("&nbsp;", " ");
+			if (intro.length() > contentLen) {
+				intro = intro.substring(0, contentLen - 1);
 			}
-			m.set("title", title);
-			m.set("content", content);
+			m.setIntro(intro);
 		}
 	}
-
+	/**
+	 * 对要显示的 article   进行过滤,如果intro为空则取conten纯文本值为intro值
+	 */
+	public static void filterArticle(Article model, int contentLen) {
+		if (StrKit.notBlank(model.getIntro())) {
+			return;
+		}
+		
+		String intro = getText(model.getStr("content")).replaceAll("&nbsp;", " ");
+		if (intro.length() > contentLen) {
+			intro = intro.substring(0, contentLen - 1);
+		}
+		model.setIntro(intro);
+	}
 	/**
 	 * 对文章 content 字段过滤
 	 */

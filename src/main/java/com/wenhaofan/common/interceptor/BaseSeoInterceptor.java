@@ -12,9 +12,9 @@ public abstract class BaseSeoInterceptor implements Interceptor{
 	@Override
 	public void intercept(Invocation inv) {
 		inv.invoke();
-		String controllerKey=inv.getControllerKey();
+		String controllerKey=inv.getActionKey();
 		
-		if(StrKit.notBlank(controllerKey)&&controllerKey.equals("/")) {
+		if(StrKit.equals(controllerKey,"/")||StrKit.equals(controllerKey, "/article/category")) {
 			indexSeo(inv);
 		}else {
 			otherSeo(inv);
