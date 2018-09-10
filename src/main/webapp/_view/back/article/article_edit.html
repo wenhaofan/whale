@@ -73,17 +73,17 @@ addEventListener("load",function(){
 					<input type="hidden" name="state" id="state"  value="#(article.state??)">
 					<input type="hidden" name="id" id="id" value="#(article.id??)">
 				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
-					<input class="form-control" placeholder="（必须）" name="title" data-rule="required;" value="#(article.title??)" />
+					<input class="form-control" placeholder="文章标题（必须）" name="title" data-rule="required;" value="#(article.title??)" />
 				</div>
 
 				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
 					<input class="form-control"
-						placeholder="自定义访问路径，如：my-first-article  默认为创建时间" name="identify"
+						placeholder="访问路径(可为空)" name="identify"
 						value="#(article.identify??)" />
 				</div>
 
 				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
-					<input name="tags" id="tags" type="text" class="form-control" placeholder="请填写文章标签" />
+					<input name="tags" id="tags" type="text" class="form-control" placeholder="文章标签" />
 				</div>
 
 				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
