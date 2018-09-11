@@ -7,8 +7,7 @@ package com.wenhaofan.common.lucene;
 public class Main {
 	public static void main(String[] args) {
 		LuceneHelper luceneHelper=new LuceneHelper();
-		 
-		  luceneHelper.readerIndex("早上好", 10);
+		  
 			 //System.out.println(ret);
 		  luceneHelper.deleteIndex("id", "1");
 	 

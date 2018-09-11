@@ -18,6 +18,7 @@ public class CommentApi extends BaseController {
 	
 	public void save() {
 		Comment comment=getModel(Comment.class,"",true);
+		
 		AgentUser agentUser=getAgentUser();
 		service.save(comment,agentUser.getCookie());
 		renderJson(Ret.ok());

@@ -17,6 +17,7 @@ import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.AgentUser;
 import com.wenhaofan.common.model.entity.User;
 import com.wenhaofan.config.BasicConfigService;
+import com.wenhaofan.meta.MetaService;
 import com.wenhaofan.nav.NavService;
 import com.wenhaofan.user.LoginService;
 import com.wenhaofan.user.UserService;
@@ -37,6 +38,8 @@ public class BaseController extends Controller{
 	public BasicConfigService basicConfigService;
 	@Inject
 	public UserService userService;
+	@Inject
+	public MetaService metaService;
 	
 	public AgentUser getAgentUser() {
 		AgentUser agentUser=null;

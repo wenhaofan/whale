@@ -28,6 +28,8 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 import com.jfinal.kit.PathKit;
+import com.jfinal.kit.StrKit;
+import com.jfinal.plugin.activerecord.Page;
 import com.wenhaofan.common.model.entity.Article;
 
 /**
@@ -122,17 +124,20 @@ public class LuceneHelper {
 
 	/**
 	 * 
-	 * @param queryStr 查询语句
-	 * @param size     查询数
+	 * @param queryStr
+	 *            查询语句
+	 * @param size
+	 *            查询数
 	 * @return
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public List<Article> readerIndex(String queryStr, Integer size) {
  
-		QueryParser queryParser = new MultiFieldQueryParser(new String[]{"title","content"},getAnalyzer());
+	public Page<Article> readerIndex(String queryStr, Integer pageNum, Integer pageSize) {
+
+		QueryParser queryParser = new MultiFieldQueryParser(new String[] { "title", "content" }, getAnalyzer());
 		// 创建QueryParser对象，并指定要查询的索引域及分词对象
-		//QueryParser queryParser = new QueryParser(strs[0], new IKAnalyzer());
+		// QueryParser queryParser = new QueryParser(strs[0], new IKAnalyzer());
 		// 创建Query对象，指定查询条件
 		Query query = null;
 
@@ -152,7 +157,7 @@ public class LuceneHelper {
 			directory = getDirectory();
 			reader = DirectoryReader.open(directory);
 			searcher = new IndexSearcher(reader);
-			search = searcher.search(query, size);
+			search = pageSearch(query, searcher, pageNum, pageSize);
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -160,7 +165,28 @@ public class LuceneHelper {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		return convertToArticles(query, reader, search, searcher);
+		List<Article> articles= convertToArticles(query, reader, search, searcher);
+		
+		Long totalPage= search.totalHits%pageSize==0?search.totalHits%pageSize:search.totalHits/pageSize;
+		
+		return new Page<>(articles, pageNum, pageSize, totalPage.intValue(),(int) search.totalHits);
+	}
+
+	public TopDocs pageSearch(Query query,IndexSearcher searcher ,Integer pageNum,Integer pageSize) throws IOException{
+ 
+		ScoreDoc sd;
+
+		if (pageNum == 1) {
+			sd = null;
+		} else {
+			int num = pageSize * (pageNum - 1);// 获取上一页的最后是多少
+			TopDocs td = searcher.search(query, num);
+			sd = td.scoreDocs[num - 1];
+		}
+
+		// 核心方法
+		return  searcher.searchAfter(sd, query, pageSize);// 这里的12像hibernate，是在这一页上查12条
+		
 	}
 
 	private List<Article> convertToArticles(Query query, IndexReader reader, TopDocs search, IndexSearcher searcher) {
@@ -170,31 +196,35 @@ public class LuceneHelper {
 		List<Article> articles = new ArrayList<>();
 
 		QueryScorer scorer = new QueryScorer(query);
-		SimpleHTMLFormatter simpleHtmlFormatter = new SimpleHTMLFormatter("<B>", "</B>");// 设定高亮显示的格式<B>keyword</B>,此为默认的格式
+		SimpleHTMLFormatter simpleHtmlFormatter = new SimpleHTMLFormatter("<font style='color:red;'>", "</font>");// 设定高亮显示的格式<B>keyword</B>,此为默认的格式
 		Highlighter highlighter = new Highlighter(simpleHtmlFormatter, scorer);
 		highlighter.setTextFragmenter(new SimpleFragmenter(100));// 设置每次返回的字符数
 
 		Article article = null;
-		String content = null;
+		String intro = null;
 		String title = null;
 		String id = null;
 		try {
 			for (ScoreDoc doc : scoreDocs) {
-
 				Document document = null;
 
 				document = searcher.doc(doc.doc);
-				content = highlighter.getBestFragment(getAnalyzer(), "content", document.get("content"));
+				intro = highlighter.getBestFragment(getAnalyzer(), "content", document.get("content"));
 				title = highlighter.getBestFragment(getAnalyzer(), "title", document.get("title"));
 				id = document.get("id");
 				article = new Article();
-				article.setContent(content);
+				
+				if(StrKit.isBlank(intro)) {
+					intro=document.get("content").substring(0,100);
+				} 
+				if(StrKit.isBlank(title)) {
+					title=document.get("title");
+				}
+				
+				article.setIntro(intro);
 				article.setId(Integer.parseInt(id));
 				article.setTitle(title);
 				articles.add(article);
-
-				System.out.println(id);
-
 			}
 
 		} catch (IOException e1) {
@@ -216,6 +246,31 @@ public class LuceneHelper {
 		return articles;
 	}
 
+	public void deleteAll() {
+		// 通过指定的索引目录地址、配置对象创建IndexWriter流对象
+		IndexWriter writer = getIndexWriter();
+
+		try {
+			  writer.deleteAll();
+			writer.commit();
+			writer.flush();
+			writer.flushNextBuffer();
+			writer.forceMergeDeletes();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+	
 	/**
 	 * 根据查询条件删除lucene索引及文档数据
 	 * 
@@ -226,15 +281,14 @@ public class LuceneHelper {
 
 		// 通过指定的索引目录地址、配置对象创建IndexWriter流对象
 		IndexWriter writer = getIndexWriter();
- 
+
 		try {
-			long count=writer.deleteDocuments(new Term(key, value));
+			 writer.deleteDocuments(new Term(key, value));
 			writer.commit();
 			writer.flush();
 			writer.flushNextBuffer();
 			writer.forceMergeDeletes();
-			System.out.println(count);
-			//writer.deleteAll();
+			// writer.deleteAll();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -248,7 +302,7 @@ public class LuceneHelper {
 		}
 
 		// 清空索引及存档的所有数据
-		 
+
 	}
 
 	/**

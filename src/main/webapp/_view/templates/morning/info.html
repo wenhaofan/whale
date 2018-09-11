@@ -21,13 +21,11 @@
       <p>
       #if(lastNextArticle.get(0)!=null)
       	上一篇： <a href="/article/#(lastNextArticle.get(0).identify)">#(lastNextArticle.get(0).title)</a>
-      
       #end
       </p>
       <p>
       #if(lastNextArticle.get(1)!=null)
       	下一篇： <a href="/article/#(lastNextArticle.get(1).identify)">#(lastNextArticle.get(1).title)</a>
-    
       #end
       </p>
        
@@ -35,93 +33,118 @@
     <div class="otherlink">
       <h2>相关文章</h2>
       <ul>
-        <li><a href="/download/div/2018-04-22/815.html" title="html5个人博客模板《黑色格调》">html5个人博客模板《黑色格调》</a></li>
-        <li><a href="/download/div/2018-04-18/814.html" title="html5个人博客模板主题《清雅》">html5个人博客模板主题《清雅》</a></li>
-        <li><a href="/download/div/2018-03-18/807.html" title="html5个人博客模板主题《绅士》">html5个人博客模板主题《绅士》</a></li>
-        <li><a href="/download/div/2018-02-22/798.html" title="html5时尚个人博客模板-技术门户型">html5时尚个人博客模板-技术门户型</a></li>
-        <li><a href="/download/div/2017-09-08/789.html" title="html5个人博客模板主题《心蓝时间轴》">html5个人博客模板主题《心蓝时间轴》</a></li>
-        <li><a href="/download/div/2017-07-16/785.html" title="古典个人博客模板《江南墨卷》">古典个人博客模板《江南墨卷》</a></li>
-        <li><a href="/download/div/2017-07-13/783.html" title="古典风格-个人博客模板">古典风格-个人博客模板</a></li>
-        <li><a href="/download/div/2015-06-28/748.html" title="个人博客《草根寻梦》―手机版模板">个人博客《草根寻梦》―手机版模板</a></li>
-        <li><a href="/download/div/2015-04-10/746.html" title="【活动作品】柠檬绿兔小白个人博客模板">【活动作品】柠檬绿兔小白个人博客模板</a></li>
-        <li><a href="/jstt/bj/2015-01-09/740.html" title="【匆匆那些年】总结个人博客经历的这四年…">【匆匆那些年】总结个人博客经历的这四年…</a></li>
+      	#for(article:aboutArticles)
+      		<li><a href="/article/#(article.identify)" title="#(article.title)">#(article.title)</a></li>
+      	#end
+        
       </ul>
     </div>
-    <div class="news_pl">
-      <h2>文章评论</h2>
+    <div class="news_pl comment-container"  >
+      <h2 id="comments">文章评论</h2>
       <ul>
+      <form action="" method="post" name="saypl" id="saypl" onsubmit="return  fl.subComment()">
+				<div id="plpost">
+				<p class="saying">
+					<span><a href="/zaoan/e/pl/?classid=7&amp;id=20">共有#(comments.totalRow)条评论</a></span>
+					<span class="response">来说两句吧...</span>
+				</p>
+		         <input type="hidden" name="identify" id="identify" value="#(article.identify)"/>
+		         <input type="hidden" name="parentId" id="parentId" value=""/>
+		         <input type="hidden" name="toUserId" id="toUserId" value=""/>
+		         <p class="yname">
+		         	<span>用户名:</span>
+		            <input name="name" maxlength="12" id="name" class="inputText"   placeholder="姓名 (*)" value="#(agentUser.name??)" size="16" required/>
+		         </p>
+		          <p class="yname">
+		         	<span>&nbsp;邮&nbsp;箱 :</span>
+		            <input name="email" maxlength="12" id="name" class="inputText"   placeholder="邮箱 (*)" value="#(agentUser.email??)" size="20" required/>
+		         </p>
+		          <p class="yname">
+		         	<span>&nbsp;网&nbsp;址 :</span>
+		            <input name="website" maxlength="12" id="name" class="inputText"   placeholder="网址 (*)" value="#(agentUser.website??)" size="20"  />
+		         </p>
+					<input name="nomember" type="hidden" id="nomember" value="1" checked="checked">
+					 <textarea name="content" rows="6" id="saytext"></textarea>
+					 <input name="imageField" type="submit" value="提交">
+					 <div style="clear:both;"></div>
+				 </div>
+			</form> 
        <div class="gbko">
-       <script src="/zaoan/e/pl/more/?classid=7&amp;id=20&amp;num=10"></script> 
-       <div class="fb">
-       		<ul>
-       			<p class="fbtime">
-       				<span>2018-08-01 10:04:45</span> dancesmile
-       			</p>
-       			<p class="fbinfo">ios和Android浏览器都基于Webkit核心。这两种浏览器以及很多其他浏览器如chrome、opera，都支持用viewport meta元素覆盖默认的画布缩放设置</p>
-       		</ul>
-       	</div>
+ 		#if(comments!=null)
+      	 
+          	  #for(comment : comments.list)
+          	  	<div class="fb">
+            	<ul id="ul-comment-#(comment.id)">
+	      			<p class="fbtime" id="comment-#(comment.id)">
+	      				<span>#(comment.gmtCreate)</span> #(comment.name)<span class="comment-reply">
+	                               <a rel="nofollow" class="reply" data-id="#(comment.id)" data-userId="#(comment.userId)">回复</a>
+	                </span>	
+	      			</p>
+	      			<p class="fbinfo">
+	      				#(comment.content)
+	      			
+	      			</p>
+	      			
+       			</ul>
+       		
+                #if(comment.childs!=null)
+                 
+                        #for(child : comment.childs)
+	               			<ul>
+	               				<p class="fbtime" id="comment-#(comment.id)">
+		      						<span>#(comment.gmtCreate)</span> 
+		      						#(comment.name)	
+		      						<span class="comment-reply">
+	                                           <a rel="nofollow" class="reply" data-id="#(child.id)" data-userid="#(child.userId)">回复</a>
+	                                 </span>
+	      						</p>
+		      					<p class="fbinfo">
+		      					@#(child.user.name) #(comment.content)
+		      				
+		      					</p>
+                        </ul>  
+                        #end
+                #end
+                </div>
+ 			#end
+       #end
+          <div class="lists-navigator clearfix">
+            <ol class="page-navigator">
+                #if(!comments.isFirstPage())
+                <li class="prev"><a href="/article/#(article.identify)?p=#(comments.pageNumber-1)#comments">←</a></li>
+                #end
+                #for(navIndex =1;navIndex<=comments.totalPage;navIndex++)
+                <li #if(comments.pageNumber == navIndex) class="current" #end><a href="/article/#(article.identify)?p=#(navIndex)#comments">#(navIndex)</a></li>
+                #end
+                #if(!comments.isLastPage())
+                <li class="next"><a href="/article/#(article.identify)?p=#(comments.pageNumber+1)#comments">→</a></li>
+                #end
+            </ol>
+        </div>
        	<script>
 		  function CheckPl(obj)
 		  {
-		  if(obj.saytext.value=="")
-		  {
-		  alert("您没什么话要说吗？");
-		  obj.saytext.focus();
-		  return false;
-		  }
-		  return true;
+			  if(obj.saytext.value=="")
+			  {
+				  alert("您没什么话要说吗？");
+				  obj.saytext.focus();
+			  	return false;
+			  }
+		  	return false;
 		  }
 		  </script>
-			<form action="/zaoan/e/pl/doaction.php" method="post" name="saypl" id="saypl" onsubmit="return CheckPl(document.saypl)">
-				<div id="plpost">
-				<p class="saying"><span><a href="/zaoan/e/pl/?classid=7&amp;id=20">共有<script type="text/javascript" src="/zaoan/e/public/ViewClick/?classid=7&amp;id=20&amp;down=2"></script>1条评论</a></span>来说两句吧...</p>
-				<p class="yname"><span>用户名:</span><input name="username" type="text" class="inputText" id="username" value="" size="16"></p>
-				<p class="yzm"><span>验证码:</span><input name="key" type="text" class="inputText" size="16">
-				<img src="/zaoan/e/ShowKey/?v=pl" align="absmiddle" name="plKeyImg" id="plKeyImg" onclick="plKeyImg.src='/zaoan/e/ShowKey/?v=pl&amp;t='+Math.random()" title="看不清楚,点击刷新"> </p>
-				<input name="nomember" type="hidden" id="nomember" value="1" checked="checked">
-				<textarea name="saytext" rows="6" id="saytext"></textarea><input name="imageField" type="submit" value="提交">
-				<input name="id" type="hidden" id="id" value="20">
-				<input name="classid" type="hidden" id="classid" value="7">
-				<input name="enews" type="hidden" id="enews" value="AddPl">
-				<input name="repid" type="hidden" id="repid" value="0">
-				<input type="hidden" name="ecmsfrom" value="/zaoan/study/html/20.html">
-				</div>
-			</form> 
 		</div>
       </ul>
     </div>
   </div>
   <div class="sidebar">
     <div class="search">
-      <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
-        <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
-        <input name="show" value="title" type="hidden">
-        <input name="tempid" value="1" type="hidden">
-        <input name="tbname" value="news" type="hidden">
+      <form action="/article/search" method="get" name="searchform" id="searchform">
+        <input name="keyword" id="keyboard" value="#(keyword)" class="input_text" value="请输入关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
         <input name="Submit" class="input_submit" value="搜索" type="submit">
       </form>
     </div>
-  <!--  <div class="lmnav">
-      <h2 class="hometitle">栏目导航</h2>
-      <ul class="navbor">
-        <li><a href="#">关于我</a></li>
-        <li><a href="share.html">模板分享</a>
-          <ul>
-            <li><a href="list.html">个人博客模板</a></li>
-            <li><a href="#">HTML5模板</a></li>
-          </ul>
-        </li>
-        <li><a href="list.html">学无止境</a>
-          <ul>
-            <li><a href="list.html">学习笔记</a></li>
-            <li><a href="#">HTML5+CSS3</a></li>
-            <li><a href="#">网站建设</a></li>
-          </ul>
-        </li>
-        <li><a href="#">慢生活</a></li>
-      </ul>
-    </div>-->
-       <div class="cloud">
+     <div class="cloud">
       <h2 class="hometitle">标签云</h2>
       <ul>	
       	#for(tag:tags)
@@ -129,6 +152,7 @@
       	#end
       </ul>
     </div>
+    
    
      <div class="paihang">
       <h2 class="hometitle">点击排行</h2>
@@ -159,17 +183,70 @@
   </div>
 </article>
  
-<script type="text/javascript">
-jQuery.noConflict();
-jQuery(function() { 
-    var elm = jQuery('#left_flow2'); 
-    var startPos = jQuery(elm).offset().top; 
-    jQuery.event.add(window, "scroll", function() { 
-        var p = jQuery(window).scrollTop(); 
-        jQuery(elm).css('position',((p) > startPos) ? 'fixed' : ''); 
+ <style>
+.fb{ border : #ececec 1px solid;
+	margin-top: 10px;
+}
+</style>
+ <script type="text/javascript">
+(function(){
+	window.fl={
 
-        jQuery(elm).css('top',((p) > startPos) ? '0' : '');
-    }); 
-}); 
+		   cancelReply:function(ele){
+				$(ele).remove();
+				$('#saypl input[name=parentId]').val("");
+	            $('#saypl input[name=toUserId]').val("");
+		   },reply: function (parentId,toUserId) {
+               $('#saypl input[name=parentId]').val(parentId);
+               $('#saypl input[name=toUserId]').val(toUserId);
+               $("html,body").animate({scrollTop: $('div.comment-container').offset().top-50}, 450);
+               $('#saypl #textarea').focus();
+               
+               if($(".cancel-comment-reply-link").length==0){
+                   $(".response").append('<a class="cancel-comment-reply-link" style="margin:0 15px;" href="javascript:void(0)">取消回复</a>');
+               }
+           },
+           subComment: function () {
+               $.ajax({
+                   type: 'post',
+                   url: '/comment/save',
+                   data: $('#saypl').serialize(),
+                   async: false,
+                   dataType: 'json',
+                   error: function (jqXHR, status, error) {
+                       if(status === 'error' && jqXHR.status === 400){
+                           alert('非法的请求');
+                       } else {
+                           console.log('Request Error:', error)
+                       }
+                   },
+                   success: function (result) {
+                       
+                       if (result && result.state=="ok") {
+                           alert('评论成功');
+                           window.location.reload();
+                       } else {
+                           if (result.msg) {
+                               alert(result.msg);
+                               window.location.reload();
+                           }
+                       }
+                   }
+               });
+               return false;
+           }
+       };
+})();
+$(function(){
+	$(".reply").click(function(){
+		var toUserId=$(this).data("userid");
+		var parentId=$(this).data("id");
+		fl.reply(parentId,toUserId);
+	})
+	
+	$(".response").on("click",".cancel-comment-reply-link",function(){
+		 fl.cancelReply($(this));
+	})
+})
 </script>
 #include('footer.html')

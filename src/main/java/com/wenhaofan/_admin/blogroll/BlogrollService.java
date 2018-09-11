@@ -3,6 +3,7 @@ package com.wenhaofan._admin.blogroll;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Db;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.Blogroll;
 
 /**
@@ -12,15 +13,16 @@ import com.wenhaofan.common.model.entity.Blogroll;
  */
 public class BlogrollService{
 
-	public static final  BlogrollService me=new BlogrollService();
-	private final Blogroll dao=new Blogroll().dao();
+ 
+	@Inject
+	private  Blogroll dao;
 	
 	public void save(Blogroll blogroll) {
 		blogroll.save();
 	}
 
-	public void remove(Blogroll blogroll) {
-		blogroll.delete();
+	public void remove(Integer id) {
+		dao.deleteById(id);
 	}
 
 	public void update(Blogroll blogroll) {
@@ -29,7 +31,7 @@ public class BlogrollService{
 
 	public List<Blogroll> listBlogroll() {
 		// TODO Auto-generated method stub
-		return dao.find("select * from blogroll");
+		return dao.find("select * from blogroll order by sort desc");
 	}
 
 	

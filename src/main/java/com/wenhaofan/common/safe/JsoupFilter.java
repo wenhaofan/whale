@@ -115,7 +115,7 @@ public class JsoupFilter {
 	public static String filterArticleContent(String content) {
 		// return content != null ? Jsoup.clean(content, contentWhitelist) : null;
 		// 添加 notPrettyPrint 参数，避免重新格式化，主要是 at me 时候不会在超链前面添加 "\n"
-		return content != null ? Jsoup.clean(content, "", contentWhitelist, notPrettyPrint) : null;
+		return getText(content).replaceAll("&nbsp;", " ");
 	}
 
 	/**

@@ -29,7 +29,6 @@ public class ArticleAdminApi extends BaseController {
 		Page<Article> articlePage = articleService.page(article, metaid, pageNum, limit);
 		Ret ret = Ret.ok().set("code", 0).set("data", articlePage.getList()).set("count", articlePage.getTotalRow());
 		renderJson(ret.toJson());
-	
 	}
 
 	public void asyncMetaWeblog() {

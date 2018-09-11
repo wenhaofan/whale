@@ -1,7 +1,6 @@
 <div id="#(article.id)" class="comment-container">
     <div id="comments" class="clearfix">
         <span class="response">Responses  / </span>
-
         <form method="post"  id="comment-form" class="comment-form" onsubmit="return fl.subComment();">
             <input type="hidden" name="identify" id="identify" value="#(article.identify)"/>
             <input type="hidden" name="parentId" id="parentId" value=""/>
@@ -72,8 +71,9 @@
                 </div>
                 #end
             </li>
-            #end
-        </ol>
+           
+        </ol> 
+       #end
         <div class="lists-navigator clearfix">
             <ol class="page-navigator">
                 #if(!comments.isFirstPage())
@@ -140,8 +140,6 @@
            }
        };
 })();
-
-
 $(function(){
 	$(".reply").click(function(){
 		var toUserId=$(this).data("userid");
@@ -152,8 +150,6 @@ $(function(){
 	$(".response").on("click",".cancel-comment-reply-link",function(){
 		 fl.cancelReply($(this));
 	})
-	
- 
 })
 </script>
  <script data-no-instant>

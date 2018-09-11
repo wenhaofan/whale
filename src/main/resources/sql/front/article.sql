@@ -65,3 +65,33 @@
 	and
 		isTop=1
 #end
+
+#sql("about")
+	select
+		pv,id,identify,title,gmtCreate
+	from
+		article
+	where
+		id in(
+			select cid from(
+		 		select
+		 			cid
+		 		from
+		 		relevancy
+		 		where
+		 			mid in(
+		 				select mid from (
+			 				select
+								mid 
+							from
+								relevancy
+							where
+								cid=#(article.id)
+		 				)as mids
+		 			)
+	 		)as cid
+		)
+	and state =1
+	ORDER BY RAND()
+	limit #(size)
+#end

@@ -133,7 +133,7 @@ h3.blogtitle { line-height: 30px; height: 30px; margin: 10px 0; }
 .xzsm ul, .ffsm ul { padding: 20px; line-height: 24px; border-top: 6px solid #a6b5c5; }
 .bt-blue { display: block; line-height: 40px; height: 40px; background: #1e8ec5; width: 100px; text-align: center; }
 .bt-blue a { color: #fff }
-.gbko { padding: 10px; background: #fff; }
+.gbko {     padding: 0px 10px 10px background: #fff; }
 .ad { overflow: hidden }
 .ad img { width: 100% }
 .leftbox { width: 70%; float: left; overflow: hidden; }
@@ -148,8 +148,8 @@ h3.blogtitle { line-height: 30px; height: 30px; margin: 10px 0; }
 .meandblog li { background: #f1f1f1; line-height: 30px; margin: 5px 0; padding: 0 0 0 10px; border-radius: 10px; border-top: 2px solid #e2e2e2; text-shadow: #eae7e7 0px 0px 1px; }
 .meandblog li a:hover { color: #000 }
 
-.fb:nth-child(8n-6) ul {
-    background: url(../images/tx9.jpg) no-repeat top 20px left 10px;
+.fb ul {
+    background: url(/_view/templates/morning/images/comment.png) no-repeat top 20px left 10px;
 }
 .fb ul {
     margin: 10px 10px;
@@ -208,4 +208,58 @@ textarea#saytext {
     padding: 0 20px;
     border-radius: 5px;
     float: right;
+}
+ .lists-navigator {
+    margin: 30px 0 35px
+}
+
+.onelist-page .lists-navigator {
+    margin: 35px 0 35px
+}
+
+.lists-navigator ol {
+    margin: 0;
+    padding: 0 10px;
+    list-style: none;
+    text-align: center
+}
+
+.lists-navigator ol li {
+    display: inline-block;
+    color: #5f5f5f
+}
+
+.lists-navigator ol li a {
+    font-size: 14px;
+    padding: 0 20px;
+    color: #5f5f5f
+}
+
+.lists-navigator ol li.current a {
+    color: #eb5055
+}
+
+#comments .lists-navigator {
+    margin: 20px 0
+}
+
+#comments .lists-navigator ol {
+    margin: 20px 0;
+    padding: 0 10px;
+    list-style: none;
+    text-align: center
+}
+
+#comments .lists-navigator ol li.current a {
+    color: #eb5055
+}
+
+#comments .page-navigator {
+    margin: 0
+}
+.comment-container {
+    position: relative;
+    z-index: 1;
+    color: #5f5f5f;
+    background-color: #f7f7f7
 }

@@ -74,8 +74,9 @@ public class ArticleService {
 		return articles;
 	}
 	
-	public List<Article> about(Article article){
-		return null;
+	public List<Article> about(Article article,Integer size){
+		SqlPara sqlPara=dao.getSqlPara("article.about", Kv.by("article", article).set("size", size));
+		return dao.find(sqlPara);
 	}
 	
 	public void addReadNum(String identify){
@@ -88,5 +89,14 @@ public class ArticleService {
 	
 	public List<Article> listHost(Integer num){
 		return dao.find("select title,identify,thumbImg,intro,content from article where state=1 order by pv desc limit  "+num);
+	}
+	
+	/**
+	 * 获取文章不包括content的信息
+	 * @param id
+	 * @return
+	 */
+	public Article getArtcileInfo(Integer id) {
+		return dao.findFirst("select identify,thumbImg,pv,gmtCreate,isTop   from article where state=1 and id=? ",id);
 	}
 }

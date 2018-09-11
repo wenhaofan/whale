@@ -15,7 +15,7 @@ import com.wenhaofan.common.model.entity.Article;
 
 public class LuceneIndexer {
 
-    @SuppressWarnings({ "unchecked", "rawtypes", "serial" })
+    @SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {
     	LuceneHelper helper =new LuceneHelper();
     	List<Document> documents=new ArrayList();
