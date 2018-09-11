@@ -1,5 +1,6 @@
 package com.wenhaofan.article;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.jfinal.kit.Kv;
@@ -7,7 +8,6 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan.common.aop.Inject;
-import com.wenhaofan.common.kit.Arraykit;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.common.safe.JsoupFilter;
@@ -29,17 +29,16 @@ public class ArticleService {
 	 * @param metas
 	 * @return
 	 */
-	public Page<Article> page(Integer pageNumber,Integer pageSize,Integer... metaIds){
-		List<Integer> temp=Arraykit.remove(metaIds, 0);
-		SqlPara sqlPara=dao.getSqlPara("article.page", Kv.create().set("metaIds", temp));
+	public Page<Article> page(Integer pageNumber,Integer pageSize,Integer metaId,Boolean isTop){
+		SqlPara sqlPara=dao.getSqlPara("article.page", Kv.by("metaId",metaId).set("isTop", isTop));
 		Page<Article> page= dao.paginate(pageNumber, pageSize,sqlPara);
-		JsoupFilter.filterArticleList(page.getList(), 30, 200);
+		
+		JsoupFilter.filterArticleList(page.getList(), 100);
 		
 		for(Article article:page.getList()) {
 			List<Meta> metas=metaService.listByCId(article.getId(), MetaTypeEnum.CATEGORY.toString());
 			article.setMetas(metas);
 		}
-
 		return page;
 	}
 	
@@ -50,16 +49,17 @@ public class ArticleService {
 	 */
 	public Article getArticle(String  identify) {
 		Article article= dao.findFirst("select * from article where identify =? ",identify);
+		JsoupFilter.filterArticle(article, 100);
 		return article;
 	}
 	
 	/**
-	 * 根据id获取文章
-	 * @param id
+	 * 获取指定文章
 	 * @return
 	 */
-	public Article getArticle(Integer id) {
-		return dao.findById(id);
+	public List<Article> listTop(){
+		SqlPara sql=dao.getSqlPara("article.listTop");
+		return dao.find(sql);
 	}
 	
 	/**
@@ -68,25 +68,25 @@ public class ArticleService {
 	 * @return
 	 */
 	public List<Article> lastNextArticle(Article article){
-		SqlPara sql=dao.getSqlPara("article.lastNextArticle", article.getId());
-		List<Article> articles= dao.find(sql);
-		
-		if(articles==null||articles.isEmpty()) {
-			articles.add(article);
-			articles.add(article);
-		}else if (articles.size()==1) {
-			articles.add(articles.get(0));
-		}
-		
+ 		List<Article> articles=new ArrayList<>();
+ 		articles.add(0, dao.findById(article.getId()-1));
+ 		articles.add(1, dao.findById(article.getId()+1));
 		return articles;
 	}
 	
+	public List<Article> about(Article article){
+		return null;
+	}
 	
-	public void addReadNum(Integer id){
-		Db.update("update article set pv=pv+1 where id="+id);
+	public void addReadNum(String identify){
+		Db.update("update article set pv=pv+1 where identify='"+identify+"'");
 	}
 
 	public List<Article> listRecent(){
-		return dao.find("select title,identify from article where state=1 order by gmtCreate desc limit 6");
+		return dao.find("select title,identify,thumbImg,intro,content from article where state=1 order by gmtCreate desc limit 6");
+	}
+	
+	public List<Article> listHost(Integer num){
+		return dao.find("select title,identify,thumbImg,intro,content from article where state=1 order by pv desc limit  "+num);
 	}
 }

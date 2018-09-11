@@ -18,27 +18,20 @@ public class ArticleApi extends BaseController{
 	}
 	
 	/**
-	 * 根据多个分类 标签id进行查询
+	 * 根据标签或分类id进行查询
 	 */
 	public void list() {
 		Integer cid=getParaToInt();
 		Integer pageNum = getParaToInt("p");
 		Integer limit=getParaToInt("limit", 10);
-		renderJson(Ret.ok("articlePage", service.page(pageNum, limit, cid)));
+		renderJson(Ret.ok("articlePage", service.page(pageNum, limit, cid,null)));
 	}
-	
+ 
 	/**
-	 * 通过id获取文章信息
-	 */
-	public void getById() {
-		renderJson(Ret.ok("article", service.getArticle(getParaToInt(0))));
-	}
-	
-	/**
-	 * 增加阅读数量,待完成
+	 * 增加阅读数量 
 	 */
 	public void addReadNum(){
-		service.addReadNum(getParaToInt());;
+		service.addReadNum(getPara());;
 		renderJson(Ret.ok());
 	}
 	

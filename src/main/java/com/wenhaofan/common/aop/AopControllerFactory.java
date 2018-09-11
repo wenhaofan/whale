@@ -132,7 +132,7 @@ public class AopControllerFactory extends ControllerFactory {
 			throw new IllegalArgumentException("为保障性能，注入层数必须小于 7");
 		}
 		
-		this.injectDepth = injectDepth;
+		AopControllerFactory.injectDepth = injectDepth;
 		return this;
 	}
 	

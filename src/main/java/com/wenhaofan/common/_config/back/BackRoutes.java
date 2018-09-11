@@ -27,6 +27,7 @@ import com.wenhaofan._admin.nav.NavController;
 import com.wenhaofan._admin.statistic.StatisticApi;
 import com.wenhaofan._admin.statistic.StatisticController;
 import com.wenhaofan._admin.user.AdminUserApi;
+import com.wenhaofan._admin.user.AdminUserController;
 import com.wenhaofan.common.interceptor.AdminIndexInterceptor;
 import com.wenhaofan.common.interceptor.ExceptionInterceptor;
 import com.wenhaofan.common.uplod.FileUploadApi;
@@ -44,9 +45,8 @@ public class BackRoutes extends Routes {
 	   addInterceptor(new ExceptionInterceptor());
 	   setBaseViewPath("/_view/back");
 	   add("/admin",IndexAdminController.class,"/");
-	   
-	   add("/admin/api/user", AdminUserApi.class);
-	   add("/admin/user",AdminUserApi.class,"/");
+ 
+	   add("/admin/api/user",AdminUserApi.class,"/");
 	   add("/admin/api/nav", NavApi.class, "/");
 	   add("/admin/api/upload",FileUploadApi.class,"/");
 	   add("/admin/api/kv", KvController.class,"/");
@@ -76,6 +76,7 @@ public class BackRoutes extends Routes {
 	   add("/admin/disk", DiskController.class, "/disk/");
 	   add("/admin/comment", AdminCommentController.class, "/");
 	   add("/admin/nav", NavController.class, "/");
+	   add("/admin/user",AdminUserController.class,"/");
 	}
 
 }

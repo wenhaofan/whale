@@ -66,12 +66,13 @@ addEventListener("load",function(){
 		<div class="col-md-12">
 			<form id="articleForm">
 				    <input type="hidden" name="categoryIds" id="categoryIds" /> 
-				    <input type="hidden" name="allowComment" value="" id="allowComment" /> 
 					<input type="hidden" name="content" id="content-editor"  /> 
 					<input type="hidden" name="fmtType" id="fmtType" value="" /> 
+					<input type="hidden" name="allowComment" value="#(article.allowComment??)" id="allowComment" /> 
 					<input type="hidden" name="thumbImg" id="thumbImg" value="#(article.thumbImg??)"> 
 					<input type="hidden" name="state" id="state"  value="#(article.state??)">
 					<input type="hidden" name="id" id="id" value="#(article.id??)">
+					<input type="hidden" name="isTop" id="isTop" value="#(article.isTop??)">
 				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
 					<input class="form-control" placeholder="文章标题（必须）" name="title" data-rule="required;" value="#(article.title??)" />
 				</div>
@@ -111,17 +112,24 @@ addEventListener("load",function(){
 				<div id="html-container" class="form-group col-md-12">
 					<div class="summernote"></div>
 				</div>
-
-				<!-- <div class="form-group col-md-3 col-sm-4">
-					<label class="col-sm-4">开启评论</label>
+			 	<div class="form-group col-md-3 col-sm-4">
+					<label class="col-sm-4">置顶</label>
 					<div class="col-sm-8">
-						<div
-							class="toggle toggle-success allow-${contents.allowComment ?! true}"
-							onclick="allow_comment(this);"
-							on="${contents.allowComment ?! true}"></div>
+						<div class="toggle toggle-success"
+							onclick="isTop(this);"
+							on="#(article.isTop??false)"></div>
 					</div>
 				</div>
+			 	
 				<div class="form-group col-md-3 col-sm-4">
+					<label class="col-sm-4">开启评论</label>
+					<div class="col-sm-8">
+						<div class="toggle toggle-success allow-#(contents.allowComment ?? true)"
+							 onclick="allow_comment(this);"
+							 on="#(article.allowComment ?? true)"></div>
+					</div>
+				</div>
+				<!--  <div class="form-group col-md-3 col-sm-4">
 					<label class="col-sm-4">类型</label>
 					<div class="col-sm-8">
 						<div
@@ -132,7 +140,7 @@ addEventListener("load",function(){
 				</div> -->
 				<div class="form-group col-md-3 col-sm-4">
 					<div class="text-right">
-					<a class="btn btn-default waves-effect waves-light" href="javascript:window.loaction.go(-1)">返回</a>
+					<a class="btn btn-default waves-effect waves-light" href="javascript:history.go(-1)">返回</a>
 					<button type="button"
 						class="btn btn-primary waves-effect waves-light" id="subArticle">
 						保存文章</button>

@@ -10,7 +10,6 @@ public class AdminUserApi  extends BaseController{
 	private AdminUserService service;
 	
 	public void editPwd() {
-
 		renderJson(service.editPassword(getLoginUser(), getPara("oldPwd"), getPara("newPwd")));
 	}
 	

@@ -90,13 +90,13 @@ public abstract class BaseArticle<M extends BaseArticle<M>> extends Model<M> imp
 		return getInt("isOriginal");
 	}
 
-	public M setIsTop(java.lang.Integer isTop) {
+	public M setIsTop(java.lang.Boolean isTop) {
 		set("isTop", isTop);
 		return (M)this;
 	}
 	
-	public java.lang.Integer getIsTop() {
-		return getInt("isTop");
+	public java.lang.Boolean getIsTop() {
+		return get("isTop");
 	}
 
 	public M setGmtModified(java.util.Date gmtModified) {
@@ -115,6 +115,24 @@ public abstract class BaseArticle<M extends BaseArticle<M>> extends Model<M> imp
 	
 	public java.lang.String getIdentify() {
 		return getStr("identify");
+	}
+
+	public M setIntro(java.lang.String intro) {
+		set("intro", intro);
+		return (M)this;
+	}
+	
+	public java.lang.String getIntro() {
+		return getStr("intro");
+	}
+
+	public M setAllowComment(java.lang.Boolean allowComment) {
+		set("allowComment", allowComment);
+		return (M)this;
+	}
+	
+	public java.lang.Boolean getAllowComment() {
+		return get("allowComment");
 	}
 
 }

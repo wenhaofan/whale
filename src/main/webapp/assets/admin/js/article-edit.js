@@ -107,12 +107,8 @@ $(document).ready(function () {
 	    
 	    saveArticle({fdata:fdata,success:function(data){
 	    	  fl.alertOk({
-				   text:data.msg,
-				   then:function(data){
-					   setTimeout(() => {
-						window.location.href="/admin/article/list";
-					}, 500);
-				   }
+				   title:"发布成功！"
+				   
 			   })
 	    }});
 	})
@@ -214,22 +210,18 @@ $(document).ready(function () {
         }
     });
   
-    $('.toggle').toggles({
-        on: true,
-        text: {
-            on: '开启',
-            off: '关闭'
-        }
-    });
-
-    $('.select-original').toggles({
-    	 on: true,
-         text: {
-             on: '原创',
-             off: '转载'
-         }
+    $(".toggle").each(function(){
+    	var on=$(this).attr("on")!="false";
+    	$(this).toggles({
+            on: on,
+            text: {
+                on: '开启',
+                off: '关闭'
+            }
+        });
     })
     
+ 
 
 
     var thumbdropzone = $('.dropzone');
@@ -304,9 +296,20 @@ function allow_comment(obj) {
     if (on == 'true') {
         this_.attr('on', 'false');
         $('#allowComment').val('false');
-    } else {
+    }else {
         this_.attr('on', 'true');
         $('#allowComment').val('true');
+    }
+}
+function isTop(obj){
+	var this_ = $(obj);
+    var on = this_.attr('on');
+    if (on == 'true') {
+        this_.attr('on', 'false');
+        $('#isTop').val('false');
+    }else {
+        this_.attr('on', 'true');
+        $('#isTop').val('true');
     }
 }
 
