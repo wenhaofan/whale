@@ -18,40 +18,40 @@ public abstract class BaseBlogroll<M extends BaseBlogroll<M>> extends Model<M> i
 		return getInt("id");
 	}
 
-	public M setUkPriority(java.lang.Integer ukPriority) {
-		set("ukPriority", ukPriority);
+	public M setSort(java.lang.Integer sort) {
+		set("sort", sort);
 		return (M)this;
 	}
 	
-	public java.lang.Integer getUkPriority() {
-		return getInt("ukPriority");
+	public java.lang.Integer getSort() {
+		return getInt("sort");
 	}
 
-	public M setUkName(java.lang.String ukName) {
-		set("ukName", ukName);
+	public M setTitle(java.lang.String title) {
+		set("title", title);
 		return (M)this;
 	}
 	
-	public java.lang.String getUkName() {
-		return getStr("ukName");
+	public java.lang.String getTitle() {
+		return getStr("title");
 	}
 
-	public M setUkUrl(java.lang.String ukUrl) {
-		set("ukUrl", ukUrl);
+	public M setUrl(java.lang.String url) {
+		set("url", url);
 		return (M)this;
 	}
 	
-	public java.lang.String getUkUrl() {
-		return getStr("ukUrl");
+	public java.lang.String getUrl() {
+		return getStr("url");
 	}
 
-	public M setRemark(java.lang.String remark) {
-		set("remark", remark);
+	public M setGmtCreate(java.util.Date gmtCreate) {
+		set("gmtCreate", gmtCreate);
 		return (M)this;
 	}
 	
-	public java.lang.String getRemark() {
-		return getStr("remark");
+	public java.util.Date getGmtCreate() {
+		return get("gmtCreate");
 	}
 
 }

@@ -30,6 +30,27 @@
 .quote-level2{
 	margin-left:25px;
 }
+
+
+.add-form{
+ 	width:485px;
+ 	margin-top: 10px;
+}
+@media screen and (max-width: 768px){
+	.layui-form-label{
+		width: 50px!important;
+	    padding-left:  0px!important;
+	}
+	.layui-input-block{
+		 margin-left: 70px;
+	 	max-width: 230px;
+	}
+	.add-form{
+		width:300px;
+		margin: 0 auto;
+		margin-top: 10px;
+	}
+}
 </style> 
 <div class="layui-row ">
 	<div class="layui-col-lg12 layui-col-md12">
@@ -80,7 +101,7 @@
 </div>
  
 <script type="text/html" id="tpl-medit">
-<div style="width:500px;padding:10px;">
+ 
 	<form class="layui-form add-form" onsubmit="return false;">
 		    <input type="hidden" name="id" value="{{id}}" >
   		  	<div class="layui-form-item layui-form-text">
@@ -115,10 +136,10 @@
 		 </div>
 	  </div>
 </form>
-</div>
+ 
 </script>
 <script type="text/html" id="tpl-bedit">
-<div style="width:500px;padding:10px; add-form">
+
 	<form class="layui-form  add-form" onsubmit="return false;">
 		<input type="hidden" name="id" value="{{id}}" >
   		  	<div class="layui-form-item layui-form-text">
@@ -140,7 +161,7 @@
 		 </div>
 	  </div>
 </form>
-</div>
+
 </script>
 <script>
 addEventListener("load",function(){
@@ -150,18 +171,26 @@ addEventListener("load",function(){
  
 function renderMEdit(data){
 	var content=template("tpl-medit",data);
+	var width=520;
+	if($(window).width()<768){
+		width=350;
+	}
   	layerIndex=layer.open({
   		title:"新增",
-  		area: ['520px', '350px'],
+  		area: [width+'px', '350px'],
 	  	  type: 1, 
 	  	  content: content //这里content是一个普通的String
   	});
 }
 function renderBEdit(data){
 	var content=template("tpl-bedit",data);
+	var width=520;
+	if($(window).width()<768){
+		width=350;
+	}
   	layerIndex=layer.open({
   		title:"新增",
-  		area: ['520px', '230px'],
+  		area: [width+'px', '230px'],
 	  	  type: 1, 
 	  	  content: content //这里content是一个普通的String
   	});

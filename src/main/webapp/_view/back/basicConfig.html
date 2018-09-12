@@ -1,5 +1,29 @@
 <style>
-
+.basic-config{
+    margin: 1rem 0 0 0rem;
+}
+. page-title{
+	margin-left:25px;
+}
+.add-form{
+ 	width:485px;
+ 	margin-top: 10px;
+}
+@media screen and (max-width: 768px){
+	.layui-form-label{
+		width: 50px!important;
+	    padding-left:  0px!important;
+	}
+	.layui-input-block{
+		 margin-left: 70px;
+	 	max-width: 230px;
+	}
+	.add-form{
+		width:300px;
+		margin: 0 auto;
+		margin-top: 10px;
+	}
+}
 @media screen and (max-width: 1200px){
 	.table-block{
 		width:90%;
@@ -7,39 +31,13 @@
 	}
 }
 
-@media screen and (max-width: 768px){
-	.layui-form-label{
-		width: 50px!important;
-	    padding-left:  0px!important;
-	}
-	.layui-input-block{
-	 margin-left: 70px;
-	     max-width: 230px;
-	}
-	   
-}
-.add-form{
-	width:400px;
-	margin: 0 auto;
-	margin-left:15px;
-}
-.basic-config{
-    width: 500px;
 
-    margin: 1rem 0 0 0rem;}
-.quote-level2{
-	margin-left:25px;
-}
 </style> 
-<div class="layui-row ">
-	<div class="layui-col-lg12 layui-col-md12">
-		<blockquote class="page-title ">基础配置</blockquote>
-	</div>
-</div>
+ 
 <div class="layui-row" >
 	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
 		<div class="basic-config">
-			<blockquote class="page-title quote-level2">网站信息配置</blockquote>
+			<blockquote class="page-title  page-title">网站信息</blockquote>
 			<form class="layui-form basicConfig" action=""   onsubmit="return false">
 			  <div class="layui-form-item">
 			    <label class="layui-form-label">标题</label>
@@ -76,7 +74,7 @@
 	</div>
 	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
 		<div class="basic-config">
-			<blockquote class="page-title quote-level2">邮箱配置</blockquote>
+			<blockquote class="page-title  page-title">邮件设置</blockquote>
 			<form class="layui-form basicConfig" action="" onsubmit="return false">
 			
 			  <div class="layui-form-item">
@@ -108,12 +106,81 @@
 		</div>
 	</div>
 </div>
+ <div class="layui-row" >
+	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
+		<div class="basic-config">
+			<blockquote class="page-title  page-title">友情链接</blockquote>
+			<form action="" onsubmit="return false;" class="layui-form">
+				<div class="layui-form-item">
+				     
+				    <button type="button" class="layui-btn" id="addBlogroll"   >新增</button>
+				 
+			</form>
+		 	<table class="layui-hide"   width="auto" style="white-space:nowrap"  id="blogrolls"></table>
+		</div>
+	</div>
  
+</div>
+ 
+<script type="text/html" id="tpl-edit-blogroll">
+
+<form class="layui-form add-form" onsubmit="return false;">
+	 
+	    <input type="hidden" name="id" value="{{id}}" >
+	<div class="layui-form-item layui-form-text">
+   	 	<label class="layui-form-label">网站名</label>
+    	<div class="layui-input-block">
+     		<input type="text" name="website" required  lay-verify="required" value="{{title}}" placeholder="请输入网站名" autocomplete="off" class="layui-input">
+    	</div>
+  	</div>
+  	<div class="layui-form-item layui-form-text">
+   	 	<label class="layui-form-label">路径</label>
+    	<div class="layui-input-block">
+     		 <input type="text" name="url" required  lay-verify="required" value="{{url}}" placeholder="请输入路径" autocomplete="off" class="layui-input">
+    	</div>
+  	</div>
+  	<div class="layui-form-item layui-form-text">
+   	 	<label class="layui-form-label">排序</label>
+    	<div class="layui-input-block">
+     		 <input type="number" name="userName" required  lay-verify="required " value="{{sort}}"  placeholder="数值越大显示越靠前" autocomplete="off" class="layui-input">
+    	</div>
+  	</div>
+  	 
+	 <div class="layui-form-item">
+	    <div class="layui-input-block">
+	    <button class="layui-btn" lay-submit lay-filter="editMconfig">立即提交</button>
+	 	</div>
+ 	 </div>
+</form>
+</script>
  
 <script>
 addEventListener("load",function(){
-	setBasicForm();
+	 
 })
+$(function(){
+	$("#addBlogroll").click(function(){
+		editBlogroll({});
+	})
+})
+function editBlogroll(data){
+	var content=template("tpl-edit-blogroll",data);
+	
+	var width=520;
+	if($(window).width()<768){
+		width=350;
+	}
+	
+  	layerIndex=layer.open({
+  		title:"新增",
+  		area: [width+'px', '280px'],
+	  	  type: 1, 
+	  	  content: content //这里content是一个普通的String
+  	});
+}
+
+
+
 function setBasicForm(){
 	$.ajax({
 		url:"/admin/api/basicConfig",
@@ -140,17 +207,30 @@ function editBasicConfig(data){
 }
  
  
-layui.use(['form', 'laytpl'],function(){
+layui.use(['form', 'laytpl','table'],function(){
 	form=layui.form;
-	 
-	
+
 	form.render();
  
- 
-	
 	form.on("submit(basicConfig)",function(data){
 		editBasicConfig(data.field);
 	})
+
+	 table = layui.table;
+	 table.render({
+		 page:{count:80,limit:10}
+	    ,elem: '#blogrolls'
+	    ,url:'/admin/api/blogroll/list'
+	    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+	    ,cols: [[
+	    	{field:'id', sort: true,width:60,title:"id"}
+	      ,{field:'title',title:"标题",width:130}  
+	      ,{field:'url',title:"网址"}
+	      ,{field:'sort',title:"排序"}
+	      ,{templet:'#operation-tpl',title:"操作",width:190}
+	    ]]
+	  });
+
 }) 
 </script>
  

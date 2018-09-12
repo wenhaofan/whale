@@ -3,18 +3,18 @@ package com.wenhaofan._admin.config;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.common._config.BlogContext;
 import com.wenhaofan.common.aop.Inject;
-import com.wenhaofan.common.model.entity.BasicConfig;
+import com.wenhaofan.common.model.entity.Config;
 
 public class BasicConfigService {
 
 	@Inject
-	private BasicConfig dao;
+	private Config dao;
 	
-	public BasicConfig get() {
-		return dao.findFirst("select * from basic_config");
+	public Config get() {
+		return dao.findFirst("select * from config");
 	}
 	
-	public Ret addOrUpdate(BasicConfig config) {
+	public Ret addOrUpdate(Config config) {
 		if(config.getId()!=null) {
 			config.update();
 		}else {

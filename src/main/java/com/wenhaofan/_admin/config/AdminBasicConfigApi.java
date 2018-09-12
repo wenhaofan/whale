@@ -3,7 +3,7 @@ package com.wenhaofan._admin.config;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
-import com.wenhaofan.common.model.entity.BasicConfig;
+import com.wenhaofan.common.model.entity.Config;
 
 public class AdminBasicConfigApi  extends BaseController {
 
@@ -15,6 +15,6 @@ public class AdminBasicConfigApi  extends BaseController {
 	}
 	
 	public void edit() {
-		renderJson(service.addOrUpdate(getBean(BasicConfig.class,"",true)));
+		renderJson(service.addOrUpdate(getBean(Config.class,"",true)));
 	}
 }

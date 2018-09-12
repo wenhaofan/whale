@@ -1,15 +1,15 @@
 package com.wenhaofan.config;
 
 import com.wenhaofan.common.aop.Inject;
-import com.wenhaofan.common.model.entity.BasicConfig;
+import com.wenhaofan.common.model.entity.Config;
 
 public class BasicConfigService {
 
 	@Inject
-	private BasicConfig dao;
+	private Config dao;
 	
-	public BasicConfig get() {
-		BasicConfig config= dao.findFirst("select * from basic_config order by gmtCreate desc limit 1");
-		return config==null?new BasicConfig():config;
+	public Config get() {
+		Config config= dao.findFirst("select * from  config order by gmtCreate desc limit 1");
+		return config==null?new Config():config;
 	}
 }

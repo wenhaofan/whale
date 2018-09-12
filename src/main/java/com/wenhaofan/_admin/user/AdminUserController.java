@@ -11,6 +11,6 @@ public class AdminUserController extends BaseController {
 	
 	public void edit() {
 		setAttr("user", service.getAdminUser());
-		render("editUser.html");
+		render("blogrollInfo.html");
 	}
 }

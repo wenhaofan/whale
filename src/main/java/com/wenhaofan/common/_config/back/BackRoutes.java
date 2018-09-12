@@ -6,7 +6,7 @@ import com.wenhaofan._admin.article.ArticleAdminController;
 import com.wenhaofan._admin.basic.BasicAdminApi;
 import com.wenhaofan._admin.basic.BasicRouter;
 import com.wenhaofan._admin.basic.KvController;
-import com.wenhaofan._admin.blogroll.BlogrollController;
+import com.wenhaofan._admin.blogroll.AdminBlogrollApi;
 import com.wenhaofan._admin.comment.AdminCommentApi;
 import com.wenhaofan._admin.comment.AdminCommentController;
 import com.wenhaofan._admin.config.AdminAdvancedConfigController;
@@ -60,13 +60,13 @@ public class BackRoutes extends Routes {
 	   add("/admin/api/metaConfig",AdminMetaWeblogConfigApi.class);
 	   add("/admin/api/baiduConfig",AdminBaiduConfigApi.class);
 	   add("/admin/api/basicConfig", AdminBasicConfigApi.class);
-	   
+	   add("/admin/api/blogroll", AdminBlogrollApi.class);
 	 
 	   add("/admin/advancedConfig",AdminAdvancedConfigController.class,"/");
 	   add("/admin/basicConfig", AdminConfigController.class,"/");
 	   add("/admin/meta", CategoryRouter.class,"/meta/");
 	   add("/admin/article", ArticleAdminController.class,"/article/");
-	   add("/admin/blogroll", BlogrollController.class,"/blogroll/");
+ 
 	   add("/admin/basic",BasicRouter.class,"/basic/");
 	   add("/admin/bloger",KvController.class,"/basic/");
 	   add("/admin/diy/html",DiyAdminController.class,"/diy/");

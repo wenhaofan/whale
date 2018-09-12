@@ -25,7 +25,7 @@ import com.wenhaofan.common.aop.AopControllerFactory;
 import com.wenhaofan.common.handle.BasePathHandler;
 import com.wenhaofan.common.interceptor.AccessLogInterceptor;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
-import com.wenhaofan.common.model.entity.BasicConfig;
+import com.wenhaofan.common.model.entity.Config;
 import com.wenhaofan.common.model.entity._MappingKit;
 import com.wenhaofan.config.BasicConfigService;
 
@@ -140,7 +140,7 @@ public class BlogConfig extends JFinalConfig {
 		 
 		BasicConfigService configService=AopControllerFactory.getInject(BasicConfigService.class);
 		 
-		BasicConfig  config=configService.get();
+		Config  config=configService.get();
 		BlogContext.reset(config);
 	}
 	
