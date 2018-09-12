@@ -5,7 +5,7 @@ import com.wenhaofan.common.controller.BaseController;
 public class AdminConfigController extends BaseController {
 
 	public void index() {
-		render("basicConfig.html");
+		render("config.html");
 	}
 	
 }

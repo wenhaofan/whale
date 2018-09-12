@@ -72,24 +72,6 @@ public abstract class BaseConfig<M extends BaseConfig<M>> extends Model<M> imple
 		return get("gmtCreate");
 	}
 
-	public M setIconUrl(java.lang.String iconUrl) {
-		set("iconUrl", iconUrl);
-		return (M)this;
-	}
-	
-	public java.lang.String getIconUrl() {
-		return getStr("iconUrl");
-	}
-
-	public M setLogoUrl(java.lang.String logoUrl) {
-		set("logoUrl", logoUrl);
-		return (M)this;
-	}
-	
-	public java.lang.String getLogoUrl() {
-		return getStr("logoUrl");
-	}
-
 	public M setEmailServer(java.lang.String emailServer) {
 		set("emailServer", emailServer);
 		return (M)this;
@@ -115,6 +97,24 @@ public abstract class BaseConfig<M extends BaseConfig<M>> extends Model<M> imple
 	
 	public java.lang.String getEmailPassword() {
 		return getStr("emailPassword");
+	}
+
+	public M setIco(java.lang.String ico) {
+		set("ico", ico);
+		return (M)this;
+	}
+	
+	public java.lang.String getIco() {
+		return getStr("ico");
+	}
+
+	public M setLogo(java.lang.String logo) {
+		set("logo", logo);
+		return (M)this;
+	}
+	
+	public java.lang.String getLogo() {
+		return getStr("logo");
 	}
 
 }

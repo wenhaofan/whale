@@ -10,6 +10,7 @@ public class AgentUserService {
 	
 	public static final String AGENT_USER_COOKIE_KEY="agentUserCookie";
 	public static final int AGENT_USER_COOKIE_AGE=356*24*60*60;
+	
 	public void save(AgentUser agentUser) {
 		agentUser.save();
 	}

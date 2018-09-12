@@ -18,14 +18,20 @@ public class AdminBlogrollApi extends BaseController {
 	@Inject
 	private BlogrollService blogrollService;
 	
+	public void get() {
+		Blogroll blogroll=blogrollService.getBlogrollById(getParaToInt());
+	
+		renderJson(Ret.ok("blogroll", blogroll));
+	}
+	
 	public void list() {
 		List<Blogroll> blogrolls=blogrollService.listBlogroll();
 		renderJson( Ret.ok("code", 0).set("data",blogrolls));
 	}
 	
-	public void add(){
+	public void saveOrUpdate(){
 		Blogroll blogroll=getModel(Blogroll.class,"",true);
-		blogrollService.save(blogroll);
+		blogrollService.saveOrUpdate(blogroll);
 		renderJson(Ret.ok());
 	}
 	
@@ -36,10 +42,5 @@ public class AdminBlogrollApi extends BaseController {
 		renderJson(Ret.ok());
 	}
 	
-	public void update() {
-		Blogroll blogroll=getModel(Blogroll.class,"",true);
-		blogrollService.update(blogroll);
-		renderJson(Ret.ok());
-	}
-	
+ 
 }

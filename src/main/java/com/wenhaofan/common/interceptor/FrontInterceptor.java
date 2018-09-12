@@ -2,6 +2,7 @@ package com.wenhaofan.common.interceptor;
 
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
+import com.wenhaofan.common._config.BlogContext;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.meta.MetaTypeEnum;
 
@@ -21,7 +22,7 @@ public class FrontInterceptor implements Interceptor{
 		c.setAttr("keyword", c.getPara("keyword"));
 		c.setAttr("user", c.getLoginUser());
 		c.setAttr("adminUser", c.userService.getAdminUser());
-		c.setAttr("basicConfig", c.basicConfigService.get());
+		c.setAttr("config", BlogContext.config);
 		c.setAttr("navs", c.navService.list());
 		c.setAttr("recentArticles", c.articleService.listRecent());
 		c.setAttr("recentComments", c.commentService.listRecent());

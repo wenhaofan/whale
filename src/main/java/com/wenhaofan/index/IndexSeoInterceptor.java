@@ -10,7 +10,7 @@ public class IndexSeoInterceptor extends BaseSeoInterceptor {
 	@Override
 	public void indexSeo(Invocation inv) {
 		Controller c=inv.getController();
-		Config config=c.getAttr("basicConfig");
+		Config config=c.getAttr("config");
 		setSeoKeyWords(c,config.getKeywords());
 		setSeoTitle(c,config.getTitle());
 		setSeoDescr(c, config.getDescription());

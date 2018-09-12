@@ -12,9 +12,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-transform"/>
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="apple-touch-icon" href="/favicon.ico">
-    <meta name="author" content="#(basicConfig.author)(#(basePath))"/>
+   <link rel="shortcut icon" href="#(config.ico??"/favicon.ico")">
+    <link rel="apple-touch-icon" href="#(config.ico??"/favicon.ico")">
+    <meta name="author" content="#(config.author)(#(basePath))"/>
     <meta name="keywords" content="#(seoKeywords)"/>
     <meta name="description" content="#(seoDescr)"/>
     <title>#(seoTitle)</title>
@@ -55,7 +55,7 @@ color:#eb5054;
 <header id="header" class="header bg-white">
     <div class="navbar-container">
         <a href="/" class="navbar-logo">  
-            <img src="/_view/templates/enjoy/static/img/logo.png" alt="" /> 
+            <img src="#(config.logo??"/_view/templates/default/static/img/logo.png")" alt="" /> 
         </a>
         <div class="navbar-menu">
          	#for(nav:navs)

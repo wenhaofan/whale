@@ -160,6 +160,8 @@ public class AdminArticleService {
 	 */
 	public void remove(Article article) {
 		article.delete();
+		//删除文章的关联
+		mservice.deleteRelevancy(article.getId());
 	}
 
 	

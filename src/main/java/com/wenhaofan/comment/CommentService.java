@@ -97,7 +97,7 @@ public class CommentService {
 		
 		AgentUser user=agentUserService.get(comment.getUserId());
 		String title=articleService.getArticle(comment.getIdentify()).getTitle();
-		EmailKit.sendEmail(adminUser.getEmail(), "你收到了一条评论 by "+BlogContext.basicConfig.getTitle(),getHintEmailContent(user.getName(),title));
+		EmailKit.sendEmail(adminUser.getEmail(), "你收到了一条评论 by "+BlogContext.config.getTitle(),getHintEmailContent(user.getName(),title));
 	}
 	
 	public String getHintEmailContent(String userName,String title) {
@@ -138,7 +138,7 @@ public class CommentService {
 		String userName=agentUserService.get(comment.getUserId()).getName();
 		
 		if(replayAgentUser!=null) {
-			EmailKit.sendEmail(replayAgentUser.getEmail(),userName+ "回复了你的评论  by "+BlogContext.basicConfig.getTitle(),getHintEmail(userName,comment));
+			EmailKit.sendEmail(replayAgentUser.getEmail(),userName+ "回复了你的评论  by "+BlogContext.config.getTitle(),getHintEmail(userName,comment));
 		}	 
 	}
 	

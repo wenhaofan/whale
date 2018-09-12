@@ -27,7 +27,7 @@ import com.wenhaofan.common.interceptor.AccessLogInterceptor;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity.Config;
 import com.wenhaofan.common.model.entity._MappingKit;
-import com.wenhaofan.config.BasicConfigService;
+import com.wenhaofan.config.ConfigService;
 
 /**
  * 博客的配置文件
@@ -138,7 +138,7 @@ public class BlogConfig extends JFinalConfig {
 		
 		
 		 
-		BasicConfigService configService=AopControllerFactory.getInject(BasicConfigService.class);
+		ConfigService configService=AopControllerFactory.getInject(ConfigService.class);
 		 
 		Config  config=configService.get();
 		BlogContext.reset(config);

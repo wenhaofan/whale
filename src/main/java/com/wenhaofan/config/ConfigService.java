@@ -3,7 +3,7 @@ package com.wenhaofan.config;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.Config;
 
-public class BasicConfigService {
+public class ConfigService {
 
 	@Inject
 	private Config dao;

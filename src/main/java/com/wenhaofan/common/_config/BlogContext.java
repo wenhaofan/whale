@@ -6,7 +6,7 @@ import com.wenhaofan.common.model.entity.Config;
 public class BlogContext {
 	
 	public static  EmailConfig emailConfig;
-	public static Config basicConfig;
+	public static Config config;
 	
 	public static String getProjectPath(){
 		return PropKit.get("projectPath");
@@ -14,7 +14,7 @@ public class BlogContext {
 	
 	public static void reset(Config config) {
 		emailConfig=new BlogContext().new EmailConfig(config);
-		basicConfig=config;
+		BlogContext.config=config;
 	}
 	
 	public class EmailConfig{
@@ -38,6 +38,11 @@ public class BlogContext {
 		}
 	}
 	
-	 
-	
+	public enum CacheNameEnum {
+		ARTICLE,
+		BLOGROLL,
+		CONFIG
+	}
 }
+
+

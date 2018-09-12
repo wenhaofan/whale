@@ -5,13 +5,13 @@ import com.wenhaofan.common._config.BlogContext;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.Config;
 
-public class BasicConfigService {
+public class ConfigService {
 
 	@Inject
 	private Config dao;
 	
 	public Config get() {
-		return dao.findFirst("select * from config");
+		return BlogContext.config;
 	}
 	
 	public Ret addOrUpdate(Config config) {
@@ -20,7 +20,6 @@ public class BasicConfigService {
 		}else {
 			config.save();
 		}
-		
 		BlogContext.reset(config);
 		
 		return Ret.ok();

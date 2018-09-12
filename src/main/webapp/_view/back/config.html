@@ -30,7 +30,9 @@
 		margin: 0 auto;
 	}
 }
-
+.upload-btn{
+	margin-left:10px;
+}
 
 </style> 
  
@@ -38,7 +40,7 @@
 	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
 		<div class="basic-config">
 			<blockquote class="page-title  page-title">网站信息</blockquote>
-			<form class="layui-form basicConfig" action=""   onsubmit="return false">
+			<form class="layui-form editConfig" action=""   onsubmit="return false">
 			  <div class="layui-form-item">
 			    <label class="layui-form-label">标题</label>
 			    <div class="layui-input-block">
@@ -58,15 +60,43 @@
 			      <input type="text" name="keywords" required  lay-verify="required" placeholder="请输入关键字" autocomplete="off" class="layui-input">
 			    </div>
 			  </div>
-			  <div class="layui-form-item">
+			    <div class="layui-form-item">
 			    <label class="layui-form-label">author</label>
 			    <div class="layui-input-block">
 			      <input type="text" name="author" required  lay-verify="required" placeholder="请输入作者" autocomplete="off" class="layui-input">
 			    </div>
 			  </div>
+			  
+			   <div class="layui-form-item">
+			   <label class="layui-form-label">ico</label>
+			    <div class="layui-input-block">
+			      <input name="ico" type="hidden">
+			 	  <img alt="" class="ico-img">
+			      <button type="button" class="layui-btn upload-btn upload-ico">
+					  <i class="layui-icon">&#xe67c;</i>上传ico
+				  </button>
+			    </div>
+			  </div>
+			    <div class="layui-form-item">
+			   <label class="layui-form-label">logo</label>
+			    <div class="layui-input-block">
+			   	 <input name="logo" type="hidden"  >
+			 	  <img alt="" class="logo-img"  >
+			      <button type="button" class="layui-btn upload-btn upload-logo"  >
+					  <i class="layui-icon">&#xe67c;</i>上传logo
+				  </button>
+			    </div>
+			  </div>
+		  <div class="layui-form-item">
+			    <label class="layui-form-label">备案号</label>
+			    <div class="layui-input-block">
+			      <input type="text" name="ICPRecord" required  lay-verify="required" placeholder="请输入备案号" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			
 			  <div class="layui-form-item">
 			    <div class="layui-input-block">
-			      <button  class="layui-btn" lay-submit lay-filter="basicConfig">立即提交</button>
+			      <button  class="layui-btn" lay-submit lay-filter="editConfig">立即提交</button>
 			    </div>
 			  </div>
 			</form>
@@ -75,7 +105,7 @@
 	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
 		<div class="basic-config">
 			<blockquote class="page-title  page-title">邮件设置</blockquote>
-			<form class="layui-form basicConfig" action="" onsubmit="return false">
+			<form class="layui-form editConfig" action="" onsubmit="return false">
 			
 			  <div class="layui-form-item">
 			    <label class="layui-form-label">发件邮箱</label>
@@ -99,7 +129,7 @@
 			 
 			  <div class="layui-form-item">
 			    <div class="layui-input-block">
-			      <button  class="layui-btn" lay-submit lay-filter="basicConfig">立即提交</button>
+			      <button  class="layui-btn" lay-submit lay-filter="editConfig">立即提交</button>
 			    </div>
 			  </div>
 			</form>
@@ -130,7 +160,7 @@
 	<div class="layui-form-item layui-form-text">
    	 	<label class="layui-form-label">网站名</label>
     	<div class="layui-input-block">
-     		<input type="text" name="website" required  lay-verify="required" value="{{title}}" placeholder="请输入网站名" autocomplete="off" class="layui-input">
+     		<input type="text" name="title" required  lay-verify="required" value="{{title}}" placeholder="请输入网站名" autocomplete="off" class="layui-input">
     	</div>
   	</div>
   	<div class="layui-form-item layui-form-text">
@@ -142,27 +172,55 @@
   	<div class="layui-form-item layui-form-text">
    	 	<label class="layui-form-label">排序</label>
     	<div class="layui-input-block">
-     		 <input type="number" name="userName" required  lay-verify="required " value="{{sort}}"  placeholder="数值越大显示越靠前" autocomplete="off" class="layui-input">
+     		 <input type="number" name="sort" required  lay-verify="required " value="{{sort}}"  placeholder="数值越大显示越靠前" autocomplete="off" class="layui-input">
     	</div>
   	</div>
   	 
 	 <div class="layui-form-item">
 	    <div class="layui-input-block">
-	    <button class="layui-btn" lay-submit lay-filter="editMconfig">立即提交</button>
+	    <button class="layui-btn" lay-submit lay-filter="editBlogroll">立即提交</button>
 	 	</div>
  	 </div>
 </form>
 </script>
- 
+
+<script type="text/html" id="tpl-blogroll-operate">
+	<button class="layui-btn layui-btn-sm delete-blogroll" data-id="{{d.id}}">删除</button>
+
+	<button class="layui-btn layui-btn-sm update-blogroll" data-id="{{d.id}}">修改</button>
+</script>
 <script>
 addEventListener("load",function(){
-	 
+	setBasicForm();
 })
 $(function(){
 	$("#addBlogroll").click(function(){
 		editBlogroll({});
 	})
+	
+	$("body").on("click",".update-blogroll",function(){
+		var id=$(this).data("id");
+		updateBlogroll(id);
+	})
+	$("body").on("click",".delete-blogroll",function(){
+		var id=$(this).data("id");
+		deleteBlogroll(id);
+	})
 })
+
+function deleteBlogroll(id){
+	fl.alertConfirm({title:"确认删除?",then:function(){
+		$.ajax({
+			url:"/admin/api/blogroll/remove/"+id,
+			success:function(data){
+				if(fl.isOk(data)){
+					fl.alertOkAndReload("删除成功！");
+				}
+			}
+		})
+	}})
+}
+
 function editBlogroll(data){
 	var content=template("tpl-edit-blogroll",data);
 	
@@ -178,24 +236,40 @@ function editBlogroll(data){
 	  	  content: content //这里content是一个普通的String
   	});
 }
-
-
-
-function setBasicForm(){
+/**
+ * 获取友链信息,并打开修改框
+ */
+function updateBlogroll(id){
 	$.ajax({
-		url:"/admin/api/basicConfig",
-		dataType:"json",
+		url:"/admin/api/blogroll/get/"+id,
+		type:"post",
 		success:function(data){
 			if(fl.isOk(data)){
-				formUtil.setFormVal(data.config,$(".basicConfig"));
-				formUtil.setFormVal(data.config,$(".basicConfig"));
+				editBlogroll(data.blogroll);
 			}
 		}
 	})
 }
-function editBasicConfig(data){
+
+
+function setBasicForm(){
 	$.ajax({
-		url:"/admin/api/basicConfig/edit",
+		url:"/admin/api/config",
+		dataType:"json",
+		success:function(data){
+			if(fl.isOk(data)){
+				var config=data.config;
+				$(".ico-img").attr("src",(config.ico&&config.ico.length>0)?config.ico:'/favicon.ico')
+				$(".logo-img").attr("src",(config.logo&&config.logo.length>0)?config.logo:'/assets/images/logo.png')
+				formUtil.setFormVal(data.config,$(".editConfig"));
+				formUtil.setFormVal(data.config,$(".editConfig"));
+			}
+		}
+	})
+}
+function editConfig(data){
+	$.ajax({
+		url:"/admin/api/config/edit",
 		data:data,
 		type:"post",
 		success:function(data){
@@ -205,32 +279,72 @@ function editBasicConfig(data){
 		}
 	})
 }
+function doEditBlogroll(data){
+	$.ajax({
+		url:"/admin/api/blogroll/saveOrUpdate",
+		data:data,
+		type:"post",
+		success:function(data){
+			if(fl.isOk(data)){
+				fl.alertOkAndReload("操作成功！");
+			}
+		}
+	})
+}
  
- 
-layui.use(['form', 'laytpl','table'],function(){
+layui.use(['form', 'laytpl','table','upload'],function(){
 	form=layui.form;
-
+	upload=layui.upload;
 	form.render();
  
-	form.on("submit(basicConfig)",function(data){
-		editBasicConfig(data.field);
+	form.on("submit(editConfig)",function(data){
+		editConfig(data.field);
 	})
 
+	form.on("submit(editBlogroll)",function(data){
+		doEditBlogroll(data.field);
+	})
+	
 	 table = layui.table;
 	 table.render({
-		 page:{count:80,limit:10}
-	    ,elem: '#blogrolls'
+		 elem: '#blogrolls'
 	    ,url:'/admin/api/blogroll/list'
 	    ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
 	    ,cols: [[
 	    	{field:'id', sort: true,width:60,title:"id"}
-	      ,{field:'title',title:"标题",width:130}  
-	      ,{field:'url',title:"网址"}
-	      ,{field:'sort',title:"排序"}
-	      ,{templet:'#operation-tpl',title:"操作",width:190}
+	      ,{field:'title',title:"标题" }  
+	      ,{field:'url',title:"网址" }
+	      ,{field:'sort',title:"排序",width:80}
+	      ,{templet:'#tpl-blogroll-operate',title:"操作",width:190}
 	    ]]
 	  });
 
+	 //执行实例
+	  upload.render({
+		  acceptMime:'image/ico'
+			    ,exts: 'ico'
+		,field:"upfile",
+	    elem: '.upload-ico' //绑定元素
+	    ,url: '/admin/api/upload/ico' //上传接口
+	  
+	    ,done: function(res){
+	      	$(".ico-img").attr("src",res.info.url);
+	      	$("input[name='ico']").val(res.info.url);
+	    },error: function(){
+	      fl.alertErro("上传失败！");
+	    }
+	  });
+	  upload.render({
+		field:"upfile",
+	    elem: '.upload-logo' //绑定元素
+	    ,url: '/admin/api/upload/logo' //上传接口
+	    ,done: function(res){
+	      	$(".logo-img").attr("src",res.info.url);
+	      	$("input[name='logo']").val(res.info.url);
+	    },error: function(){
+	      fl.alertErro("上传失败！");
+	    }
+	  });
 }) 
 </script>
  
