@@ -9,6 +9,7 @@ import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.meta.MetaService;
+import com.wenhaofan.user.UserService;
 
 /**
  * 网站首页控制器
@@ -25,6 +26,8 @@ public class IndexController extends BaseController {
 	
 	@Inject
 	private MetaService metaService;
+	@Inject
+	private UserService userService;
 	
 	public void index() {
 		Integer pageNum = getParaToInt(0,1);

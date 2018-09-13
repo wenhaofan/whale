@@ -41,6 +41,8 @@ public class BlogConfig extends JFinalConfig {
 
 	public static Plugins plugins = null;
 
+	public static FrontRoutes frontRoutes;
+	
 	private WallFilter wallFilter;
 	@Override
 	public void configConstant(Constants me) {
@@ -55,14 +57,16 @@ public class BlogConfig extends JFinalConfig {
 	public void configRoute(Routes me) {
 		// 配置路由
 		me.add(new BackRoutes());
-		me.add(new FrontRoutes());
-
+		frontRoutes=new FrontRoutes();
+		me.add(frontRoutes);
 	}
 
 	private static Prop loadConfig() {
 		try {
+			BlogContext.CONFIG_FILE_NAME="dev_blog_config.txt";
 			return PropKit.use("dev_blog_config.txt");
 		} catch (Exception e) {
+			BlogContext.CONFIG_FILE_NAME="blog_config.txt";
 			return PropKit.use("blog_config.txt");
 		}
 		
@@ -136,8 +140,6 @@ public class BlogConfig extends JFinalConfig {
 		// TODO Auto-generated method stub
 		super.afterJFinalStart();
 		
-		
-		 
 		ConfigService configService=AopControllerFactory.getInject(ConfigService.class);
 		 
 		Config  config=configService.get();

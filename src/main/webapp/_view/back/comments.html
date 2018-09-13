@@ -53,11 +53,11 @@ layui.use(['layer','table','form'], function(){
 	    ]]
 	  });
 
-  //监听提交
-  form.on('submit(reply)', function(data){
+	 //监听提交
+	 form.on('submit(reply)', function(data){
 	   submitReply(data.field);
-  	 return false;
-  });
+	 	 return false;
+	 });
 });
 
 function renderReply(){

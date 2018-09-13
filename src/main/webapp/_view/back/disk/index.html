@@ -44,7 +44,7 @@ uploadUtil.setUploadServerUrl("/admin/api/disk/upload");
 <script type="text/javascript">
 var currentFolderId="#(folderId)";
 
-window.addEventListener("load",function(){
+$(function(){
 	listDiskItem({parentId:currentFolderId});
 	
 	if(currentFolderId!=0){

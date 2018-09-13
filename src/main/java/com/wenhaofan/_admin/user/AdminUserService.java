@@ -1,6 +1,8 @@
 package com.wenhaofan._admin.user;
 
 import com.jfinal.kit.Ret;
+import com.jfinal.plugin.ehcache.CacheKit;
+import com.wenhaofan.common._config.BlogContext;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.kit.StrKit;
 import com.wenhaofan.common.model.entity.User;
@@ -22,13 +24,15 @@ public class AdminUserService {
 	
  
 	public Ret update(User user) {
-		System.out.println(user);
 		user.setId(getAdminUser().getId());
 		user.update();
+		CacheKit.remove(BlogContext.CacheNameEnum.BLOGGER.name(),  "getAdminUser");
 		return Ret.ok();
 	}
+	
 	public User getAdminUser() {
-		return dao.findFirst("select * from user");
+		User user=dao.findFirstByCache(BlogContext.CacheNameEnum.BLOGGER.name(), "getAdminUser", "select * from user");
+		return user.setPwd("");
 	}
 	
 }

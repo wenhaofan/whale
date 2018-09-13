@@ -22,16 +22,25 @@ public class AdminIndexInterceptor implements Interceptor{
 		
 		Controller c=inv.getController();
 		
+		if(c.getParaToBoolean("pjax")!=null) {
+			return;
+		}
+		boolean isPjax = "true".equalsIgnoreCase(c.getHeader("X-PJAX"));
+		 
+		if(isPjax) {
+			return;
+		}
+
 		String viewPath=((Controller)inv.getTarget()).getViewPath();
-		
 		viewPath+=c.getRender().getView();
 		
 		AdminUserService adminUserService=AopControllerFactory.getInject(AdminUserService.class);
 		User adminUser=adminUserService.getAdminUser();
-		
-		c.setAttr("adminUser", adminUser);
+
 		String requestUrl=c.getRequest().getRequestURI();
+		
 		c.setAttr("requestUrl", requestUrl);
+		c.setAttr("adminUser", adminUser);
 		
 		if(viewPath.endsWith(".html")) {
 			c.setAttr("includeUrl", viewPath);

@@ -36,16 +36,16 @@ window.onload = function ()
     <div id="mnav">
       <h2><span class="navicon"></span></h2>
       <ul>
-        <li><a href="/">网站首页</a></li>
-        <li><a href="/aboutMe">关于我</a></li>
-        <li><a href="gbook.html">留言</a></li>
+       	#for(nav:navs)
+       	 <li><a href="#(nav.url)">#(nav.title)</a></li>	
+        #end
       </ul>
     </div>
     <nav class="topnav" id="topnav">
       <ul>
-        <li><a href="/">网站首页</a></li>
-        <li><a href="/aboutMe">关于我</a></li>
-        <li><a href="gbook.html">留言</a></li>
+        #for(nav:navs)
+       	 <li><a href="#(nav.url)">#(nav.title)</a></li>	
+        #end
       </ul>
     </nav>
   </div>

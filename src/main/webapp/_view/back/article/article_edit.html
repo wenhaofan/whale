@@ -15,6 +15,7 @@
 <link href="/assets/plugins/mditor/css/mditor.min.css" rel="stylesheet" />
 <link href="/assets/plugins/summernote/0.8.2/summernote.css"
 	rel="stylesheet">
+	
 <link href="/assets/plugins/dropzone/4.3.0/min/dropzone.min.css"
 	rel="stylesheet">
 <link href="/assets/admin/css/artilce-edit.css" rel="stylesheet">
@@ -28,16 +29,13 @@ function tagInit(){
 	$('#html-container .note-editable').empty().html($("#tpl-content").html());
 }
 
-addEventListener("load",function(){
+$(document).ready(function() {
 	#if(article!=null&&article.thumbImg!=null)
 		var thumbImg="#(article.thumbImg)";
 		$("#dropzone").css({"background-image":"url('"+thumbImg+"')","background-size":"cover"})
 		$('.dz-image').hide();
- 
 	#end
 })
-
-
 
 </script>
 <style>
@@ -206,7 +204,6 @@ addEventListener("load",function(){
 	<script src="/assets/plugins/dropzone/4.3.0/min/dropzone.min.js"></script>
 	<script src="/assets/plugins/to-markdown/3.1.0/to-markdown.min.js"></script>
 	<script src="/assets/plugins/tagsinput/jquery.tagsinput.min.js"></script>
-	<script src="/assets/admin/js/article-edit.js" ></script>
 	<script type="text/javascript" src="/assets/common/meta.js"></script>
 	<script src="/assets/js/strKit.js"></script>
-	
+	<script src="/assets/admin/js/article-edit.js" ></script>

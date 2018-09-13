@@ -4,6 +4,9 @@
 		<blockquote class="page-title">文章列表</blockquote>
 	</div>
 </div>
+<script type="text/javascript">
+ 
+</script>
 <div class="site-block">
 	<form class="layui-form article-query-form" method="post" >
 		<div class="layui-form-item">
@@ -32,22 +35,11 @@
 	</form>
 </div>
 <div style="width:100%;overflow:auto;">
-	<table class="layui-table" id="articles" width="auto" style="white-space:nowrap"  lay-data="{ id: 'articles',url:'/admin/api/article/list', page:{count:80,limit:10}}"
-		lay-filter="test">
-		<thead>
-			<tr>
-				<th lay-data="{field:'id', sort: true}">ID</th>
-				<th lay-data="{field:'title',minWidth:150}">标题</th>
-				<th lay-data="{field:'pv', sort: true}">阅读量</th>
-				<th lay-data="{field:'state',templet:'#state-tpl'}">状态</th>
-				<th lay-data="{field:'isOriginal',templet:'#original-tpl'}">原创</th>
-				<th lay-data="{field:'identify'}">访问路径</th>
-				<th lay-data="{templet:'#operation-tpl',width:220}">操作</th>
-			</tr>
-		</thead>
+	<table class="layui-table" id="articles" width="auto" style="white-space:nowrap"  lay-data="{ }"lay-filter="test">
+		
 	</table>
 </div>
-
+ 
 
 <script type="text/html" id="state-tpl">
   #[[ {{#  if(d.state ==0){ }}
@@ -91,7 +83,7 @@
 ]]#
 </script>
 <script type="text/javascript">
-$(function(){
+$(document).ready(function() {
 	$("body").on("click",".article-async",function(){
 		$.ajax({
 			url:"/admin/api/article/asyncMetaWeblog/"+$(this).data("id"),
@@ -103,6 +95,7 @@ $(function(){
 		})
 	})
 })
+ 
 </script>
 <script type="text/javascript" src="/assets/common/meta.js"></script>
 <script src="/assets/admin/js/article-list.js"></script>

@@ -108,8 +108,8 @@ $(document).ready(function () {
 	    saveArticle({fdata:fdata,success:function(data){
 	    	  fl.alertOk({
 				   title:"发布成功！"
-				   
-			   })
+			   });
+	    	  $("input[name='id']").val(data.article.id);
 	    }});
 	})
 	
@@ -258,7 +258,7 @@ $(document).ready(function () {
 });
 
 $(function(){
-	window.addEventListener("load",function(){
+	 
 		  if($(window).width()<=768){
 		    	$(".fa-columns").trigger("click");
 		    	isHideShowHtml=true;
@@ -283,9 +283,7 @@ $(function(){
 			$(".page-title").text("添加文章");
 		  
 		}
-		
-	
-	})
+ 
 })
 
  

@@ -26,6 +26,8 @@ import com.wenhaofan._admin.nav.NavApi;
 import com.wenhaofan._admin.nav.NavController;
 import com.wenhaofan._admin.statistic.StatisticApi;
 import com.wenhaofan._admin.statistic.StatisticController;
+import com.wenhaofan._admin.themes.AdminThemesApi;
+import com.wenhaofan._admin.themes.AdminThemesController;
 import com.wenhaofan._admin.user.AdminUserApi;
 import com.wenhaofan._admin.user.AdminUserController;
 import com.wenhaofan.common.interceptor.AdminIndexInterceptor;
@@ -44,8 +46,8 @@ public class BackRoutes extends Routes {
 	   addInterceptor(new AdminIndexInterceptor());
 	   addInterceptor(new ExceptionInterceptor());
 	   setBaseViewPath("/_view/back");
-	   add("/admin",IndexAdminController.class,"/");
- 
+	   
+	   add("/admin/api/themes",AdminThemesApi.class,"/");
 	   add("/admin/api/user",AdminUserApi.class,"/");
 	   add("/admin/api/nav", NavApi.class, "/");
 	   add("/admin/api/upload",FileUploadApi.class,"/");
@@ -66,7 +68,7 @@ public class BackRoutes extends Routes {
 	   add("/admin/config", AdminConfigController.class,"/");
 	   add("/admin/meta", CategoryRouter.class,"/meta/");
 	   add("/admin/article", ArticleAdminController.class,"/article/");
- 
+	   add("/admin",IndexAdminController.class,"/");
 	   add("/admin/basic",BasicRouter.class,"/basic/");
 	   add("/admin/bloger",KvController.class,"/basic/");
 	   add("/admin/diy/html",DiyAdminController.class,"/diy/");
@@ -77,6 +79,7 @@ public class BackRoutes extends Routes {
 	   add("/admin/comment", AdminCommentController.class, "/");
 	   add("/admin/nav", NavController.class, "/");
 	   add("/admin/user",AdminUserController.class,"/");
+	   add("/admin/themes",AdminThemesController.class,"/");
 	}
 
 }

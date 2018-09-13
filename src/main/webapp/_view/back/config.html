@@ -190,9 +190,7 @@
 	<button class="layui-btn layui-btn-sm update-blogroll" data-id="{{d.id}}">修改</button>
 </script>
 <script>
-addEventListener("load",function(){
-	setBasicForm();
-})
+
 $(function(){
 	$("#addBlogroll").click(function(){
 		editBlogroll({});
@@ -206,6 +204,7 @@ $(function(){
 		var id=$(this).data("id");
 		deleteBlogroll(id);
 	})
+	setBasicForm();
 })
 
 function deleteBlogroll(id){

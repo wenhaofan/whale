@@ -21,16 +21,40 @@ layui.use([ 'table', 'form' ], function() {
 	table = layui.table;
 	laytpl = layui.laytpl;
 	form = layui.form;
-
+	
 	form.on('select(category-select)', function(data) {
 		querylist($(".layui-form").serializeJson());
 	});
 	form.on('select(state-select)', function(data) {
 		querylist($(".layui-form").serializeJson())
 	});
+	
+	renderArticles();
+	initCategorySelect();
 });
 
+function renderArticles(){
+	table.render({
+		page:{count:80,limit:10}
+		,url:'/admin/api/article/list' 
+	    ,elem: '#articles'
+	    ,height: 312
+	    ,page: true //开启分页
+	    ,cols: [[ //表头
+	    	{field:'id', sort: true,title:"ID"}
+	      ,{field:'title',minWidth:150,title:"标题"}
+	      ,{field:'pv', sort: true,title:"阅读量"}
+	      ,{field:'state',templet:'#state-tpl',title:"状态"}
+	      ,{field:'isOriginal',templet:'#original-tpl',title:"原创"}
+	      ,{field:'identify',title:"访问路径"}
+	      ,{templet:'#operation-tpl',width:220,title:"操作"}
+	    ]]
+	  });
+ 
+}
+
 $(function() {
+ 
 	$("body").on("click", ".article-update", function() {
 		var id = $(this).attr("data-id");
 		window.location.href = "/admin/article/edit/" + id;
@@ -91,6 +115,4 @@ function initCategorySelect() {
 	metaUtils.listMeta( initCategorys);
 }
 
-window.addEventListener("load", function() {
-	initCategorySelect();
-})
+ 

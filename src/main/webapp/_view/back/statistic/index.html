@@ -181,7 +181,7 @@ $(function(){
 		<blockquote class="page-title ">浏览统计</blockquote>
 	</div>
 </div>
-<div class="row">
+<div class="layui-row ">
 	<div class="layui-col-xs12 layui-col-sm6 col-md-6">
 		<div class="layui-inline access-statistic-item">
 			 <div id="line" style="width:100%;height:400px;"></div>
@@ -193,100 +193,5 @@ $(function(){
 		</div>
  	</div>
 </div>
-<script>
-
-addEventListener("load",function(){
-
-	// 基于准备好的dom，初始化echarts实例
-	var myChart = echarts.init(document.getElementById('bar'));
-
-$.ajax({
-	url:"/admin/api/statistic/hotArticle/10",
-	success:function(data){
-		// 指定图表的配置项和数据
-		var option = {
-		    title: {
-		        text: '热门文章'
-		    },
-		    tooltip: {},   toolbox: {
-		        feature: {
-		            dataView: {},
-		            saveAsImage: {
-		                pixelRatio: 2
-		            },
-		            restore: {}
-		        }
-		    },
-		    legend: {
-		        data:['阅读量']
-		    },
-		    grid:{
-		    	bottom:"30%"
-		    },
-		    xAxis: {
-		        data: data.titleList,
-		        axisLabel:{
-                    interval:0,
-                    rotate:45,
-                    margin:2,
-                    textStyle:{
-                             color:"#222"
-                    },formatter:function(value)
-                    {
-                    	if(value.length>7){
-                    		return value.substring(0,7)+"...";
-                    	}
-                        return value;
-                    }}
-		    },
-		    yAxis: {},
-		    series: [{
-		        type: 'bar',
-		        data:data.pvList,
-		        barMaxWidth:40
-		    }]
-		};
-		
-		// 使用刚指定的配置项和数据显示图表。
-		myChart.setOption(option);
-
-	}
-})
-
- 
-
-$.ajax({
-	url:"/admin/api/statistic/statisticsAccessNumDays/7",
-	success:function(data){
-		echarts.init(document.getElementById('line')).setOption({
-		    title: {text: '7天访问量'},
-		    tooltip: {},
-		    toolbox: {
-		        feature: {
-		            dataView: {},
-		            saveAsImage: {
-		                pixelRatio: 2
-		            },
-		            restore: {}
-		        }
-		    },
-		    xAxis: { 
-		    	type: 'category',
-		        data: data.dayList
-		    }, grid:{
-		    	bottom:"30%"
-		    },
-		    yAxis: {
-		    	type:'value'
-		    },
-		    series: [{
-		        type: 'line',
-		        smooth: true,
-		        data: data.numList
-		    }]
-		});
-	}
-})
-})
-</script>
 <script src="http://pd6htjig8.bkt.clouddn.com/echarts.js"></script>
+<script src="/assets/admin/js/statistic.js"></script>

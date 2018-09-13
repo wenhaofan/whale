@@ -49,7 +49,6 @@ public class ArticleService {
 	 */
 	public Article getArticle(String  identify) {
 		Article article= dao.findFirst("select * from article where identify =? ",identify);
-		JsoupFilter.filterArticle(article, 100);
 		return article;
 	}
 	

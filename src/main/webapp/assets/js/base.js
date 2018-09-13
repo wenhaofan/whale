@@ -39,9 +39,9 @@ $.fl.prototype.alertOk = function (options) {
  * 弹出成功，并在500毫秒后刷新页面
  * @param text
  */
-$.fl.prototype.alertOkAndReload = function (text) {
+$.fl.prototype.alertOkAndReload = function (title) {
     this.alertOk({
-        text: text, then: function () {
+        title: title, then: function () {
             setTimeout(function () {
                 window.location.reload();
             }, 500);

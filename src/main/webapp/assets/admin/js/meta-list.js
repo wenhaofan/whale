@@ -102,7 +102,7 @@ $(function() {
 	})
 })
 
-window.addEventListener("load", function() {
+$( function() {
 
 	var initCategory = {
 		type:"category",
