@@ -1,8 +1,12 @@
 #include("header.html")
+<style>
+.post-list-item-container .item-label{
+	height:auto;
+}
+</style>
 <div class="main-content common-page clearfix">
     <div class="common-item">
         <div class="common-title">
-        
 	        #if(tag!=null)
 	        	#(tag.type=="category"?"分类":"标签")
         		#(tag.mname)
@@ -14,7 +18,7 @@
             <div class="post-lists-body">
             	#if((articlePage==null||articlePage.list.isEmpty()&&tag==null))
             		 <div class="post-list-item">没有找到内容,换别的关键字进行检索吧</div>
-            	#else
+            	#else if(articlePage==null||articlePage.list.isEmpty())
             		<div class="post-list-item">暂无文章,先看看其他的吧</div> 
             	#end
                 #for(article : articlePage.list??)

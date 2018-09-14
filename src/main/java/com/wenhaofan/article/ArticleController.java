@@ -62,7 +62,7 @@ public class ArticleController extends BaseController{
 		articleService.addReadNum(identify);
 		List<Meta> categorys=metaService.listByCId(article.getId(), "category");
 		List<Meta> atags=metaService.listByCId(article.getId(), "tag");
-		Page<Comment> comments=commentService.page(getParaToInt("p",1),2, article.getIdentify());
+		Page<Comment> commentPage=commentService.page(getParaToInt("p",1),2, article.getIdentify());
  
 		List<Article> lastNextArticle=articleService.lastNextArticle(article);
 		setAttr("lastNextArticle", lastNextArticle);
@@ -70,7 +70,7 @@ public class ArticleController extends BaseController{
 		List<Article> aboutArticles=articleService.about(article, 10);
 		 
 		setAttr("aboutArticles", aboutArticles);
-		setAttr("comments", comments);
+		setAttr("commentPage", commentPage);
 		setAttr("acategorys",categorys);
 		setAttr("atags",atags);
 		setAttr("article", article);

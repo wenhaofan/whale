@@ -16,10 +16,13 @@ import com.jfinal.kit.PropKit;
 */
 public class PropertyKit {
  
+	public static void main(String[] args) {
+		updateValue("blog_config.txt","theme","1");
+	}
 	
 	public static void updateValue(String fileName,String key,String newValue) {
 		String path=FileKit.class.getResource("/"+fileName).getPath() ;
-		path=path.substring(1, path.length());
+
 		update(path, key, newValue);
 	}
 	
