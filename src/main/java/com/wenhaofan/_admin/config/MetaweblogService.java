@@ -163,7 +163,7 @@ public class MetaweblogService {
 	}
 	
 	public String signContent(String content,String link){
-		return content+"<br><a href='"+link+"'>原文地址:"+link+"</a>";
+		return "<br><a href='"+link+"'>个人博客原文地址:"+link+"</a>"+content;
 	}
 	
 }
