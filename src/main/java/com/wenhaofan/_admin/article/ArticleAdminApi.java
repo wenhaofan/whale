@@ -19,7 +19,13 @@ public class ArticleAdminApi extends BaseController {
 
 	@Inject
 	private AdminArticleService articleService;
-
+	@Inject
+	private AdminArticleLuceneIndexes luceneIndexes;
+	
+	public void createIndex() {
+		luceneIndexes.resetArticleIndexes();
+		renderJson(Ret.ok());
+	}
 	
 	public void list() {
 		Article article = getModel(Article.class, "", true);

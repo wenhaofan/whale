@@ -49,5 +49,9 @@ public class IndexController extends BaseController {
 	public void aboutMe() {
 		render("about.html");
 	}
+	
+	public void search() {
+		render("search.html");
+	}
 
 }

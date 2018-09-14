@@ -35,18 +35,12 @@ public class ArticleAdminController  extends BaseController{
 			render("article_edit.html");
 			return;
 		}
-		
 		Article article=service.get(id);
 		setAttr("article", article);
-		
-		 
 		//文章关联的分类和标签
 		setAttr("aCategorys", service.listCategory(id));
-		
 		List<Meta> aTag=service.listTag(id);
-		
 		setAttr("aTags", aTag);
-		
 		render("article_edit.html");
 	}
 	

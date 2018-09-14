@@ -37,9 +37,9 @@ function setSelectedCategory(data){
     }
 }
 
-function saveArticle(paras){
+function editArticle(paras){
    $.ajax({
-	   url:"/admin/api/article/add",
+	   url:"/admin/api/article/edit",
 	   type:"post",
 	   data:paras.fdata,
 	   success:function(data){
@@ -72,7 +72,7 @@ $(document).ready(function () {
 	    
 	    setSelectedCategory(fdata);
 	    
-	    saveArticle({fdata:fdata,success:function(data){
+	    editArticle({fdata:fdata,success:function(data){
 	    	  fl.alertOk({});
 			  $("#id").val(data.article.id);
 	    }});
@@ -105,7 +105,7 @@ $(document).ready(function () {
 	    setSelectedTag(fdata);
 	    setSelectedCategory(fdata);
 	    
-	    saveArticle({fdata:fdata,success:function(data){
+	    editArticle({fdata:fdata,success:function(data){
 	    	  fl.alertOk({
 				   title:"发布成功！"
 			   });

@@ -8,7 +8,7 @@ import com.jfinal.kit.Ret;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.BaiduSeoConfig;
 
-public class BaiduSeoService {
+public class AdminBaiduSeoService {
 
 	@Inject
 	private BaiduSeoConfig dao;

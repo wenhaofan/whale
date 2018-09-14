@@ -65,7 +65,7 @@ import com.jfinal.core.ControllerFactory;
  * 5：如上 2、3、4 中的配置，建议的用法是：先用 setEnhance()/setSingleton() 配置大多数情况，然后在个别
  *    违反上述配置的情况下在 @Inject 中直接 enhance、singleton 来覆盖默认配置，这样可以节省大量代码
  */
-public class AopControllerFactory extends ControllerFactory {
+public class AopFactory extends ControllerFactory {
 	
 	// 单例缓存
 	protected HashMap<Class<?>, Object> singletonCache = new HashMap<Class<?>, Object>();
@@ -74,7 +74,7 @@ public class AopControllerFactory extends ControllerFactory {
 	private YesOrNo singleton = YesOrNo.YES;			// 默认单例
 	private static int injectDepth = 5;						// 默认注入深度
 	
-	private static AopControllerFactory me;
+	private static AopFactory me;
 	
 	@SuppressWarnings("unchecked")
 	public static <T> T getInject(Class<? extends Object> target){
@@ -90,7 +90,7 @@ public class AopControllerFactory extends ControllerFactory {
 		}
 		
 		if(me==null) {
-			me=new 	AopControllerFactory();
+			me=new 	AopFactory();
 		}
 		
 		try {
@@ -108,7 +108,7 @@ public class AopControllerFactory extends ControllerFactory {
 	/**
 	 * 设置被注入的对象是否被增强，可使用 @Inject(enhance = YesOrNo.NO) 覆盖此默认值
 	 */
-	public AopControllerFactory setEnhance(boolean enhance) {
+	public AopFactory setEnhance(boolean enhance) {
 		this.enhance = enhance ? YesOrNo.YES : YesOrNo.NO;
 		return this;
 	}
@@ -116,7 +116,7 @@ public class AopControllerFactory extends ControllerFactory {
 	/**
 	 * 设置被注入的对象是否为单例，可使用 @Inject(singleton = YesOrNo.NO) 覆盖此默认值 
 	 */
-	public AopControllerFactory setSingleton(boolean singleton) {
+	public AopFactory setSingleton(boolean singleton) {
 		this.singleton = singleton ? YesOrNo.YES : YesOrNo.NO;
 		return this;
 	}
@@ -124,7 +124,7 @@ public class AopControllerFactory extends ControllerFactory {
 	/**
 	 * 设置注入深度，避免被注入类在具有循环依赖时造成无限循环
 	 */
-	public AopControllerFactory setInjectDepth(int injectDepth) {
+	public AopFactory setInjectDepth(int injectDepth) {
 		if (injectDepth <= 0) {
 			throw new IllegalArgumentException("注入层数必须大于 0");
 		}
@@ -132,7 +132,7 @@ public class AopControllerFactory extends ControllerFactory {
 			throw new IllegalArgumentException("为保障性能，注入层数必须小于 7");
 		}
 		
-		AopControllerFactory.injectDepth = injectDepth;
+		AopFactory.injectDepth = injectDepth;
 		return this;
 	}
 	

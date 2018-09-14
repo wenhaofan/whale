@@ -6,7 +6,7 @@ import com.wenhaofan.common.kit.Ret;
 import com.wenhaofan.common.model.entity.Nav;
 import com.wenhaofan.nav.NavService;
 
-public class NavApi extends BaseController{
+public class AdminNavApi extends BaseController{
 
 	@Inject
 	private AdminNavService  service;

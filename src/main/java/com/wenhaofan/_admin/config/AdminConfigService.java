@@ -5,7 +5,7 @@ import com.wenhaofan.common._config.BlogContext;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.Config;
 
-public class ConfigService {
+public class AdminConfigService {
 
 	@Inject
 	private Config dao;

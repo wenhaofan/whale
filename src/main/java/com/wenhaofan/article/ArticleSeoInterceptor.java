@@ -6,13 +6,21 @@ import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
 import com.wenhaofan.common.interceptor.BaseSeoInterceptor;
 import com.wenhaofan.common.model.entity.Article;
+import com.wenhaofan.common.model.entity.Config;
 import com.wenhaofan.common.model.entity.Meta;
 
-public class ArticleSeo extends BaseSeoInterceptor {
+public class ArticleSeoInterceptor extends BaseSeoInterceptor {
 
+ 
 	@Override
 	public void indexSeo(Invocation inv) {
-		
+		 
+			Controller c=inv.getController();
+			Config config=c.getAttr("config");
+			setSeoKeyWords(c,config.getKeywords());
+			setSeoTitle(c,config.getTitle());
+			setSeoDescr(c, config.getDescription());
+	 
 	}
 
 	@Override
@@ -22,6 +30,7 @@ public class ArticleSeo extends BaseSeoInterceptor {
 
 		List<Meta> tags=c.getAttr("atags");
 		List<Meta> categorys=c.getAttr("acategorys");
+
 		
 		setSeoTitle(c, article.getTitle());
 		setSeoKeyWords(c,keywords(tags,categorys,article.getTitle())+",范文皓,范文皓的个人博客");

@@ -4,7 +4,7 @@ import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
 import com.wenhaofan._admin.user.AdminUserService;
-import com.wenhaofan.common.aop.AopControllerFactory;
+import com.wenhaofan.common.aop.AopFactory;
 import com.wenhaofan.common.model.entity.User;
 import com.wenhaofan.common.service.IndexService;
 
@@ -12,8 +12,6 @@ import com.wenhaofan.common.service.IndexService;
 public class AdminIndexInterceptor implements Interceptor{
 
 	IndexService service=IndexService.me;
-	
-	
 	
 	@Override
 	public void intercept(Invocation inv) {
@@ -34,7 +32,7 @@ public class AdminIndexInterceptor implements Interceptor{
 		String viewPath=((Controller)inv.getTarget()).getViewPath();
 		viewPath+=c.getRender().getView();
 		
-		AdminUserService adminUserService=AopControllerFactory.getInject(AdminUserService.class);
+		AdminUserService adminUserService=AopFactory.getInject(AdminUserService.class);
 		User adminUser=adminUserService.getAdminUser();
 
 		String requestUrl=c.getRequest().getRequestURI();

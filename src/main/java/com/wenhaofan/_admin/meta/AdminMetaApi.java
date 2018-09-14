@@ -12,7 +12,7 @@ import com.wenhaofan.meta.MetaService;
  * @author fwh
  *
  */
-public class MetaAdminApi  extends BaseController {
+public class AdminMetaApi  extends BaseController {
 
 	@Inject
 	private MetaService metaService;

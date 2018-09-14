@@ -32,9 +32,7 @@ public class ArticleService {
 	public Page<Article> page(Integer pageNumber,Integer pageSize,Integer metaId,Boolean isTop){
 		SqlPara sqlPara=dao.getSqlPara("article.page", Kv.by("metaId",metaId).set("isTop", isTop));
 		Page<Article> page= dao.paginate(pageNumber, pageSize,sqlPara);
-		
-		JsoupFilter.filterArticleList(page.getList(), 100);
-		
+ 
 		for(Article article:page.getList()) {
 			List<Meta> metas=metaService.listByCId(article.getId(), MetaTypeEnum.CATEGORY.toString());
 			article.setMetas(metas);
@@ -49,6 +47,7 @@ public class ArticleService {
 	 */
 	public Article getArticle(String  identify) {
 		Article article= dao.findFirst("select * from article where identify =? ",identify);
+ 
 		return article;
 	}
 	
@@ -58,7 +57,12 @@ public class ArticleService {
 	 */
 	public List<Article> listTop(){
 		SqlPara sql=dao.getSqlPara("article.listTop");
-		return dao.find(sql);
+		List<Article> artiles= dao.find(sql);
+		for(Article article:artiles) {
+			List<Meta> metas=metaService.listByCId(article.getId(), MetaTypeEnum.CATEGORY.toString());
+			article.setMetas(metas);
+		}
+		return artiles;
 	}
 	
 	/**

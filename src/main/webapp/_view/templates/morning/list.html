@@ -3,51 +3,57 @@
   <h1 class="t_nav"><span>不要轻易放弃。学习成长的路上，我们长路漫漫，只因学无止境。 </span><a href="/" class="n1">网站首页</a><a href="/" class="n2">#(tag.mname??)#(keyword)</a></h1>
   <div class="blogs">
     <div class="mt20"></div>
-     #for(article:articlePage.list)
-	  	 <li> 
-	  	 	#if(article.thumbImg!=null)
-	  	 		<span class="blogpic"><a href="/article/#(article.identify)"><img src="#(article.thumbImg)"></a></span>
-	  	 	#end
-	      <h3 class="blogtitle"><a href="/article/#(article.identify)">#(article.title)</a></h3>
-	      <div class="bloginfo">
-	        <p>#(article.intro)...</p>
-	      </div>
- 		  <div class="autor">
-		      	<span class="lm">
-		      		#for(meta:article.metas)
-		      		  <a href="/article/category/1-#(meta.id)" title=#(meta.mname)" target="_blank" class="classname">
-		      			#(meta.mname)
-		      		  </a>
-		      			#if(!for.last)|#end 
-		      		#end
-		      	</span>
-		      	<span class="dtime">#(article.gmtCreate)</span>
-		      	<span class="viewnum">浏览（<a href="/">#(article.pv)</a>）</span>
-		      	<span class="readmore">
-		      		<a href="/article/#(article.identify)">阅读原文</a>
-		      	</span>
-		    </div>	 
-		</li>
-  	#end
-    <div class="pagelist">
-    	<a title="Total record">&nbsp;<b>#(articlePage.totalRow)</b> </a>&nbsp;&nbsp;&nbsp;
-     
-    	   #for(pageNum=1;pageNum<=articlePage.totalPage;pageNum++)
-				#if(pageNum == currentPageNum) 
-					<b>#(pageNum)</b>
-				#else
-					&nbsp;<a href="/#(pageNum)">#(pageNum)</a>
-		    	#end
-		    #end
-   	  #if(!articlePage.isFirstPage())
-	    &nbsp;	 <a href="/#(currentPageNum-1)">上一页</a></li>
-	  #end
-	  #if(!articlePage.isLastPage())
-		   &nbsp;  <a href="/#(currentPageNum+1)">下一页</a> 
-		     &nbsp;<a href="/download/index_2.html">尾页</a>
-	  #end
-    	 
-    	
+     #if(articlePage!=null&&!articlePage.list.isEmpty())
+	     #for(article:articlePage.list)
+		  	 <li> 
+		  	 	#if(article.thumbImg!=null)
+		  	 		<span class="blogpic"><a href="/article/#(article.identify)"><img src="#(article.thumbImg)"></a></span>
+		  	 	#end
+		      <h3 class="blogtitle"><a href="/article/#(article.identify)">#(article.title)</a></h3>
+		      <div class="bloginfo">
+		        <p>#(article.intro)...</p>
+		      </div>
+	 		  <div class="autor">
+			      	<span class="lm">
+			      		#for(meta:article.metas)
+			      		  <a href="/article/category/1-#(meta.id)" title=#(meta.mname)" target="_blank" class="classname">
+			      			#(meta.mname)
+			      		  </a>
+			      			#if(!for.last)|#end 
+			      		#end
+			      	</span>
+			      	<span class="dtime">#(article.gmtCreate)</span>
+			      	<span class="viewnum">浏览（<a href="/">#(article.pv)</a>）</span>
+			      	<span class="readmore">
+			      		<a href="/article/#(article.identify)">阅读原文</a>
+			      	</span>
+			    </div>	 
+			</li>
+	  	#end
+	    <div class="pagelist">
+	    	<a title="Total record">&nbsp;<b>#(articlePage.totalRow)</b> </a>&nbsp;&nbsp;&nbsp;
+	     
+	    	   #for(pageNum=1;pageNum<=articlePage.totalPage;pageNum++)
+					#if(pageNum == currentPageNum) 
+						<b>#(pageNum)</b>
+					#else
+						&nbsp;<a href="/#(pageNum)">#(pageNum)</a>
+			    	#end
+			    #end
+	   	  #if(!articlePage.isFirstPage())
+		    &nbsp;	 <a href="/#(currentPageNum-1)">上一页</a></li>
+		  #end
+		  #if(!articlePage.isLastPage())
+			   &nbsp;  <a href="/#(currentPageNum+1)">下一页</a> 
+			     &nbsp;<a href="/download/index_2.html">尾页</a>
+		  #end
+	 #else
+		#if(tag==null)
+           		<div class="post-list-item">没有找到内容,换别的关键字进行检索吧</div>
+           	#else
+           		<div class="post-list-item">暂无文章,先看看其他的吧</div> 
+         #end
+   	 #end 
     </div>
   </div> 
 		  

@@ -21,7 +21,7 @@ import com.jfinal.template.source.FileSourceFactory;
 import com.mysql.jdbc.Connection;
 import com.wenhaofan.common._config.back.BackRoutes;
 import com.wenhaofan.common._config.front.FrontRoutes;
-import com.wenhaofan.common.aop.AopControllerFactory;
+import com.wenhaofan.common.aop.AopFactory;
 import com.wenhaofan.common.handle.BasePathHandler;
 import com.wenhaofan.common.interceptor.AccessLogInterceptor;
 import com.wenhaofan.common.interceptor.LoginInterceptor;
@@ -47,9 +47,9 @@ public class BlogConfig extends JFinalConfig {
 	@Override
 	public void configConstant(Constants me) {
 		me.setDevMode(true);
-		me.setControllerFactory(new AopControllerFactory());
+		me.setControllerFactory(new AopFactory());
 		me.setJsonFactory(new MixedJsonFactory());
-		me.setError404View("/_view/templates/default/404.html");
+		me.setError404View("/_view/error/404.html");
 	}
 
 
@@ -140,7 +140,7 @@ public class BlogConfig extends JFinalConfig {
 		// TODO Auto-generated method stub
 		super.afterJFinalStart();
 		
-		ConfigService configService=AopControllerFactory.getInject(ConfigService.class);
+		ConfigService configService=AopFactory.getInject(ConfigService.class);
 		 
 		Config  config=configService.get();
 		BlogContext.reset(config);

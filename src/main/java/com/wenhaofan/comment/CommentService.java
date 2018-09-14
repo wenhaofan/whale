@@ -10,7 +10,7 @@ import com.wenhaofan._admin.user.AdminUserService;
 import com.wenhaofan.agentUser.AgentUserService;
 import com.wenhaofan.article.ArticleService;
 import com.wenhaofan.common._config.BlogContext;
-import com.wenhaofan.common.aop.AopControllerFactory;
+import com.wenhaofan.common.aop.AopFactory;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.exception.MsgException;
 import com.wenhaofan.common.kit.EmailKit;
@@ -89,7 +89,7 @@ public class CommentService {
 			return;
 		}
 		//否则通知管理员
-		AdminUserService adminUserService=AopControllerFactory.getInject(AdminUserService.class);
+		AdminUserService adminUserService=AopFactory.getInject(AdminUserService.class);
 		User adminUser=adminUserService.getAdminUser();
 		if(adminUser==null) {
 			return;

@@ -11,14 +11,9 @@ import java.util.regex.Pattern;
 import com.jfinal.core.Controller;
 import com.jfinal.kit.StrKit;
 import com.wenhaofan.agentUser.AgentUserService;
-import com.wenhaofan.article.ArticleService;
-import com.wenhaofan.comment.CommentService;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.AgentUser;
 import com.wenhaofan.common.model.entity.User;
-import com.wenhaofan.config.ConfigService;
-import com.wenhaofan.meta.MetaService;
-import com.wenhaofan.nav.NavService;
 import com.wenhaofan.user.LoginService;
 import com.wenhaofan.user.UserService;
 
@@ -29,17 +24,8 @@ public class BaseController extends Controller{
 	@Inject
 	public AgentUserService agentUserService;
 	@Inject
-	public ArticleService articleService;
-	@Inject
-	public CommentService commentService;
-	@Inject
-	public NavService navService;
-	@Inject
-	public ConfigService basicConfigService;
-	@Inject
 	public UserService userService;
-	@Inject
-	public MetaService metaService;
+ 
 	
 	public AgentUser getAgentUser() {
 		AgentUser agentUser=null;

@@ -16,7 +16,7 @@ import com.wenhaofan.common.model.entity.Blogroll;
 public class AdminBlogrollApi extends BaseController {
 	
 	@Inject
-	private BlogrollService blogrollService;
+	private AdminBlogrollService blogrollService;
 	
 	public void get() {
 		Blogroll blogroll=blogrollService.getBlogrollById(getParaToInt());

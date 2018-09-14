@@ -1,27 +1,33 @@
 package com.wenhaofan.common.interceptor;
 
+import java.util.ArrayList;
+
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
-import com.jfinal.kit.StrKit;
 
 public abstract class BaseSeoInterceptor implements Interceptor{
 	public static final String SEO_TITLE = "seoTitle";
 	public static final String SEO_KEYWORDS = "seoKeywords";
 	public static final String SEO_DESCR = "seoDescr";
+	
+	@SuppressWarnings({ "unchecked", "serial", "rawtypes" })
+	private static ArrayList<String> indexSeoUrl=new ArrayList() {{
+		add("/");
+		add("/search");
+		add("/article/category");
+		add("/article/search");
+	}};
 	@Override
 	public void intercept(Invocation inv) {
 		inv.invoke();
 		String controllerKey=inv.getActionKey();
 		
-		if(StrKit.equals(controllerKey,"/")||StrKit.equals(controllerKey, "/article/category")||StrKit.equals(controllerKey,"/article/search")) {
+		if(indexSeoUrl.contains(controllerKey)) {
 			indexSeo(inv);
 		}else {
 			otherSeo(inv);
 		}
-		
-		
-		
 	}
 
 	public void setSeoTitle(Controller c,String seoTitle) {

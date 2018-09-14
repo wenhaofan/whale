@@ -6,6 +6,7 @@
   <title>博客后台管理</title>
 #@jquery()
 #@layui()
+<link href="/assets/plugins/nprogress/nprogress.css"  rel="stylesheet">
 <link href="/assets/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link href="/assets/admin/css/style.min.css" rel="stylesheet">
 <link href="/assets/plugins/limonte-sweetalert2/6.4.1/sweetalert2.min.css" rel="stylesheet">
@@ -14,6 +15,7 @@
 <script type="text/javascript" src="/assets/plugins/template/art-template.js"></script>
 <script type="text/javascript" src="/assets/js/from-util.js"></script>
 <script type="text/javascript" src="/assets/plugins/jquery-pjax/jquery.pjax.js"></script>
+<script type="text/javascript" src="/assets/plugins/nprogress/nprogress.js"></script>
 <script type="text/javascript">
 var fl=new $.fl();
  
@@ -23,34 +25,15 @@ $(function(){
 			$(this).addClass("layui-this")
 		}
 	})
-	
- $(document).pjax('a[pjax]', '.layui-fluid')
-	
-	/** $("a").click(function(){
-		var pjax=$(this).attr("pjax");
-		
-		if(pjax==undefined){
-			return true;
-		}
-		
-		var href=$(this).attr("href");
-		history.pushState(null, $(this).find("span").text(), href);
-		
-		if(href.indexOf("?")==-1){
-			href+="?pjax=true";
-		}else{
-			href+="&pjax=true";
-		}  
-	   $.ajax({
-		   url:href,
-		   dataType:"html",
-		   success:function(data){
-			  $(".layui-fluid").html(data);
-		   }
-	   })
-	   return false;
-	}) **/
-	
+	$(".menu-tree li").click(function(){
+		$(".menu-tree li").each(function(){
+			$(this).removeClass("layui-this")
+		})
+		$(this).addClass("layui-this");
+	})
+	$(document).on('pjax:start', function() { NProgress.start(); });
+	$(document).on('pjax:end',   function() { NProgress.done();  });
+ 	$(document).pjax('a[pjax]', '.layui-fluid');
 	
 	$(".layui-toggle-menu").click(function(){
 		if($(this).find("i").hasClass("layui-icon-spread-left")){
@@ -380,7 +363,6 @@ $(function(){
 	})
 })
 </script>
-
 
 </body>
 </html>

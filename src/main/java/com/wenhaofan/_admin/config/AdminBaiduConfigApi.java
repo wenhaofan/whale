@@ -9,7 +9,7 @@ import com.wenhaofan.common.model.entity.BaiduSeoConfig;
 
 public class AdminBaiduConfigApi extends BaseController {
 	@Inject
-	private BaiduSeoService baiduSeoService;
+	private AdminBaiduSeoService baiduSeoService;
 	/**
 	 * 根据id获取
 	 */

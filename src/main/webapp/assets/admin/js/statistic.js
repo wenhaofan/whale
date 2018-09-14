@@ -1,6 +1,10 @@
 
 $(function(){
-
+ 
+	while(!echarts){
+		alert("加载未完成");
+	}
+ 
 	// 基于准备好的dom，初始化echarts实例
 	var myChart = echarts.init(document.getElementById('bar'));
 

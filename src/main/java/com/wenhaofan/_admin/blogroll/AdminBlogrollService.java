@@ -13,7 +13,7 @@ import com.wenhaofan.common.model.entity.Blogroll;
  * @author fwh
  *
  */
-public class BlogrollService{
+public class AdminBlogrollService{
 
  
 	@Inject
@@ -25,18 +25,17 @@ public class BlogrollService{
 		}else{
 			blogroll.save();
 		}
-		//移除缓存
 		CacheKit.remove(BlogContext.CacheNameEnum.BLOGROLL.name(), "list");
 	}
 
 	public void remove(Integer id) {
 		dao.deleteById(id);
-		//移除缓存
 		CacheKit.remove(BlogContext.CacheNameEnum.BLOGROLL.name(), "list");
 	}
 
 	public void update(Blogroll blogroll) {
 		blogroll.update();
+		CacheKit.removeAll(BlogContext.CacheNameEnum.BLOGROLL.name());
 	}
 
 	public List<Blogroll> listBlogroll() {

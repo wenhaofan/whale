@@ -1,4 +1,3 @@
-
 <script src="/assets/kit/DateUtil.js"></script>
 <link rel="stylesheet" href="/assets/admin/css/statistic.css?v=12">
 <script type="text/javascript">
@@ -87,14 +86,14 @@ $(function(){
 				<div class="info-block-middle">
 					<div>
 						<p>共发表了</p>
-						<p class="text-right text-big article-total-num" onclick='window.location.href="/admin/article/list"'></p>
+						<a href="/admin/article/list" pajx><p class="text-right text-big article-total-num"></p></a>
 						<p>篇文章</p>
 					</div>
 				</div>
 				<div class="info-block-right">
 					<div>
 						<p>本月发表</p>
-						<p class="text-right text-big article-month-num"  onclick='window.location.href="/admin/article/list"'></p>
+						<a href="/admin/article/list" pajx><p class="text-right text-big article-month-num" ></p></a>
 						<p>篇文章</p>
 					</div>
 				</div>
@@ -111,14 +110,14 @@ $(function(){
 				<div class="info-block-middle">
 					<div>
 						<p>共收到了</p>
-						<p class="text-right text-big comment-total-num"  onclick='window.location.href="/admin/comment"'></p>
+						<a href="/admin/comment" pajx><p class="text-right text-big comment-total-num" ></p></a>
 						<p>条评论</p>
 					</div>
 				</div>
 				<div class="info-block-right ">
 					<div>
 						<p>本月收到</p>
-						<p class="text-right text-big comment-month-num"  onclick='window.location.href="/admin/comment"'></p>
+						<a href="/admin/comment" pajx><p class="text-right text-big comment-month-num" ></p></a>
 						<p>条评论</p>
 					</div>
 				</div>
@@ -134,14 +133,14 @@ $(function(){
 				<div class="info-block-middle">
 					<div>
 						<p>共上传了</p>
-						<p class="text-right text-big disk-total-num" onclick='window.location.href="/admin/disk"'></p>
+						<a href="/admin/disk" pjax><p class="text-right text-big disk-total-num"  ></p></a>
 						<p>个附件</p>
 					</div>
 				</div>
 				<div class="info-block-right ">
 					<div>
 						<p>本月上传</p>
-						<p class="text-right text-big disk-month-num"  onclick='window.location.href="/admin/disk"'></p>
+						<a href="/admin/disk" pajx><p class="text-right text-big disk-month-num"   ></p></a>
 						<p>个附件</p>
 					</div>
 				</div>
@@ -193,5 +192,5 @@ $(function(){
 		</div>
  	</div>
 </div>
-<script src="http://pd6htjig8.bkt.clouddn.com/echarts.js"></script>
+<script src="http://pd6htjig8.bkt.clouddn.com/echarts.js" id="echartsEl"></script>
 <script src="/assets/admin/js/statistic.js"></script>

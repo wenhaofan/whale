@@ -38,7 +38,6 @@ function renderArticles(){
 		page:{count:80,limit:10}
 		,url:'/admin/api/article/list' 
 	    ,elem: '#articles'
-	    ,height: 312
 	    ,page: true //开启分页
 	    ,cols: [[ //表头
 	    	{field:'id', sort: true,title:"ID"}
@@ -49,8 +48,7 @@ function renderArticles(){
 	      ,{field:'identify',title:"访问路径"}
 	      ,{templet:'#operation-tpl',width:220,title:"操作"}
 	    ]]
-	  });
- 
+	 });
 }
 
 $(function() {
@@ -88,8 +86,6 @@ $(function() {
 			})
 		}})
 	})
-	
-	
 })
 
 function querylist(data) {

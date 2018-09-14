@@ -8,7 +8,7 @@ import com.wenhaofan.common.model.entity.Config;
 public class AdminConfigApi  extends BaseController {
 
 	@Inject
-	private ConfigService service;
+	private AdminConfigService service;
 	
 	public void index() {
 		renderJson(Ret.ok("config", service.get()));

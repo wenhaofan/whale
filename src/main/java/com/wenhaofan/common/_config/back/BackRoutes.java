@@ -21,9 +21,9 @@ import com.wenhaofan._admin.diy.assets.AssetsAdminController;
 import com.wenhaofan._admin.diy.html.DiyAdminController;
 import com.wenhaofan._admin.index.IndexAdminController;
 import com.wenhaofan._admin.meta.CategoryRouter;
-import com.wenhaofan._admin.meta.MetaAdminApi;
-import com.wenhaofan._admin.nav.NavApi;
-import com.wenhaofan._admin.nav.NavController;
+import com.wenhaofan._admin.meta.AdminMetaApi;
+import com.wenhaofan._admin.nav.AdminNavApi;
+import com.wenhaofan._admin.nav.AdminNavController;
 import com.wenhaofan._admin.statistic.StatisticApi;
 import com.wenhaofan._admin.statistic.StatisticController;
 import com.wenhaofan._admin.themes.AdminThemesApi;
@@ -49,10 +49,10 @@ public class BackRoutes extends Routes {
 	   
 	   add("/admin/api/themes",AdminThemesApi.class,"/");
 	   add("/admin/api/user",AdminUserApi.class,"/");
-	   add("/admin/api/nav", NavApi.class, "/");
+	   add("/admin/api/nav", AdminNavApi.class, "/");
 	   add("/admin/api/upload",FileUploadApi.class,"/");
 	   add("/admin/api/kv", KvController.class,"/");
-	   add("/admin/api/meta",MetaAdminApi.class);
+	   add("/admin/api/meta",AdminMetaApi.class);
 	   add("/admin/api/blogger", KvController.class,"/");
 	   add("/admin/api/article",ArticleAdminApi.class,"/article/");
 	   add("/admin/api/basic",BasicAdminApi.class);
@@ -77,7 +77,7 @@ public class BackRoutes extends Routes {
 	   add("/admin/statistic",StatisticController.class,"/statistic/");
 	   add("/admin/disk", DiskController.class, "/disk/");
 	   add("/admin/comment", AdminCommentController.class, "/");
-	   add("/admin/nav", NavController.class, "/");
+	   add("/admin/nav", AdminNavController.class, "/");
 	   add("/admin/user",AdminUserController.class,"/");
 	   add("/admin/themes",AdminThemesController.class,"/");
 	}

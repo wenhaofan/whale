@@ -13,8 +13,7 @@ public class IndexSeoInterceptor extends BaseSeoInterceptor {
 		Config config=c.getAttr("config");
 		setSeoKeyWords(c,config.getKeywords());
 		setSeoTitle(c,config.getTitle());
-		setSeoDescr(c, config.getDescription());
-		
+		setSeoDescr(c, config.getDescription());	
 	}
 
 	@Override

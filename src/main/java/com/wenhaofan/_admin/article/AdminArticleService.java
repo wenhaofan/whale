@@ -10,7 +10,7 @@ import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
-import com.wenhaofan._admin.config.BaiduSeoService;
+import com.wenhaofan._admin.config.AdminBaiduSeoService;
 import com.wenhaofan._admin.config.MetaweblogService;
 import com.wenhaofan.article.ArticleService;
 import com.wenhaofan.common.aop.Inject;
@@ -19,6 +19,7 @@ import com.wenhaofan.common.kit.ListKit;
 import com.wenhaofan.common.kit.StrKit;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
+import com.wenhaofan.common.safe.JsoupFilter;
 import com.wenhaofan.meta.MetaService;
 import com.wenhaofan.meta.MetaTypeEnum;
 
@@ -36,9 +37,11 @@ public class AdminArticleService {
 	@Inject
 	private  ArticleService articleService;
 	@Inject
-	private BaiduSeoService baiduSeoService;
+	private AdminBaiduSeoService baiduSeoService;
 	@Inject
 	private MetaweblogService metaweblogService;
+	@Inject
+	private AdminArticleLuceneIndexes luceneIndexes;
 
 	/**
 	 * 将指定文章推送至其他网站
@@ -64,17 +67,23 @@ public class AdminArticleService {
 	}
 	
 	public void saveOrUpdate(Article article,List<Meta> tags,List<Meta> categorys) {
+		//如果简介为空则从content中取出100纯文字作为简介
+		if(article.getIntro()==null) {
+			JsoupFilter.filterArticle(article, 100);
+		}
+		if(article.getIsTop()==null) {
+			article.setIsTop(false);
+		}
 		if(article.getId()==null) {
 			save(article, tags, categorys);
+			luceneIndexes.add(article);
 		}else {
 			update(article, tags, categorys);
+			luceneIndexes.update(article);
 		}
-		
- 
 		new Thread(()-> {
 			//向百度推送该文章
-			baiduSeoService.pushLink(article.getUrl());
-			
+			baiduSeoService.pushLink(article.getUrl());	
 		}).start();;
 
 	}
@@ -169,6 +178,9 @@ public class AdminArticleService {
 		Article article=new Article();
 		article.setId(id);
 		article.setState(Article.STATE_DISCARD);
+		
+		luceneIndexes.delete(id);
+		
 		return article.update()?Ret.ok():Ret.fail();
 	}
 	/**
@@ -180,6 +192,11 @@ public class AdminArticleService {
 		Article article=new Article();
 		article.setId(id);
 		article.setState(Article.STATE_PUBLISH);
+		
+		Article temp=dao.findById(id);
+		if(temp!=null) {
+			luceneIndexes.add(temp);
+		}
 		return article.update()?Ret.ok():Ret.fail();
 	}
 		

@@ -49,8 +49,11 @@
 	and
 		state=1
 	#if(isTop!=null)
-	and
-		isTop=#para(isTop)
+		#if(isTop)
+			and isTop=#para(isTop)
+		#else
+			and isTop!=1
+		#end
 	#end
 	order by gmtCreate desc
 #end

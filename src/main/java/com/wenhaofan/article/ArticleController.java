@@ -3,6 +3,7 @@ package com.wenhaofan.article;
 import java.util.List;
 
 import com.jfinal.aop.Before;
+import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Page;
 import com.wenhaofan.comment.CommentService;
 import com.wenhaofan.common.aop.Inject;
@@ -16,11 +17,11 @@ import com.wenhaofan.meta.MetaService;
  * @author fwh
  *
  */
-@Before(ArticleSeo.class)
+@Before(ArticleSeoInterceptor.class)
 public class ArticleController extends BaseController{
 
 	@Inject
-	private ArticleService service;
+	private ArticleService articleService;
 	@Inject
 	private MetaService metaService;
 	
@@ -37,7 +38,7 @@ public class ArticleController extends BaseController{
 			return;
 		}
 		Integer pageNum = getParaToInt(0,1);
-		Integer limit=getParaToInt("limit", 12);
+		Integer limit=getParaToInt(2, 12);
 		Page<Article> articlePage=articleService.page(pageNum, limit,cid,null);
 		
 		Meta tag=metaService.get(cid);
@@ -52,7 +53,7 @@ public class ArticleController extends BaseController{
 	
 	public void index(){
 		String identify=getPara();
-		Article article=service.getArticle(identify);
+		Article article=articleService.getArticle(identify);
 		if(article==null) {
 			renderError(404);
 			return;
@@ -79,11 +80,20 @@ public class ArticleController extends BaseController{
 	}
 	
 	public void search() {
-		
 		String queryStr=getPara("keyword");
+		if(StrKit.isBlank(queryStr)) {
+			renderError(404);
+			return;
+		}
 		Integer pageNum=getParaToInt(0,1);
 		Integer pageSize= getParaToInt(1,10);
-		Page<Article>   articlePage=articleLuceneIndexes.search(queryStr,pageNum,pageSize);
+		Page<Article>  articlePage=null;
+		try {
+			articlePage=articleLuceneIndexes.search(queryStr,pageNum,pageSize);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
  
 		setAttr("articlePage",articlePage);
 		setAttr("currentPageNum", pageNum);
