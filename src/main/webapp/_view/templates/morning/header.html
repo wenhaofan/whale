@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>#(seoTitle)</title>
+<title>#(seoTitle==null?config.title:(seoTitle==config.title?seoTitle:seoTitle+"-"+config.title))</title>
 <meta name="keywords" content="#(seoKeywords)" />
 <meta name="description" content="#(seoDescr)" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -17,7 +17,7 @@
     <meta name="author" content="#(config.author)(#(basePath))"/>
     <meta name="keywords" content="#(seoKeywords)"/>
     <meta name="description" content="#(seoDescr)"/>
-    <title>#(seoTitle)</title>
+    <title>#(seoTitle==null?config.title:(seoTitle==config.title?seoTitle:seoTitle+"-"+config.title))</title>
     <link href="//cdn.bootcss.com/highlight.js/9.10.0/styles/xcode.min.css" rel="stylesheet">
     <link href="/_view/templates/pinghsu/static/css/style.min.css" rel="stylesheet">
     <!--[if lt IE 9]>
