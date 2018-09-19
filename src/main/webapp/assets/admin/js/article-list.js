@@ -111,4 +111,34 @@ function initCategorySelect() {
 	metaUtils.listMeta( initCategorys);
 }
 
- 
+
+$(document).ready(function() {
+	$("body").on("click",".article-async",function(){
+		$.ajax({
+			url:"/admin/api/article/asyncMetaWeblog/"+$(this).data("id"),
+			success:function(data){
+				if(fl.isOk(data)){
+					fl.alertOk({});
+				}
+			}
+		})
+	})
+	
+	$("body").on("click",".createIndex",function(){
+		fl.alertConfirm({title:"是否确认重置索引？",text:"执行过程中搜索服务将暂时不能使用，文章越多时间越长。",then:function(){
+			NProgress.start();
+			$.ajax({
+				url:"/admin/api/article/createIndex",
+				success:function(data){
+					if(fl.isOk(data)){
+						fl.alertOk({title:"重置成功！"});
+					}
+					NProgress.done();
+				}
+			})
+			
+			fl.alertOk({title:"执行中,请耐心等待！"});
+		}})
+		 
+	})
+})

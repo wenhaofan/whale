@@ -7,6 +7,15 @@ public class QueryComment {
 	private Date gmtStart;
 	private Date gmtEnd;
 	private String identify;
+	private Integer state;
+	
+	
+	public Integer getState() {
+		return state;
+	}
+	public void setState(Integer state) {
+		this.state = state;
+	}
 	public Date getGmtStart() {
 		return gmtStart;
 	}

@@ -263,3 +263,51 @@ textarea#saytext {
     color: #5f5f5f;
     background-color: #f7f7f7
 }
+.news_infos pre code {
+    margin: 0px;
+    padding: 1.3em;
+    border: 0px;
+    -webkit-font-smoothing: antialiased;
+    font-family: Menlo, "Bitstream Vera Sans Mono", "DejaVu Sans Mono", Monaco, Consolas, monospace;
+    font-size: 13px;
+    border-radius: 3px;
+    background: rgb(247, 247, 247);
+    display: block;
+    overflow: auto;
+    color: rgb(49, 49, 49);
+    line-height: 20px;
+    padding-top: 0px;
+}
+
+.news_infos pre code {
+    line-height: 20px;
+    margin: 0;
+    padding: 1.3em;
+    color: #313131;
+    background-color: #f7f7f7;
+}
+.news_infos h3{
+	 font-size: 1.2em;    color: rgb(68, 68, 68);
+    position: relative;
+    margin: 20px 0;
+}
+.flinks{
+	padding-left: 1rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0px;
+    -webkit-font-smoothing: antialiased;
+    vertical-align: baseline;
+    color: rgb(49, 49, 49);
+}
+.flinks li{
+	border: 0px; -webkit-font-smoothing: antialiased; word-wrap: break-word; display: inline-block; overflow: hidden; width: 208px; white-space: nowrap; text-overflow: ellipsis;
+}
+blockquote {
+    padding: 0 10px 0 20px;
+    border-left: 4px solid #ddd;
+}
+blockquote li  {
+  list-style: disc;
+}
+   

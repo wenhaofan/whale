@@ -49,7 +49,7 @@ public class IndexController extends BaseController {
 		render("profiles/profiles.html");
 	}
 
-	public void aboutMe() {
+	public void about() {
 		render("about.html");
 	}
 	

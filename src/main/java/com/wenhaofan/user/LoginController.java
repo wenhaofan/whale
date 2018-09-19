@@ -2,8 +2,8 @@ package com.wenhaofan.user;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
+import com.wenhaofan._admin.common.config.interceptor.LoginInterceptor;
 import com.wenhaofan.common.controller.BaseController;
-import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.index.IndexSeoInterceptor;
 /**
  * 后台页面控制器

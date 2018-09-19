@@ -24,5 +24,12 @@
 }
 #modal-dialog{
 	margin-top:150px!important;
-	
+}
+@media screen and (max-width: 768px) {
+ .mditor .head{
+	height:76px;
+}
+#md-container .body{
+	margin-top:38px;
+}
 }

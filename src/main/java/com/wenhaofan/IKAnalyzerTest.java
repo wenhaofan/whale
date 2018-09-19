@@ -5,12 +5,14 @@ import java.io.IOException;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
+import com.wenhaofan.common._config.BlogContext;
 import com.wenhaofan.common.lucene.IKAnalyzer;
  
 
 public class IKAnalyzerTest {
 
 	public static void main(String[] args) throws IOException {
+		System.out.println(BlogContext.CacheNameEnum.ARTICLE.name());
 		try {
 			IKAnalyzer ikAnalyzer = new IKAnalyzer(false);
 			TokenStream ts = ikAnalyzer.tokenStream("f", "\"加大Eclipse运行可用最大内存数 \\r\\n\" + \r\n" + 

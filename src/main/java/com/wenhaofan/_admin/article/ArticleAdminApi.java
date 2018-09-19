@@ -48,7 +48,7 @@ public class ArticleAdminApi extends BaseController {
 	 * @throws Exception
 	 */
 
-	public void add() {
+	public void edit() {
 		Article article = getModel(Article.class, "", true);
 		List<Meta> tags=getModelList(Meta.class, "tag");
 		List<Meta> categorys=getModelList(Meta.class, "category");

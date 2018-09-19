@@ -15,6 +15,7 @@ public class AdminUserApi  extends BaseController{
 	
 	public void editInfo() {
 		User user=getModel(User.class,"",true);
+	 
 		renderJson(service.update(user));
 	}
 }

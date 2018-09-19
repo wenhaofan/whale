@@ -13,10 +13,10 @@ public class AdminCommentApi  extends BaseController{
 	
 	
 	public void page() {
-		Boolean isAduit=getParaToBoolean("isAduit",null);
+		QueryComment query=getBean(QueryComment.class,"",true);
 		Integer pageNum = getParaToInt("page");
 		Integer limit = getParaToInt("limit");
-		Page<Comment> page=service.page(pageNum, limit, isAduit);
+		Page<Comment> page=service.page(pageNum, limit, query);
 		Ret ret = Ret.ok().set("code", 0).set("data", page.getList()).set("count", page.getTotalRow());
 		renderJson(ret.toJson());
 	}

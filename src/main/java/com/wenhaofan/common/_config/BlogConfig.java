@@ -19,12 +19,11 @@ import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.template.Engine;
 import com.jfinal.template.source.FileSourceFactory;
 import com.mysql.jdbc.Connection;
-import com.wenhaofan.common._config.back.BackRoutes;
-import com.wenhaofan.common._config.front.FrontRoutes;
+import com.wenhaofan._admin.common.config.interceptor.LoginInterceptor;
+import com.wenhaofan._admin.common.config.router.AdminRoutes;
 import com.wenhaofan.common.aop.AopFactory;
 import com.wenhaofan.common.handle.BasePathHandler;
 import com.wenhaofan.common.interceptor.AccessLogInterceptor;
-import com.wenhaofan.common.interceptor.LoginInterceptor;
 import com.wenhaofan.common.model.entity.Config;
 import com.wenhaofan.common.model.entity._MappingKit;
 import com.wenhaofan.config.ConfigService;
@@ -56,7 +55,7 @@ public class BlogConfig extends JFinalConfig {
 	@Override
 	public void configRoute(Routes me) {
 		// 配置路由
-		me.add(new BackRoutes());
+		me.add(new AdminRoutes());
 		frontRoutes=new FrontRoutes();
 		me.add(frontRoutes);
 	}
@@ -85,13 +84,11 @@ public class BlogConfig extends JFinalConfig {
 
 	@Override
 	public void configEngine(Engine me) {
- 
-		me.addSharedFunction("_view/common/validate.html");
+  
 		me.addSharedFunction("_view/common/jquery.html");
 		me.addSharedFunction("_view/common/bootstrap.html");
 		me.addSharedFunction("_view/common/layui.html");
- 
-		me.addSharedFunction("_view/common/ueditor.html");
+  
  
 		me.setSourceFactory(new FileSourceFactory());
 	}

@@ -15,6 +15,7 @@ import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.exception.MsgException;
 import com.wenhaofan.common.kit.EmailKit;
 import com.wenhaofan.common.model.entity.AgentUser;
+import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Comment;
 import com.wenhaofan.common.model.entity.User;
 
@@ -96,7 +97,16 @@ public class CommentService {
 		}
 		
 		AgentUser user=agentUserService.get(comment.getUserId());
-		String title=articleService.getArticle(comment.getIdentify()).getTitle();
+		Article article=articleService.getArticle(comment.getIdentify());
+		String title=null;
+		if(article!=null) {
+			title=articleService.getArticle(comment.getIdentify()).getTitle();
+		}else {
+			if(StrKit.equals(comment.getIdentify(), "links")) {
+				title="友情链接";
+			}
+		}
+		
 		EmailKit.sendEmail(adminUser.getEmail(), "你收到了一条评论 by "+BlogContext.config.getTitle(),getHintEmailContent(user.getName(),title));
 	}
 	

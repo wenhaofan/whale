@@ -44,6 +44,14 @@ public class AdminArticleService {
 	private AdminArticleLuceneIndexes luceneIndexes;
 
 	/**
+	 * 获取文章的 title,id,identify
+	 * @return
+	 */
+	public List<Article> listSimpleArtilce(){
+		return dao.find("select title,id,identify from article");
+	}
+	
+	/**
 	 * 将指定文章推送至其他网站
 	 * @param id
 	 * @return

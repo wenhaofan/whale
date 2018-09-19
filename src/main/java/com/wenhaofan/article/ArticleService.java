@@ -10,7 +10,6 @@ import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
-import com.wenhaofan.common.safe.JsoupFilter;
 import com.wenhaofan.meta.MetaService;
 import com.wenhaofan.meta.MetaTypeEnum;
 
@@ -47,7 +46,6 @@ public class ArticleService {
 	 */
 	public Article getArticle(String  identify) {
 		Article article= dao.findFirst("select * from article where identify =? ",identify);
- 
 		return article;
 	}
 	

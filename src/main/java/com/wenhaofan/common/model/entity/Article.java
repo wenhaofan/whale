@@ -27,6 +27,9 @@ public class Article extends BaseArticle<Article> {
 	
 	public String getUrl() {
 		String projectPath=PropKit.get("projectPath");
+		if(!projectPath.endsWith("/")) {
+			projectPath+="/";
+		}
 		return projectPath+"article/"+getIdentify();
 	}
 	

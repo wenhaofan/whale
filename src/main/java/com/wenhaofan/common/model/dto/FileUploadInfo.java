@@ -14,8 +14,6 @@ public class FileUploadInfo {
 	 */
 	private String url;
 	
-	
-	
 	public String getUrl() {
 		return url;
 	}

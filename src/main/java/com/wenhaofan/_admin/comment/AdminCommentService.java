@@ -19,8 +19,9 @@ public class AdminCommentService extends BaseController {
 	@Inject
 	private CommentService frontCommentService;
  
-	public Page<Comment> page(Integer pageNumber,Integer pageSize,Boolean isAduit) {	
-		SqlPara sqlPara=dao.getSqlPara("adminComment.page", Kv.by("isAduit", isAduit));
+	 
+	public Page<Comment> page(Integer pageNumber,Integer pageSize,QueryComment query) {	
+		SqlPara sqlPara=dao.getSqlPara("adminComment.page",Kv.by("query", query));
 		Page<Comment> page= dao.paginate(pageNumber, pageSize, sqlPara);
 		
 		 for(Comment c:page.getList()) {

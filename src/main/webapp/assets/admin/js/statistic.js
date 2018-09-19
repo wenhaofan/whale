@@ -95,3 +95,72 @@ $.ajax({
 	}
 })
 })
+
+(function(){
+	
+	window.statistic={
+		countByDate:function(paras){
+			$.ajax({
+				url:"/admin/api/statistic/"+paras.methodName+"Num/",
+				type:"post",
+				data:paras.data,
+				success:function(data){
+					if(fl.isOk(data)){
+						paras.success(data);
+					}
+				}
+			})
+		}
+	}
+
+	statistic.countByDate({
+		methodName:"article",
+		data:{},
+		success:function(data){
+			$(".article-total-num").text(data.count);
+		}
+	})
+	statistic.countByDate({
+		methodName:"comment",
+		data:{},
+		success:function(data){
+			$(".comment-total-num").text(data.count);
+		}
+	})
+	
+	statistic.countByDate({
+		methodName:"disk",
+		data:{},
+		success:function(data){
+			$(".disk-total-num").text(data.count);
+		}
+	})
+	
+	statistic.countByDate({
+		methodName:"comment",
+		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(dateUtil.getTodayEnd())},
+		success:function(data){
+			$(".comment-month-num").text(data.count);
+		}
+	})
+	statistic.countByDate({
+		methodName:"article",
+		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(dateUtil.getTodayEnd())},
+		success:function(data){
+			$(".article-month-num").text(data.count);
+		}
+	})
+
+	statistic.countByDate({
+		methodName:"disk",
+		data:{gmtStart:dateUtil.format(dateUtil.getMonthFirst()),gmtEnd:dateUtil.format(dateUtil.getTodayEnd())},
+		success:function(data){
+			$(".disk-month-num").text(data.count);
+		}
+	})
+
+})();
+$(function(){
+	//获取本月发表文章的数量
+
+})

@@ -40,12 +40,12 @@
       </ul>
     </div>
     <div class="news_pl comment-container"  >
-      <h2 id="comments">文章评论</h2>
+      <h2 id="commentPage">文章评论</h2>
       <ul>
       <form action="" method="post" name="saypl" id="saypl" onsubmit="return  fl.subComment()">
 				<div id="plpost">
 				<p class="saying">
-					<span><a href="/zaoan/e/pl/?classid=7&amp;id=20">共有#(comments.totalRow)条评论</a></span>
+					<span><a href="/zaoan/e/pl/?classid=7&amp;id=20">共有#(commentPage.totalRow)条评论</a></span>
 					<span class="response">来说两句吧...</span>
 				</p>
 		         <input type="hidden" name="identify" id="identify" value="#(article.identify)"/>
@@ -70,9 +70,9 @@
 				 </div>
 			</form> 
        <div class="gbko">
- 		#if(comments!=null)
+ 		#if(commentPage!=null)
       	 
-          	  #for(comment : comments.list)
+          	  #for(comment : commentPage.list)
           	  	<div class="fb">
             	<ul id="ul-comment-#(comment.id)">
 	      			<p class="fbtime" id="comment-#(comment.id)">
@@ -110,14 +110,14 @@
        #end
           <div class="lists-navigator clearfix">
             <ol class="page-navigator">
-                #if(!comments.isFirstPage())
-                <li class="prev"><a href="/article/#(article.identify)?p=#(comments.pageNumber-1)#comments">←</a></li>
+                #if(!commentPage.isFirstPage())
+                <li class="prev"><a href="/article/#(article.identify)?p=#(commentPage.pageNumber-1)#commentPage">←</a></li>
                 #end
-                #for(navIndex =1;navIndex<=comments.totalPage;navIndex++)
-                <li #if(comments.pageNumber == navIndex) class="current" #end><a href="/article/#(article.identify)?p=#(navIndex)#comments">#(navIndex)</a></li>
+                #for(navIndex =1;navIndex<=commentPage.totalPage;navIndex++)
+                <li #if(commentPage.pageNumber == navIndex) class="current" #end><a href="/article/#(article.identify)?p=#(navIndex)#commentPage">#(navIndex)</a></li>
                 #end
-                #if(!comments.isLastPage())
-                <li class="next"><a href="/article/#(article.identify)?p=#(comments.pageNumber+1)#comments">→</a></li>
+                #if(!commentPage.isLastPage())
+                <li class="next"><a href="/article/#(article.identify)?p=#(commentPage.pageNumber+1)#commentPage">→</a></li>
                 #end
             </ol>
         </div>

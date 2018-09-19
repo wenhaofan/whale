@@ -2397,3 +2397,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
         opacity: 1
     }
 }
+#comments li{
+	list-style: none;	
+}

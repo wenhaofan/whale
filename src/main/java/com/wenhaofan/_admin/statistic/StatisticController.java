@@ -6,7 +6,7 @@ import com.wenhaofan.common.controller.BaseController;
 public class StatisticController extends BaseController{
 
 	public void index() {
-		render("index.html");
+		render("statistic.html");
 	}
 	
 }

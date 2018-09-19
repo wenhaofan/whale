@@ -5,4 +5,5 @@ jdbcUrl=jdbc:mysql://127.0.0.1:3306/qiuqiublog?characterEncoding=utf-8
 userName=root
 blogCharset=utf-8
 domain=liyanqiu.live
-projectPath=http://www.liyanqiu.live;
+projectPath=http://www.liyanqiu.live
+theme=pinghsu

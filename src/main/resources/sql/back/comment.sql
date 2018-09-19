@@ -3,10 +3,13 @@
 		*
 	from
 		comment
-	#if(isAduit!=null)
 	where
-		 isAduit=#para(isAduit)
+			1=1
+	#if(query.state!=null)
+		and isAduit=#para(query.state)
 	#end
-	
+	#if(query.identify!=null&&query.identify.length()>0)
+		and  identify=#para(query.identify)
+	#end
 	order by gmtCreate desc
 #end
