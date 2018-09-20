@@ -25,7 +25,7 @@ public class _MappingKit {
 		arp.addMapping("html_action","id", HtmlAction.class);
 		arp.addMapping("meta", "id",Meta.class);
 		arp.addMapping("relevancy","id",Relevancy.class);
-		arp.addMapping("kv", "id",Kv.class);
+ 
 		arp.addMapping("access_log", "id", AccessLog.class);
 		arp.addMapping("disk", "id", Disk.class);
 		arp.addMapping("agent_user", "id", AgentUser.class);

@@ -252,13 +252,9 @@ function download(id){
 		dataType:"json",
 		success:function(data){
 			if(fl.isOk(data)){
-				 
 		       var $eleForm = $("<form method='get'></form>");
-
 	            $eleForm.attr("action",data.disk.url);
-
 	            $(document.body).append($eleForm);
-
 	            //提交表单，实现下载
 	            $eleForm.submit();
 			}
@@ -289,35 +285,13 @@ $contextMenu.on(".disk-file",[
 	},{
 		events:{
 			"click":function(element){
-				
+				var id=$(element).data("id");
+				share(id);
 			}
 		},text:"分享"
 	}
 ]);
 
-$(function(){
-	$contextMenu.on(".disk-file",[
-		{
-			events:{
-				"click":function(element,element2){
-				
-				},"mouseover":function(){
-					
-				}
-			},text:"下载",
-			className:"menuGoBack",
-			condition:function(){
-				return currentFolderId!=0;
-			}
-		},{
-			events:{
-				"click":function(element){
-					rename(element);
-				}
-			},text:"重命名"
-		}
-	]);
-})
 
 $contextMenu.on(".disk-main",[
 	{
@@ -337,6 +311,12 @@ $contextMenu.on(".disk-main",[
 				createFolderItem();
 			}
 		},text:"新建文件夹"
+	},{
+		events:{
+			"click":function(element){
+				$(".disk-upload-button").trigger("click");
+			}
+		},text:"上传"
 	},{
 		events:{
 			"click":function(element){
@@ -365,12 +345,6 @@ $contextMenu.on(".disk-folder",[
 				removeFile($(element).data("id"));
 			}
 		},text:"删除"
-	},{
-		events:{
-			"click":function(element){
-				
-			}
-		},text:"分享"
 	}
 ]);
 

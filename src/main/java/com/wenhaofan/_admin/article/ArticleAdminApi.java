@@ -61,9 +61,13 @@ public class ArticleAdminApi extends BaseController {
 	 */
 	public void remove() {
 		Integer id =getParaToInt(0);
-		renderJson(articleService.delete(id).toJson());;
+		renderJson(articleService.remove(id).toJson());;
 	}
 
+	public void delete() {
+		Integer id =getParaToInt(0);
+		renderJson(articleService.delete(id).toJson());;
+	}
 	/**
 	 * 恢复成功
 	 */

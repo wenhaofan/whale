@@ -20,7 +20,6 @@ public class AdminBlogrollApi extends BaseController {
 	
 	public void get() {
 		Blogroll blogroll=blogrollService.getBlogrollById(getParaToInt());
-	
 		renderJson(Ret.ok("blogroll", blogroll));
 	}
 	

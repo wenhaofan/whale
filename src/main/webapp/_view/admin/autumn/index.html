@@ -18,9 +18,17 @@
 <script type="text/javascript" src="/assets/plugins/jquery-pjax/jquery.pjax.js"></script>
 <script type="text/javascript" src="/assets/plugins/nprogress/nprogress.js"></script>
 <script type="text/javascript" src="/assets/admin/js/index.js"></script>
-
+<script type="text/javascript">
+$(function(){
+	$(".menu-tree a").each(function(){
+		if($(this).attr("href").indexOf("#(requestUrl)")!=-1){
+			$(this).parent().addClass("layui-this");
+		}
+	})
+})
+</script>
 </head>
-<body class=" ">
+<body>
 <div class="layui-layout layui-layout-admin">
   <div class="layui-header">
   	<div class="layui-toggle-menu">

@@ -1,4 +1,4 @@
-package com.wenhaofan._admin.config;
+package com.wenhaofan._admin.metaweblog;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import com.wenhaofan.common.model.entity.MetaweblogConfig;
 public class AdminMetaWeblogConfigApi extends BaseController {
 	
 	@Inject
-	private MetaweblogService metaweblogService;
+	private MetaweblogHelper metaweblogService;
 	
 	
 	public void mget() {

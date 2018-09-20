@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import com.jfinal.kit.PropKit;
-
 /**
 * @author 作者:范文皓
 * @createDate 创建时间：2018年9月13日 下午3:59:07
@@ -28,13 +26,15 @@ public class PropertyKit {
 	
 	public static void update(String path,String key,String newValue) {
 	       String temp = "";
-	        try {
-	            File file = new File(path);
-	            FileInputStream fis = new FileInputStream(file);
-	            InputStreamReader isr = new InputStreamReader(fis);
-	            BufferedReader br = new BufferedReader(isr);
-	            StringBuffer buf = new StringBuffer();
-
+	       File file = new File(path);
+	        try (
+	        	    FileInputStream fis = new FileInputStream(file);
+		            InputStreamReader isr = new InputStreamReader(fis);
+	        		BufferedReader br = new BufferedReader(isr); 
+	        		 FileOutputStream fos = new FileOutputStream(file);
+		            PrintWriter pw = new PrintWriter(fos);
+	        	){
+	        	StringBuffer buf = new StringBuffer();
 	            // 保存该行前面的内容
 	            while ( (temp = br.readLine()) != null) {
 	            	
@@ -47,13 +47,8 @@ public class PropertyKit {
 	                }
 	                buf = buf.append(System.getProperty("line.separator"));
 	            }
-
-	            br.close();
-	            FileOutputStream fos = new FileOutputStream(file);
-	            PrintWriter pw = new PrintWriter(fos);
 	            pw.write(buf.toString().toCharArray());
-	            pw.flush();
-	            pw.close();
+	            pw.flush();     
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }

@@ -1,11 +1,20 @@
 
 $(function(){
- 
-	while(!echarts){
-		alert("加载未完成");
-	}
- 
 	// 基于准备好的dom，初始化echarts实例
+	
+	if(echarts==undefined){
+		setTimeout(() => {
+			renderAccessReport();
+			renderArticleReport();
+		}, 100);
+	}else{
+		renderAccessReport();
+		renderArticleReport();
+	}
+	
+})
+
+ function renderArticleReport(){
 	var myChart = echarts.init(document.getElementById('bar'));
 
 	$.ajax({
@@ -57,46 +66,46 @@ $(function(){
 		// 使用刚指定的配置项和数据显示图表。
 		myChart.setOption(option);
 
-	}
-})
+		} 
+	})
+}
+function renderAccessReport(){
+	$.ajax({
+		url:"/admin/api/statistic/statisticsAccessNumDays/7",
+		success:function(data){
+				echarts.init(document.getElementById('line')).setOption({
+				    title: {text: '7天访问量'},
+				    tooltip: {},
+				    toolbox: {
+				        feature: {
+				            dataView: {},
+				            saveAsImage: {
+				                pixelRatio: 2
+				            },
+				            restore: {}
+				        }
+				    }, color:'#66baf0',
+				    xAxis: { 
+				    	type: 'category',
+				        data: data.dayList
+				    }, grid:{
+				    	bottom:"30%"
+				    },
+				    yAxis: {
+				    	type:'value'
+				    },
+				    series: [{
+				        type: 'line',
+				        smooth: true,
+				        data: data.numList
+				    }]
+				});
+			}
+	})
+}
 
- 
 
-$.ajax({
-	url:"/admin/api/statistic/statisticsAccessNumDays/7",
-	success:function(data){
-		echarts.init(document.getElementById('line')).setOption({
-		    title: {text: '7天访问量'},
-		    tooltip: {},
-		    toolbox: {
-		        feature: {
-		            dataView: {},
-		            saveAsImage: {
-		                pixelRatio: 2
-		            },
-		            restore: {}
-		        }
-		    }, color:'#66baf0',
-		    xAxis: { 
-		    	type: 'category',
-		        data: data.dayList
-		    }, grid:{
-		    	bottom:"30%"
-		    },
-		    yAxis: {
-		    	type:'value'
-		    },
-		    series: [{
-		        type: 'line',
-		        smooth: true,
-		        data: data.numList
-		    }]
-		});
-	}
-})
-})
-
-(function(){
+$(function(){
 	
 	window.statistic={
 		countByDate:function(paras){
@@ -159,8 +168,4 @@ $.ajax({
 		}
 	})
 
-})();
-$(function(){
-	//获取本月发表文章的数量
-
-})
+});

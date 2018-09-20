@@ -259,31 +259,20 @@ $(document).ready(function () {
 
 $(function(){
 	 
-		  if($(window).width()<=768){
-		    	$(".fa-columns").trigger("click");
-		    	isHideShowHtml=true;
-		    }
-		 $("#multiple-sel").select2({
-		        width: '100%'
-		 });	 
-	    $('#tags').tagsInput({
-	        width: '100%',
-	        height: '35px',
-	        defaultText: '请输入文章标签'
-	    });
+	if($(window).width()<=768){
+	    	$(".fa-columns").trigger("click");
+	    	isHideShowHtml=true;
+	    }
+	 $("#multiple-sel").select2({
+	        width: '100%'
+	 });	 
+    $('#tags').tagsInput({
+        width: '100%',
+        height: '35px',
+        defaultText: '请输入文章标签'
+    });
 
-	    tagInit();
-		 
-		var isUpdate=notNull($("#id").val());
-		
-		if(isUpdate){
-			$(".page-title").text("修改文章");
-		 
-		}else{
-			$(".page-title").text("添加文章");
-		  
-		}
- 
+    tagInit();
 })
 
  

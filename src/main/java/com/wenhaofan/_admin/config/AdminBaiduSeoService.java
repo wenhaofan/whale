@@ -5,6 +5,7 @@ import java.util.List;
 import com.jfinal.kit.HttpKit;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
+import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.BaiduSeoConfig;
 
@@ -18,7 +19,8 @@ public class AdminBaiduSeoService {
 	}
 	
 	public List<BaiduSeoConfig> list(){
-		return dao.find("select * from baidu_seo_config");
+		SqlPara sql=dao.getSqlPara("adminBaiduseo.list");
+		return dao.find(sql);
 	}
 	
 	public void pushLink(String link) {
@@ -58,7 +60,6 @@ public class AdminBaiduSeoService {
 		}else {
 			config.save();
 		}
-		
 		return Ret.ok();
 	}
 }

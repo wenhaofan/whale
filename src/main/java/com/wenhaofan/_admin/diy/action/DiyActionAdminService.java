@@ -29,7 +29,7 @@ public class DiyActionAdminService {
 	
 	
 	public Ret save(HtmlAction action,UploadFile uf) {
-		Ret ret=null; //uploadService.uploadHtmlAction(uf);
+		Ret ret=Ret.create(); //uploadService.uploadHtmlAction(uf);
 		
 		action.setPath(ret.getStr("relativePath")+File.separator+ret.getStr("fileName"));
 		action.setAction("/"+action.getAction());
@@ -41,7 +41,7 @@ public class DiyActionAdminService {
 
 		//缓存中新增一条添加记录,不做重新加载
 		List<HtmlAction> htmlActions=listHtmlAction();
-		htmlActions.add(action);
+		htmlActions.add (action);
 		return ret;
 	}
 	

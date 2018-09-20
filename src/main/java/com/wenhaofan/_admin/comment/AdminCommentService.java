@@ -19,18 +19,36 @@ public class AdminCommentService extends BaseController {
 	@Inject
 	private CommentService frontCommentService;
  
-	 
+	/**
+	 * 分页查询评论
+	 * @param pageNumber
+	 * @param pageSize
+	 * @param query
+	 * @return
+	 */
 	public Page<Comment> page(Integer pageNumber,Integer pageSize,QueryComment query) {	
 		SqlPara sqlPara=dao.getSqlPara("adminComment.page",Kv.by("query", query));
 		Page<Comment> page= dao.paginate(pageNumber, pageSize, sqlPara);
-		
-		 for(Comment c:page.getList()) {
-			 Integer beforeRow=Db.queryInt("select count(id) from comment where identify= ? and gmtCreate > ?",c.getIdentify(),c.getGmtCreate());
-			 c.setPageNum(beforeRow/6);
-		 }
-		 return page;
+		return setInPageNums(page); 
 	}
-	
+	/**
+	 * 设置多个评论所在页码
+	 * @param page
+	 * @return
+	 */
+	private Page<Comment> setInPageNums(Page<Comment> page) {
+		for(Comment c:page.getList()) {
+			setInPageNum(c);
+		 }
+		return page;
+	}
+	/**
+	 * 回复评论
+	 * @param toId
+	 * @param content
+	 * @param user
+	 * @return
+	 */
 	public Ret reply(Integer toId,String content,AgentUser user) {
 		
 		Comment toComment = dao.findById(toId);
@@ -56,13 +74,16 @@ public class AdminCommentService extends BaseController {
 	}
 	
 	
-	
-	
 	public Ret delete(Integer id) {
 		dao.findById(id).delete();
 		return Ret.ok();
 	}
-	
+	/**
+	 * 审核评论
+	 * @param id
+	 * @param aduit
+	 * @return
+	 */
 	public Ret aduit(Integer id,boolean aduit) {
 		Comment comment=dao.findById(id);
 		comment.setIsAduit(aduit).update();
@@ -79,9 +100,11 @@ public class AdminCommentService extends BaseController {
 	}
 	
 	public void setInPageNum(Comment c) {
-		 Integer beforeRow=Db.queryInt("select count(id) from comment where identify= ? and gmtCreate > ?",c.getIdentify(),c.getGmtCreate());
+		 SqlPara sql=dao.getSqlPara("adminComment.countBefore", Kv.by("identify", c.getIdentify()).set("gmtCreate", c.getGmtCreate()));
+		 Integer beforeRow=Db.queryInt(sql.getSql(), sql.getPara());
 		 c.setPageNum(beforeRow/6);
 	}
+	
 	public Comment get(Integer id) {
 		return dao.findById(id);
 	}

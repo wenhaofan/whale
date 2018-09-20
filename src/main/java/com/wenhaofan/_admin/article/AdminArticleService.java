@@ -5,13 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import com.jfinal.kit.Kv;
-import com.jfinal.kit.PropKit;
 import com.jfinal.kit.Ret;
-import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan._admin.config.AdminBaiduSeoService;
-import com.wenhaofan._admin.config.MetaweblogService;
+import com.wenhaofan._admin.meta.AdminMetaService;
+import com.wenhaofan._admin.metaweblog.MetaweblogHelper;
 import com.wenhaofan.article.ArticleService;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.exception.MsgException;
@@ -20,7 +19,6 @@ import com.wenhaofan.common.kit.StrKit;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.common.safe.JsoupFilter;
-import com.wenhaofan.meta.MetaService;
 import com.wenhaofan.meta.MetaTypeEnum;
 
 /**
@@ -33,13 +31,13 @@ public class AdminArticleService {
 	@Inject
 	private Article  dao;
 	@Inject
-	private MetaService mservice;
+	private AdminMetaService mservice;
 	@Inject
 	private  ArticleService articleService;
 	@Inject
 	private AdminBaiduSeoService baiduSeoService;
 	@Inject
-	private MetaweblogService metaweblogService;
+	private MetaweblogHelper metaweblogService;
 	@Inject
 	private AdminArticleLuceneIndexes luceneIndexes;
 
@@ -61,7 +59,7 @@ public class AdminArticleService {
 		Article article=dao.findById(id);
 		new Thread(()-> {
 			//向其他论坛推送
-			System.err.println(metaweblogService.pushNewPostMetaweblog(article, tags));
+			System.err.println(metaweblogService.pushPostMetaweblog(article, tags));
 		}).start();
 		return Ret.ok();
 	}
@@ -74,6 +72,12 @@ public class AdminArticleService {
 		return mservice.listByCId(id,MetaTypeEnum.TAG.toString());
 	}
 	
+	/**
+	 * 根据id是否为空判断执行update还是add
+	 * @param article
+	 * @param tags
+	 * @param categorys
+	 */
 	public void saveOrUpdate(Article article,List<Meta> tags,List<Meta> categorys) {
 		//如果简介为空则从content中取出100纯文字作为简介
 		if(article.getIntro()==null) {
@@ -93,7 +97,6 @@ public class AdminArticleService {
 			//向百度推送该文章
 			baiduSeoService.pushLink(article.getUrl());	
 		}).start();;
-
 	}
 	
 	
@@ -114,15 +117,14 @@ public class AdminArticleService {
 			}
 		}else {
 			//默认路径为创建时间
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
-			article.setIdentify(sdf.format(new Date()));
+			article.setIdentify(genIdentify(new Date()));
 		}
 		
 		article.setGmtCreate(new Date());
 		article.save();
 		
 		int articleId=article.getId();
-		
+		//创建分类 标签的关联
 		if(ListKit.notBlank(categorys)) {
 			mservice.saveMetas(categorys, articleId);
 		}
@@ -132,6 +134,16 @@ public class AdminArticleService {
 
 	}
 
+	private String genIdentify(Date date) {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
+		return sdf.format(date); 
+	}
+	/**
+	 * 更新文章
+	 * @param article
+	 * @param tags
+	 * @param categorys
+	 */
 	public void update(Article article,List<Meta> tags,List<Meta> categorys) {
 		
 		String identify=article.getIdentify();
@@ -144,9 +156,7 @@ public class AdminArticleService {
 		}else {
 			//默认路径为创建时间
 			Article tempArticle=article.findById(article.getId());
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
-			identify=sdf.format(tempArticle.getGmtCreate());
-			article.setIdentify(identify);
+			article.setIdentify(genIdentify(tempArticle.getGmtCreate()));
 		}
 		
 		article.update();
@@ -154,9 +164,9 @@ public class AdminArticleService {
 		int articleId=article.getId();
 		
 		//删除文章的关联
-		mservice.deleteRelevancy(articleId);
+		mservice.deleteRelevanceByCid(articleId);
 		
-		
+		//创建标签分类的关联
 		if(ListKit.notBlank(categorys)) {
 			mservice.saveMetas(categorys, articleId);
 		}
@@ -166,29 +176,31 @@ public class AdminArticleService {
 		
 	}
 
-	
-	public void removeCategorys(Integer articleId) {
-		Db.update("delete from  articleCategory where articleId=?", articleId);
-	}
-	
 	/**
 	 * 真删除
 	 * @param article
 	 */
-	public void remove(Article article) {
-		article.delete();
+	public Ret delete(Integer id) {
+		Article article=dao.findById(id);
+		if(article==null) {
+			return Ret.ok();
+		}
 		//删除文章的关联
-		mservice.deleteRelevancy(article.getId());
+		mservice.deleteRelevanceByCid(article.getId());
+		luceneIndexes.delete(id);
+		return article.delete()?Ret.ok():Ret.fail();
 	}
 
-	
-	public Ret delete(Integer id) {
+	/**
+	 * 假删除
+	 * @param id
+	 * @return
+	 */
+	public Ret remove(Integer id) {
 		Article article=new Article();
 		article.setId(id);
 		article.setState(Article.STATE_DISCARD);
-		
 		luceneIndexes.delete(id);
-		
 		return article.update()?Ret.ok():Ret.fail();
 	}
 	/**
@@ -213,9 +225,14 @@ public class AdminArticleService {
 		return article;
 	}
 
-	
-
-	
+	/**
+	 * 分页查询
+	 * @param article
+	 * @param metaId
+	 * @param pageNumber
+	 * @param pageSize
+	 * @return
+	 */
 	public Page<Article> page(Article article, Integer metaId, int pageNumber, int pageSize) {
 
 		Kv kv=Kv.by("mid", metaId).set("article", article);
@@ -226,22 +243,5 @@ public class AdminArticleService {
 		
 		return articlePage;
 	}
-
-
-
-	
-	public int count(Article article) {
-		List<Article> articles = article.find("select count(id) as count from article where state=?",
-				PropKit.get("is_valid"));
-
-		if (articles != null && articles.size() > 0) {
-			return articles.get(0).getInt("count");
-		}
-		return 0;
-	}
-
-	
-	
-
 		
 }

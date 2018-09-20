@@ -3,8 +3,6 @@ package com.wenhaofan._admin.common.config.router;
 import com.jfinal.config.Routes;
 import com.wenhaofan._admin.article.ArticleAdminApi;
 import com.wenhaofan._admin.article.ArticleAdminController;
-import com.wenhaofan._admin.basic.BasicAdminApi;
-import com.wenhaofan._admin.basic.BasicRouter;
 import com.wenhaofan._admin.blogroll.AdminBlogrollApi;
 import com.wenhaofan._admin.comment.AdminCommentApi;
 import com.wenhaofan._admin.comment.AdminCommentController;
@@ -13,7 +11,6 @@ import com.wenhaofan._admin.config.AdminAdvancedConfigController;
 import com.wenhaofan._admin.config.AdminBaiduConfigApi;
 import com.wenhaofan._admin.config.AdminConfigApi;
 import com.wenhaofan._admin.config.AdminConfigController;
-import com.wenhaofan._admin.config.AdminMetaWeblogConfigApi;
 import com.wenhaofan._admin.disk.DiskApi;
 import com.wenhaofan._admin.disk.DiskController;
 import com.wenhaofan._admin.diy.action.DiyActionAdminController;
@@ -22,6 +19,7 @@ import com.wenhaofan._admin.diy.html.DiyAdminController;
 import com.wenhaofan._admin.index.IndexAdminController;
 import com.wenhaofan._admin.meta.AdminMetaApi;
 import com.wenhaofan._admin.meta.CategoryRouter;
+import com.wenhaofan._admin.metaweblog.AdminMetaWeblogConfigApi;
 import com.wenhaofan._admin.nav.AdminNavApi;
 import com.wenhaofan._admin.nav.AdminNavController;
 import com.wenhaofan._admin.statistic.StatisticApi;
@@ -52,7 +50,7 @@ public class AdminRoutes extends Routes {
 	   add("/admin/api/upload",FileUploadApi.class);
 	   add("/admin/api/meta",AdminMetaApi.class);
 	   add("/admin/api/article",ArticleAdminApi.class);
-	   add("/admin/api/basic",BasicAdminApi.class);
+ 
 	   add("/admin/api/statistic", StatisticApi.class);
 	   add("/admin/api/disk",DiskApi.class);
 	   add("/admin/api/comment",AdminCommentApi.class);
@@ -65,8 +63,8 @@ public class AdminRoutes extends Routes {
 	   add("/admin/config", AdminConfigController.class,"/");
 	   add("/admin/meta", CategoryRouter.class,"/");
 	   add("/admin/article", ArticleAdminController.class,"/");
-	   add("/admin/",IndexAdminController.class,"/");
-	   add("/admin/basic",BasicRouter.class,"/basic/");
+	   add("/admin",IndexAdminController.class,"/");
+ 
 	 
 	   add("/admin/diy/html",DiyAdminController.class,"/diy/");
 	   add("/admin/diy/action", DiyActionAdminController.class,"/");

@@ -100,5 +100,11 @@ bottom: 0px;
 .layui-fluid{
     background-color: #fff;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.1);
-
+}
+.layui-nav-bar{
+	display: none;
+}
+.layui-side,.layui-header{
+	z-index: 1!important;
+	
 }

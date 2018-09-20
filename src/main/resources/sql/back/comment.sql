@@ -13,3 +13,7 @@
 	#end
 	order by gmtCreate desc
 #end
+
+#sql("countBefore")
+	select count(id) from comment where identify= #para(identify) and gmtCreate > #para(gmtCreate)
+#end

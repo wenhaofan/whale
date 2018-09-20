@@ -18,7 +18,7 @@ public class AdminCommentApi  extends BaseController{
 		Integer limit = getParaToInt("limit");
 		Page<Comment> page=service.page(pageNum, limit, query);
 		Ret ret = Ret.ok().set("code", 0).set("data", page.getList()).set("count", page.getTotalRow());
-		renderJson(ret.toJson());
+		renderJson(ret);
 	}
 	
 	public void reply() {

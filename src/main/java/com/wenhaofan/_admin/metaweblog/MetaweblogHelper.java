@@ -1,4 +1,4 @@
-package com.wenhaofan._admin.config;
+package com.wenhaofan._admin.metaweblog;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -19,7 +19,7 @@ import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.common.model.entity.MetaweblogConfig;
 import com.wenhaofan.common.model.entity.MetaweblogRelevance;
 
-public class MetaweblogService {
+public class MetaweblogHelper {
 
 	@Inject
 	private MetaweblogConfig dao;
@@ -52,7 +52,13 @@ public class MetaweblogService {
 		return dao.find("select * from metaweblog_config");
 	}
 	
-	public Ret pushNewPostMetaweblog(Article article,List<Meta> tags) {
+	/**
+	 * 执行文章推送
+	 * @param article
+	 * @param tags
+	 * @return
+	 */
+	public Ret pushPostMetaweblog(Article article,List<Meta> tags) {
 		List<MetaweblogConfig> configs= list();
 		Ret result=null;
  
@@ -75,7 +81,13 @@ public class MetaweblogService {
 		
 		return Ret.ok("success",successKv).set("fail", failKv);
 	}
-	
+	/**
+	 * 推送文章，拼接标签
+	 * @param config
+	 * @param article
+	 * @param tags
+	 * @return
+	 */
 	public Ret pushNewPost(MetaweblogConfig config,Article article,List<Meta> tags) {
 		StringBuilder sb=new StringBuilder();
 		 
@@ -89,6 +101,13 @@ public class MetaweblogService {
 		return pushPost(config,article,sb.toString());
 	}
 	
+	/**
+	 * 推送文章
+	 * @param mconfig
+	 * @param article
+	 * @param keywords
+	 * @return
+	 */
 	public Ret pushPost(MetaweblogConfig mconfig,Article article,String keywords) {
 		MetaweblogRelevance  metaweblogRelevance =relevanceService.get(article.getId(),mconfig.getId());
 		
@@ -99,7 +118,13 @@ public class MetaweblogService {
 		}
 		
 	}
-	
+	/**
+	 * 推送新文章
+	 * @param mconfig
+	 * @param article
+	 * @param keywords
+	 * @return
+	 */
 	public Ret pushNewPost(MetaweblogConfig mconfig,Article article,String keywords) {
  
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
@@ -132,6 +157,14 @@ public class MetaweblogService {
 		return Ret.ok("type","newPost");
 	}
 	
+	/**
+	 * 执行修改
+	 * @param mconfig
+	 * @param article
+	 * @param keywords
+	 * @param metaweblogRelevance
+	 * @return
+	 */
 	public Ret editPost(MetaweblogConfig mconfig,Article article,String keywords,MetaweblogRelevance  metaweblogRelevance) {
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		try {
@@ -163,7 +196,7 @@ public class MetaweblogService {
 	}
 	
 	public String signContent(String content,String link){
-		return "<br><a href='"+link+"'>个人博客原文地址:"+link+" </a>"+content;
+		return "<br><a href='"+link+"'>个人博客 地址:"+link+" </a>"+content;
 	}
 	
 }

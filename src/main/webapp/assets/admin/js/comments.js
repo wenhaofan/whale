@@ -16,7 +16,7 @@ layui.use(['layer','table','form'], function(){
 		 renderTable(data.value,$("#state-select option:selected").val());
 	 })
 	  form.on("select(state-select)",function(data){
-		 renderTable(data.value,$("#identify-select option:selected").val());
+		 renderTable($("#identify-select option:selected").val(),data.value);
 	 })
 });
  

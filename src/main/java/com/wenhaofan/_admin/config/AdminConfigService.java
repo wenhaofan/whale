@@ -1,6 +1,7 @@
 package com.wenhaofan._admin.config;
 
 import com.jfinal.kit.Ret;
+import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan.common._config.BlogContext;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.Config;
@@ -11,7 +12,8 @@ public class AdminConfigService {
 	private Config dao;
 	
 	public Config get() {
-		return BlogContext.config;
+		SqlPara sqlPara=dao.getSqlPara("adminConfig.get");
+		return dao.findFirst(sqlPara);
 	}
 	
 	public Ret addOrUpdate(Config config) {
@@ -20,8 +22,9 @@ public class AdminConfigService {
 		}else {
 			config.save();
 		}
-		BlogContext.reset(config);
+		BlogContext.reset(get());
 		
 		return Ret.ok();
 	}
+	 
 }

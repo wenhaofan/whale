@@ -1,5 +1,7 @@
-package com.wenhaofan._admin.config;
+package com.wenhaofan._admin.metaweblog;
 
+import com.jfinal.kit.Kv;
+import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.MetaweblogRelevance;
 
@@ -16,7 +18,8 @@ public class MetaweblogRelevanceService {
 		relevance.save();
 	}
 	
-	public MetaweblogRelevance get(Integer articleId,Integer configId) {
-		return dao.findFirst("select * from metaweblog_relevance where articleId=? and metaweblogId=?",articleId,configId);
+	public MetaweblogRelevance get(Integer articleId,Integer metaweblogId) {
+		SqlPara sql=dao.getSqlPara("metaweblog_relevance.get", Kv.by("articleId", articleId).set("metaweblogId", metaweblogId));
+		return dao.findFirst(sql);
 	}
 }

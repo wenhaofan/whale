@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import com.jfinal.kit.PropKit;
-
 /**
  * @author 作者:范文皓
  * @createDate 创建时间：2018年9月13日 下午2:52:50
@@ -21,7 +19,7 @@ public class FileKit {
 		String path=FileKit.class.getResource("/blog_config.txt").getPath() ;
 		path=path.substring(1, path.length());
 		replaceLine(path,1,"#数据库信息2");
-		
+		  
 	}
 
 	public static void replaceLine(String path,Integer num,String newStr ) {

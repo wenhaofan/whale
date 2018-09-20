@@ -15,5 +15,4 @@ public class AdminCommentController extends BaseController {
 		render("comments.html");
 	}
 	
-	
 }

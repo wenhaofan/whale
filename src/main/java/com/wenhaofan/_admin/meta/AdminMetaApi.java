@@ -4,7 +4,6 @@ import com.jfinal.kit.Ret;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Meta;
-import com.wenhaofan.meta.MetaService;
 
 /**
  * 分类管理的控制器
@@ -15,7 +14,7 @@ import com.wenhaofan.meta.MetaService;
 public class AdminMetaApi  extends BaseController {
 
 	@Inject
-	private MetaService metaService;
+	private AdminMetaService metaService;
 	/**
 	 * 删除
 	 */

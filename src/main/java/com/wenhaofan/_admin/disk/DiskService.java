@@ -44,12 +44,15 @@ public class DiskService {
 	public Disk get(Integer id) {
 		return dao.findById(id);
 	}
-	
+	/**
+	 * 创建文件夹
+	 * @param disk
+	 */
 	public void createFolder(Disk disk) {
 		if(disk.getParentId()==null) {
 			disk.setParentId(0);
 		}
-		SqlPara sql=Db.getSqlPara("disk.listCheckFolder",
+		SqlPara sql=Db.getSqlPara("adminDisk.listCheckFolder",
 				Kv.by("name", disk.getName()).set("parentId", disk.getParentId()));
 		
 		List<Disk> diskList=dao.find(sql);
@@ -60,8 +63,9 @@ public class DiskService {
 		disk.setGmtModify(new Date());
 		disk.save();
 	}
+	
 	public List<Disk> list(QueryDisk query){
-		SqlPara sql=dao.getSqlPara("disk.list", Kv.by("query",query));
+		SqlPara sql=dao.getSqlPara("adminDisk.list", Kv.by("query",query));
 		return dao.find(sql);
 	}
 	/**
@@ -84,7 +88,7 @@ public class DiskService {
 		String temp=arr.length>=2?arr[0]:fileName;
 		
 		
-		SqlPara sql=dao.getSqlPara("disk.listCheckFile", Kv.by("fileName", temp).set("parentId", parentId));
+		SqlPara sql=dao.getSqlPara("adminDisk.listCheckFile", Kv.by("fileName", temp).set("parentId", parentId));
 		List<Disk> list=dao.find(sql);
 		
 		if(list.isEmpty()) {
