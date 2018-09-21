@@ -19,7 +19,7 @@ public class MetaweblogRelevanceService {
 	}
 	
 	public MetaweblogRelevance get(Integer articleId,Integer metaweblogId) {
-		SqlPara sql=dao.getSqlPara("metaweblog_relevance.get", Kv.by("articleId", articleId).set("metaweblogId", metaweblogId));
+		SqlPara sql=dao.getSqlPara("adminMetaweblogRelevance.get", Kv.by("articleId", articleId).set("metaweblogId", metaweblogId));
 		return dao.findFirst(sql);
 	}
 }

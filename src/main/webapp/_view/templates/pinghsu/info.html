@@ -1,5 +1,31 @@
 #include("header.html")
-
+<script type="text/javascript">
+function addLink() {
+    var body_element = document.body;
+    var selection;
+    selection = window.getSelection();
+    
+    var locationHref=document.location.href;
+    var appendLink="\r\n\r\n 原文出自[ 范文皓的个人博客 ] 转载请保留原文链接: <a href='"+locationHref+"'>"+locationHref+"</a>";
+    if (window.clipboardData) { // Internet Explorer
+        var copytext = selection + appendLink;
+        window.clipboardData.setData ("Text", copytext);
+        return false;
+    } else {
+        var copytext = selection + appendLink;
+        var newdiv = document.createElement('div');
+        newdiv.style.position='absolute';
+        newdiv.style.left='-99999px';
+        body_element.appendChild(newdiv);
+        newdiv.innerHTML = copytext;
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function() {
+        	body_element.removeChild(newdiv);
+        },0);
+    }
+}
+document.oncopy = addLink;
+</script>
 <article class="main-content page-page" itemscope itemtype="http://schema.org/Article">
 	<div class="post-header">
 		<h1 class="post-title" itemprop="name headline">
@@ -78,7 +104,7 @@ function shareWeibo(){
 	window.open("http://service.weibo.com/share/share.php?url="+getUrl()+"&title="+document.title);
 }
 </script>
-#if(article.allowComment==false)
+#if(article.allowComment!=false)
 	#include('comments.html')
 #end
 

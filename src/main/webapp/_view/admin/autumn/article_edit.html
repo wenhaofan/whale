@@ -75,7 +75,7 @@ $(document).ready(function() {
 		 
 					<select id="multiple-sel" class="select2 form-control" multiple="multiple" data-placeholder="请选择分类...">
 						#for(category:allCategory)
-							<option #for(aCategory:aCategorys) #if(aCategory.id==category.id) selected  #end  #end  >#(category.mname)</option>
+							<option #for(aCategory:aCategorys)#if(aCategory.mid==category.id) selected  #end  #end  >#(category.mname)</option>
 						#end
 					</select>
 				</div>

@@ -814,7 +814,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .post-list-item-container .item-label {
     position: relative;
-    height: auto;
+    height: 130px;
     padding: 25px 20px 40px;
     background-color: #fff
 }

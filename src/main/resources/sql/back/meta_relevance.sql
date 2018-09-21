@@ -7,6 +7,6 @@
 		#if(mid!=null) 
 			mid= #para(mid) 
 		#elseif(cid!=null) 
-			#para(cid) 
+		   cid = #para(cid) 
 		#end 
 #end
