@@ -12,8 +12,9 @@ $(function(){
 		})
 		$(this).addClass("layui-this");
 	})
+	
 	$(document).on('pjax:start', function() { NProgress.start(); });
-	$(document).on('pjax:end',   function() { NProgress.done();  });
+	$(document).on('pjax:end',   function() { NProgress.done(); $(".note-popover").remove() });
  	$(document).pjax('a[pjax]', '.layui-fluid');
 	
 	$(".layui-toggle-menu").click(function(){
@@ -60,16 +61,12 @@ layui.use(['form','layer'],function(){
 	
 	  //监听提交
 	  form.on('submit(updatePwd)', function(data){
-		 
-		   $.ajax({
+		   fl.ajax({
 			   url:"/admin/api/user/editPwd",
 			   data:data.field,
-			   type:"post",
 			   success:function(data){
-				   if(fl.isOk(data)){
-					   fl.alertOk({title:"密码修改成功！"});
-					   layer.close(updatePwdIndex);
-				   }
+					fl.alertOk({title:"密码修改成功！"});
+					layer.close(updatePwdIndex);
 			   }
 		   })
 	  	 return false;
@@ -78,15 +75,12 @@ layui.use(['form','layer'],function(){
 	  //监听提交
 	  form.on('submit(updateInfo)', function(data){
 		 
-		   $.ajax({
+		   fl.ajax({
 			   url:"/admin/api/user/editInfo",
 			   data:data.field,
-			   type:"post",
 			   success:function(data){
-				   if(fl.isOk(data)){
-					   fl.alertOk({title:"修改成功！"});
-					   layer.close(updatePwdIndex);
-				   }
+				    fl.alertOk({title:"修改成功！"});
+					layer.close(updatePwdIndex);
 			   }
 		   })
 	  	 return false;

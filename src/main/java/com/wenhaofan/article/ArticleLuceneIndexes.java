@@ -14,8 +14,8 @@ import com.wenhaofan.common.model.entity.Article;
 */
 public class ArticleLuceneIndexes {
 
-	@Inject
-	private LuceneHelper luceneHelper;
+	 
+	private LuceneHelper luceneHelper=LuceneHelper.single();
 
 	@Inject
 	private ArticleService articleService;

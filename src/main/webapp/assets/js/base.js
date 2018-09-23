@@ -16,7 +16,7 @@ $.extend({
 
 $.fl.prototype.isOk = function (data){
 	var b= data&&data.state=="ok";
-	if(!b){
+	if(!b&&(!data.isHint)){
 		var msg=(data&&data.msg)||'出bug了！';
 		this.alertError({title:msg});
 	}
@@ -53,7 +53,7 @@ $.fl.prototype.alertOkAndReload = function (title) {
  * @param options
  */
 $.fl.prototype.alertWarn = function (options) {
-    options = options.length ? {text: options} : ( options || {} );
+    options = options.length ? {title: options} : ( options || {} );
     options.title = options.title || '警告信息';
     options.text = options.text;
     options.timer = 3000;
@@ -79,7 +79,7 @@ $.fl.prototype.alertConfirm = function (options) {
  * @param options
  */
 $.fl.prototype.alertError = function (options) {
-    options = options.length ? {text: options} : ( options || {} );
+    options = options.length ? {title: options} : ( options || {} );
     options.title = options.title || '错误信息';
     options.text = options.text;
     options.type = 'error';
@@ -114,20 +114,32 @@ $.fl.prototype.alertBox = function (options) {
  *
  * @param options   参数
  */
-$.fl.prototype.post = function (options) {
+$.fl.prototype.ajax = function (options) {
+	NProgress.start();  
     var self = this;
     $.ajax({
-        type: 'POST',
+        type: options.type||"post",
         url: options.url,
         data: options.data || {},
         async: options.async || false,
-        dataType: 'json',
-        success: function (result) {
-            self.hideLoading();
-            options.success && options.success(result);
+        dataType: options.dataType||"json",
+        success: function (data) {
+           data.isHint=options.isHint;
+           if(self.isOk(data)){
+        	   options.success(data);
+           }else{
+        	   if(options.fail){
+        		   options.fail(data);
+        	   } 
+           }
+           NProgress.done();
         },
         error: function (e) {
-            console.log('post异常', e);
+            console.log('异常', e);
+            if(options.error){
+            	options.error();
+            }
+            NProgress.done();
         }
     });
 };

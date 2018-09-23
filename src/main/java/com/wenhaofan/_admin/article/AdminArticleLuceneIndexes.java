@@ -1,5 +1,7 @@
 package com.wenhaofan._admin.article;
 
+import java.util.List;
+
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Store;
@@ -7,8 +9,8 @@ import org.apache.lucene.document.FieldType;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexOptions;
 
+import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
-import com.jfinal.plugin.activerecord.Page;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.kit.EmailKit;
 import com.wenhaofan.common.lucene.LuceneHelper;
@@ -18,9 +20,7 @@ import com.wenhaofan.common.safe.JsoupFilter;
 public class AdminArticleLuceneIndexes {
 	
 	private static final Log log = Log.getLog(EmailKit.class);
-	
-	@Inject
-	private LuceneHelper luceneHelper;
+ 
 	
 	@Inject
 	private AdminArticleService adminArticleService;
@@ -31,13 +31,15 @@ public class AdminArticleLuceneIndexes {
 	}
 	
 	public void deleteAll() {
-		luceneHelper.deleteAll();
+		LuceneHelper.single().deleteAll();
 	}
 	
 	public void addAll() {
-		Page<Article> articlePage=adminArticleService.page(new Article().setState(1), null, 1, 999999);
-		articlePage.getList().forEach((article)->{
-			add(article);
+		List<Article> articleList=adminArticleService.listAll(1);
+		articleList.forEach((article)->{
+			if(StrKit.notBlank(article.getContent())) {
+				add(article);
+			}
 		});
 	}
 	
@@ -48,7 +50,7 @@ public class AdminArticleLuceneIndexes {
 		
 		Document document = getDocument(article);
 		 
-		long count=luceneHelper.createIndex(document);
+		long count=LuceneHelper.single().createIndex(document);
 	 
 		if(count==0) {
 			log.error("引索创建失败！id="+article.getId());
@@ -58,7 +60,7 @@ public class AdminArticleLuceneIndexes {
 	private Document getDocument(Article article) {
 		Document document = new Document();
 	    FieldType type = new FieldType();
-	    type.setIndexOptions(IndexOptions.DOCS);
+	    type.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS);
 	    type.setTokenized(false);
 	    type.setStored(true);
 
@@ -72,11 +74,11 @@ public class AdminArticleLuceneIndexes {
 	}
 	
 	public void delete(Integer id) {
-		luceneHelper.deleteIndex("id", id.toString());
+		LuceneHelper.single().deleteIndex("id", id.toString());
 	}
 	
 	public void update(Article article) {
-		luceneHelper.updateIndex("id", article.getId().toString(), getDocument(article));
+		LuceneHelper.single().updateIndex("id", article.getId().toString(), getDocument(article));
 	}
 	
 	 

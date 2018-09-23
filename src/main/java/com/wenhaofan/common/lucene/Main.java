@@ -6,7 +6,7 @@ package com.wenhaofan.common.lucene;
 */
 public class Main {
 	public static void main(String[] args) {
-		LuceneHelper luceneHelper=new LuceneHelper();
+		LuceneHelper luceneHelper=LuceneHelper.single();
 		  
 			 //System.out.println(ret);
 		  luceneHelper.deleteIndex("id", "1");

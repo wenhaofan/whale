@@ -93,10 +93,14 @@ public class AdminArticleService {
 			update(article, tags, categorys);
 			luceneIndexes.update(article);
 		}
-		new Thread(()-> {
-			//向百度推送该文章
-			baiduSeoService.pushLink(article.getUrl());	
-		}).start();;
+		
+		if(article.getState().equals(1)) {
+			new Thread(()-> {
+				//向百度推送该文章
+				baiduSeoService.pushLink(article.getUrl());	
+			}).start();;
+		}
+		
 	}
 	
 	
@@ -237,11 +241,16 @@ public class AdminArticleService {
 
 		Kv kv=Kv.by("mid", metaId).set("article", article);
 		
-		SqlPara sql=dao.getSqlPara("adminArticle.listArticle", kv);
+		SqlPara sql=dao.getSqlPara("adminArticle.page", kv);
 		
 		Page<Article> articlePage = dao.paginate(pageNumber, pageSize,sql);
 		
 		return articlePage;
 	}
+	
+	public List<Article> listAll(Integer state){
 		
+		SqlPara sql=dao.getSqlPara("adminArticle.listAll",Kv.by("article", new Article().setState(state)));
+		return dao.find(sql);
+	}
 }

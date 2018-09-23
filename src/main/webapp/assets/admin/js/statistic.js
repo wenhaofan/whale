@@ -1,18 +1,19 @@
 
 $(function(){
 	// 基于准备好的dom，初始化echarts实例
-	
+	lazyRender();
+})
+
+function lazyRender(){
 	if(echarts==undefined){
 		setTimeout(() => {
-			renderAccessReport();
-			renderArticleReport();
+			lazyRender();
 		}, 100);
 	}else{
 		renderAccessReport();
 		renderArticleReport();
 	}
-	
-})
+}
 
  function renderArticleReport(){
 	var myChart = echarts.init(document.getElementById('bar'));

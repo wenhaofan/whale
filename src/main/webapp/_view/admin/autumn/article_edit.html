@@ -2,15 +2,14 @@
 <link href="/assets/plugins/select2/dist/css/select2-bootstrap.css"
 	rel="stylesheet">
 <link href="/assets/plugins/toggles/toggles.css" rel="stylesheet">
-<link href="/assets/plugins/font-awesome/4.7.0/css/font-awesome.css"
-	rel="stylesheet">
+ 
 <link
 	href="/assets/plugins/multi-select/0.9.12/css/multi-select.min.css"
 	rel="stylesheet" />
 <link href="/assets/plugins/select2/3.4.8/select2.min.css"
 	rel="stylesheet" />
 <link href="/assets/plugins/mditor/css/mditor.min.css" rel="stylesheet" />
-<link href="/assets/plugins/summernote/0.8.2/summernote.css"
+<link href="/assets/plugins/summernote/0.8.9/summernote.css"
 	rel="stylesheet">
 	
 <link href="/assets/plugins/dropzone/4.3.0/min/dropzone.min.css"
@@ -54,7 +53,7 @@ $(document).ready(function() {
 					<input type="hidden" name="fmtType" id="fmtType" value="" /> 
 					<input type="hidden" name="allowComment" value="#(article.allowComment??)" id="allowComment" /> 
 					<input type="hidden" name="thumbImg" id="thumbImg" value="#(article.thumbImg??)"> 
-					<input type="hidden" name="state" id="state"  value="#(article.state??)">
+					<input type="hidden" name="state" id="state"  value="#(article.state??0)">
 					<input type="hidden" name="id" id="id" value="#(article.id??)">
 					<input type="hidden" name="isTop" id="isTop" value="#(article.isTop??0)">
 				<div class="form-group col-md-6" style="padding: 0 10px 0 0;">
@@ -79,7 +78,10 @@ $(document).ready(function() {
 						#end
 					</select>
 				</div>
-					<div class="form-group col-xs-12">
+				<div class="form-group col-xs-12">
+					<div class="pull-left">
+						<span class="hint-msg"></span>
+					</div>
 					<div class="pull-right">
 						<a id="switch-btn" href="javascript:void(0)"
 							class="btn btn-purple btn-sm waves-effect waves-light switch-editor">
@@ -88,7 +90,6 @@ $(document).ready(function() {
 				</div>
 				
 				<div class="clearfix"></div>
-
 			
 				<div id="md-container" class="form-group col-md-12">
 					<textarea id="md-editor" class=""></textarea>
@@ -182,8 +183,8 @@ $(document).ready(function() {
 	<script src="/assets/plugins/jquery-multi-select/jquery.quicksearch.js"></script>
 	<script src="/assets/plugins/mditor/js/mditor.min.js"></script>
 	<script src="/assets/plugins/wysihtml5/0.3.0/wysihtml5.min.js"></script>
-	<script src="/assets/plugins/summernote/0.8.2/summernote.min.js"></script>
-	<script src="/assets/plugins/summernote/0.8.2/lang/summernote-zh-CN.min.js"></script>
+	<script src="/assets/plugins/summernote/0.8.9/summernote.js"></script>
+	<script src="/assets/plugins/summernote/0.8.9/lang/summernote-zh-CN.js"></script>
 	<script src="/assets/plugins/multi-select/0.9.12/js/jquery.multi-select.min.js"></script>
 	<script src="/assets/plugins/select2/3.4.8/select2.min.js"></script>
 	<script src="/assets/plugins/jquery-toggles/2.0.4/toggles.min.js"></script>

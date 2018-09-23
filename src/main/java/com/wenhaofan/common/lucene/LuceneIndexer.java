@@ -17,10 +17,10 @@ public class LuceneIndexer {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) {
-    	LuceneHelper helper =new LuceneHelper();
+    	LuceneHelper helper =LuceneHelper.single();
     	List<Document> documents=new ArrayList();
     	documents.add(getDocument(new Article().setId(1).setContent("早上好").setTitle("晚安")));
-		helper.createIndexs(documents);
+		 helper.createIndexs(documents);
     }
     private static Document getDocument(Article article) {
 		Document document = new Document();

@@ -1,5 +1,6 @@
 package com.wenhaofan.user;
 
+import com.jfinal.aop.Clear;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.agentUser.AgentUserService;
@@ -10,6 +11,7 @@ import com.wenhaofan.common.kit.IpKit;
 * @author 作者:Lemon
 * @createDate 创建时间：2018年9月6日 下午12:38:51
 */
+@Clear
 public class LoginApi extends BaseController {
 
 	private LoginService loginService=LoginService.me;

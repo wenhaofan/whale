@@ -495,20 +495,18 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     font-size: 22px;
     line-height: 22px;
     position: absolute;
-    top: 50%;
     left: 0;
     display: block;
-    width: auto;
-    max-width: 50%;
-    height: 22px;
-    margin-top: -10px;
+    width: 120px;
+    height: 60px;
+    margin-top: 5px;
     margin-left: 25px;
     text-decoration: none
 }
 
 .navbar-logo img {
     width: auto;
-    height: 22px;
+    height: 60px;
     outline: 0
 }
 
@@ -1960,7 +1958,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .footer-meta .meta-copyright .info-logo img {
-    height: 32px;
+    height: 60px;
     margin-bottom: 12px
 }
 

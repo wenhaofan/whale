@@ -21,10 +21,11 @@ public class ArticleApi extends BaseController{
 	 * 根据标签或分类id进行查询
 	 */
 	public void list() {
-		Integer cid=getParaToInt();
-		Integer pageNum = getParaToInt("p");
-		Integer limit=getParaToInt("limit", 10);
-		renderJson(Ret.ok("articlePage", service.page(pageNum, limit, cid,null)));
+		Integer cid=getParaToInt(2);
+		Integer pageNum = getParaToInt(0,1);
+		Integer limit=getParaToInt(1, 10);
+		boolean isTop=getParaToBoolean(3, false);
+		renderJson(Ret.ok("articlePage", service.page(pageNum, limit, cid,isTop)));
 	}
  
 	/**

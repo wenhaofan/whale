@@ -37,9 +37,9 @@
         		data:$('.validate-form').serialize(),
         		success:function(data){
 	        		if(fl.isOk(data)){
-	        			fl.alertOk({title:"登录成功！",then:function(){
+	        			 
 	        				window.location.href="/admin";
-	        			}})
+	        		 
 	        		}	
         		}
         	})

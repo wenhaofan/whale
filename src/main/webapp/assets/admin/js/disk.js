@@ -77,7 +77,7 @@ function convertToSpan(obj){
 }
 
 function addEmptyInfo(){
-	$(".disk-content").append('<div style="background: url(/assets/disk/empty.png) no-repeat scroll center 0 transparent;padding-top: 146px;width: 488px;position: absolute;left: 50%;top: 50%;text-align: center;margin: -40px 0 0 -244px;"><p style="    display: inline-block;text-align: center;width: 300px;">暂无文件</p></div>')
+	$(".disk-content").append('<div style="background: url(/assets/admin/images/disk/empty.png) no-repeat scroll center 0 transparent;padding-top: 146px;width: 488px;position: absolute;left: 50%;top: 50%;text-align: center;margin: -40px 0 0 -244px;"><p style="    display: inline-block;text-align: center;width: 300px;">暂无文件</p></div>')
 }
 
 function listDiskItem(query){

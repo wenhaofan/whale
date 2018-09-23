@@ -68,14 +68,15 @@
 <script type="text/html" id="operation-tpl">
 #[[
 	
-	<button class="layui-btn layui-btn-sm article-async" data-id="{{d.id}}">同步发布</button>
+	<button class="layui-btn layui-btn-sm article-async" data-id="{{d.id}}">推送</button>
 
 	<button class="layui-btn layui-btn-sm article-update" data-id="{{d.id}}">修改</button>
 	
 {{# if(d.state == 2){ }}
 	<button class="layui-btn layui-btn-sm article-recover" data-id="{{d.id}}">恢复</button> 
+	 <button class="layui-btn layui-btn-sm article-delete" data-id="{{d.id}}">删除</button> 
 {{# } else if(d.state == 1){ }}
-  <button class="layui-btn layui-btn-sm article-remove" data-id="{{d.id}}">删除</button> 
+   <button class="layui-btn layui-btn-sm article-remove" data-id="{{d.id}}">废弃</button> 
 {{# } }}
 	
 ]]#

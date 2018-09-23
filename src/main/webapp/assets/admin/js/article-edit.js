@@ -1,12 +1,14 @@
 var mditor, htmlEditor;
 
-
 var markdownUtil=new $.markdownUtil();
-
 var attach_url = $('#attach_url').val();
 
 Dropzone.autoDiscover = false;
 
+/**
+ * 获取编辑器的内容
+ * @returns
+ */
 function getContent(){
 	var fmtType= $('#fmtType').val();
 	var content = fmtType == 'markdown' ? mditor.value : htmlEditor.summernote('code');
@@ -38,81 +40,91 @@ function setSelectedCategory(data){
 }
 
 function editArticle(paras){
-   $.ajax({
+   fl.ajax({
 	   url:"/admin/api/article/edit",
-	   type:"post",
 	   data:paras.fdata,
+	   async:false,
 	   success:function(data){
-		   if(fl.isOk(data)){
-			   paras.success(data);
-		   }
+			paras.success(data);
 	   }
    })
 }
 
+/**
+ * 保存文章
+ * @returns
+ */
+function save(state,isAuto){
+	var content = getContent();
+    var title = $('#articleForm input[name=title]').val();
+    if (title == '') {
+    	if(!isAuto){
+    		fl.alertWarn('标题不能为空');
+    	}
+        return;
+    }
+    
+    var $tempDiv=$('<div style="display:none;"></div>')
+    $tempDiv.html(content);
+  
+    var divText= $tempDiv.text().replace(/<[^>]*>|/g,"").replace(/\s+/g, "");
+ 
+    $tempDiv.remove();
+    if (divText.length<=0) {
+    	if(!isAuto){
+    		fl.alertWarn('请输入文章内容');
+    	}  	
+        return;
+    }
+ 
+   
+    $("#content-editor").val(content);
+    
+    if(state!=undefined){
+    	$('input[name="state"]').val(state);
+    }
+    
+    var fdata= $("#articleForm").serializeArray();
+    
+    setSelectedTag(fdata);
+    setSelectedCategory(fdata);
+    
+    editArticle({fdata:fdata,success:function(data){
+    	  var time="["+new Date()+"]";
+    	  if(isAuto){
+    		  $(".hint-msg").text("自动保存成功！"+time);
+    	  }else{
+    		  $(".hint-msg").text((data.state==0?"草稿保存成功！":"发布成功！")+time);
+    	  }
+    	  $("input[name='id']").val(data.article.id);
+    	  var host=window.location.host;
+    	  var currentUrl=window.location.protocol+"//"+host+"/admin/article/edit/"+data.article.id;
+    	  
+    	  if(window.location.href!=currentUrl){
+    		  history.pushState({}, document.title, currentUrl);
+    	  } 
+    }});
+}
+
+function autoSave(){
+ 
+	setInterval(() => {
+		save(0,true);
+	}, 20000);
+}
+
 $(document).ready(function () {
+	
+	autoSave();
+	
 	//保存草稿
 	$("#draft").click(function(){
-		var content =getContent();
-	    var title = $('#articleForm input[name=title]').val();
-	   
-	    if (title == '') {
-	        fl.alertWarn('标题不能为空');
-	        return;
-	    } 
-	    
-	    var categoryIds= $('#multiple-sel').val();
-	    $("#articleForm #categoryIds").val(categoryIds);
-	    $("#content-editor").val(content);
-	    $('#state').val(0);
-
-	    var fdata= $("#articleForm").serializeArray();
-	    
-	    setSelectedTag(fdata);
-	    
-	    setSelectedCategory(fdata);
-	    
-	    editArticle({fdata:fdata,success:function(data){
-	    	  fl.alertOk({});
-			  $("#id").val(data.article.id);
-	    }});
+		 save(0);
 	});
-	
-	
 	//保存并发布
 	$("#subArticle").click(function(){
-		var content = getContent();
-	    var title = $('#articleForm input[name=title]').val();
-	    if (title == '') {
-	        fl.alertWarn('标题不能为空');
-	        return;
-	    }
-	    if (content == '') {
-	    	fl.alertWarn('请输入文章内容');
-	        return;
-	    }
-	    var categoryIds= $('#multiple-sel').val();
-	    if(categoryIds.length==0){
-	    	fl.alertWarn('请选择分类');
-	        return;
-	    }
-	 
-	    $("#articleForm #categoryIds").val(categoryIds);
-	    $("#content-editor").val(content);
-	    $('#state').val(1);
-	    
-	    var fdata= $("#articleForm").serializeArray();
-	    setSelectedTag(fdata);
-	    setSelectedCategory(fdata);
-	    
-	    editArticle({fdata:fdata,success:function(data){
-	    	  fl.alertOk({
-				   title:"发布成功！"
-			   });
-	    	  $("input[name='id']").val(data.article.id);
-	    }});
+		save(1);
 	})
-	
     mditor = window.mditor = Mditor.fromTextarea(document.getElementById('md-editor'));
     // 富文本编辑器
     htmlEditor = $('.summernote').summernote({
@@ -122,7 +134,6 @@ $(document).ready(function () {
         //上传图片的接口
         callbacks:{
             onImageUpload: function(files) {
-            	
             	 var uploadUtil=new $.uploadUtil();
                  uploadUtil.setUploadServerUrl("/admin/api/upload/article");
                  uploadUtil.uploadFile({
@@ -153,9 +164,7 @@ $(document).ready(function () {
             'margin-top': modalHeight  
         });  
     });  
-    
- 
-	 
+   
   
 	 var fmtType = $('#fmtType').val();
 	    // 富文本编辑器
