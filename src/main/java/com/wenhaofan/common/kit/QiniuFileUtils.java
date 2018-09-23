@@ -5,11 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+import com.jfinal.log.Log;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
+import com.wenhaofan.common._config.BlogContext;
 
 
 /**
@@ -19,10 +21,8 @@ import com.qiniu.util.Auth;
  */
 public class QiniuFileUtils {
 
-	public static String  ak="-J6wMUs4suf31Rr3mOpI9gSALJT8S3d4Y8q6YlPs";
-	public static String  sk="x2A_diIcaZ-Uiv4E66w5eO-_F8CUc2QQUOMuBXHc";
-	public static String  bucket="blog";
-	public static String  qiniuUrl="http://pd6htjig8.bkt.clouddn.com";
+	private static Log log=Log.getLog(QiniuFileUtils.class);
+	
 	/**
 	 * 上传文件工具类 
 	 * @param filePath 上传的文件的路径
@@ -31,11 +31,23 @@ public class QiniuFileUtils {
 	 * @return
 	 */
 	public static Ret uploadFile(String filePath,String fileName,String qiniuName) {
+		String ak=BlogContext.config.getQiniuAk();
+		String sk=BlogContext.config.getQiniuSk();
+		String url=BlogContext.config.getQiniuUrl();
+		String bucket=BlogContext.config.getQiniuBucket();
+		
+		if(!StrKit.notBlank(ak,sk,bucket,url)) {
+			return Ret.fail();
+		}
+		
 		Ret ret=uploadFile(new File(filePath+File.separator+fileName), qiniuName, ak ,sk,bucket);
+		
 		if(ret.isFail()) {
 			return ret;
 		}
-		return ret.set("qiniuurl", qiniuUrl).set("url",qiniuUrl+"/"+ret.getStr("qiniuFileName"));
+		
+		String fileUrl=url.endsWith("/")?url+ret.getStr("qiniuFileName"):url+"/"+ret.getStr("qiniuFileName");
+		return ret.set("url",fileUrl);
 	}
 	//http://p2lno0vsw.bkt.clouddn.com+"/"+lemonim-avatar.jpg
 	public static void main(String[] args) {
@@ -94,10 +106,11 @@ public class QiniuFileUtils {
 		String upToken = auth.uploadToken(bucket);
 
 		try {
-			  uploadManager.put(localPath, key, upToken);
+			uploadManager.put(localPath, key, upToken);
 			return Ret.ok("qiniuFileName", key);
 		} catch (QiniuException ex) {
 			ex.printStackTrace();
+			log.error(ex.getMessage(),ex);
 		}
 
 		return Ret.fail();

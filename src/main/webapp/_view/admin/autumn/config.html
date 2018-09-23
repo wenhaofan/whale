@@ -68,29 +68,58 @@
 	</div>
 	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
 		<div class="basic-config">
-			<blockquote class="page-title  page-title">邮件设置</blockquote>
+			<blockquote class="page-title  page-title">其他设置</blockquote>
 			<form class="layui-form editConfig" action="" onsubmit="return false">
 			
 			  <div class="layui-form-item">
 			    <label class="layui-form-label">发件邮箱</label>
 			    <div class="layui-input-block">
-			      <input type="text" name=fromEmail required  lay-verify="required" placeholder="请输入发件邮箱" autocomplete="off" class="layui-input">
+			      <input type="text" name="fromEmail"   placeholder="请输入发件邮箱" autocomplete="off" class="layui-input">
 			    </div>
 			  </div>
 			  <div class="layui-form-item">
-			    <label class="layui-form-label">邮件密码</label>
+			    <label class="layui-form-label">邮箱授权码</label>
 			    <div class="layui-input-block">
-			      <input type="text" name="emailPassword" required  lay-verify="required" placeholder="请输入邮件密码" autocomplete="off" class="layui-input">
+			      <input type="text" name="emailPassword"   placeholder="请输入邮件密码" autocomplete="off" class="layui-input">
 			    </div>
 			  </div>
 			  <div class="layui-form-item">
 			    <label class="layui-form-label">邮件服务器</label>
 			    <div class="layui-input-block">
 			      <input type="hidden" name="id">
-			      <input type="text" name="emailServer" required  lay-verify="required" placeholder="请输入邮件服务器地址" autocomplete="off" class="layui-input">
+			      <input type="text" name="emailServer"   placeholder="请输入邮件服务器地址" autocomplete="off" class="layui-input">
 			    </div>
 			  </div>
-			 
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">七牛云AK</label>
+			    <div class="layui-input-block">
+			      <input type="hidden" name="id">
+			      <input type="text" name="qiniuAk"  placeholder="请输入七牛云AK" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">七牛云SK</label>
+			    <div class="layui-input-block">
+			      <input type="hidden" name="id">
+			      <input type="text" name="qiniuSk"   placeholder="请输入七牛云SK" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">七牛云存储空间名称</label>
+			    <div class="layui-input-block">
+			      <input type="hidden" name="id">
+			      <input type="text" name="qiniuBucket"  placeholder="请输入七牛云存储空间名称" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  <div class="layui-form-item">
+			    <label class="layui-form-label">七牛云URL</label>
+			    <div class="layui-input-block">
+			      <input type="hidden" name="id">
+			      <input type="text" name="qiniuUrl"  placeholder="请输入七牛云URL" autocomplete="off" class="layui-input">
+			    </div>
+			  </div>
+			  
+			  
 			  <div class="layui-form-item">
 			    <div class="layui-input-block">
 			      <button  class="layui-btn" lay-submit lay-filter="editConfig">立即提交</button>

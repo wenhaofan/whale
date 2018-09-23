@@ -117,4 +117,40 @@ public abstract class BaseConfig<M extends BaseConfig<M>> extends Model<M> imple
 		return getStr("logo");
 	}
 
+	public M setQiniuAk(java.lang.String qiniuAk) {
+		set("qiniuAk", qiniuAk);
+		return (M)this;
+	}
+	
+	public java.lang.String getQiniuAk() {
+		return getStr("qiniuAk");
+	}
+
+	public M setQiniuSk(java.lang.String qiniuSk) {
+		set("qiniuSk", qiniuSk);
+		return (M)this;
+	}
+	
+	public java.lang.String getQiniuSk() {
+		return getStr("qiniuSk");
+	}
+
+	public M setQiniuBucket(java.lang.String qiniuBucket) {
+		set("qiniuBucket", qiniuBucket);
+		return (M)this;
+	}
+	
+	public java.lang.String getQiniuBucket() {
+		return getStr("qiniuBucket");
+	}
+
+	public M setQiniuUrl(java.lang.String qiniuUrl) {
+		set("qiniuUrl", qiniuUrl);
+		return (M)this;
+	}
+	
+	public java.lang.String getQiniuUrl() {
+		return getStr("qiniuUrl");
+	}
+
 }

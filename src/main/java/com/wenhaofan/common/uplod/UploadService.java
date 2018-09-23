@@ -56,7 +56,16 @@ public class UploadService {
 		info.setFileName(pathAndFileName[1]);
 		
 		Ret ret=QiniuFileUtils.uploadFile(absolutePath, fileName, fileName);
-		info.setUrl(ret.getStr("url"));
+	
+		String fileUrl=null;
+		
+		//如果七牛云上传失败则返回服务器资源路径
+		if(ret.isFail()){
+			fileUrl=basePath+uploadType+"/"+arr[1]+"/"+fileName;
+		}else {
+			fileUrl=ret.getStr("url");
+		}
+		info.setUrl(fileUrl);
 		return info;
 	}
 	
