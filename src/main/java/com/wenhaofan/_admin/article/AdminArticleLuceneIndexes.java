@@ -43,6 +43,10 @@ public class AdminArticleLuceneIndexes {
 		});
 	}
 	
+	/**
+	 * 添加索引
+	 * @param article
+	 */
 	public void add(Article article) {
 		//过滤html标签
 		String content=JsoupFilter.filterArticleContent(article.getContent());

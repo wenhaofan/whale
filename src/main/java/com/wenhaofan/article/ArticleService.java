@@ -88,7 +88,7 @@ public class ArticleService {
 		return dao.find("select title,identify,thumbImg,intro,content from article where state=1 order by gmtCreate desc limit 6");
 	}
 	
-	public List<Article> listHost(Integer num){
+	public List<Article> listHot(Integer num){
 		return dao.find("select title,identify,thumbImg,intro,content from article where state=1 order by pv desc limit  "+num);
 	}
 	

@@ -249,8 +249,11 @@ public class AdminArticleService {
 	}
 	
 	public List<Article> listAll(Integer state){
-		
 		SqlPara sql=dao.getSqlPara("adminArticle.listAll",Kv.by("article", new Article().setState(state)));
 		return dao.find(sql);
+	}
+	
+	public List<Article> listHot(Integer num){
+		return dao.find("select title,identify,thumbImg,intro,content from article where state=1 order by pv desc limit  "+num);
 	}
 }

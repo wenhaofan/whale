@@ -1,5 +1,7 @@
 package com.wenhaofan._admin.comment;
 
+import java.util.List;
+
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.Db;
@@ -107,5 +109,13 @@ public class AdminCommentService extends BaseController {
 	
 	public Comment get(Integer id) {
 		return dao.findById(id);
+	}
+	
+	public List<Comment>  listRecent(Integer num){
+		List<Comment> list= dao.find("select * from comment order by gmtCreate desc limit "+num);
+		for(Comment comment:list) {
+			setInPageNum(comment);
+		}
+		return list;
 	}
 }

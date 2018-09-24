@@ -1,6 +1,7 @@
 package com.wenhaofan._admin.meta;
 
 import com.jfinal.kit.Ret;
+import com.wenhaofan._admin.common.annotation.SysLog;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Meta;
@@ -15,10 +16,8 @@ public class AdminMetaApi  extends BaseController {
 
 	@Inject
 	private AdminMetaService metaService;
-	/**
-	 * 删除
-	 */
-
+	
+	@SysLog(value="删除分类或标签",action="meta")
 	public void remove() {
 		Integer id = getParaToInt(0);
 		Meta meta=new Meta();
@@ -26,16 +25,15 @@ public class AdminMetaApi  extends BaseController {
 		metaService.delete(meta);
 		renderJson(Ret.ok());
 	}
-
+	
+	@SysLog(value="编辑分类或标签",action="meta")
 	public void update() {
 		Meta meta=getModel(Meta.class,"",true);
 		metaService.saveOrUpdate(meta);
 		renderJson(Ret.ok().toJson());
 	}
-
-	/**
-	 * 执行添加操作的控制器
-	 */
+	
+	@SysLog(value="添加分类或标签",action="meta")
 	public void add() {
 		Meta meta=getModel(Meta.class,"",true);
 		metaService.saveOrUpdate(meta);

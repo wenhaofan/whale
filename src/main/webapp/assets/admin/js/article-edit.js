@@ -88,7 +88,9 @@ function save(state,isAuto){
     
     setSelectedTag(fdata);
     setSelectedCategory(fdata);
-    
+  
+    fdata[11]={name:"isAuto", value:isAuto?"1":"0"};
+   
     editArticle({fdata:fdata,success:function(data){
     	  var time="["+new Date()+"]";
     	  if(isAuto){

@@ -3,6 +3,7 @@ package com.wenhaofan._admin.blogroll;
 import java.util.List;
 
 import com.jfinal.kit.Ret;
+import com.wenhaofan._admin.common.annotation.SysLog;
 import com.wenhaofan.common.aop.Inject;
 
 /**
@@ -28,15 +29,16 @@ public class AdminBlogrollApi extends BaseController {
 		renderJson( Ret.ok("code", 0).set("data",blogrolls));
 	}
 	
+	@SysLog(value="编辑友链",action="blogroll")
 	public void saveOrUpdate(){
 		Blogroll blogroll=getModel(Blogroll.class,"",true);
 		blogrollService.saveOrUpdate(blogroll);
 		renderJson(Ret.ok());
 	}
 	
+	@SysLog(value="删除友链",action="blogroll")
 	public void remove(){
 		Integer id=getParaToInt(0);
- 
 		blogrollService.remove(id);
 		renderJson(Ret.ok());
 	}

@@ -68,8 +68,8 @@
 <script type="text/html" id="operation-tpl">
 #[[
 	
-	<button class="layui-btn layui-btn-sm article-async" data-id="{{d.id}}">推送</button>
-
+	<button class="layui-btn layui-btn-sm article-push" data-id="{{d.id}}">推送</button>
+	<button class="layui-btn layui-btn-sm article-preview" data-identify="{{d.identify}}">预览</button>	
 	<button class="layui-btn layui-btn-sm article-update" data-id="{{d.id}}">修改</button>
 	
 {{# if(d.state == 2){ }}

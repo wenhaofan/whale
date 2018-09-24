@@ -114,6 +114,7 @@ public class BlogConfig extends JFinalConfig {
  
     	arp.setBaseSqlTemplatePath(PathKit.getRootClassPath() + "/sql");
         arp.addSqlTemplate("all_sqls.sql");
+        
 	    me.add(new EhCachePlugin());
 	}
 

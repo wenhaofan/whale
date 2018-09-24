@@ -306,7 +306,6 @@ public class LuceneHelper {
 			writer.deleteDocuments(new Term(key, value));
 			writer.commit();
 			writer.flush();
- 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

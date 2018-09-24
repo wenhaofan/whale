@@ -5,6 +5,7 @@ import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
 import com.wenhaofan._admin.user.AdminUserService;
 import com.wenhaofan.common.aop.AopFactory;
+import com.wenhaofan.common.kit.StrKit;
 import com.wenhaofan.common.model.entity.User;
 import com.wenhaofan.common.service.IndexService;
 
@@ -25,9 +26,6 @@ public class AdminIndexInterceptor implements Interceptor{
 		if(isPjax) {
 			return;
 		}
-
-		String viewPath=((Controller)inv.getTarget()).getViewPath();
-		viewPath+=c.getRender().getView();
 		
 		AdminUserService adminUserService=AopFactory.getInject(AdminUserService.class);
 		User adminUser=adminUserService.getAdminUser();
@@ -37,7 +35,13 @@ public class AdminIndexInterceptor implements Interceptor{
 		c.setAttr("requestUrl", requestUrl);
 		c.setAttr("adminUser", adminUser);
 		
-		if(viewPath.endsWith(".html")) {
+		String viewPath=((Controller)inv.getTarget()).getViewPath();
+		
+		if(c.getRender()!=null) {
+			viewPath+=c.getRender().getView();
+		}
+		
+		if(StrKit.notBlank(viewPath)&&viewPath.endsWith(".html")) {
 			c.setAttr("includeUrl", viewPath);
 			c.render("/_view/admin/autumn/index.html");
 		}

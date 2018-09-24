@@ -120,7 +120,7 @@ function initCategorySelect() {
 
 
 $(document).ready(function() {
-	$("body").on("click",".article-async",function(){
+	$("body").on("click",".article-push",function(){
 		fl.ajax({
 			url:"/admin/api/article/asyncMetaWeblog/"+$(this).data("id"),
 			success:function(data){
@@ -128,7 +128,9 @@ $(document).ready(function() {
 			}
 		})
 	})
-	
+	$("body").on("click",".article-preview",function(){
+		 window.open("/article/"+$(this).data("identify"));
+	})
 	$("body").on("click",".createIndex",function(){
 		fl.alertConfirm({title:"是否确认重置索引？",text:"执行过程中搜索服务将暂时不能使用，文章越多时间越长。",then:function(){
 			fl.ajax({

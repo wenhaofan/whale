@@ -1,5 +1,6 @@
 package com.wenhaofan._admin.nav;
 
+import com.wenhaofan._admin.common.annotation.SysLog;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.Ret;
@@ -22,16 +23,16 @@ public class AdminNavApi extends BaseController{
 		Nav nav=service.get(getParaToInt());
 		renderJson(Ret.ok("nav", nav));
 	}
-	
+	@SysLog(value="删除导航",action="meta")
 	public void delete() {
 		renderJson(service.delete(getParaToInt("toId")));
 	}
-	
+	@SysLog(value="更新导航",action="meta")
 	public void update() {
 		Nav nav=getBean(Nav.class,"",true);
 		renderJson(service.update(nav));
 	}
-	
+	@SysLog(value="添加导航",action="meta")
 	public void add() {
 		Nav nav =getModel(Nav.class,"",true);
 		renderJson(service.add(nav));

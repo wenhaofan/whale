@@ -3,11 +3,13 @@ package com.wenhaofan._admin.article;
 import java.util.List;
 
 import com.jfinal.plugin.activerecord.Page;
+import com.wenhaofan._admin.common.annotation.SysLog;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.Ret;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
+import com.wenhaofan.common.model.entity.User;
 
 /**
  * 文章后台管理的控制器
@@ -22,6 +24,7 @@ public class ArticleAdminApi extends BaseController {
 	@Inject
 	private AdminArticleLuceneIndexes luceneIndexes;
 	
+	@SysLog(value="重置文章索引",action="article")
 	public void createIndex() {
 		luceneIndexes.resetArticleIndexes();
 		renderJson(Ret.ok());
@@ -43,22 +46,24 @@ public class ArticleAdminApi extends BaseController {
 	}
 	
 	/**
-	 * 执行文章添加
+	 * 执行文章编辑
 	 * 
 	 * @throws Exception
 	 */
-
+	@SysLog(value="编辑文章",action="article")
 	public void edit() {
 		Article article = getModel(Article.class, "", true);
 		List<Meta> tags=getModelList(Meta.class, "tag");
 		List<Meta> categorys=getModelList(Meta.class, "category");
+		User user=getLoginUser();
+		article.setUserId(user.getId());
 		articleService.saveOrUpdate(article, tags, categorys);
+	
 		renderJson(Ret.ok("添加成功!").set("article", article).toJson());
 	}
 
-	/**
-	 * 删除文章
-	 */
+ 
+	@SysLog(value="废弃文章",action="article")
 	public void remove() {
 		Integer id =getParaToInt(0);
 		renderJson(articleService.remove(id).toJson());;
@@ -68,9 +73,8 @@ public class ArticleAdminApi extends BaseController {
 		Integer id =getParaToInt(0);
 		renderJson(articleService.delete(id).toJson());;
 	}
-	/**
-	 * 恢复成功
-	 */
+	 
+	@SysLog(value="恢复文章",action="article")
 	public void recover() {
 		Integer id = getParaToInt(0);
 		renderJson(articleService.recover(id));;
@@ -80,7 +84,15 @@ public class ArticleAdminApi extends BaseController {
 	 * 获取文章信息
 	 */
 	public void get() {
-		renderJson(articleService.get(getParaToInt(0)));
+		renderJson(Ret.ok("article", articleService.get(getParaToInt(0))));
 	}
  
+	/**
+	 * 获取浏览量最多的前几条
+	 */
+	public void listHot() {
+		renderJson(Ret.ok("list", articleService.listHot(getParaToInt("num",10))));
+	}
+	
+	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jfinal.kit.Ret;
 import com.jfinal.upload.UploadFile;
+import com.wenhaofan._admin.common.annotation.SysLog;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Disk;
@@ -25,6 +26,7 @@ public class DiskApi extends BaseController{
 		renderJson(Ret.ok("list", diskList));
 	}
 	
+	@SysLog(value="文件系统上传",action="disk")
 	public void upload() {
 		UploadFile	uploadFile = getFile("upfile", UploadService.tempPath);
 		Integer parentId=getParaToInt("parentId",0);
@@ -32,6 +34,7 @@ public class DiskApi extends BaseController{
 		renderJson(Ret.ok("disk", disk));
 	}
 	
+	@SysLog(value="创建文件夹",action="disk")
 	public void createFolder() {
 		Disk disk=getModel(Disk.class,"",true);
 		disk.setType(DiskType.FOLDER.toString());
@@ -39,11 +42,13 @@ public class DiskApi extends BaseController{
 		renderJson(Ret.ok("disk",disk));
 	}
 	
+	@SysLog(value="删除文件夹或文件",action="disk")
 	public void remove() {
 		service.remove(getParaToInt());
 		renderJson(Ret.ok());
 	}
-
+	
+	@SysLog(value="更新文件夹或文件",action="disk")
 	public void update() {
 		Disk disk=getModel(Disk.class,"",true);
 		renderJson(Ret.ok("disk", service.update(disk)	));

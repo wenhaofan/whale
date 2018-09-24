@@ -7,6 +7,7 @@ import com.wenhaofan._admin.blogroll.AdminBlogrollApi;
 import com.wenhaofan._admin.comment.AdminCommentApi;
 import com.wenhaofan._admin.comment.AdminCommentController;
 import com.wenhaofan._admin.common.config.interceptor.AdminIndexInterceptor;
+import com.wenhaofan._admin.common.config.interceptor.SysLogInterceptor;
 import com.wenhaofan._admin.config.AdminAdvancedConfigController;
 import com.wenhaofan._admin.config.AdminBaiduConfigApi;
 import com.wenhaofan._admin.config.AdminConfigApi;
@@ -42,6 +43,7 @@ public class AdminRoutes extends Routes {
 	public void config() { 
 	   addInterceptor(new AdminIndexInterceptor());
 	   addInterceptor(new ExceptionInterceptor());
+	   addInterceptor(new SysLogInterceptor());
 	   setBaseViewPath("/_view/admin/autumn/");
 	   
 	   add("/admin/api/themes",AdminThemesApi.class);

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.core.Controller;
+import com.wenhaofan.common.aop.AopFactory;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.IpKit;
 import com.wenhaofan.common.log.AccessLogService;
@@ -18,7 +19,7 @@ public class AccessLogInterceptor implements Interceptor {
 
 	private static int maxOutputLengthOfParaValue = 512;
 	
-	private static AccessLogService service=AccessLogService.me;
+	private static AccessLogService service=AopFactory.getInject(AccessLogService.class);
 	
 	
 	@Override

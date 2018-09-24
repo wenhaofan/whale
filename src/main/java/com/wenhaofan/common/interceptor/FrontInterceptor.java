@@ -22,7 +22,7 @@ public class FrontInterceptor implements Interceptor{
 			return ;
 		}
 		c.setAttr("agentUser", c.getAgentUser());
-		c.setAttr("hotArticles",getArticleService().listHost(4));
+		c.setAttr("hotArticles",getArticleService().listHot(4));
 		c.setAttr("tags",getMetaService().listMeta(MetaTypeEnum.TAG.toString()));
 		c.setAttr("keyword", c.getPara("keyword"));
 		c.setAttr("adminUser", c.userService.getAdminUser());

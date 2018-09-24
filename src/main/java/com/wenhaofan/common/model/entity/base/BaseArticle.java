@@ -36,15 +36,6 @@ public abstract class BaseArticle<M extends BaseArticle<M>> extends Model<M> imp
 		return getStr("content");
 	}
 
-	public M setHtmlTitle(java.lang.String htmlTitle) {
-		set("htmlTitle", htmlTitle);
-		return (M)this;
-	}
-	
-	public java.lang.String getHtmlTitle() {
-		return getStr("htmlTitle");
-	}
-
 	public M setGmtCreate(java.util.Date gmtCreate) {
 		set("gmtCreate", gmtCreate);
 		return (M)this;
@@ -133,6 +124,15 @@ public abstract class BaseArticle<M extends BaseArticle<M>> extends Model<M> imp
 	
 	public java.lang.Boolean getAllowComment() {
 		return get("allowComment");
+	}
+
+	public M setUserId(java.lang.Integer userId) {
+		set("userId", userId);
+		return (M)this;
+	}
+	
+	public java.lang.Integer getUserId() {
+		return getInt("userId");
 	}
 
 }
