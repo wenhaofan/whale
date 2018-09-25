@@ -108,6 +108,33 @@ function renderAccessReport(){
 
 $(function(){
 	
+	fl.ajax({
+		url:"/admin/api/article/listHot",
+		success:function(data){
+			$.each(data.list,function(index,item){
+				var $dd=$(template("tpl-list-article",item));
+				$("#article-list").append($dd);
+			})
+		}
+	})
+	fl.ajax({
+		url:"/admin/api/comment/listRecent",
+		success:function(data){
+			$.each(data.list,function(index,item){
+				var $dd=$(template("tpl-list-comment",item));
+				$("#comment-list").append($dd);
+			})
+		}
+	})
+	fl.ajax({
+		url:"/admin/api/comment/sysLog",
+		success:function(data){
+			$.each(data.list,function(index,item){
+				var $dd=$(template("tpl-list-sysLog",item));
+				$("#comment-list").append($dd);
+			})
+		}
+	})
 	window.statistic={
 		countByDate:function(paras){
 			$.ajax({

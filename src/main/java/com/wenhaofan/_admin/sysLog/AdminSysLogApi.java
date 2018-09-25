@@ -12,7 +12,7 @@ public class AdminSysLogApi extends BaseController {
 	private AdminSysLogService service;
 	
 	public void page() {
-		Page<SysLog> logPage=service.listRecent(getParaToInt("page", 1), getParaToInt("limit",10));
+		Page<SysLog> logPage=service.listRecent(getParaToInt("page", 1), getParaToInt("limit",8));
 		renderJson(Ret.ok("logPage", logPage));
 	}
 	

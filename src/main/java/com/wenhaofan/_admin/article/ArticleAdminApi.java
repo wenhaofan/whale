@@ -91,7 +91,7 @@ public class ArticleAdminApi extends BaseController {
 	 * 获取浏览量最多的前几条
 	 */
 	public void listHot() {
-		renderJson(Ret.ok("list", articleService.listHot(getParaToInt("num",10))));
+		renderJson(Ret.ok("list", articleService.listHot(getParaToInt("num",8))));
 	}
 	
 	

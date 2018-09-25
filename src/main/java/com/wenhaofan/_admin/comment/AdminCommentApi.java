@@ -34,5 +34,8 @@ public class AdminCommentApi  extends BaseController{
 	public void aduit() {
 		renderJson(service.aduit(getParaToInt("toId"),getParaToBoolean("aduit")));
 	}
+	public void listRecent() {
+		renderJson(Ret.ok("list", service.listRecent(getParaToInt(0,8))));
+	}
 	
 }
