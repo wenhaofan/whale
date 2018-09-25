@@ -99,7 +99,7 @@
 	</div>
 	<div class="layui-col-xs12 layui-col-sm6 layui-col-md4 info-statistic-block">
 		<div  class="info-statistic-item" >
-			<dl  class="statistic-list" id="sysLogList">
+			<dl  class="statistic-list" id="sysLog-list">
 				<dt>系统日志</dt>
 				 
 			</dl>
@@ -157,5 +157,5 @@
 <dd><a href="/article/{{identify}}?p={{pageNum}}#li-comment-{{id}}"  target="_blank">{{name}}:{{content}}</a></dd>
 </script>
 <script type="text/html" id="tpl-list-sysLog">
-<dd>{{content}}</dd>
+<dd>{{content}} by {{gmtCreate}}</dd>
 </script>

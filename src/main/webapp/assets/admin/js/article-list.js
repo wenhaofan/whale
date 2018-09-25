@@ -1,20 +1,3 @@
-$.fn.serializeJson = function()   
-{   
-   var o = {};   
-   var a = this.serializeArray();   
-   $.each(a, function() {   
-       if (o[this.name]) {   
-           if (!o[this.name].push) {   
-               o[this.name] = [o[this.name]];   
-           }   
-           o[this.name].push(this.value || '');   
-       } else {   
-           o[this.name] = this.value || '';   
-       }   
-   });   
-   return o;   
-}; 
-
 var form;
 var table;
 layui.use([ 'table', 'form' ], function() {
@@ -50,51 +33,7 @@ function renderArticles(){
 	    ]]
 	 });
 }
-
-$(function() {
  
-	$("body").on("click", ".article-update", function() {
-		var id = $(this).attr("data-id");
-		window.location.href = "/admin/article/edit/" + id;
-	})
-	
-	
-	$("body").on("click", ".article-remove", function() {
-		var id = $(this).attr("data-id");
-		fl.alertConfirm({title:"是否确认废弃？",then:function(){
-			fl.ajax({
-				url : "/admin/api/article/remove/"+id,
-				success : function(data) {
-					fl.alertOkAndReload(data.msg);
-					 
-				}
-			})
-		}})
-	})
-	$("body").on("click", ".article-delete", function() {
-		var id = $(this).attr("data-id");
-		fl.alertConfirm({title:"是否确认删除？",text:"注意：删除后将不能恢复！",then:function(){
-			fl.ajax({
-				url : "/admin/api/article/delete/"+id,
-				success : function(data) {
-					fl.alertOkAndReload(data.msg)
-				}
-			})
-		}})
-	})
-	$("body").on("click", ".article-recover", function() {
-		var id = $(this).attr("data-id");
-		fl.alertConfirm({title:"是否确认恢复？",then:function(){
-			fl.ajax({
-				url : "/admin/api/article/recover/"+id,
-				success : function(data) {
-					fl.alertOkAndReload(data.msg)
-				}
-			})
-		}})
-	})
-})
-
 function querylist(data) {
 	table.reload('articles', {
 		url : '/admin/api/article/list',
@@ -120,25 +59,110 @@ function initCategorySelect() {
 
 
 $(document).ready(function() {
+	
+	//避免pjax重复加载js导致事件重复绑定
+	if (typeof (adminArticleListBind) != "undefined") {
+	    return;
+	}   
+	adminArticleListBind=true;
+	
+ 
+	$("body").on("click", ".article-remove", function() {
+		removeArticle(this);
+	})
+	$("body").on("click", ".article-delete", function() {
+		deleteArticle(this);
+	})
+	
+	$("body").on("click", ".article-recover", function() {
+		recoverArticle(this);
+	})
+	
 	$("body").on("click",".article-push",function(){
-		fl.ajax({
-			url:"/admin/api/article/asyncMetaWeblog/"+$(this).data("id"),
-			success:function(data){
-				fl.alertOk({});
-			}
-		})
+		asyncMetaWeblog(this);
 	})
-	$("body").on("click",".article-preview",function(){
-		 window.open("/article/"+$(this).data("identify"));
-	})
+ 
 	$("body").on("click",".createIndex",function(){
-		fl.alertConfirm({title:"是否确认重置索引？",text:"执行过程中搜索服务将暂时不能使用，文章越多时间越长。",then:function(){
-			fl.ajax({
-				url:"/admin/api/article/createIndex",
-				success:function(data){
-					fl.alertOk({title:"重置成功！"});
-				}
-			})
-		}}) 
+		createIndex();
 	})
 })
+
+/**
+ * 废弃文章
+ * @param that
+ * @returns
+ */
+function removeArticle(that){
+	var id = $(that).data("id");
+	fl.alertConfirm({title:"是否确认废弃？",then:function(){
+		fl.ajax({
+			url : "/admin/api/article/remove/"+id,
+			success : function(data) {
+				fl.alertOkAndReload(data.msg);
+			}
+		})
+	}})
+	return false;
+}
+
+/**
+ * 删除文章
+ * @param that
+ * @returns
+ */
+function deleteArticle(that){
+	var id = $(that).attr("data-id");
+	fl.alertConfirm({title:"是否确认删除？",text:"注意：删除后将不能恢复！",then:function(){
+		fl.ajax({
+			url : "/admin/api/article/delete/"+id,
+			success : function(data) {
+				fl.alertOkAndReload(data.msg)
+			}
+		})
+	}})
+}
+
+/**
+ * 调用metaweblog接口同步发送文章
+ * @param that
+ * @returns
+ */
+function asyncMetaWeblog(that){
+	fl.ajax({
+		url:"/admin/api/article/asyncMetaWeblog/"+$(that).data("id"),
+		success:function(data){
+			fl.alertOk({});
+		}
+	})
+}
+
+/**
+ * 恢复文章
+ * @param that
+ * @returns
+ */
+function recoverArticle(that){
+	var id = $(that).attr("data-id");
+	fl.alertConfirm({title:"是否确认恢复？",then:function(){
+		fl.ajax({
+			url : "/admin/api/article/recover/"+id,
+			success : function(data) {
+				fl.alertOkAndReload(data.msg)
+			}
+		})
+	}})
+}
+/**
+ * 重置所有索引
+ * @returns
+ */
+function resetIndex(){
+	fl.alertConfirm({title:"是否确认重置索引？",text:"执行过程中搜索服务将暂时不能使用，文章越多时间越长。",then:function(){
+		fl.ajax({
+			url:"/admin/api/article/createIndex",
+			success:function(data){
+				fl.alertOk({title:"重置成功！"});
+			}
+		})
+	}}) 
+}

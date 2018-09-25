@@ -25,6 +25,7 @@ import com.wenhaofan._admin.nav.AdminNavApi;
 import com.wenhaofan._admin.nav.AdminNavController;
 import com.wenhaofan._admin.statistic.StatisticApi;
 import com.wenhaofan._admin.statistic.StatisticController;
+import com.wenhaofan._admin.sysLog.AdminSysLogApi;
 import com.wenhaofan._admin.themes.AdminThemesApi;
 import com.wenhaofan._admin.themes.AdminThemesController;
 import com.wenhaofan._admin.user.AdminUserApi;
@@ -60,7 +61,8 @@ public class AdminRoutes extends Routes {
 	   add("/admin/api/baiduConfig",AdminBaiduConfigApi.class);
 	   add("/admin/api/config", AdminConfigApi.class);
 	   add("/admin/api/blogroll", AdminBlogrollApi.class);
-	 
+	  add("/admin/api/sysLog", AdminSysLogApi.class);
+	   
 	   add("/admin/advancedConfig",AdminAdvancedConfigController.class,"/");
 	   add("/admin/config", AdminConfigController.class,"/");
 	   add("/admin/meta", CategoryRouter.class,"/");

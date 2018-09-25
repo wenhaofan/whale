@@ -127,12 +127,15 @@ $(function(){
 		}
 	})
 	fl.ajax({
-		url:"/admin/api/comment/sysLog",
+		url:"/admin/api/sysLog/page",
 		success:function(data){
-			$.each(data.list,function(index,item){
-				var $dd=$(template("tpl-list-sysLog",item));
-				$("#comment-list").append($dd);
+			$.each(data.logPage.list,function(index,item){
+				 
+					var $dd=$(template("tpl-list-sysLog",item));
+					$("#sysLog-list").append($dd);
+				 
 			})
+			
 		}
 	})
 	window.statistic={

@@ -4,6 +4,6 @@ import com.jfinal.core.JFinal;
 
 public class Application {
 	public static void main(String[] args) {
-		JFinal.start("src/main/webapp", 9090, "/");
+		JFinal.start("src/main/webapp", 8080, "/");
 	}
 }
