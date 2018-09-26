@@ -11,7 +11,7 @@ $(function(){
 		var id=$(this).data("id");
 		deleteBlogroll(id);
 	})
-	setBasicForm();
+	
 })
 
 function deleteBlogroll(id){
@@ -67,8 +67,8 @@ function setBasicForm(){
 				var config=data.config;
 				$(".ico-img").attr("src",(config.ico&&config.ico.length>0)?config.ico:'/favicon.ico')
 				$(".logo-img").attr("src",(config.logo&&config.logo.length>0)?config.logo:'/assets/images/logo.png')
-				formUtil.setFormVal(data.config,$(".editConfig"));
-				formUtil.setFormVal(data.config,$(".editConfig"));
+			 
+				form.val("editConfig",config)
 			}
 		}
 	})
@@ -102,9 +102,18 @@ layui.use(['form', 'laytpl','table','upload'],function(){
 	form=layui.form;
 	upload=layui.upload;
 	form.render();
- 
+   
 	form.on("submit(editConfig)",function(data){
+		
+		var $form=$(data.form);
+		var $input=$form.find("div.layui-form-item").find("input[name='isAuditComment']");
+		if($input.length>0){
+			if(!data.field.isAuditComment){
+				data.field.isAuditComment=0;
+			}
+		}
 		editConfig(data.field);
+		return false;
 	})
 
 	form.on("submit(editBlogroll)",function(data){
@@ -151,4 +160,5 @@ layui.use(['form', 'laytpl','table','upload'],function(){
 	      fl.alertErro("上传失败！");
 	    }
 	  });
+	  setBasicForm();
 }) 

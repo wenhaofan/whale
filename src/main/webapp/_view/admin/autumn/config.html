@@ -2,7 +2,7 @@
 	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
 		<div class="basic-config">
 			<blockquote class="page-title  page-title">网站信息</blockquote>
-			<form class="layui-form editConfig" action=""   onsubmit="return false">
+			<form class="layui-form editConfig" lay-filter="editConfig" action=""   onsubmit="return false">
 			  <div class="layui-form-item">
 			    <label class="layui-form-label">标题</label>
 			    <div class="layui-input-block">
@@ -69,8 +69,7 @@
 	<div class="layui-col-xs12 layui-col-md6 layui-col-lg6">
 		<div class="basic-config">
 			<blockquote class="page-title  page-title">其他设置</blockquote>
-			<form class="layui-form editConfig" action="" onsubmit="return false">
-			
+			<form class="layui-form editConfig" lay-filter="editConfig" action="" onsubmit="return false">
 			  <div class="layui-form-item">
 			    <label class="layui-form-label">发件邮箱</label>
 			    <div class="layui-input-block">
@@ -118,7 +117,12 @@
 			      <input type="text" name="qiniuUrl"  placeholder="请输入七牛云URL" autocomplete="off" class="layui-input">
 			    </div>
 			  </div>
-			  
+			 <div class="layui-form-item">
+			    <label class="layui-form-label">评论审核</label>
+			    <div class="layui-input-block">
+			       <input type="checkbox" value="1" name="isAuditComment" lay-skin="switch" lay-text="开启|关闭" checked>
+			    </div>
+			  </div>
 			  
 			  <div class="layui-form-item">
 			    <div class="layui-input-block">

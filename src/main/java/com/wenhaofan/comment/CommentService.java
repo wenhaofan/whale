@@ -73,12 +73,21 @@ public class CommentService {
 		if(comment.getUserId()==-1) {
 			comment.setIsAduit(true);
 		}
+		if(BlogContext.config.getIsAuditComment()) {
+			comment.setIsAduit(true);
+		}
+		
+		comment.save();
 		
 		new Thread(()->{
 			//发送通知邮件
 			sendHintAdminEmail(comment);
+			if(comment.getIsAduit()) {
+				sendReplyEmail(comment);
+			}
 		}).start();;
-		comment.save();
+		
+		
 	}
 
 
