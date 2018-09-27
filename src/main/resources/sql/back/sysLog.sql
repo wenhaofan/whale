@@ -11,5 +11,5 @@
 #end
 
 #sql("listRecent")
-	select * from sys_log  order by gmtCreate
+	select * from sys_log  order by gmtCreate desc
 #end
