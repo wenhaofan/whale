@@ -184,3 +184,18 @@ boyd,html{
   background-color: #fff;
   color: #3b8cff;
 }
+.disk-copy{
+	text-align: center;
+	width:300px;
+	margin: 10px;
+}
+.disk-copy .copy-link-hint{
+	display: inline-block;
+	width: 100%;
+	margin-top: 10px;	text-align: center;
+	color: red;
+}
+.disk-copy button{
+	display: inline-block;
+	margin-top:10px;
+}

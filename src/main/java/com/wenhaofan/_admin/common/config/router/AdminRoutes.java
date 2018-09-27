@@ -26,6 +26,7 @@ import com.wenhaofan._admin.nav.AdminNavController;
 import com.wenhaofan._admin.statistic.StatisticApi;
 import com.wenhaofan._admin.statistic.StatisticController;
 import com.wenhaofan._admin.sysLog.AdminSysLogApi;
+import com.wenhaofan._admin.sysLog.SysLogController;
 import com.wenhaofan._admin.themes.AdminThemesApi;
 import com.wenhaofan._admin.themes.AdminThemesController;
 import com.wenhaofan._admin.user.AdminUserApi;
@@ -79,6 +80,7 @@ public class AdminRoutes extends Routes {
 	   add("/admin/nav", AdminNavController.class, "/");
 	   add("/admin/user",AdminUserController.class,"/");
 	   add("/admin/themes",AdminThemesController.class,"/");
+	   add("/admin/sysLog", SysLogController.class,"");
 	}
 
 }

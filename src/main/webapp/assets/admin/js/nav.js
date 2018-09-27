@@ -32,6 +32,14 @@ var replyData;
 var layerIndex;
  
 $(function(){
+	
+	//避免pjax重复加载js导致事件重复绑定
+	if (typeof (adminNavListIsBind) != "undefined") {
+	    return;
+	}   
+	adminNavListIsBind=true;
+	
+	
 	$("body").on("click",".add",function(){
 	  	var editHtml=template("tpl-edit",{method:"add"});
 
@@ -69,20 +77,16 @@ $(function(){
 	$("body").on("click",".delete",function(){
 		deleteId=$(this).data("id");
 		fl.alertConfirm({title:"确认删除！",then:function(){
-			$.ajax({
+			fl.ajax({
 				url:"/admin/api/nav/delete",
 				data:{toId:deleteId},
 				success:function(data){
-					if(fl.isOk(data)){
-						fl.alertOkAndReload();	
-					}
+					fl.alertOkAndReload();	
 				}
 			})
 		}})
 	})
-	$("body").on("click",".update",function(){
-		
-	})
+ 
 })
 
 function add(data){
@@ -99,14 +103,12 @@ function add(data){
 
 }
 function update(data){
-	$.ajax({
+	fl.ajax({
 		url:"/admin/api/nav/update",
 		type:"post",
 		data:data,
 		success:function(data){
-			if(fl.isOk(data)){
-				fl.alertOkAndReload("修改成功！");
-			}
+			fl.alertOkAndReload("修改成功！");
 		}
 	})
 }

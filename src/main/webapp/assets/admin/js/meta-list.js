@@ -18,28 +18,24 @@ function update(obj, type, id, name, pri) {
 }
 
 function add(data) {
-	$.ajax({
+	fl.ajax({
 		url : "/admin/api/meta/add",
 		type : "post",
 		data : data,
 		dataType : "json",
 		success : function(data) {
-			if (fl.isOk(data)) {
-				fl.alertOkAndReload(data.text);
-			}
+			fl.alertOkAndReload(data.text);
 		}
 	})
 }
 
 function doUpdate(data) {
-	$.ajax({
+	fl.ajax({
 		url : "/admin/api/meta/update",
 		data : data,
 		dataType : "json",
 		success : function(data) {
-			if (fl.isOk(data)) {
-				fl.alertOkAndReload(data.text);
-			}
+			fl.alertOkAndReload(data.text);
 		}
 	})
 }
@@ -48,13 +44,11 @@ function remove(id) {
 	fl.alertConfirm({
 		title : '确认删除吗？',
 		then : function() {
-			$.ajax({
+			fl.ajax({
 				url : "/admin/api/meta/remove/" + id,
 				dataType : "json",
 				success : function(data) {
-					if (fl.isOk(data)) {
-						fl.alertOkAndReload(data.text);
-					}
+					fl.alertOkAndReload(data.text);
 				}
 			})
 		}
@@ -62,6 +56,13 @@ function remove(id) {
 }
 
 $(function() {
+	
+	//避免pjax重复加载js导致事件重复绑定
+	if (typeof (adminMetaListIsBind) != "undefined") {
+	    return;
+	}   
+	adminMetaListIsBind=true;
+	
 	$("a").hover(function() {
 		return false;
 	})

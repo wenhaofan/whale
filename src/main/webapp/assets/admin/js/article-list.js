@@ -61,10 +61,10 @@ function initCategorySelect() {
 $(document).ready(function() {
 	
 	//避免pjax重复加载js导致事件重复绑定
-	if (typeof (adminArticleListBind) != "undefined") {
+	if (typeof (adminArticleListIsBind) != "undefined") {
 	    return;
 	}   
-	adminArticleListBind=true;
+	adminArticleListIsBind=true;
 	
  
 	$("body").on("click", ".article-remove", function() {
