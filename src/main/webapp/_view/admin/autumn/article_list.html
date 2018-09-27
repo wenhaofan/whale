@@ -76,9 +76,10 @@
 	<button class="layui-btn layui-btn-sm article-recover" data-id="{{d.id}}">恢复</button> 
 	 <button class="layui-btn layui-btn-sm article-delete" data-id="{{d.id}}">删除</button> 
 {{# } else if(d.state == 1){ }}
-   <button class="layui-btn layui-btn-sm article-remove" data-id="{{d.id}}">废弃</button> 
-{{# } }}
-	
+    <button class="layui-btn layui-btn-sm article-remove" data-id="{{d.id}}">废弃</button> 
+{{# }else if(d.state==0){ }}
+	 <button class="layui-btn layui-btn-sm article-delete" data-id="{{d.id}}">删除</button> 
+{{# }}}
 ]]#
 </script>
 <script type="text/javascript" src="/assets/common/meta.js"></script>

@@ -57,6 +57,7 @@ public class AdminArticleLuceneIndexes {
 		long count=LuceneHelper.single().createIndex(document);
 	 
 		if(count==0) {
+			
 			log.error("引索创建失败！id="+article.getId());
 		}
 	}

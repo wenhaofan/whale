@@ -18,7 +18,7 @@ $.fn.serializeJson = function()
 $(function(){
 	
 	$(".menu-tree li").each(function(){
-		if($(this).find("a").attr("href")=="#(requestUrl)"){
+		if($(this).find("a").attr("href")==requestUrl){
 			$(this).addClass("layui-this")
 		}
 	})

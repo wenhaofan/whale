@@ -83,7 +83,7 @@ $(document).ready(function() {
 	})
  
 	$("body").on("click",".createIndex",function(){
-		createIndex();
+		resetIndex();
 	})
 })
 
