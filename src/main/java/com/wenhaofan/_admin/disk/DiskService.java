@@ -86,16 +86,13 @@ public class DiskService {
 		String[] arr=fileName.split("\\.");
 		
 		String temp=arr.length>=2?arr[0]:fileName;
-		
-		
+
 		SqlPara sql=dao.getSqlPara("adminDisk.listCheckFile", Kv.by("fileName", temp).set("parentId", parentId));
 		List<Disk> list=dao.find(sql);
 		
 		if(list.isEmpty()) {
 			return fileName;
 		}
-		
-		
 		
 		if(arr.length>=2) {
 			return arr[0]+"("+list.size()+")."+arr[arr.length-1];
@@ -105,40 +102,45 @@ public class DiskService {
 	}
 	
 	
-	private static final String basePath = "/upload/";
+	private static final String basePath = File.separator+"upload"+File.separator;
  
 
 	
 	public Disk upload(UploadFile uf,Integer parentId) {
  
 		String fileName=getFileName(uf.getFileName(),parentId);
+		String type=getFileType(fileName);
+		String absolutePath = genAbsolutePath(type);
 		
-		String relativePath=basePath+File.separator+"disk";
-		String absolutePath= PathKit.getWebRootPath()+relativePath;
-		 
 		saveOriginalFileToTargetFile(uf.getFile(),absolutePath,fileName);
-	
+
+		//上传至七牛云
+		Ret ret=QiniuFileUtils.uploadFile(absolutePath, fileName, fileName);
+		String fileUrl=null;
+		//如果七牛云上传失败则返回服务器资源路径
+		if(ret.isFail()){
+			fileUrl=basePath+"disk"+File.separator+type+File.separator+fileName;
+		}else {
+			fileUrl=ret.getStr("url");
+		}
+		
 		Disk disk=new Disk();
 		disk.setName(fileName);
 		disk.setGmtCreate(new Date());
-		
-		String[] arr=fileName.split(".");
-		if(arr.length>=2) {
-			disk.setType(arr[arr.length-1]);
-		}
-		
-		//上传至七牛云
-		Ret ret=QiniuFileUtils.uploadFile(absolutePath, fileName, fileName);
-		String url=ret.getStr("url");
-		disk.setUrl(url);
+		disk.setType(type);	
+		disk.setUrl(fileUrl  );
 		disk.setParentId(parentId);
 		disk.setSize(uf.getFile().length());
-		
-		String type=getFileType(disk.getName());
 		disk.setType(type);
-		
 		disk.save();
+		
 		return disk;
+	}
+
+	private String genAbsolutePath(String type) {
+		String relativePath=basePath+"disk"+File.separator+type;
+		String absolutePath= PathKit.getWebRootPath()+relativePath;
+		return absolutePath;
 	}
 	
 	private void saveOriginalFileToTargetFile(File originalFile, String targetFilePath,String targetFileName) {

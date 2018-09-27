@@ -3,7 +3,7 @@ package com.wenhaofan._admin.blogroll;
 import java.util.List;
 
 import com.jfinal.kit.Ret;
-import com.wenhaofan._admin.common.annotation.SysLog;
+import com.wenhaofan.common.annotation.SysLog;
 import com.wenhaofan.common.aop.Inject;
 
 /**

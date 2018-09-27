@@ -6,11 +6,11 @@ import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.StrKit;
-import com.wenhaofan._admin.common.annotation.SysLog;
-import com.wenhaofan._admin.common.log.SysLogHelper;
-import com.wenhaofan._admin.common.log.SysLogLevelEnum;
+import com.wenhaofan.common.annotation.SysLog;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.IpKit;
+import com.wenhaofan.common.log.SysLogHelper;
+import com.wenhaofan.common.log.SysLogLevelEnum;
 
 public class SysLogInterceptor implements   Interceptor {
 

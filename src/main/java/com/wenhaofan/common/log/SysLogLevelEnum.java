@@ -1,4 +1,4 @@
-package com.wenhaofan._admin.common.log;
+package com.wenhaofan.common.log;
 
 public enum SysLogLevelEnum {
 

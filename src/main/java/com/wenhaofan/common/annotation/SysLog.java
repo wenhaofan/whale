@@ -1,4 +1,4 @@
-package com.wenhaofan._admin.common.annotation;
+package com.wenhaofan.common.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

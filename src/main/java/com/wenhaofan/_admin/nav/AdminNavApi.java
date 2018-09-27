@@ -1,6 +1,6 @@
 package com.wenhaofan._admin.nav;
 
-import com.wenhaofan._admin.common.annotation.SysLog;
+import com.wenhaofan.common.annotation.SysLog;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.Ret;

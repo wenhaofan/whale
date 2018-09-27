@@ -1,7 +1,7 @@
 package com.wenhaofan._admin.comment;
 
 import com.jfinal.plugin.activerecord.Page;
-import com.wenhaofan._admin.common.annotation.SysLog;
+import com.wenhaofan.common.annotation.SysLog;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.Ret;

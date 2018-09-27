@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.jfinal.kit.Ret;
 import com.jfinal.upload.UploadFile;
-import com.wenhaofan._admin.common.annotation.SysLog;
+import com.wenhaofan.common.annotation.SysLog;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.model.entity.Disk;
