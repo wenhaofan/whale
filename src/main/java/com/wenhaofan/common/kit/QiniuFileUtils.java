@@ -37,13 +37,13 @@ public class QiniuFileUtils {
 		String bucket=BlogContext.config.getQiniuBucket();
 		
 		if(!StrKit.notBlank(ak,sk,bucket,url)) {
-			return Ret.fail();
+			return Ret.fail("code",0);
 		}
 		
 		Ret ret=uploadFile(new File(filePath+File.separator+fileName), qiniuName, ak ,sk,bucket);
 		
 		if(ret.isFail()) {
-			return ret;
+			return ret.set("code",1);
 		}
 		
 		String fileUrl=url.endsWith("/")?url+ret.getStr("qiniuFileName"):url+"/"+ret.getStr("qiniuFileName");
@@ -108,7 +108,7 @@ public class QiniuFileUtils {
 		try {
 			uploadManager.put(localPath, key, upToken);
 			return Ret.ok("qiniuFileName", key);
-		} catch (QiniuException ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			log.error(ex.getMessage(),ex);
 		}

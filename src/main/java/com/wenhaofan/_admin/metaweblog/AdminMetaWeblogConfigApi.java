@@ -24,12 +24,12 @@ public class AdminMetaWeblogConfigApi extends BaseController {
 		List<MetaweblogConfig> configs=metaweblogService.list();
 		renderJson(Ret.ok().set("code", 0).set("data", configs));
 	}
-	@SysLog(value="编辑metaweblog配置",action="meta")
+	@SysLog(value="编辑metaweblog配置",action="saveOrUpdate")
 	public void mconfigEdit() {
 		MetaweblogConfig config=getModel(MetaweblogConfig.class,"",true);
-		renderJson(metaweblogService.updateOrAdd(config));
+		renderJson(metaweblogService.saveOrUpdate(config));
 	}
-	@SysLog(value="删除metaweblog配置",action="meta")
+	@SysLog(value="删除metaweblog配置",action="delete")
 	public void mconfigDelete() {
 		renderJson(metaweblogService.delete(getParaToInt()));
 	}

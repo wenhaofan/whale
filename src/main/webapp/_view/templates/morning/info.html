@@ -4,7 +4,7 @@
   <div class="infos">
     <div class="newsview">
       <h3 class="news_title">#(article.title)</h3>
-      <div class="news_author"><span class="au01"><a href="mailto:dancesmiling@qq.com">#(config.author)</a></span><span class="au02">#(article.gmtCreate)</span><span class="au03">共<b><script src="/_view/templates/morning//e/public/ViewClick/?classid=5&amp;id=816&amp;addclick=1"></script>#(article.pv)</b>人围观</span></div>
+      <div class="news_author"><span class="au01"><a href="mailto:dancesmiling@qq.com">#(config.author)</a></span><span class="au02">#(article.gmtCreate)</span><span class="au03">共<b>#(article.pv)</b>人围观</span></div>
       <div class="tags">
       		#for(meta:atags)
       		<a href="/article/category/#(meta.id)" target="_blank">#(meta.mname)</a>

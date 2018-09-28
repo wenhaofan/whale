@@ -10,6 +10,8 @@ import com.jfinal.upload.UploadFile;
 import com.wenhaofan.common.kit.DateKit;
 import com.wenhaofan.common.kit.QiniuFileUtils;
 import com.wenhaofan.common.kit.Ret;
+import com.wenhaofan.common.log.SysLogActionEnum;
+import com.wenhaofan.common.log.SysLogHelper;
 import com.wenhaofan.common.model.dto.FileUploadInfo;
 
 /**
@@ -61,7 +63,15 @@ public class UploadService {
 		
 		//如果七牛云上传失败则返回服务器资源路径
 		if(ret.isFail()){
+			
 			fileUrl=basePath+uploadType+"/"+arr[1]+"/"+fileName;
+			
+			String data=Ret.create("fileUrl", fileUrl).toJson();
+			if(ret.getInt("code")==0){
+				SysLogHelper.addWarnLog("七牛云未配置，上传资源将仅存至服务器！", SysLogActionEnum.UPLOAD.getName(),data);
+			}else {
+				SysLogHelper.addErrorLog("七牛云上传失败，上传资源将仅存至服务器！", SysLogActionEnum.UPLOAD.getName(), data);
+			}
 		}else {
 			fileUrl=ret.getStr("url");
 		}
@@ -88,7 +98,7 @@ public class UploadService {
 			String uploadType,
 			String extName) {
 
-		String	relativePath = basePath + uploadType+File.separator+extName;
+		String	relativePath = basePath + uploadType+"/"+extName;
 
 		String fileName = generateFileName(520520, extName);
 	
@@ -100,7 +110,7 @@ public class UploadService {
 		if(!file.exists()) {
 			file.mkdirs();
 		}
-		saveOriginalFileToTargetFile(originalFile, targetFilePath+File.separator+targetFileName);
+		saveOriginalFileToTargetFile(originalFile, targetFilePath+"/"+targetFileName);
 	}
 
 	/**

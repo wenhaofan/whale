@@ -11,7 +11,7 @@
 			and
 				state=#para(query.state)
 		#else
-			and state =1
+			and state =0
 		#end
 		
 		#if(query.parentId!=null)

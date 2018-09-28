@@ -2,33 +2,27 @@ package com.wenhaofan.common.log;
 
 public enum SysLogActionEnum {
 	/**
-	 * 默认
+	 * 删除
 	 */
-	DEFAULT("defalut"),
+	DELETE("delete"),
 	/**
-	 * 文章
+	 * 新增
 	 */
-	ARTICLE("article"),
+	SAVE("save"),
 	/**
-	 * 文章标签分类
+	 * 更新
 	 */
-	META("meta"),
+	UPDATE("update"),
+	SAVE_OR_UPDATE("saveOrUpdate"),
 	/**
 	 * 上传
 	 */
 	UPLOAD("upload"),
 	/**
-	 * 用户
+	 * 其他类型的日志
 	 */
-	USER("user"),
-	/**
-	 * 配置
-	 */
-	CONFIG("config"),
-	/**
-	 * 包含 metaweblog,baidu 推送
-	 */
-	PUSH("push");
+	OTHER("other");
+	
 	private String name;
 
 	

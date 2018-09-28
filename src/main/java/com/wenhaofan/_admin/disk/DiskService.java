@@ -13,6 +13,8 @@ import com.jfinal.upload.UploadFile;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.kit.QiniuFileUtils;
 import com.wenhaofan.common.kit.Ret;
+import com.wenhaofan.common.log.SysLogActionEnum;
+import com.wenhaofan.common.log.SysLogHelper;
 import com.wenhaofan.common.model.entity.Disk;
 import com.wenhaofan.common.model.entity.QueryDisk;
 
@@ -102,7 +104,7 @@ public class DiskService {
 	}
 	
 	
-	private static final String basePath = File.separator+"upload"+File.separator;
+	private static final String basePath = "/"+"upload"+"/";
  
 
 	
@@ -119,7 +121,14 @@ public class DiskService {
 		String fileUrl=null;
 		//如果七牛云上传失败则返回服务器资源路径
 		if(ret.isFail()){
-			fileUrl=basePath+"disk"+File.separator+type+File.separator+fileName;
+			fileUrl=basePath+"disk"+"/"+type+"/"+fileName;
+			
+			String data=Ret.create("fileUrl", fileUrl).toJson();
+			if(ret.getInt("code")==0){
+				SysLogHelper.addWarnLog("七牛云未配置，上传资源将仅存至服务器！", SysLogActionEnum.UPLOAD.getName(),data);
+			}else {
+				SysLogHelper.addErrorLog("七牛云上传失败，上传资源将仅存至服务器！", SysLogActionEnum.UPLOAD.getName(), data);
+			}
 		}else {
 			fileUrl=ret.getStr("url");
 		}
@@ -138,7 +147,7 @@ public class DiskService {
 	}
 
 	private String genAbsolutePath(String type) {
-		String relativePath=basePath+"disk"+File.separator+type;
+		String relativePath=basePath+"disk"+"/"+type;
 		String absolutePath= PathKit.getWebRootPath()+relativePath;
 		return absolutePath;
 	}
@@ -148,7 +157,7 @@ public class DiskService {
 		if(!file.exists()) {
 			file.mkdirs();
 		}
-		saveOriginalFileToTargetFile(originalFile, targetFilePath+File.separator+targetFileName);
+		saveOriginalFileToTargetFile(originalFile, targetFilePath+"/"+targetFileName);
 		originalFile.delete();
 	}
 

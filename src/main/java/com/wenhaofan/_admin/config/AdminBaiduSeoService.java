@@ -7,6 +7,8 @@ import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
 import com.jfinal.plugin.activerecord.SqlPara;
 import com.wenhaofan.common.aop.Inject;
+import com.wenhaofan.common.log.SysLogActionEnum;
+import com.wenhaofan.common.log.SysLogHelper;
 import com.wenhaofan.common.model.entity.BaiduSeoConfig;
 
 public class AdminBaiduSeoService {
@@ -31,9 +33,7 @@ public class AdminBaiduSeoService {
 	public void pushLink(String link,String site,String token) {
 		String url="http://data.zz.baidu.com/urls?site="+site+"&token="+token;
 		Kv headers=Kv.by("User-Agent", "curl/7.12.1 ").set("Host", "data.zz.baidu.com").set("Content-Type", "text/plain").set("Content-Length", "83");
-		String result=HttpKit.post(url,link,headers);
-		//待加日志
-		System.out.println(result);
+		HttpKit.post(url,link,headers);
 	}
 	
 	public void pushLink(List<BaiduSeoConfig> configs,String link) {
@@ -42,6 +42,7 @@ public class AdminBaiduSeoService {
 				pushLink(link,config.getSite(),config.getToken());
 			} catch (Exception e) {
 				e.printStackTrace();
+				SysLogHelper.addWarnLog("百度推送接口异常！", SysLogActionEnum.OTHER.getName(), Kv.by("config", config).set("link", link).toJson());
 			}
 		}); 
 	}
@@ -54,7 +55,7 @@ public class AdminBaiduSeoService {
 	}
 	
 	 
-	public Ret updateOrAdd(BaiduSeoConfig config) {
+	public Ret saveOrUpdate(BaiduSeoConfig config) {
 		if(config.getId()!=null) {
 			config.update();
 		}else {

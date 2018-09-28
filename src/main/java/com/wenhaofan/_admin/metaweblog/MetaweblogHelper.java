@@ -14,6 +14,8 @@ import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.common.aop.Inject;
+import com.wenhaofan.common.log.SysLogActionEnum;
+import com.wenhaofan.common.log.SysLogHelper;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.common.model.entity.MetaweblogConfig;
@@ -31,7 +33,7 @@ public class MetaweblogHelper {
 	}
 	
 	
-	public Ret updateOrAdd(MetaweblogConfig config) {
+	public Ret saveOrUpdate(MetaweblogConfig config) {
 		if(config.getId()!=null) {
 			config.update();
 		}else {
@@ -73,9 +75,11 @@ public class MetaweblogHelper {
 			if(result.isOk()) {
 				successCount++;
 				successKv.set(config.getWebsite(), config).set("type", type);
+				SysLogHelper.addWarnLog("metaweblog接口异常！", SysLogActionEnum.OTHER.getName(),Ret.by("config", config).toJson());
 			}else {
 				failCount++;
 				failKv.set(config.getWebsite(), config).set("type", type);
+				SysLogHelper.addInfoLog("metaweblog推送成功！", SysLogActionEnum.OTHER.getName(),Ret.by("config", config).toJson());
 			}
 		}
 		

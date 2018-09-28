@@ -28,30 +28,29 @@ public class SysLogInterceptor implements   Interceptor {
 		}
 		
 		BaseController c=(BaseController)inv.getController();
-		
-		
 		String content=sysLog.value();
 		String action=sysLog.action();
 		String ip=null;
 		String data=null;
 		Integer userId=null;
+		String url=null;
 		Kv dataMap=Kv.create();
 		
 		if(inv.isActionInvocation()) {
-			
 			ip=IpKit.getRealIp(c.getRequest());
-			
 			if(!inv.getControllerKey().contains("upload")) {
 				dataMap.putAll(c.getParaMap());
 			}
 			userId=c.getLoginUser().getId();
+			url=c.getRequest().getRequestURL().toString();
 		}else {
 			dataMap.set("methodArgs", inv.getArgs());
 		}
 		data=dataMap.toJson();
 		
-		if(StrKit.isBlank(c.getPara("isAuto"))) {
-			SysLogHelper.addSysLog(content, data, action, ip,userId,SysLogLevelEnum.INFO.getValue());
+		String isAuto=c.getPara("isAuto");
+		if(StrKit.isBlank(isAuto)) {
+			SysLogHelper.addSysLog(content, data, action, ip,url,userId,SysLogLevelEnum.INFO.getValue());
 		}
 	}
 

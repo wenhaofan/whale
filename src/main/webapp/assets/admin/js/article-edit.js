@@ -89,7 +89,7 @@ function save(state,isAuto){
     setSelectedTag(fdata);
     setSelectedCategory(fdata);
   
-    fdata[11]={name:"isAuto", value:isAuto?"1":"0"};
+    fdata[11]={name:"isAuto", value:isAuto?"1":""};
    
     editArticle({fdata:fdata,success:function(data){
     	  var time="["+new Date()+"]";
@@ -109,7 +109,6 @@ function save(state,isAuto){
 }
 
 function autoSave(){
- 
 	setInterval(() => {
 		save(0,true);
 	}, 20000);

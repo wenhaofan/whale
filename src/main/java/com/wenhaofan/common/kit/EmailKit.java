@@ -25,9 +25,9 @@ import com.wenhaofan.common._config.BlogContext;
  */
 public class EmailKit {
 	
-	private static final Log log = Log.getLog(EmailKit.class);
  
-	public static String sendEmail(String emailServer, String fromEmail, String password, String toEmail, String title, String content) {
+ 
+	public static Ret sendEmail(String emailServer, String fromEmail, String password, String toEmail, String title, String content) throws AddressException,MessagingException {
 		
 		// 获取系统属性
 		Properties properties = System.getProperties();
@@ -54,7 +54,7 @@ public class EmailKit {
 		MimeMessage message = new MimeMessage(session);
 
 		// Set From: 头部头字段
-		try {
+	 
 			message.setFrom(new InternetAddress(fromEmail));
 			// Set To: 头部头字段
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
@@ -73,26 +73,16 @@ public class EmailKit {
 			message.setContent(mainPart);
 			// 发送消息
 			Transport.send(message);
-		} catch (AddressException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			log.error(e.getMessage(), e);
-			return "fail";
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			log.error(e.getMessage(), e);
-			return "fail";
-		}
+	 
 		
-		return "ok";
+		return Ret.fail();
 		
 	}
 	
-	public  static void sendEmail(String toEmail,String title,String content) {
-		String result=sendEmail(BlogContext.emailConfig.getEmailServer(), BlogContext.emailConfig.getFromEmail(), BlogContext.emailConfig.getEmailPassword()
-				, toEmail, title, content);
-		System.out.println(result);
+	public  static boolean sendEmail(String toEmail,String title,String content) throws AddressException,MessagingException {
+		Ret result= sendEmail(BlogContext.emailConfig.getEmailServer(), BlogContext.emailConfig.getFromEmail(), BlogContext.emailConfig.getEmailPassword()
+					, toEmail, title, content);
+		return result.isOk();
 	}
 
  
@@ -100,14 +90,24 @@ public class EmailKit {
  
 	
 	public static void main(String[] args) {
-		String ret = sendEmail(
-				"abc.com",              // 邮件发送服务器地址
-				"no-reply@abc.com",		// 发件邮箱
-				null,					// 发件邮箱密码
-				"test@test.com",		// 收件地址
-				"邮件标题",              // 邮件标题
-				"content");				// 邮件内容
-		System.out.println("发送返回值: " + ret);
+		Ret ret;
+		try {
+			ret = sendEmail(
+					"abc.com",              // 邮件发送服务器地址
+					"no-reply@abc.com",		// 发件邮箱
+					null,					// 发件邮箱密码
+					"test@test.com",		// 收件地址
+					"邮件标题",              // 邮件标题
+					"content");
+			System.out.println("发送返回值: " + ret);
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}				// 邮件内容
+
 	}
 }
 		

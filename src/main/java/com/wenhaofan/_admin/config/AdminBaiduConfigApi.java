@@ -23,19 +23,19 @@ public class AdminBaiduConfigApi extends BaseController {
 		renderJson(Ret.ok().set("code", 0).set("data", configs));
 	}
 	
-	@SysLog(value="编辑百度接口配置",action="config")
+	@SysLog(value="编辑百度接口配置",action="update")
 	public void bconfigEdit() {
 		BaiduSeoConfig config=getModel(BaiduSeoConfig.class,"",true);
-		renderJson(baiduSeoService.updateOrAdd(config));
+		renderJson(baiduSeoService.saveOrUpdate(config));
 	}
  
  
-	@SysLog(value="删除百度接口配置",action="config")
+	@SysLog(value="删除百度接口配置",action="update")
 	public void bconfigDelete() {
 		renderJson(baiduSeoService.delete(getParaToInt()));
 	}
 	
-	@SysLog(value="调用百度推送接口",action="push")
+	@SysLog(value="调用百度推送接口")
 	public void pushBaiduLinks() {
 		String links=getPara("links");
 		baiduSeoService.pushLink(links);

@@ -1,26 +1,20 @@
 <link rel="stylesheet" href="/assets/admin/css/meta-list.css" />
 
-<div class="layui-row ">
-	<div class="layui-col-lg12 layui-col-md12">
-		<blockquote class="page-title ">分类/标签管理</blockquote>
-	</div>
-</div>
-
+ 
 <div class="layui-row list ">
-	<div class="layui-col-md6">
-		<div class="categorys-block">
-			<div class="categorys-head">
-				<h2>分类管理</h2>
-			</div>
+	<div class="layui-col-md6 categorys-block">
+		<div class="tags-head">
+			<blockquote class="page-title ">分类管理</blockquote>
+		
+		</div>
 			<div class="categorys-body">
 				<ul class="layui-nav" id="category-list">
 				</ul>
 			</div>
-		</div>
 	</div>
 	<div class="layui-col-md6 tags-block">
 		<div class="tags-head">
-			<h2>标签管理</h2>
+			<blockquote class="page-title ">标签管理</blockquote>
 		</div>
 		
 		<div class="tags-body">
@@ -70,7 +64,8 @@
 	 <li class="layui-nav-item">
 	    <a href="javascript:;">
 				{{ meta.mname}}({{meta.count}})
-			<span class="layui-nva-more"></span>
+<i class="fa fa-caret-down"></i>
+ 
 		</a>
 	    <dl class="layui-nav-child" > <!-- 二级菜单 -->
 	      <dd><a href="javascript:void(0)" onclick="update(this,'{{type}}',{{meta.id}},'{{meta.mname}}',{{meta.sort}})" >修改</a></dd>

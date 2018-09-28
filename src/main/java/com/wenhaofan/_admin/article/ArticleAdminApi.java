@@ -24,7 +24,7 @@ public class ArticleAdminApi extends BaseController {
 	@Inject
 	private AdminArticleLuceneIndexes luceneIndexes;
 	
-	@SysLog(value="重置文章索引",action="article")
+	@SysLog(value="重置文章索引",action="udpate")
 	public void createIndex() {
 		luceneIndexes.resetArticleIndexes();
 		renderJson(Ret.ok());
@@ -39,7 +39,9 @@ public class ArticleAdminApi extends BaseController {
 		Ret ret = Ret.ok().set("code", 0).set("data", articlePage.getList()).set("count", articlePage.getTotalRow());
 		renderJson(ret.toJson());
 	}
+	
 
+	@SysLog(value="使用metaweblog接口推送文章",action="other")
 	public void asyncMetaWeblog() {
 		Integer id=getParaToInt();
 		renderJson(articleService.asyncMetaWeblog(id));
@@ -50,7 +52,7 @@ public class ArticleAdminApi extends BaseController {
 	 * 
 	 * @throws Exception
 	 */
-	@SysLog(value="编辑文章",action="article")
+	@SysLog(value="编辑文章",action="saveOrUpdate")
 	public void edit() {
 		Article article = getModel(Article.class, "", true);
 		List<Meta> tags=getModelList(Meta.class, "tag");
@@ -63,18 +65,18 @@ public class ArticleAdminApi extends BaseController {
 	}
 
  
-	@SysLog(value="废弃文章",action="article")
+	@SysLog(value="废弃文章",action="update")
 	public void remove() {
 		Integer id =getParaToInt(0);
 		renderJson(articleService.remove(id).toJson());;
 	}
-
+	@SysLog(value="删除文章",action="delete")
 	public void delete() {
 		Integer id =getParaToInt(0);
 		renderJson(articleService.delete(id).toJson());;
 	}
 	 
-	@SysLog(value="恢复文章",action="article")
+	@SysLog(value="恢复文章",action="update")
 	public void recover() {
 		Integer id = getParaToInt(0);
 		renderJson(articleService.recover(id));;

@@ -12,7 +12,7 @@ import com.wenhaofan.common.kit.PropertyKit;
 */
 public class AdminThemesApi extends BaseController {
 
-	@SysLog(value="切换主题",action="themes")
+	@SysLog(value="切换主题",action="udpate")
 	public void change() {
 		String themeName=getPara();
 		BlogContext.setTheme(themeName);

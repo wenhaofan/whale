@@ -9,7 +9,7 @@ public class AdminNavService {
 	@Inject
 	private Nav dao;
 	
-	public Ret add(Nav nav) {
+	public Ret save(Nav nav) {
 		nav.save();
 		return Ret.ok();
 	}

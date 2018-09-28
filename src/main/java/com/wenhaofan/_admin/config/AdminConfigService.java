@@ -16,7 +16,7 @@ public class AdminConfigService {
 		return dao.findFirst(sqlPara);
 	}
 	
-	public Ret addOrUpdate(Config config) {
+	public Ret saveOrUpdate(Config config) {
 		if(config.getId()!=null) {
 			config.update();
 		}else {

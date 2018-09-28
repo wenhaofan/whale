@@ -22,15 +22,15 @@ public class AdminCommentApi  extends BaseController{
 		renderJson(ret);
 	}
 	
-	@SysLog(value="回复评论",action="comment")
+	@SysLog(value="回复评论",action="save")
 	public void reply() {
 		renderJson(service.reply(getParaToInt("toId"), getPara("content"), getAgentUser()));
 	}
-	@SysLog(value="删除评论",action="comment")
+	@SysLog(value="删除评论",action="delete")
 	public void delete() {
 		renderJson(service.delete(getParaToInt("toId")));
 	}
-	@SysLog(value="审核评论",action="comment")
+	@SysLog(value="审核评论",action="update")
 	public void aduit() {
 		renderJson(service.aduit(getParaToInt("toId"),getParaToBoolean("aduit")));
 	}

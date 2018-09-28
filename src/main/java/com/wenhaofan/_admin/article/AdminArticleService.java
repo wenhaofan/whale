@@ -16,6 +16,8 @@ import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.exception.MsgException;
 import com.wenhaofan.common.kit.ListKit;
 import com.wenhaofan.common.kit.StrKit;
+import com.wenhaofan.common.log.SysLogActionEnum;
+import com.wenhaofan.common.log.SysLogHelper;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Meta;
 import com.wenhaofan.common.safe.JsoupFilter;
@@ -59,7 +61,8 @@ public class AdminArticleService {
 		Article article=dao.findById(id);
 		new Thread(()-> {
 			//向其他论坛推送
-			System.err.println(metaweblogService.pushPostMetaweblog(article, tags));
+			metaweblogService.pushPostMetaweblog(article, tags);
+		
 		}).start();
 		return Ret.ok();
 	}
@@ -86,9 +89,10 @@ public class AdminArticleService {
 		if(article.getIsTop()==null) {
 			article.setIsTop(false);
 		}
+		
 		if(article.getId()==null) {
 			save(article, tags, categorys);
-			luceneIndexes.add(article);
+			luceneIndexes.addIndex(article);
 		}else {
 			update(article, tags, categorys);
 			luceneIndexes.update(article);
@@ -219,7 +223,7 @@ public class AdminArticleService {
 		
 		Article temp=dao.findById(id);
 		if(temp!=null) {
-			luceneIndexes.add(temp);
+			luceneIndexes.addIndex(temp);
 		}
 		return article.update()?Ret.ok():Ret.fail();
 	}

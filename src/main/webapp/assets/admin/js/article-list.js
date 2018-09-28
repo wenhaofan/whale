@@ -164,5 +164,24 @@ function resetIndex(){
 				fl.alertOk({title:"重置成功！"});
 			}
 		})
+		
+		fl.ajax({
+			url:"/admin/api/article/createIndex",
+			success:function(data){
+				fl.alertOk({title:"重置成功！"});
+			}
+		})
+		fl.ajax({
+			url:"/admin/api/article/createIndex",
+			success:function(data){
+				fl.alertOk({title:"重置成功！"});
+			}
+		})
+		fl.ajax({
+			url:"/admin/api/article/createIndex",
+			success:function(data){
+				fl.alertOk({title:"重置成功！"});
+			}
+		})
 	}}) 
 }

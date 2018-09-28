@@ -31,9 +31,13 @@
 	background-color: #fff;
 }
 .categorys-block .layui-nav-item ,.tags-block .layui-nav-item{
-	margin: 0rem 0.5rem;
+	margin:0rem 0.5rem 0.5rem 0.5rem;
 	background-color: #393D49;
 	line-height: 30px;
+}
+
+.categorys-block a,.tags-block a{
+	padding: 0 5px 0px 10px!important;
 }
 
  

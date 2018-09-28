@@ -457,10 +457,13 @@ $(function(){
 	$(".disk-upload-button").click(function(){
 		$(".disk-upload-file").trigger("click");
 	})
-	if (typeof (adminDiskListIsBind) != "undefined") {
-	    return;
-	}   
-	adminDiskListIsBind=true;
+	$(".folder-goback a").click(function(){
+		goBackFolder();
+	})
+		$(".disk-create-folder").click(function(){
+		createFolderItem();
+	})
+
 
 	
 	var clipboard=new ClipboardJS('.copy-btn');
@@ -474,10 +477,7 @@ $(function(){
 		changeFolder(this);
 	})
 	
-	$(".folder-goback a").click(function(){
-		goBackFolder();
-	})
-	
+
 	$("body").on("click",".confirm-rename",function(){
 		confirmRename(this);
 	})
@@ -490,11 +490,7 @@ $(function(){
 		$(this).parent().parent().prev().show();
 		$(this).parent().parent().remove();
 	})
-	
-	$(".disk-create-folder").click(function(){
-		createFolderItem();
-	})
-	
+
 	$(".disk-content").on("click",".confirm-create-folder",function(){
 		var folderName=$(this).prev().val();
 		createFolder({name:folderName});

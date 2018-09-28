@@ -8,6 +8,8 @@
 	#if(query.level!=null)
 		and level=#para(query.level)
 	#end
+	
+	 order by gmtCreate desc
 #end
 
 #sql("listRecent")

@@ -8,16 +8,21 @@ import com.wenhaofan.common.model.entity.SysLog;
 */
 public class SysLogHelper {
 	
-	public static void addSysLog(String content,String action,String data) {
-		addSysLog(content, data, action, null,null,SysLogLevelEnum.INFO.getValue());
+ 
+	public static void addInfoLog(String content,String action,String data) {
+		addSysLog(content, data, action, null, null,null,SysLogLevelEnum.INFO.getValue());
 	}
-	
+	public static void addWarnLog(String content,String action,String data) {
+		addSysLog(content, data, action, null, null,null,SysLogLevelEnum.WARN.getValue());
+	}
+	public static void addErrorLog(String content,String action,String data) {
+		addSysLog(content, data, action, null, null,null,SysLogLevelEnum.ERROR.getValue());
+	}
 	public static void addSysLog(String content,String action,String data,Integer level) {
-		addSysLog(content, data, action, null,null,level);
+		addSysLog(content, data, action, null, null,null,level);
 	}
-	
 	public static void addSysLog(String content,String data,
-			String action,String ip,Integer userId,Integer level) {
+			String action,String ip,String url,Integer userId,Integer level) {
 		SysLog sysLog=new SysLog();
 		sysLog.setContent(content);
 		sysLog.setAction(action);
@@ -25,7 +30,7 @@ public class SysLogHelper {
 		sysLog.setIp(ip);
 		sysLog.setUserId(userId);
 		sysLog.setLevel(level);
-		
+		sysLog.setUrl(url);
 		sysLog.save();
 	}
 }

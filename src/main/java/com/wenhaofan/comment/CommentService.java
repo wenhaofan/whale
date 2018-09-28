@@ -2,7 +2,13 @@ package com.wenhaofan.comment;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
+import com.jfinal.kit.Kv;
+import com.jfinal.kit.LogKit;
 import com.jfinal.kit.StrKit;
+import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.SqlPara;
@@ -14,13 +20,18 @@ import com.wenhaofan.common.aop.AopFactory;
 import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.exception.MsgException;
 import com.wenhaofan.common.kit.EmailKit;
+import com.wenhaofan.common.log.SysLogActionEnum;
+import com.wenhaofan.common.log.SysLogHelper;
 import com.wenhaofan.common.model.entity.AgentUser;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Comment;
+import com.wenhaofan.common.model.entity.SysLog;
 import com.wenhaofan.common.model.entity.User;
 
 public class CommentService {
 
+	private static Log log=Log.getLog(CommentService.class);
+	
 	@Inject
 	private static  Comment dao;
 	@Inject
@@ -116,7 +127,14 @@ public class CommentService {
 			}
 		}
 		
-		EmailKit.sendEmail(adminUser.getEmail(), "你收到了一条评论 by "+BlogContext.config.getTitle(),getHintEmailContent(user.getName(),title));
+		try {
+			EmailKit.sendEmail(adminUser.getEmail(), "你收到了一条评论 by "+BlogContext.config.getTitle(),getHintEmailContent(user.getName(),title));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e.getMessage(),e);
+			SysLogHelper.addWarnLog("管理员评论通知发送失败！",SysLogActionEnum.OTHER.getName(), Kv.by("comment", comment).toJson());
+		} 
 	}
 	
 	public String getHintEmailContent(String userName,String title) {
@@ -157,7 +175,14 @@ public class CommentService {
 		String userName=agentUserService.get(comment.getUserId()).getName();
 		
 		if(replayAgentUser!=null) {
-			EmailKit.sendEmail(replayAgentUser.getEmail(),userName+ "回复了你的评论  by "+BlogContext.config.getTitle(),getHintEmail(userName,comment));
+			try {
+				EmailKit.sendEmail(replayAgentUser.getEmail(),userName+ "回复了你的评论  by "+BlogContext.config.getTitle(),getHintEmail(userName,comment));
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error(e.getMessage(),e);
+				SysLogHelper.addWarnLog("@评论通知发送失败！",SysLogActionEnum.OTHER.getName(), Kv.by("comment", comment).toJson());
+			} 
+		 
 		}	 
 	}
 	

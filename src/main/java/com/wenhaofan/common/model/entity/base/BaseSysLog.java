@@ -81,4 +81,13 @@ public abstract class BaseSysLog<M extends BaseSysLog<M>> extends Model<M> imple
 		return getInt("level");
 	}
 
+	public M setUrl(java.lang.String url) {
+		set("url", url);
+		return (M)this;
+	}
+	
+	public java.lang.String getUrl() {
+		return getStr("url");
+	}
+
 }

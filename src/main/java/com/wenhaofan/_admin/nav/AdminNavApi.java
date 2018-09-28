@@ -23,19 +23,19 @@ public class AdminNavApi extends BaseController{
 		Nav nav=service.get(getParaToInt());
 		renderJson(Ret.ok("nav", nav));
 	}
-	@SysLog(value="删除导航",action="meta")
+	@SysLog(value="删除导航",action="delete")
 	public void delete() {
 		renderJson(service.delete(getParaToInt("toId")));
 	}
-	@SysLog(value="更新导航",action="meta")
+	@SysLog(value="更新导航",action="update")
 	public void update() {
 		Nav nav=getBean(Nav.class,"",true);
 		renderJson(service.update(nav));
 	}
-	@SysLog(value="添加导航",action="meta")
+	@SysLog(value="添加导航",action="save")
 	public void add() {
 		Nav nav =getModel(Nav.class,"",true);
-		renderJson(service.add(nav));
+		renderJson(service.save(nav));
 	}
 	
 }

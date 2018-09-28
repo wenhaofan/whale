@@ -1,18 +1,14 @@
 
 $(function(){
 	// 基于准备好的dom，初始化echarts实例
-	lazyRender();
+	$.getScript('/assets/echarts/echarts.js',function(){
+		lazyRender();
+	});
 })
 
 function lazyRender(){
-	if(echarts==undefined){
-		setTimeout(() => {
-			lazyRender();
-		}, 100);
-	}else{
-		renderAccessReport();
-		renderArticleReport();
-	}
+	renderAccessReport();
+	renderArticleReport();
 }
 
  function renderArticleReport(){

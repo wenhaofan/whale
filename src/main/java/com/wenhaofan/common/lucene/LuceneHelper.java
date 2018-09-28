@@ -67,7 +67,9 @@ public class LuceneHelper {
 			directory = FSDirectory.open(Paths.get(indexDir));
 			iKAnalyzer = new IKAnalyzer(true);
  
-
+			IndexWriterConfig config = new IndexWriterConfig(getAnalyzer());
+ 
+			indexWriter= new IndexWriter(directory, config);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -99,15 +101,8 @@ public class LuceneHelper {
 	 * 
 	 * @return
 	 */
-	public static IndexWriter getIndexWriter() {
-		IndexWriterConfig config = new IndexWriterConfig(getAnalyzer());
-		try {
-			return new IndexWriter(directory, config);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+	public  IndexWriter getIndexWriter() {
+		return indexWriter;
 	}
 
 	/**
@@ -117,10 +112,18 @@ public class LuceneHelper {
 	 * @param content
 	 * @throws IOException
 	 */
-	public void createIndexs(List<Document> cocuments) {
-		cocuments.forEach((document) -> {
-			createIndex(document);
-		});
+	public long createIndexs(List<Document> documents) {
+		writeLock.lock();
+		IndexWriter writer = getIndexWriter();
+		try {
+			return writer.addDocuments(documents);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			writeLock.unlock();
+		}
+		return 0;
 	}
 
 	/**
@@ -140,7 +143,7 @@ public class LuceneHelper {
 		try  {
 			IndexWriter writer = getIndexWriter();
 			count = writer.addDocument(document);
-			writer.close();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -282,7 +285,6 @@ public class LuceneHelper {
 		
 		try {
 			writer.deleteAll();
-			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -298,23 +300,21 @@ public class LuceneHelper {
 	 * @param key
 	 * @param value
 	 */
-	public void deleteIndex(String key, String value) {
+	public long deleteIndex(String key, String value) {
 		
 		writeLock.lock();
 		// 通过指定的索引目录地址、配置对象创建IndexWriter流对象
 		IndexWriter writer = getIndexWriter();
 
 		try {
-			writer.deleteDocuments(new Term(key, value));
-			writer.close();
+			return writer.deleteDocuments(new Term(key, value));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-		
 			writeLock.unlock();
 		}
- 
+		return 0;
 	}
 
 	/**
@@ -324,22 +324,17 @@ public class LuceneHelper {
 	 * @param value
 	 * @param document
 	 */
-	public void updateIndex(String key, String value, Document document) {
-
+	public long updateIndex(String key, String value, Document document) {
 		writeLock.lock();
-		
-		// 通过配置、目录参数创建流对象
 		IndexWriter writer = getIndexWriter();
- 
 		try {
-			writer.updateDocument(new Term(key, value), document);
-			writer.close();
+			return writer.updateDocument(new Term(key, value), document);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			 writeLock.unlock();
 		}
- 
+		return 0;
 	}
 }
