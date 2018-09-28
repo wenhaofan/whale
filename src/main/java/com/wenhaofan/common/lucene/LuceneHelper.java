@@ -66,11 +66,8 @@ public class LuceneHelper {
 		try {
 			directory = FSDirectory.open(Paths.get(indexDir));
 			iKAnalyzer = new IKAnalyzer(true);
-			Directory directory = null;
-			Analyzer analyzer = getAnalyzer();
-			IndexWriterConfig config = new IndexWriterConfig(analyzer);
-			directory = getDirectory();
-			indexWriter= new IndexWriter(directory, config);
+ 
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,7 +100,14 @@ public class LuceneHelper {
 	 * @return
 	 */
 	public static IndexWriter getIndexWriter() {
-		return indexWriter;
+		IndexWriterConfig config = new IndexWriterConfig(getAnalyzer());
+		try {
+			return new IndexWriter(directory, config);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -136,6 +140,7 @@ public class LuceneHelper {
 		try  {
 			IndexWriter writer = getIndexWriter();
 			count = writer.addDocument(document);
+			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -277,10 +282,7 @@ public class LuceneHelper {
 		
 		try {
 			writer.deleteAll();
-			writer.commit();
-			writer.flush();
-		
-
+			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -304,12 +306,12 @@ public class LuceneHelper {
 
 		try {
 			writer.deleteDocuments(new Term(key, value));
-			writer.commit();
-			writer.flush();
+			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+		
 			writeLock.unlock();
 		}
  
@@ -331,6 +333,7 @@ public class LuceneHelper {
  
 		try {
 			writer.updateDocument(new Term(key, value), document);
+			writer.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

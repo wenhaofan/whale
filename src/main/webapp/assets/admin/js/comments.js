@@ -25,19 +25,16 @@ var layerIndex;
 function submitReply(info){
 	replyData=info;
 	fl.alertConfirm({title:"确认回复？",then:function(){
-		$.ajax({
+		fl.ajax({
 			url:"/admin/api/comment/reply",
 			type:"post",
 			data:replyData,
 			success:function(data){
-				if(fl.isOk(data)){
-					fl.alertOk({title:"回复成功！"});
-					layer.close(layerIndex);
-				}
+				fl.alertOk({title:"回复成功！"});
+				layer.close(layerIndex);
 			}
 		})
 	}})
-
 }
 /**
  * 渲染评论表格
@@ -63,66 +60,86 @@ function renderTable(identify,state){
 	    ]]
 	  });
 }
+
+function showComment(that){
+	var pageNum=$(that).data("page");
+	var identify=$(that).data("identify");
+	var id=$(that).data("id");
+	window.open("/article/"+identify+"?p="+pageNum+"#li-comment-"+id);
+}
+
+var deleteId;
+function deleteComment(that){
+	deleteId=$(that).data("id");
+	fl.alertConfirm({title:"确认删除！",then:function(){
+		fl.ajax({
+			url:"/admin/api/comment/delete",
+			data:{toId:deleteId},
+			success:function(data){
+				fl.alertOkAndReload();	
+			}
+		})
+	}})
+}
+
+var aduitInfo;
+var $aduitEle;
+function auditComment(that){
+	var toId=$(that).data("id");
+	var aduit=$(that).data("val");
+	aduitInfo={toId:toId,aduit:aduit}
+
+	$aduitEle=$(that);
+	fl.alertConfirm({title:("确认"+(aduit=="0"?"不通过？":"通过？")),then:function(){
+		fl.ajax({
+			url:"/admin/api/comment/aduit",
+			data:aduitInfo,
+			success:function(data){
+				fl.alertOkAndReload();	
+			}
+		})
+	}})
+}
+
+
+function renderReply(that){
+  	var toId=	$(that).data("id");
+  	var content=$(that).parent().parent().prev().prev().text();
+  	
+  	var replyHtml=template("tpl-reply",{content:content,toId:toId});
+	var width=520;
+	if($(window).width()<768){
+		width=350;
+	}
+  	layerIndex=layer.open({
+  		title:"回复",
+  		area: [width+'px', '380px'],
+	  	  type: 1, 
+	  	  content: replyHtml //这里content是一个普通的String
+  	});
+}
 $(function(){
+	
+	//避免pjax重复加载js导致事件重复绑定
+	if (typeof (adminCommentListIsBind) != "undefined") {
+	    return;
+	}   
+	adminCommentListIsBind=true;
+	
 	$("body").on("click",".reply",function(){
-	  	var toId=	$(this).data("id");
-	  	var content=$(this).parent().parent().prev().prev().text();
-	  	
-	  	var replyHtml=template("tpl-reply",{content:content,toId:toId});
-		var width=520;
-		if($(window).width()<768){
-			width=350;
-		}
-	  	
-	  	layerIndex=layer.open({
-	  		title:"回复",
-	  		area: [width+'px', '380px'],
-		  	  type: 1, 
-		  	  content: replyHtml //这里content是一个普通的String
-	  	});
+		renderReply(this);
 	})
 	
-	var aduitInfo;
-	var $aduitEle;
 	$("body").on("click",".aduit",function(){
-		var toId=$(this).data("id");
-		var aduit=$(this).data("val");
-		aduitInfo={toId:toId,aduit:aduit}
- 
-		$aduitEle=$(this);
-		fl.alertConfirm({title:("确认"+(aduit=="0"?"不通过？":"通过？")),then:function(){
-			$.ajax({
-				url:"/admin/api/comment/aduit",
-				data:aduitInfo,
-				success:function(data){
-					if(fl.isOk(data)){
-						fl.alertOkAndReload();	
-					}
-				}
-			})
-		}})
+		auditComment(this);
 	})
 	
-	var deleteId;
+	
 	$("body").on("click",".delete",function(){
-		deleteId=$(this).data("id");
-		fl.alertConfirm({title:"确认删除！",then:function(){
-			$.ajax({
-				url:"/admin/api/comment/delete",
-				data:{toId:deleteId},
-				success:function(data){
-					if(fl.isOk(data)){
-						fl.alertOkAndReload();	
-					}
-				}
-			})
-		}})
+		deleteComment(this);
 	})
 	
 	$("body").on("click",".go",function(){
-		var pageNum=$(this).data("page");
-		var identify=$(this).data("identify");
-		var id=$(this).data("id");
-		window.open("/article/"+identify+"?p="+pageNum+"#li-comment-"+id);
+		showComment(this);
 	})
 })

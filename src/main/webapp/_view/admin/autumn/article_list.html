@@ -69,17 +69,18 @@
 #[[
 	
 	<button class="layui-btn layui-btn-sm article-push" data-id="{{d.id}}">推送</button>
-	<button class="layui-btn layui-btn-sm article-preview" data-identify="{{d.identify}}">预览</button>	
-	<button class="layui-btn layui-btn-sm article-update" data-id="{{d.id}}">修改</button>
+	<button class="layui-btn layui-btn-sm "><a href="/article/{{d.identify}}" target="_blank">预览</a></button>	
+	<button class="layui-btn layui-btn-sm "><a href="/admin/article/edit/{{d.id}}" pjax>修改</a></button>
 	
 {{# if(d.state == 2){ }}
 	<button class="layui-btn layui-btn-sm article-recover" data-id="{{d.id}}">恢复</button> 
 	 <button class="layui-btn layui-btn-sm article-delete" data-id="{{d.id}}">删除</button> 
 {{# } else if(d.state == 1){ }}
-   <button class="layui-btn layui-btn-sm article-remove" data-id="{{d.id}}">废弃</button> 
-{{# } }}
-	
+    <button class="layui-btn layui-btn-sm article-remove" data-id="{{d.id}}">废弃</button> 
+{{# }else if(d.state==0){ }}
+	 <button class="layui-btn layui-btn-sm article-delete" data-id="{{d.id}}">删除</button> 
+{{# }}}
 ]]#
 </script>
 <script type="text/javascript" src="/assets/common/meta.js"></script>
-<script src="/assets/admin/js/article-list.js"></script>
+<script type="text/javascript" src="/assets/admin/js/article-list.js"></script>

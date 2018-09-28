@@ -10,6 +10,8 @@
 		#if(query.state!=null)
 			and
 				state=#para(query.state)
+		#else
+			and state =1
 		#end
 		
 		#if(query.parentId!=null)

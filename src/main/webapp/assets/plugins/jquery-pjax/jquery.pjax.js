@@ -308,6 +308,8 @@ function pjax(options) {
       state: pjax.state,
       previousState: previousState
     })
+    
+ 
     context.html(data)
 
     // FF bug: Won't autofocus fields that are inserted via JS.

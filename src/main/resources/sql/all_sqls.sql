@@ -59,5 +59,8 @@
 #namespace("adminConfig")
 #include("/back/config.sql")
 #end
+#namespace("sysLog")
+#include("/back/sysLog.sql")
+#end
 加载通用sql组件
 #include("common.sql");

@@ -1,5 +1,5 @@
 <script src="/assets/js/DateUtil.js"></script>
-<link rel="stylesheet" href="/assets/admin/css/statistic.css?v=12">
+<link rel="stylesheet" href="/assets/admin/css/console.css?v=12">
 <div class="layui-row ">
 	<div class="layui-col-lg12 layui-col-md12">
 		<blockquote class="page-title ">仪表盘</blockquote>
@@ -99,7 +99,7 @@
 	</div>
 	<div class="layui-col-xs12 layui-col-sm6 layui-col-md4 info-statistic-block">
 		<div  class="info-statistic-item" >
-			<dl  class="statistic-list" id="sysLogList">
+			<dl  class="statistic-list" id="sysLog-list">
 				<dt>系统日志</dt>
 				 
 			</dl>
@@ -149,7 +149,7 @@
  	</div>
 </div>
 <script src="/assets/echarts/echarts.js"></script>
-<script src="/assets/admin/js/statistic.js"></script>
+<script src="/assets/admin/js/console.js"></script>
 <script type="text/html" id="tpl-list-article">
 <dd><a href="/article/{{identify}}" target="_blank">{{title}}</dd>
 </script>
@@ -157,5 +157,5 @@
 <dd><a href="/article/{{identify}}?p={{pageNum}}#li-comment-{{id}}"  target="_blank">{{name}}:{{content}}</a></dd>
 </script>
 <script type="text/html" id="tpl-list-sysLog">
-<dd>{{content}}</dd>
+<dd>{{content}} by {{gmtCreate}}</dd>
 </script>

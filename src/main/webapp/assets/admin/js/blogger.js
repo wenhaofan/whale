@@ -1,13 +1,11 @@
 function editInfo(data){
 	data.about=htmlEditor.summernote('code');
-	$.ajax({
+	fl.ajax({
 		url:"/admin/api/user/editInfo",
 		data:data,
 		type:"post",
 		success:function(data){
-			if(fl.isOk(data)){
 				fl.alertOk({title:"修改成功！"});
-			}
 		}
 	})
 }

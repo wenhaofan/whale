@@ -153,4 +153,12 @@ public abstract class BaseConfig<M extends BaseConfig<M>> extends Model<M> imple
 		return getStr("qiniuUrl");
 	}
 
+	public M setIsAuditComment(java.lang.Boolean isAuditComment) {
+		set("isAuditComment", isAuditComment);
+		return (M)this;
+	}
+	
+	public java.lang.Boolean getIsAuditComment() {
+		return get("isAuditComment");
+	}
 }

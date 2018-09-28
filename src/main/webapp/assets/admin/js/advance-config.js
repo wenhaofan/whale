@@ -1,33 +1,19 @@
 $(function(){
+	
+	//避免pjax重复加载js导致事件重复绑定
+	if (typeof (adminAdvanceListIsBind) != "undefined") {
+	    return;
+	}   
+	adminAdvanceListIsBind=true;
+	
 	$("body").on("click",".privacy",function(){
-		var content=$(this).data("content");
-		var text=$(this).text();
-		
-		$(this).text(content);
-		$(this).data("content",text);
+		showPrivacy(this);
 	})
 	$("body").on("click",".mupdate",function(){
-		$.ajax({
-			url:"/admin/api/metaConfig/mget/"+$(this).data("id"),
-			dataType:'json',
-			success:function(data){
-				if(fl.isOk(data)){
-					renderMEdit(data.config);
-				}
-			}
-		})
- 
+		renderMupdate(this);
 	})
 	$("body").on("click",".bupdate",function(){
-		$.ajax({
-			url:"/admin/api/baiduConfig/bget/"+$(this).data("id"),
-			dataType:'json',
-			success:function(data){
-				if(fl.isOk(data)){
-					renderBEdit(data.config);
-				}
-			}
-		}) 
+		renderBupdate(this);
 	})
 	
 	$("body").on("click",".madd",function(){
@@ -36,41 +22,70 @@ $(function(){
 	$("body").on("click",".badd",function(){
 		renderBEdit({});
 	})
-	
-	var deleteMid;
-	
+
 	$("body").on("click",".mdelete",function(){
-		deleteMid=$(this).data("id");
-		fl.alertConfirm({title:"是否确认删除？",then:function(){
-			$.ajax({
-				url:"/admin/api/metaConfig/mconfigDelete/"+deleteMid,
-				success:function(data){
-					if(fl.isOk(data)){
-						fl.alertOkAndReload();
-					}
-				}
-			})
-		}})
-		
+		mdelete(that);
 	})
-	var deleteBid;
+	
 	$("body").on("click",".bdelete",function(){
-		deleteBid=$(this).data("id");
-		fl.alertConfirm({title:"是否确认删除？",then:function(){
-			$.ajax({
-				url:"/admin/api/baiduConfig/bconfigDelete/"+deleteBid,
-				success:function(data){
-					if(fl.isOk(data)){
-						fl.alertOkAndReload();
-					}
-				}
-			})
-  
-		}});
+		bdelete(this);
 	})
 })
+var deleteMid;
+function mdelete(that){
+	deleteMid=$(that).data("id");
+	fl.alertConfirm({title:"是否确认删除？",then:function(){
+		fl.ajax({
+			url:"/admin/api/metaConfig/mconfigDelete/"+deleteMid,
+			success:function(data){
+				fl.alertOkAndReload();
+			}
+		})
+	}})
+}
 
- 
+var deleteBid;
+function bdelete(that){
+	deleteBid=$(that).data("id");
+	fl.alertConfirm({title:"是否确认删除？",then:function(){
+		fl.ajax({
+			url:"/admin/api/baiduConfig/bconfigDelete/"+deleteBid,
+			success:function(data){
+				fl.alertOkAndReload();
+			}
+		})
+
+	}});
+}
+function renderBupdate(that){
+	fl.ajax({
+		url:"/admin/api/baiduConfig/bget/"+$(that).data("id"),
+		dataType:'json',
+		success:function(data){
+			renderBEdit(data.config);
+		}
+	}) 
+}
+function renderMupdate(taht){
+	fl.ajax({
+		url:"/admin/api/metaConfig/mget/"+$(taht).data("id"),
+		dataType:'json',
+		success:function(data){
+			renderMEdit(data.config);
+		}
+	})
+}
+/**
+ * 显示隐藏的密码
+ * @param that
+ * @returns
+ */
+function showPrivacy(that){
+	var content=$(that).data("content");
+	var text=$(that).text();
+	$(that).text(content);
+	$(that).data("content",text);
+}
  
 function renderMEdit(data){
 	var content=template("tpl-medit",data);
@@ -100,26 +115,22 @@ function renderBEdit(data){
 }
 
 function medit(data){
-	$.ajax({
+	fl.ajax({
 		url:"/admin/api/metaConfig/mconfigEdit",
 		data:data,
 		type:"post",
 		success:function(data){
-			if(fl.isOk(data)){
-				fl.alertOkAndReload();
-			}
+			fl.alertOkAndReload();
 		}
 	})
 }
 function bedit(data){
-	$.ajax({
+	fl.ajax({
 		url:"/admin/api/baiduConfig/bconfigEdit",
 		data:data,
 		type:"post",
 		success:function(data){
-			if(fl.isOk(data)){
-				fl.alertOkAndReload();
-			}
+			fl.alertOkAndReload();
 		}
 	})
 }
@@ -166,19 +177,15 @@ layui.use(['form','table','laytpl'],function(){
 	form.on("submit(pushLinks)",function(data){
 		pushLinks(data.field);
 	})
- 
- 
 }) 
 
 function pushLinks(data){
-	$.ajax({
+	fl.ajax({
 		data:data,
 		url:"/admin/api/baiduConfig/pushBaiduLinks",
 		type:"post",
 		success:function(data){
-			if(fl.isOk(data)){
-				fl.alertOk({title:"提交成功！"});
-			}
+			fl.alertOk({title:"提交成功！"});
 		}
 	})
 }

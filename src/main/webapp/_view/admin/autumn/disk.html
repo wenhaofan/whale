@@ -35,6 +35,16 @@
 	<a href="javascript:void(0)" data-id="{{id}}">{{name}}</a>
 	<span style="color: #c5d8f3;padding: 0 5px;line-height: 16px;">&gt;</span>
 </script>
+<script type="text/html" id="tpl-copy">
+<div class="disk-copy">
+<input id="disk-link" class="layui-input layui-btn-primary copy-link" value="https://github.com/zenorocha/clipboard.js.git">
+
+<button type="button" class="layui-btn layui-btn-normal  layui-btn-sm copy-btn" data-clipboard-target="#disk-link">
+	复制
+</button>
+<h4 class="copy-link-hint"></h4>
+</div>
+</script>
 <script type="text/javascript">
 var currentFolderId="#(folderId)";
 </script>
@@ -57,7 +67,7 @@ var currentFolderId="#(folderId)";
 				<span style="color: #c5d8f3;padding: 0 3px;">|</span>
 			</li>
 			
-			<li class="folder-nva hide">
+			<li class="folder-nav hide">
 				<a href="javascript:void(0)" data-id="0">全部文件</a>
 			</li>
 			
@@ -82,7 +92,9 @@ var currentFolderId="#(folderId)";
 	<div class="disk-content clear">
 	 
 	</div>
-</div> 
+</div>
+
 <script type="text/javascript" src="/assets/plugins/context-menu/contextMenu.js"></script>
 <script type="text/javascript" src="/assets/common/upload.js"></script>
 <script type="text/javascript" src="/assets/admin/js/disk.js"></script>
+<script type="text/javascript" src="/assets/plugins/clipboard/clipboard.min.js"></script>

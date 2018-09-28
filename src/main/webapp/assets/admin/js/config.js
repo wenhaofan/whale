@@ -1,4 +1,11 @@
 $(function(){
+	
+	//避免pjax重复加载js导致事件重复绑定
+	if (typeof (adminConfigIsBind) != "undefined") {
+	    return;
+	}   
+	adminConfigIsBind=true;
+	
 	$("#addBlogroll").click(function(){
 		editBlogroll({});
 	})
@@ -11,17 +18,15 @@ $(function(){
 		var id=$(this).data("id");
 		deleteBlogroll(id);
 	})
-	setBasicForm();
+	
 })
 
 function deleteBlogroll(id){
 	fl.alertConfirm({title:"确认删除?",then:function(){
-		$.ajax({
+		fl.ajax({
 			url:"/admin/api/blogroll/remove/"+id,
 			success:function(data){
-				if(fl.isOk(data)){
-					fl.alertOkAndReload("删除成功！");
-				}
+				fl.alertOkAndReload("删除成功！");
 			}
 		})
 	}})
@@ -46,54 +51,45 @@ function editBlogroll(data){
  * 获取友链信息,并打开修改框
  */
 function updateBlogroll(id){
-	$.ajax({
+	fl.ajax({
 		url:"/admin/api/blogroll/get/"+id,
 		type:"post",
 		success:function(data){
-			if(fl.isOk(data)){
-				editBlogroll(data.blogroll);
-			}
+			editBlogroll(data.blogroll);
 		}
 	})
 }
 
 
 function setBasicForm(){
-	$.ajax({
+	fl.ajax({
 		url:"/admin/api/config",
 		dataType:"json",
 		success:function(data){
-			if(fl.isOk(data)){
-				var config=data.config;
-				$(".ico-img").attr("src",(config.ico&&config.ico.length>0)?config.ico:'/favicon.ico')
-				$(".logo-img").attr("src",(config.logo&&config.logo.length>0)?config.logo:'/assets/images/logo.png')
-				formUtil.setFormVal(data.config,$(".editConfig"));
-				formUtil.setFormVal(data.config,$(".editConfig"));
-			}
+			var config=data.config;
+			$(".ico-img").attr("src",(config.ico&&config.ico.length>0)?config.ico:'/favicon.ico')
+			$(".logo-img").attr("src",(config.logo&&config.logo.length>0)?config.logo:'/assets/images/logo.png')
+			form.val("editConfig",config)
 		}
 	})
 }
 function editConfig(data){
-	$.ajax({
+	fl.ajax({
 		url:"/admin/api/config/edit",
 		data:data,
 		type:"post",
 		success:function(data){
-			if(fl.isOk(data)){
-				fl.alertOk({title:"修改成功！"});
-			}
+			fl.alertOk({title:"修改成功！"});
 		}
 	})
 }
 function doEditBlogroll(data){
-	$.ajax({
+	fl.ajax({
 		url:"/admin/api/blogroll/saveOrUpdate",
 		data:data,
 		type:"post",
 		success:function(data){
-			if(fl.isOk(data)){
-				fl.alertOkAndReload("操作成功！");
-			}
+			fl.alertOkAndReload("操作成功！");
 		}
 	})
 }
@@ -102,9 +98,18 @@ layui.use(['form', 'laytpl','table','upload'],function(){
 	form=layui.form;
 	upload=layui.upload;
 	form.render();
- 
+   
 	form.on("submit(editConfig)",function(data){
+		
+		var $form=$(data.form);
+		var $input=$form.find("div.layui-form-item").find("input[name='isAuditComment']");
+		if($input.length>0){
+			if(!data.field.isAuditComment){
+				data.field.isAuditComment=0;
+			}
+		}
 		editConfig(data.field);
+		return false;
 	})
 
 	form.on("submit(editBlogroll)",function(data){
@@ -151,4 +156,5 @@ layui.use(['form', 'laytpl','table','upload'],function(){
 	      fl.alertErro("上传失败！");
 	    }
 	  });
+	  setBasicForm();
 }) 

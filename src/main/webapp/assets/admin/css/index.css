@@ -134,8 +134,13 @@ bottom: 0px;
 }
 .layui-header a{
 	color: #337ab7!important;
-}@media screen and (max-width: 768px) {
+}
+@media screen and (max-width: 768px) {
 	.layui-logo{
 		display: none;
 	}
 } 
+
+button a{
+	color:inherit!important;
+}

@@ -18,60 +18,60 @@ function lazyRender(){
  function renderArticleReport(){
 	var myChart = echarts.init(document.getElementById('bar'));
 
-	$.ajax({
-	url:"/admin/api/statistic/hotArticle/10",
-	success:function(data){
-		// 指定图表的配置项和数据
-		var option = {
-		    title: {
-		        text: '热门文章'
-		    },
-		    tooltip: {},   toolbox: {
-		        feature: {
-		            dataView: {},
-		            saveAsImage: {
-		                pixelRatio: 2
-		            },
-		            restore: {}
-		        }
-		    },
-		    legend: {
-		        data:['阅读量']
-		    },
-		    grid:{
-		    	bottom:"30%"
-		    },
-		    color:'#66baf0',
-		    xAxis: {
-		        data: data.titleList,
-		        axisLabel:{
-                    interval:0,
-                    rotate:45,
-                    margin:2,
-                     formatter:function(value)
-                    {
-                    	if(value.length>7){
-                    		return value.substring(0,7)+"...";
-                    	}
-                        return value;
-                    }}
-		    },
-		    yAxis: {},
-		    series: [{
-		        type: 'bar',
-		        data:data.pvList,
-		        barMaxWidth:40
-		    }]
-		};
-		
-		// 使用刚指定的配置项和数据显示图表。
-		myChart.setOption(option);
-
-		} 
+	fl.ajax({
+		url:"/admin/api/statistic/hotArticle/10",
+		success:function(data){
+			// 指定图表的配置项和数据
+			var option = {
+			    title: {
+			        text: '热门文章'
+			    },
+			    tooltip: {},   toolbox: {
+			        feature: {
+			            dataView: {},
+			            saveAsImage: {
+			                pixelRatio: 2
+			            },
+			            restore: {}
+			        }
+			    },
+			    legend: {
+			        data:['阅读量']
+			    },
+			    grid:{
+			    	bottom:"30%"
+			    },
+			    color:'#66baf0',
+			    xAxis: {
+			        data: data.titleList,
+			        axisLabel:{
+	                    interval:0,
+	                    rotate:45,
+	                    margin:2,
+	                     formatter:function(value)
+	                    {
+	                    	if(value.length>7){
+	                    		return value.substring(0,7)+"...";
+	                    	}
+	                        return value;
+	                    }}
+			    },
+			    yAxis: {},
+			    series: [{
+			        type: 'bar',
+			        data:data.pvList,
+			        barMaxWidth:40
+			    }]
+			};
+			
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
+	
+			} 
 	})
 }
 function renderAccessReport(){
-	$.ajax({
+	fl.ajax({
 		url:"/admin/api/statistic/statisticsAccessNumDays/7",
 		success:function(data){
 				echarts.init(document.getElementById('line')).setOption({
@@ -117,6 +117,7 @@ $(function(){
 			})
 		}
 	})
+	
 	fl.ajax({
 		url:"/admin/api/comment/listRecent",
 		success:function(data){
@@ -127,12 +128,15 @@ $(function(){
 		}
 	})
 	fl.ajax({
-		url:"/admin/api/comment/sysLog",
+		url:"/admin/api/sysLog/listRecent",
 		success:function(data){
-			$.each(data.list,function(index,item){
-				var $dd=$(template("tpl-list-sysLog",item));
-				$("#comment-list").append($dd);
+			$.each(data.logPage.list,function(index,item){
+				 
+					var $dd=$(template("tpl-list-sysLog",item));
+					$("#sysLog-list").append($dd);
+				 
 			})
+			
 		}
 	})
 	window.statistic={
