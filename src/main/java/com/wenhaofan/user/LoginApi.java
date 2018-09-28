@@ -4,6 +4,7 @@ import com.jfinal.aop.Clear;
 import com.jfinal.kit.PropKit;
 import com.jfinal.kit.Ret;
 import com.wenhaofan.agentUser.AgentUserService;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.IpKit;
 
@@ -14,9 +15,9 @@ import com.wenhaofan.common.kit.IpKit;
 @Clear
 public class LoginApi extends BaseController {
 
-	private LoginService loginService=LoginService.me;
+	@Inject
+	private LoginService loginService;
 
-	
 	public void index() {
 		if(isLogin()) {
 			renderJson(Ret.ok());

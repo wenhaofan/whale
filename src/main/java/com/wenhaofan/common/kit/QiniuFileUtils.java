@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.UUID;
 
 import com.jfinal.log.Log;
-import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;

@@ -156,32 +156,26 @@ function recoverArticle(that){
  * 重置所有索引
  * @returns
  */
+var resetLayerIndex;
 function resetIndex(){
-	fl.alertConfirm({title:"是否确认重置索引？",text:"执行过程中搜索服务将暂时不能使用，文章越多时间越长。",then:function(){
+	resetLayerIndex=layer.msg('重置中', {
+			  icon: 16
+			  ,shade: 0.01,
+			  time: false,
+			  success:function(){
+					
+			  }
+			});
+	//不知为何只有这样才能弹出加载提示框 
+	setTimeout(() => {
 		fl.ajax({
 			url:"/admin/api/article/createIndex",
 			success:function(data){
 				fl.alertOk({title:"重置成功！"});
+				layer.close(resetLayerIndex);
+			},error:function(){
+				layer.close(resetLayerIndex);
 			}
 		})
-		
-		fl.ajax({
-			url:"/admin/api/article/createIndex",
-			success:function(data){
-				fl.alertOk({title:"重置成功！"});
-			}
-		})
-		fl.ajax({
-			url:"/admin/api/article/createIndex",
-			success:function(data){
-				fl.alertOk({title:"重置成功！"});
-			}
-		})
-		fl.ajax({
-			url:"/admin/api/article/createIndex",
-			success:function(data){
-				fl.alertOk({title:"重置成功！"});
-			}
-		})
-	}}) 
+	}, 1000);
 }

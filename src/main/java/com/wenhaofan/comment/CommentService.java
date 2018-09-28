@@ -2,11 +2,7 @@ package com.wenhaofan.comment;
 
 import java.util.List;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-
 import com.jfinal.kit.Kv;
-import com.jfinal.kit.LogKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.log.Log;
 import com.jfinal.plugin.activerecord.Db;
@@ -25,7 +21,6 @@ import com.wenhaofan.common.log.SysLogHelper;
 import com.wenhaofan.common.model.entity.AgentUser;
 import com.wenhaofan.common.model.entity.Article;
 import com.wenhaofan.common.model.entity.Comment;
-import com.wenhaofan.common.model.entity.SysLog;
 import com.wenhaofan.common.model.entity.User;
 
 public class CommentService {

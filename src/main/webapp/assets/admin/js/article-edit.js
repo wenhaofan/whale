@@ -18,6 +18,19 @@ function getContent(){
 	return content;
 }
 
+function browerSaveArticle(id,content){
+	try {
+		localStorage.setItem( 'article-auto-'+id, content );	
+	} catch (e) {
+		localStorage.clear();
+		console.log("超出最大存储,清空本地存储！");
+		localStorage.setItem( 'article-auto-'+id, content );	
+	}
+	$(".hint-msg").text("本地保存成功！");
+}
+function getBrowerSaveArticle(id){
+	return localStorage.getItem('article-auto-'+id);
+}
 function setSelectedTag(data){
     var tags=$("#tags").val();
     if(notNull(tags)){
@@ -54,30 +67,18 @@ function editArticle(paras){
  * 保存文章
  * @returns
  */
-function save(state,isAuto){
+function save(state){
 	var content = getContent();
     var title = $('#articleForm input[name=title]').val();
     if (title == '') {
-    	if(!isAuto){
-    		fl.alertWarn('标题不能为空');
-    	}
+    	fl.alertWarn('标题不能为空');
         return;
     }
-    
-    var $tempDiv=$('<div style="display:none;"></div>')
-    $tempDiv.html(content);
   
-    var divText= $tempDiv.text().replace(/<[^>]*>|/g,"").replace(/\s+/g, "");
- 
-    $tempDiv.remove();
-    if (divText.length<=0) {
-    	if(!isAuto){
-    		fl.alertWarn('请输入文章内容');
-    	}  	
+    if (content.length<=0) {
+    	fl.alertWarn('请输入文章内容');
         return;
     }
- 
-   
     $("#content-editor").val(content);
     
     if(state!=undefined){
@@ -88,16 +89,10 @@ function save(state,isAuto){
     
     setSelectedTag(fdata);
     setSelectedCategory(fdata);
-  
-    fdata[11]={name:"isAuto", value:isAuto?"1":""};
    
     editArticle({fdata:fdata,success:function(data){
     	  var time="["+new Date()+"]";
-    	  if(isAuto){
-    		  $(".hint-msg").text("自动保存成功！"+time);
-    	  }else{
-    		  $(".hint-msg").text((data.state==0?"草稿保存成功！":"发布成功！")+time);
-    	  }
+    	  $(".hint-msg").text((data.state==0?"草稿保存成功！":"发布成功！")+time);
     	  $("input[name='id']").val(data.article.id);
     	  var host=window.location.host;
     	  var currentUrl=window.location.protocol+"//"+host+"/admin/article/edit/"+data.article.id;
@@ -110,7 +105,7 @@ function save(state,isAuto){
 
 function autoSave(){
 	setInterval(() => {
-		save(0,true);
+		browerSaveArticle($("input[name='id']").val(), getContent()); 
 	}, 20000);
 }
 
@@ -153,7 +148,6 @@ $(document).ready(function () {
             }
         }
     });
-
 
 	$('.modal').on('shown.bs.modal', function (e) {  
         // 关键代码，如没将modal设置为 block，则$modala_dialog.height() 为零  
@@ -215,8 +209,6 @@ $(document).ready(function () {
             $('#fmtType').val('markdown');
             this_.text('切换为富文本编辑器');
             htmlEditor.summernote("code", "");
-            
-        
         }
     });
   

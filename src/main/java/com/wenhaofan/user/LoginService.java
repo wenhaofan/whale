@@ -7,19 +7,24 @@ import com.jfinal.kit.Ret;
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.SqlPara;
 import com.jfinal.plugin.ehcache.CacheKit;
+import com.wenhaofan.common.aop.Inject;
 import com.wenhaofan.common.model.entity.LoginRecord;
 import com.wenhaofan.common.model.entity.Session;
 import com.wenhaofan.common.model.entity.User;
 
 public class LoginService {
-	
-	public  final static LoginService me=new LoginService();
-	private User dao =new User().dao();
-	//private LoginRecord log=new LoginRecord().dao();
-	
-	
+	 
+	@Inject
+	private User dao;
+ 
 	public static final  String loginUserKey="loginUser";
-	public static final String sessionIdName="fwhBlogId";
+	public static final String sessionIdName="antuBlogSessionId";
+	public static final String sessionCacheKey="loginSessionCacheKey";
+	/**
+	 * 在session的失效时间小于该时间时访问系统 则失效时间重置为访问时间后的24小时
+	 */
+	private static final Integer resetSessionExpiredTime=4*60*60*1000;
+ 
 	public Ret  login(String ukAccount,String pwd,boolean isKeep,String ip) {
 
 		
@@ -46,12 +51,13 @@ public class LoginService {
 		
 		session.setExpireAt(System.currentTimeMillis()+liveSecond*1000);
 		
-		CacheKit.put(LoginService.loginUserKey,session.getId(), loginUser);
-		
 		if(!session.save()) {
 			return Ret.fail("msg","session保存失败!");
 		}
+
+		CacheKit.put(LoginService.sessionCacheKey, session.getId(), session);
 		
+		CacheKit.put(LoginService.loginUserKey,session.getId(), loginUser);
 		
 		return Ret.ok("cookieMaxAge", liveSecond)
 				.set(LoginService.loginUserKey, loginUser).set(sessionIdName, session.getId());
@@ -59,6 +65,13 @@ public class LoginService {
 	
 	
 	public User getUserWithSessionId(String sessionId) {
+		Session session=	CacheKit.get(LoginService.sessionCacheKey, sessionId);
+		
+		if(session!=null&&(session.getExpireAt()-System.currentTimeMillis())<=resetSessionExpiredTime) {
+			session.setExpireAt(System.currentTimeMillis()+24*60*60*1000);
+			session.update();
+		}
+		
 		return CacheKit.get(LoginService.loginUserKey, sessionId);
 	}
 	

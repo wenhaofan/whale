@@ -22,6 +22,12 @@ function tagInit(){
 		$('#tags').addTag("#(atag.mname)");
 	#end
 	
+	var localContent=getBrowerSaveArticle($("input[name='id']").val());
+	if(localContent&&localContent.length>0){
+		$('#html-container .note-editable').empty().html(localContent);
+		$(".hint-msg").text("本地存储读取成功！");
+		return;
+	}
 	$('#html-container .note-editable').empty().html($("#tpl-content").html());
 }
 

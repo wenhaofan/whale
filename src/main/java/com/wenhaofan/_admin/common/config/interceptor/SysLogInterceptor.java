@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.kit.Kv;
-import com.jfinal.kit.StrKit;
 import com.wenhaofan.common.annotation.SysLog;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.kit.IpKit;
@@ -47,11 +46,7 @@ public class SysLogInterceptor implements   Interceptor {
 			dataMap.set("methodArgs", inv.getArgs());
 		}
 		data=dataMap.toJson();
-		
-		String isAuto=c.getPara("isAuto");
-		if(StrKit.isBlank(isAuto)) {
-			SysLogHelper.addSysLog(content, data, action, ip,url,userId,SysLogLevelEnum.INFO.getValue());
-		}
+		SysLogHelper.addSysLog(content, data, action, ip,url,userId,SysLogLevelEnum.INFO.getValue());
 	}
 
 }

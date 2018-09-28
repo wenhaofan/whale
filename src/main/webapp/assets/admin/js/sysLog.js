@@ -19,12 +19,12 @@ function renderSysLogTable(data){
 	    ,page: true //开启分页
 	    ,cols: [[ //表头
 	      {field: 'id', title: 'ID', width:80, sort: true, fixed: 'left'}
+	      ,{field: 'content', title: '内容'}
 	      ,{field: 'action', title: 'action',width:100}
 	      ,{field: 'url', title: '请求路径'}
-	      ,{field: 'content', title: '内容'}
-	      ,{field: 'data', title: '数据'}
-	      ,{templet: '#tpl-level', title: '类型', width: 90, sort: true}
 	      ,{field: 'ip', title: 'IP', width: 120}
+	      ,{templet: '#tpl-level', title: '类型', width: 90, sort: true}
+	      ,{field: 'data', title: '数据'}
 	      ,{field: 'gmtCreate', title: '创建时间', width: 180, sort: true}
 	     ]]
 	  });

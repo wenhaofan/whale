@@ -25,7 +25,8 @@ public class BaseController extends Controller{
 	public AgentUserService agentUserService;
 	@Inject
 	public UserService userService;
- 
+	@Inject
+	public LoginService loginService;
 	
 	public AgentUser getAgentUser() {
 		AgentUser agentUser=null;
@@ -80,15 +81,14 @@ public class BaseController extends Controller{
 		
 		if(sessionId!=null) {
 			//通过sessionId从缓存中获取登录用户
-			User loginUser=LoginService.me.getUserWithSessionId(sessionId);
+			User loginUser=loginService.getUserWithSessionId(sessionId);
 			//如果依然为空则从数据库中寻找有效的登录用户
 			if(loginUser==null) {
-				loginUser=LoginService.me.loginWithSessionId(sessionId);
+				loginUser=loginService.loginWithSessionId(sessionId);
 			}
 			
 			if(loginUser!=null) {
 				setAttr(LoginService.loginUserKey, loginUser);
-		
 			}else {
 				//为空则表示cookie无用，删之
 				removeCookie(LoginService.sessionIdName);
@@ -96,6 +96,7 @@ public class BaseController extends Controller{
 			}
 		}
 		
+	
 		
 		return getAttr(LoginService.loginUserKey);
 	}

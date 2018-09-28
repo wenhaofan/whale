@@ -116,11 +116,13 @@ public class LuceneHelper {
 		writeLock.lock();
 		IndexWriter writer = getIndexWriter();
 		try {
-			return writer.addDocuments(documents);
+			 writer.addDocuments(documents);
+			return writer.commit();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
+		
 			writeLock.unlock();
 		}
 		return 0;
@@ -139,11 +141,11 @@ public class LuceneHelper {
 
 		writeLock.lock();
 
-		long count = 0;
+ 
 		try  {
 			IndexWriter writer = getIndexWriter();
-			count = writer.addDocument(document);
-			
+			  writer.addDocument(document);
+			return writer.commit();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,7 +153,7 @@ public class LuceneHelper {
 			writeLock.unlock();
 		}
 
-		return count;
+		return 0;
 	}
 
 	/**
@@ -177,11 +179,11 @@ public class LuceneHelper {
 		// 通过IndexReader流对象创建IndexSearcher
 		IndexSearcher searcher = null;
 		List<Article> articles = null;
+		
 		try (
 			// 获取lucene索引目录,
-			Directory directory = getDirectory();
-			// 通过索引目录创建IndexReader流对象
-			IndexReader reader = DirectoryReader.open(directory);) {
+			IndexReader reader=getIndexReader();
+		) {
 			// 创建Query对象，指定查询条件
 			Query query = queryParser.parse(queryStr);
 			searcher = new IndexSearcher(reader);
@@ -202,6 +204,12 @@ public class LuceneHelper {
 		Long totalPage = search.totalHits % pageSize == 0 ? search.totalHits % pageSize : search.totalHits / pageSize;
 
 		return new Page<>(articles, pageNum, pageSize, totalPage.intValue(), (int) search.totalHits);
+	}
+
+	private IndexReader getIndexReader() throws IOException {
+		Directory directory = getDirectory();
+		// 通过索引目录创建IndexReader流对象
+		return DirectoryReader.open(directory);
 	}
 
 	public TopDocs pageSearch(Query query, IndexSearcher searcher, Integer pageNum, Integer pageSize)
@@ -285,6 +293,7 @@ public class LuceneHelper {
 		
 		try {
 			writer.deleteAll();
+			 writer.commit();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -307,7 +316,8 @@ public class LuceneHelper {
 		IndexWriter writer = getIndexWriter();
 
 		try {
-			return writer.deleteDocuments(new Term(key, value));
+			  writer.deleteDocuments(new Term(key, value));
+			  return writer.commit();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -328,7 +338,9 @@ public class LuceneHelper {
 		writeLock.lock();
 		IndexWriter writer = getIndexWriter();
 		try {
-			return writer.updateDocument(new Term(key, value), document);
+			  writer.updateDocument(new Term(key, value), document);
+			   
+			  return writer.commit();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
