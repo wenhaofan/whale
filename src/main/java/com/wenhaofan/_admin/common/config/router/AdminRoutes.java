@@ -14,9 +14,6 @@ import com.wenhaofan._admin.config.AdminConfigApi;
 import com.wenhaofan._admin.config.AdminConfigController;
 import com.wenhaofan._admin.disk.DiskApi;
 import com.wenhaofan._admin.disk.DiskController;
-import com.wenhaofan._admin.diy.action.DiyActionAdminController;
-import com.wenhaofan._admin.diy.assets.AssetsAdminController;
-import com.wenhaofan._admin.diy.html.DiyAdminController;
 import com.wenhaofan._admin.index.IndexAdminController;
 import com.wenhaofan._admin.meta.AdminMetaApi;
 import com.wenhaofan._admin.meta.CategoryRouter;
@@ -70,10 +67,7 @@ public class AdminRoutes extends Routes {
 	   add("/admin/article", ArticleAdminController.class,"/");
 	   add("/admin",IndexAdminController.class,"/");
  
-	 
-	   add("/admin/diy/html",DiyAdminController.class,"/diy/");
-	   add("/admin/diy/action", DiyActionAdminController.class,"/");
-	   add("/admin/diy/assets", AssetsAdminController.class,"/");
+
 	   add("/admin/statistic",StatisticController.class,"/");
 	   add("/admin/disk", DiskController.class, "/");
 	   add("/admin/comment", AdminCommentController.class, "/");

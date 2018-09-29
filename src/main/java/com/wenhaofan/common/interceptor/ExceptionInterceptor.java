@@ -1,13 +1,10 @@
 package com.wenhaofan.common.interceptor;
 
-import java.lang.reflect.Method;
-
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 import com.jfinal.kit.Kv;
 import com.jfinal.kit.Ret;
 import com.jfinal.log.Log;
-import com.wenhaofan.common.annotation.SysLog;
 import com.wenhaofan.common.controller.BaseController;
 import com.wenhaofan.common.exception.MsgException;
 import com.wenhaofan.common.kit.IpKit;

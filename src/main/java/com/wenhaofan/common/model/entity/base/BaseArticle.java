@@ -72,15 +72,6 @@ public abstract class BaseArticle<M extends BaseArticle<M>> extends Model<M> imp
 		return getInt("state");
 	}
 
-	public M setIsOriginal(java.lang.Integer isOriginal) {
-		set("isOriginal", isOriginal);
-		return (M)this;
-	}
-	
-	public java.lang.Integer getIsOriginal() {
-		return getInt("isOriginal");
-	}
-
 	public M setIsTop(java.lang.Boolean isTop) {
 		set("isTop", isTop);
 		return (M)this;
