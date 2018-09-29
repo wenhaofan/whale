@@ -31,7 +31,6 @@
 			</li>
 	  	#end
 	    <div class="pagelist">
-	    	<a title="Total record">&nbsp;<b>#(articlePage.totalRow)</b> </a>&nbsp;&nbsp;&nbsp;
 	     
 	    	   #for(pageNum=1;pageNum<=articlePage.totalPage;pageNum++)
 					#if(pageNum == currentPageNum) 
@@ -45,7 +44,7 @@
 		  #end
 		  #if(!articlePage.isLastPage())
 			   &nbsp;  <a href="/#(currentPageNum+1)">下一页</a> 
-			     &nbsp;<a href="/download/index_2.html">尾页</a>
+			     &nbsp;<a href="/#(articlePage.totalPage)">尾页</a>
 		  #end
 	 #else
 		#if(tag==null)

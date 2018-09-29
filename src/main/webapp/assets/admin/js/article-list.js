@@ -23,11 +23,10 @@ function renderArticles(){
 	    ,elem: '#articles'
 	    ,page: true //开启分页
 	    ,cols: [[ //表头
-	    	{field:'id', sort: true,title:"ID"}
+	    	{field:'id', sort: true,title:"ID", width:90}
 	      ,{field:'title',minWidth:150,title:"标题"}
-	      ,{field:'pv', width:100,sort: true,title:"阅读量"}
-	      ,{field:'state',templet:'#state-tpl',title:"状态"}
-	      ,{field:'isOriginal',templet:'#original-tpl',title:"原创"}
+	      ,{field:'pv', width:90,sort: true,title:"阅读量"}
+	      ,{field:'state',width:90,templet:'#state-tpl',title:"状态"}
 	      ,{field:'identify',title:"访问路径"}
 	      ,{templet:'#operation-tpl', title:"操作"}
 	    ]]

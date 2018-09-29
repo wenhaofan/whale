@@ -465,13 +465,20 @@ $(function(){
 	})
 
 
-	
 	var clipboard=new ClipboardJS('.copy-btn');
 	
 	clipboard.on('success', function(e) {
 	    $(".copy-link-hint").text("链接已复制到您的剪切板,如未生效请手动复制！");
 	});
 
+	
+	//避免pjax重复加载js导致事件重复绑定
+	if (typeof (adminDiskListIsBind) != "undefined") {
+	    return;
+	}   
+	adminDiskListIsBind=true;
+	
+	
 	
 	$(".folder-nav").on("click","a",function(){
 		changeFolder(this);
@@ -511,7 +518,6 @@ $(function(){
 			$(that).replaceWith('<input type="file" class=" disk-upload-file " style="display:none;">');
 		}})
 	})
-	
-	
+
 })
 

@@ -5,6 +5,17 @@ var attach_url = $('#attach_url').val();
 
 Dropzone.autoDiscover = false;
 
+
+function getPlainText(content){
+    var $tempDiv=$('<div style="display:none;"></div>')
+    $tempDiv.html(content);
+  
+    var divText= $tempDiv.text().replace(/<[^>]*>|/g,"").replace(/\s+/g, "");
+ 
+    $tempDiv.remove();
+    return divText();
+}
+
 /**
  * 获取编辑器的内容
  * @returns
@@ -20,6 +31,9 @@ function getContent(){
 
 function browerSaveArticle(id,content){
 	try {
+		if(getPlainText(content).length==0){
+			return;
+		}
 		localStorage.setItem( 'article-auto-'+id, content );	
 	} catch (e) {
 		localStorage.clear();

@@ -1,9 +1,19 @@
 
 $(function(){
-	// 基于准备好的dom，初始化echarts实例
-	$.getScript('/assets/echarts/echarts.js',function(){
+
+	var head= document.getElementsByTagName('head')[0]; 
+	var script= document.createElement('script'); 
+	script.type= 'text/javascript'; 
+	script.onreadystatechange= function () { 
+	if (this.readyState == 'complete') 
 		lazyRender();
-	});
+	} 
+	script.onload= function(){ 
+		lazyRender();
+	} 
+	script.src= '/assets/echarts/echarts.js'; 
+	head.appendChild(script); 
+	
 })
 
 function lazyRender(){

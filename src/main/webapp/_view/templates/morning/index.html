@@ -40,6 +40,23 @@
       </div>
     </li>
   	#end
+  	  <div class="pagelist">
+	    	 
+	    	   #for(pageNum=1;pageNum<=articlePage.totalPage;pageNum++)
+					#if(pageNum == currentPageNum) 
+						<b>#(pageNum)</b>
+					#else
+						&nbsp;<a href="/#(pageNum)">#(pageNum)</a>
+			    	#end
+			    #end
+	   	  #if(!articlePage.isFirstPage())
+		    &nbsp;	 <a href="/#(currentPageNum-1)">上一页</a></li>
+		  #end
+		  #if(!articlePage.isLastPage())
+			   &nbsp;  <a href="/#(currentPageNum+1)">下一页</a> 
+			     &nbsp;<a href="/#(articlePage.totalPage)">尾页</a>
+		  #end
+		</div>
   </div>
   <div class="sidebar">
     <div class="about">

@@ -19,6 +19,7 @@ import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.template.Engine;
 import com.jfinal.template.source.FileSourceFactory;
 import com.mysql.jdbc.Connection;
+import com.wenhaofan._admin.article.AdminArticleLuceneIndexes;
 import com.wenhaofan._admin.common.config.interceptor.LoginInterceptor;
 import com.wenhaofan._admin.common.config.router.AdminRoutes;
 import com.wenhaofan.common.aop.AopFactory;
@@ -45,7 +46,7 @@ public class BlogConfig extends JFinalConfig {
 	private WallFilter wallFilter;
 	@Override
 	public void configConstant(Constants me) {
-		me.setDevMode(true);
+		me.setDevMode(p.getBoolean("devMode", false));
 		me.setControllerFactory(new AopFactory());
 		me.setJsonFactory(new MixedJsonFactory());
 		me.setError404View("/_view/error/404.html");
@@ -84,12 +85,9 @@ public class BlogConfig extends JFinalConfig {
 
 	@Override
 	public void configEngine(Engine me) {
-  
 		me.addSharedFunction("_view/common/jquery.html");
 		me.addSharedFunction("_view/common/bootstrap.html");
 		me.addSharedFunction("_view/common/layui.html");
-  
- 
 		me.setSourceFactory(new FileSourceFactory());
 	}
 
@@ -139,13 +137,11 @@ public class BlogConfig extends JFinalConfig {
 		super.afterJFinalStart();
 		
 		ConfigService configService=AopFactory.getInject(ConfigService.class);
-		 
+		AdminArticleLuceneIndexes  articleLucene=AopFactory.getInject(AdminArticleLuceneIndexes.class);
 		Config  config=configService.get();
 		BlogContext.reset(config);
+		articleLucene.resetArticleIndexes();
 	}
 	
- 
- 
- 
 }
 

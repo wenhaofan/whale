@@ -73,8 +73,8 @@ boyd,html{
 .file-thumb{
 	width:84px;
 	height:84px;
-	 
     margin: 0 auto;
+    background-size: 100% 90% !important;
 }
 
 .file-name h3{

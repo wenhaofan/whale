@@ -75,11 +75,11 @@ public class MetaweblogHelper {
 			if(result.isOk()) {
 				successCount++;
 				successKv.set(config.getWebsite(), config).set("type", type);
-				SysLogHelper.addWarnLog("metaweblog接口异常！", SysLogActionEnum.OTHER.getName(),Ret.by("config", config).toJson());
 			}else {
 				failCount++;
 				failKv.set(config.getWebsite(), config).set("type", type);
-				SysLogHelper.addInfoLog("metaweblog推送成功！", SysLogActionEnum.OTHER.getName(),Ret.by("config", config).toJson());
+				SysLogHelper.addWarnLog("metaweblog接口异常！", SysLogActionEnum.OTHER.getName(),Ret.by("config", config).toJson());
+
 			}
 		}
 		
