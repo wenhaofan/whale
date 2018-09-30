@@ -5,7 +5,7 @@ function editInfo(data){
 		data:data,
 		type:"post",
 		success:function(data){
-				fl.alertOk({title:"修改成功！"});
+			fl.alertOk({title:"修改成功！"});
 		}
 	})
 }

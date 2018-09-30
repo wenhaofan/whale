@@ -55,7 +55,6 @@ public class ExceptionInterceptor implements Interceptor {
 			if(!inv.getControllerKey().contains("upload")) {
 				dataMap.putAll(c.getParaMap());
 			}
-			userId=c.getLoginUser().getId();
 			url=c.getRequest().getRequestURL().toString();
 		}else {
 			dataMap.set("methodArgs", inv.getArgs());

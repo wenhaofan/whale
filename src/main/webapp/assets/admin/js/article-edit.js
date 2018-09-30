@@ -13,7 +13,7 @@ function getPlainText(content){
     var divText= $tempDiv.text().replace(/<[^>]*>|/g,"").replace(/\s+/g, "");
  
     $tempDiv.remove();
-    return divText();
+    return divText;
 }
 
 /**
@@ -56,14 +56,14 @@ function setSelectedTag(data){
     }
 }
 function setSelectedCategory(data){
-    var categoryIds=$("#categoryIds").val();
-    if(notNull(categoryIds)){
-    	var categoryArr=categoryIds.split(",");
-    	$.each(categoryArr,function(index,item){
-    		data.push({name:"category["+index+"].mname",value:item});
-    		data.push({name:"category["+index+"].type",value:"category"});
-    	})
-    }
+	var categoryIds=$("#multiple-sel").select2("val");
+	var category;
+	for(var i=0,size=categoryIds.length;i<size;i++){
+		category=categoryIds[i];
+		data.push({name:"category["+i+"].mname",value:category});
+		data.push({name:"category["+i+"].type",value:"category"});
+	}
+	return data;
 }
 
 function editArticle(paras){
@@ -106,7 +106,7 @@ function save(state){
    
     editArticle({fdata:fdata,success:function(data){
     	  var time="["+new Date()+"]";
-    	  $(".hint-msg").text((data.state==0?"草稿保存成功！":"发布成功！")+time);
+    	  $(".hint-msg").text((data.article.state==0?"草稿保存成功！":"发布成功！")+time);
     	  $("input[name='id']").val(data.article.id);
     	  var host=window.location.host;
     	  var currentUrl=window.location.protocol+"//"+host+"/admin/article/edit/"+data.article.id;
